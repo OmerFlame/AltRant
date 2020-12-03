@@ -8,51 +8,42 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Rant-->
-        <scene sceneID="gje-co-744">
+        <!--Rant View Controller-->
+        <scene sceneID="pCk-fH-rvh">
             <objects>
-                <viewController id="mG1-zK-QDq" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="rBs-Ni-7wy">
+                <viewController storyboardIdentifier="RantViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YEq-ap-G6c" customClass="RantViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jzS-eJ-qgR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rant View" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zik-dr-aSN">
-                                <rect key="frame" x="169" y="464.5" width="76.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bD6-gy-n6l">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="M7h-aK-ofA">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="gRe-8p-VbY"/>
+                        <viewLayoutGuide key="safeArea" id="F4g-GR-WyF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Zik-dr-aSN" firstAttribute="centerX" secondItem="gRe-8p-VbY" secondAttribute="centerX" id="OzF-zr-YBf"/>
-                            <constraint firstItem="Zik-dr-aSN" firstAttribute="centerY" secondItem="gRe-8p-VbY" secondAttribute="centerY" id="iFY-wg-fi1"/>
+                            <constraint firstAttribute="bottom" secondItem="bD6-gy-n6l" secondAttribute="bottom" id="PEp-Wx-QaM"/>
+                            <constraint firstItem="M7h-aK-ofA" firstAttribute="centerY" secondItem="jzS-eJ-qgR" secondAttribute="centerY" id="QBp-wb-cbd"/>
+                            <constraint firstItem="bD6-gy-n6l" firstAttribute="leading" secondItem="jzS-eJ-qgR" secondAttribute="leading" id="RRn-hA-7Pq"/>
+                            <constraint firstItem="bD6-gy-n6l" firstAttribute="top" secondItem="jzS-eJ-qgR" secondAttribute="top" id="XpE-tV-AEq"/>
+                            <constraint firstAttribute="trailing" secondItem="bD6-gy-n6l" secondAttribute="trailing" id="pQa-rC-RoU"/>
+                            <constraint firstItem="M7h-aK-ofA" firstAttribute="centerX" secondItem="jzS-eJ-qgR" secondAttribute="centerX" id="uYQ-C7-7YC"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Rant" id="fFx-ND-T0a"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bRQ-g1-fy8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1113.0434782608697" y="172.76785714285714"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="QiA-nW-L7b">
-            <objects>
-                <navigationController storyboardIdentifier="RantView" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3vc-UT-wGn" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AUo-TD-q0a">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
-                        <segue destination="mG1-zK-QDq" kind="relationship" relationship="rootViewController" id="1su-oc-QDu"/>
+                        <outlet property="loadingIndicator" destination="M7h-aK-ofA" id="oWq-ig-AKL"/>
+                        <outlet property="tableView" destination="bD6-gy-n6l" id="G8e-qe-AMJ"/>
                     </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KOo-1v-ary" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2vZ-xz-tRL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="202.89855072463769" y="172.76785714285714"/>
+            <point key="canvasLocation" x="317" y="112"/>
         </scene>
     </scenes>
     <resources>

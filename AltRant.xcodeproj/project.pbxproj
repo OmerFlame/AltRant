@@ -17,6 +17,7 @@
 		5904018325762953002B062A /* RantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5904018125762953002B062A /* RantInFeedCell.xib */; };
 		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
 		5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */; };
+		592B1B2F2578F31300109377 /* RantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592B1B2E2578F31300109377 /* RantViewController.swift */; };
 		59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59306E952578E68600F6AD08 /* RantViewController.storyboard */; };
 		5990650A257643B30058C1D7 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906509257643B30058C1D7 /* CloseButton.swift */; };
 		5990650E257643D60058C1D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990650D257643D60058C1D7 /* TagListView.swift */; };
@@ -53,6 +54,7 @@
 		5922A55925779E0B009F3025 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
 		5922A55A25779E1E009F3025 /* AltRant-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AltRant-Bridging-Header.h"; sourceTree = "<group>"; };
 		5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
+		592B1B2E2578F31300109377 /* RantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantViewController.swift; sourceTree = "<group>"; };
 		59306E952578E68600F6AD08 /* RantViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RantViewController.storyboard; sourceTree = "<group>"; };
 		59906509257643B30058C1D7 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		5990650D257643D60058C1D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				5904016B257627A3002B062A /* SceneDelegate.swift */,
 				59E671732576CE5B007EEB28 /* LoginViewController.swift */,
 				5904016D257627A3002B062A /* ViewController.swift */,
+				592B1B2E2578F31300109377 /* RantViewController.swift */,
 				59306E952578E68600F6AD08 /* RantViewController.storyboard */,
 				5922A55425778C90009F3025 /* LoginViewController.storyboard */,
 				5904016F257627A3002B062A /* Main.storyboard */,
@@ -265,6 +268,7 @@
 				5990652D257668FD0058C1D7 /* User.swift in Sources */,
 				5904016A257627A3002B062A /* AppDelegate.swift in Sources */,
 				5990652325765FE10058C1D7 /* RantResponse.swift in Sources */,
+				592B1B2F2578F31300109377 /* RantViewController.swift in Sources */,
 				59906511257644120058C1D7 /* TagView.swift in Sources */,
 				5904016C257627A3002B062A /* SceneDelegate.swift in Sources */,
 				5990651F25765FE10058C1D7 /* RantInFeed.swift in Sources */,

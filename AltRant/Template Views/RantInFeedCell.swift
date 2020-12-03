@@ -13,6 +13,7 @@ class RantInFeedCell: UITableViewCell {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
     @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
     
     var rantContents: Binding<RantInFeed>!
@@ -25,6 +26,19 @@ class RantInFeedCell: UITableViewCell {
         upvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == 1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
         scoreLabel.text = String(rantContents!.wrappedValue.score + rantContents!.wrappedValue.vote_state)
         downvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == -1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
+        
+        if image == nil {
+            supplementalImageView.isHidden = true
+        } else {
+            let resizeMultiplier = getImageResizeMultiplier(imageWidth: image!.size.width, imageHeight: image!.size.height, multiplier: 1)
+            
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier), false, resizeMultiplier)
+            image!.draw(in: CGRect(x: 0, y: 0, width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            supplementalImageView.image = newImage
+        }
         
         upvoteButton.isUserInteractionEnabled = rantContents!.wrappedValue.vote_state != -2
         downvoteButton.isUserInteractionEnabled = rantContents!.wrappedValue.vote_state != -2
@@ -109,9 +123,17 @@ class RantInFeedCell: UITableViewCell {
     
     @IBAction func handleTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
-            let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(withIdentifier: "RantView") as! UINavigationController
+            let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(withIdentifier: "RantViewController") as! RantViewController
             
             parentTableViewController.navigationController?.pushViewController(rantVC, animated: true)
+        }
+    }
+    
+    private func getImageResizeMultiplier(imageWidth: CGFloat, imageHeight: CGFloat, multiplier: Int) -> CGFloat {
+        if imageWidth / CGFloat(multiplier) < 315 && imageHeight / CGFloat(multiplier) < 420 {
+            return CGFloat(multiplier)
+        } else {
+            return getImageResizeMultiplier(imageWidth: imageWidth, imageHeight: imageHeight, multiplier: multiplier + 2)
         }
     }
 }

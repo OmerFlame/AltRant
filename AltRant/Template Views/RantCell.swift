@@ -17,6 +17,7 @@ class RantCell: UITableViewCell {
     @IBOutlet weak var userScoreLabel: PaddingLabel!
     
     @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
     
     override func awakeFromNib() {
@@ -41,7 +42,18 @@ class RantCell: UITableViewCell {
         usernameLabel.text = "OmerFlame"
         userScoreLabel.text = "+9999"
         
+        let resizeMultiplier = getImageResizeMultiplier(imageWidth: supplementalImageView.image!.size.width, imageHeight: supplementalImageView.image!.size.height, multiplier: 1)
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: supplementalImageView.image!.size.width / resizeMultiplier, height: supplementalImageView.image!.size.height / resizeMultiplier), false, resizeMultiplier)
+        supplementalImageView.image!.draw(in: CGRect(x: 0, y: 0, width: supplementalImageView.image!.size.width / resizeMultiplier, height: supplementalImageView.image!.size.height / resizeMultiplier))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        supplementalImageView.image = newImage
         //bodyLabel.text = "Lorem ipsum"
+        
+        //supplementalImageView.frame.size.width /= resizeMultiplier
+        //supplementalImageView.frame.size.height /= resizeMultiplier
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
         tagList.addTags(["This", "Is", "A", "Test"])
@@ -53,5 +65,13 @@ class RantCell: UITableViewCell {
     
     @IBAction func downvote(_ sender: UIButton) {
         print("Downvote pressed")
+    }
+    
+    private func getImageResizeMultiplier(imageWidth: CGFloat, imageHeight: CGFloat, multiplier: Int) -> CGFloat {
+        if imageWidth / CGFloat(multiplier) < 315 && imageHeight / CGFloat(multiplier) < 420 {
+            return CGFloat(multiplier)
+        } else {
+            return getImageResizeMultiplier(imageWidth: imageWidth, imageHeight: imageHeight, multiplier: multiplier + 2)
+        }
     }
 }
