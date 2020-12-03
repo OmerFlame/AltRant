@@ -13,6 +13,28 @@
 		59040171257627A3002B062A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5904016F257627A3002B062A /* Main.storyboard */; };
 		59040173257627A5002B062A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59040172257627A5002B062A /* Assets.xcassets */; };
 		59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59040174257627A5002B062A /* LaunchScreen.storyboard */; };
+		5904018225762953002B062A /* RantInFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904018025762953002B062A /* RantInFeedCell.swift */; };
+		5904018325762953002B062A /* RantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5904018125762953002B062A /* RantInFeedCell.xib */; };
+		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
+		5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */; };
+		5990650A257643B30058C1D7 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906509257643B30058C1D7 /* CloseButton.swift */; };
+		5990650E257643D60058C1D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990650D257643D60058C1D7 /* TagListView.swift */; };
+		59906511257644120058C1D7 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906510257644120058C1D7 /* TagView.swift */; };
+		5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990651725765FE10058C1D7 /* CommentModel.swift */; };
+		5990651F25765FE10058C1D7 /* RantInFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990651825765FE10058C1D7 /* RantInFeed.swift */; };
+		5990652025765FE10058C1D7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990651925765FE10058C1D7 /* Profile.swift */; };
+		5990652125765FE10058C1D7 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990651A25765FE10058C1D7 /* File.swift */; };
+		5990652225765FE10058C1D7 /* RantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990651B25765FE10058C1D7 /* RantModel.swift */; };
+		5990652325765FE10058C1D7 /* RantResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990651C25765FE10058C1D7 /* RantResponse.swift */; };
+		5990652425765FE10058C1D7 /* RantFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990651D25765FE10058C1D7 /* RantFeed.swift */; };
+		59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906526257660AF0058C1D7 /* ColorFromHexString.swift */; };
+		5990652A257668E90058C1D7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906529257668E90058C1D7 /* APIRequest.swift */; };
+		5990652D257668FD0058C1D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990652C257668FD0058C1D7 /* User.swift */; };
+		59E671632576AD12007EEB28 /* RantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671612576AD12007EEB28 /* RantCell.swift */; };
+		59E671642576AD12007EEB28 /* RantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E671622576AD12007EEB28 /* RantCell.xib */; };
+		59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671662576BAF4007EEB28 /* PaddingLabel.swift */; };
+		59E6716A2576BD74007EEB28 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671692576BD74007EEB28 /* RoundedImageView.swift */; };
+		59E671752576CE5B007EEB28 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671732576CE5B007EEB28 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +46,30 @@
 		59040172257627A5002B062A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59040175257627A5002B062A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59040177257627A5002B062A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5904018025762953002B062A /* RantInFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantInFeedCell.swift; sourceTree = "<group>"; };
+		5904018125762953002B062A /* RantInFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RantInFeedCell.xib; sourceTree = "<group>"; };
+		5922A55425778C90009F3025 /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
+		5922A55925779E0B009F3025 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
+		5922A55A25779E1E009F3025 /* AltRant-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AltRant-Bridging-Header.h"; sourceTree = "<group>"; };
+		5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
+		59906509257643B30058C1D7 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		5990650D257643D60058C1D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
+		59906510257644120058C1D7 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		5990651725765FE10058C1D7 /* CommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
+		5990651825765FE10058C1D7 /* RantInFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RantInFeed.swift; sourceTree = "<group>"; };
+		5990651925765FE10058C1D7 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		5990651A25765FE10058C1D7 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		5990651B25765FE10058C1D7 /* RantModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RantModel.swift; sourceTree = "<group>"; };
+		5990651C25765FE10058C1D7 /* RantResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RantResponse.swift; sourceTree = "<group>"; };
+		5990651D25765FE10058C1D7 /* RantFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RantFeed.swift; sourceTree = "<group>"; };
+		59906526257660AF0058C1D7 /* ColorFromHexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFromHexString.swift; sourceTree = "<group>"; };
+		59906529257668E90058C1D7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		5990652C257668FD0058C1D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		59E671612576AD12007EEB28 /* RantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantCell.swift; sourceTree = "<group>"; };
+		59E671622576AD12007EEB28 /* RantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RantCell.xib; sourceTree = "<group>"; };
+		59E671662576BAF4007EEB28 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		59E671692576BD74007EEB28 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
+		59E671732576CE5B007EEB28 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +102,71 @@
 		59040168257627A3002B062A /* AltRant */ = {
 			isa = PBXGroup;
 			children = (
+				5922A55825779DD1009F3025 /* Extensions */,
+				5990651625765FE10058C1D7 /* Data Structures */,
+				59906508257643900058C1D7 /* TagListView */,
+				5904017F2576292A002B062A /* Template Views */,
 				59040169257627A3002B062A /* AppDelegate.swift */,
+				59906529257668E90058C1D7 /* APIRequest.swift */,
+				5990652C257668FD0058C1D7 /* User.swift */,
 				5904016B257627A3002B062A /* SceneDelegate.swift */,
+				59E671732576CE5B007EEB28 /* LoginViewController.swift */,
 				5904016D257627A3002B062A /* ViewController.swift */,
+				5922A55425778C90009F3025 /* LoginViewController.storyboard */,
 				5904016F257627A3002B062A /* Main.storyboard */,
 				59040172257627A5002B062A /* Assets.xcassets */,
 				59040174257627A5002B062A /* LaunchScreen.storyboard */,
 				59040177257627A5002B062A /* Info.plist */,
+				59906526257660AF0058C1D7 /* ColorFromHexString.swift */,
+				59E671662576BAF4007EEB28 /* PaddingLabel.swift */,
+				59E671692576BD74007EEB28 /* RoundedImageView.swift */,
 			);
 			path = AltRant;
+			sourceTree = "<group>";
+		};
+		5904017F2576292A002B062A /* Template Views */ = {
+			isa = PBXGroup;
+			children = (
+				5904018025762953002B062A /* RantInFeedCell.swift */,
+				5904018125762953002B062A /* RantInFeedCell.xib */,
+				59E671612576AD12007EEB28 /* RantCell.swift */,
+				59E671622576AD12007EEB28 /* RantCell.xib */,
+			);
+			path = "Template Views";
+			sourceTree = "<group>";
+		};
+		5922A55825779DD1009F3025 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5922A55925779E0B009F3025 /* UIScrollView+InfiniteScroll.h */,
+				5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */,
+				5922A55A25779E1E009F3025 /* AltRant-Bridging-Header.h */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		59906508257643900058C1D7 /* TagListView */ = {
+			isa = PBXGroup;
+			children = (
+				59906509257643B30058C1D7 /* CloseButton.swift */,
+				5990650D257643D60058C1D7 /* TagListView.swift */,
+				59906510257644120058C1D7 /* TagView.swift */,
+			);
+			path = TagListView;
+			sourceTree = "<group>";
+		};
+		5990651625765FE10058C1D7 /* Data Structures */ = {
+			isa = PBXGroup;
+			children = (
+				5990651725765FE10058C1D7 /* CommentModel.swift */,
+				5990651825765FE10058C1D7 /* RantInFeed.swift */,
+				5990651925765FE10058C1D7 /* Profile.swift */,
+				5990651A25765FE10058C1D7 /* File.swift */,
+				5990651B25765FE10058C1D7 /* RantModel.swift */,
+				5990651C25765FE10058C1D7 /* RantResponse.swift */,
+				5990651D25765FE10058C1D7 /* RantFeed.swift */,
+			);
+			path = "Data Structures";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +185,8 @@
 			dependencies = (
 			);
 			name = AltRant;
+			packageProductDependencies = (
+			);
 			productName = AltRant;
 			productReference = 59040166257627A3002B062A /* AltRant.app */;
 			productType = "com.apple.product-type.application";
@@ -98,6 +202,7 @@
 				TargetAttributes = {
 					59040165257627A3002B062A = {
 						CreatedOnToolsVersion = 12.2;
+						LastSwiftMigration = 1220;
 					};
 				};
 			};
@@ -110,6 +215,8 @@
 				Base,
 			);
 			mainGroup = 5904015D257627A3002B062A;
+			packageReferences = (
+			);
 			productRefGroup = 59040167257627A3002B062A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -124,9 +231,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59E671642576AD12007EEB28 /* RantCell.xib in Resources */,
 				59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */,
 				59040173257627A5002B062A /* Assets.xcassets in Resources */,
 				59040171257627A3002B062A /* Main.storyboard in Resources */,
+				5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */,
+				5904018325762953002B062A /* RantInFeedCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,9 +247,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59E671752576CE5B007EEB28 /* LoginViewController.swift in Sources */,
+				59E671632576AD12007EEB28 /* RantCell.swift in Sources */,
+				5990650A257643B30058C1D7 /* CloseButton.swift in Sources */,
+				5990652025765FE10058C1D7 /* Profile.swift in Sources */,
+				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
+				5990650E257643D60058C1D7 /* TagListView.swift in Sources */,
+				59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */,
+				5990652225765FE10058C1D7 /* RantModel.swift in Sources */,
+				59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */,
 				5904016E257627A3002B062A /* ViewController.swift in Sources */,
+				5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */,
+				5990652D257668FD0058C1D7 /* User.swift in Sources */,
 				5904016A257627A3002B062A /* AppDelegate.swift in Sources */,
+				5990652325765FE10058C1D7 /* RantResponse.swift in Sources */,
+				59906511257644120058C1D7 /* TagView.swift in Sources */,
 				5904016C257627A3002B062A /* SceneDelegate.swift in Sources */,
+				5990651F25765FE10058C1D7 /* RantInFeed.swift in Sources */,
+				5990652125765FE10058C1D7 /* File.swift in Sources */,
+				59E6716A2576BD74007EEB28 /* RoundedImageView.swift in Sources */,
+				5990652425765FE10058C1D7 /* RantFeed.swift in Sources */,
+				5990652A257668E90058C1D7 /* APIRequest.swift in Sources */,
+				5904018225762953002B062A /* RantInFeedCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +415,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -295,6 +425,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cracksoftware.AltRant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AltRant/Extensions/AltRant-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -305,6 +437,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -314,6 +447,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cracksoftware.AltRant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AltRant/Extensions/AltRant-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

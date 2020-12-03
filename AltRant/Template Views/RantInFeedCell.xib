@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" verticalCompressionResistancePriority="1000" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInFeedCell" rowHeight="266" translatesAutoresizingMaskIntoConstraints="NO" id="KGk-i7-Jjw" customClass="RantInFeedCell" customModule="AltRant" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="442" height="266"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="442" height="266"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="kWC-FQ-uon">
+                        <rect key="frame" x="22" y="15" width="394" height="236"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="F6y-jH-PG6" userLabel="Voting Stack View">
+                                <rect key="frame" x="0.0" y="0.0" width="37.5" height="70"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="744" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pP3-4o-bVM" userLabel="Upvote Button">
+                                        <rect key="frame" x="6" y="0.0" width="26" height="26.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="26" id="35p-d5-DOp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <color key="tintColor" systemColor="systemGrayColor"/>
+                                        <state key="normal" image="plusplus"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="266" horizontalCompressionResistancePriority="1000" text="9999" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="foZ-h2-iwf" userLabel="Score Label">
+                                        <rect key="frame" x="0.0" y="27.5" width="37.5" height="15.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="26" id="T1L-Tr-Vpp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmW-8B-UBv" userLabel="Downvote Button">
+                                        <rect key="frame" x="6" y="44" width="26" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="a46-69-uM6"/>
+                                            <constraint firstAttribute="width" constant="26" id="qfJ-Hs-JXY"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <color key="tintColor" systemColor="systemGrayColor"/>
+                                        <state key="normal" image="minusminus"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="foZ-h2-iwf" secondAttribute="trailing" id="hxI-Az-O2m"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dmW-8B-UBv" secondAttribute="bottom" id="rJL-Zh-KcC"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Rty-yM-DGZ" userLabel="Text Stack View">
+                                <rect key="frame" x="47.5" y="0.0" width="346.5" height="236"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VX-ol-prW" userLabel="Body">
+                                        <rect key="frame" x="0.0" y="0.0" width="346.5" height="216"/>
+                                        <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="01C-F5-QAi" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="224" width="282" height="12"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                <color key="value" systemColor="labelColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="tagBackgroundColor">
+                                                <color key="value" systemColor="systemBackgroundColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedTextColor">
+                                                <color key="value" systemColor="labelColor"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingX">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="enableRemoveButton" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="marginY">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="marginX">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="paddingY">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="3VX-ol-prW" firstAttribute="leading" secondItem="Rty-yM-DGZ" secondAttribute="leading" id="FY1-dH-exP"/>
+                                    <constraint firstAttribute="trailing" secondItem="3VX-ol-prW" secondAttribute="trailing" id="YuS-2G-V1P"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Rty-yM-DGZ" secondAttribute="trailing" id="T3K-r9-XpO"/>
+                            <constraint firstItem="3VX-ol-prW" firstAttribute="leading" secondItem="foZ-h2-iwf" secondAttribute="trailing" constant="10" id="sdl-hF-VSM"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="kWC-FQ-uon" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="8ME-J9-Wyf"/>
+                    <constraint firstItem="kWC-FQ-uon" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="NBc-h5-Poj"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="kWC-FQ-uon" secondAttribute="trailing" constant="6" id="Xey-1d-BP0"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="kWC-FQ-uon" secondAttribute="bottom" constant="4" id="dt5-gK-ry9"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="bodyLabel" destination="3VX-ol-prW" id="Ykd-sJ-S5l"/>
+                <outlet property="downvoteButton" destination="dmW-8B-UBv" id="4QS-2f-sLc"/>
+                <outlet property="scoreLabel" destination="foZ-h2-iwf" id="KjU-d6-gdy"/>
+                <outlet property="tagList" destination="01C-F5-QAi" id="iXU-SQ-DrQ"/>
+                <outlet property="upvoteButton" destination="pP3-4o-bVM" id="8pH-Fr-hEh"/>
+            </connections>
+            <point key="canvasLocation" x="220.28985507246378" y="160.04464285714286"/>
+        </tableViewCell>
+    </objects>
+    <designables>
+        <designable name="01C-F5-QAi">
+            <size key="intrinsicContentSize" width="282" height="12"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="minusminus" width="26" height="26"/>
+        <image name="plusplus" width="26" height="26"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
