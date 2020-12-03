@@ -75,6 +75,7 @@
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="01C-F5-QAi" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="224" width="282" height="12"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <gestureRecognizers/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                                 <color key="value" systemColor="labelColor"/>
@@ -105,6 +106,9 @@
                                     <constraint firstItem="3VX-ol-prW" firstAttribute="leading" secondItem="Rty-yM-DGZ" secondAttribute="leading" id="FY1-dH-exP"/>
                                     <constraint firstAttribute="trailing" secondItem="3VX-ol-prW" secondAttribute="trailing" id="YuS-2G-V1P"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="QFM-Xo-VJv" appends="YES" id="Ywj-WK-nce"/>
+                                </connections>
                             </stackView>
                         </subviews>
                         <constraints>
@@ -130,6 +134,11 @@
             </connections>
             <point key="canvasLocation" x="220.28985507246378" y="160.04464285714286"/>
         </tableViewCell>
+        <tapGestureRecognizer id="QFM-Xo-VJv">
+            <connections>
+                <action selector="handleTap:" destination="KGk-i7-Jjw" id="sLU-rS-tjb"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <designables>
         <designable name="01C-F5-QAi">

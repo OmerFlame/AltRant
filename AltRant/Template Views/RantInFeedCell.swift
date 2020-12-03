@@ -16,10 +16,10 @@ class RantInFeedCell: UITableViewCell {
     @IBOutlet weak var tagList: TagListView!
     
     var rantContents: Binding<RantInFeed>!
-    var parentTableView: UITableView? = nil
+    var parentTableViewController: UITableViewController? = nil
     
-    func configure(with model: Binding<RantInFeed>, image: UIImage?, parentTableView: UITableView?) {
-        self.parentTableView = parentTableView
+    func configure(with model: Binding<RantInFeed>, image: UIImage?, parentTableViewController: UITableViewController?) {
+        self.parentTableViewController = parentTableViewController
         self.rantContents = model
         
         upvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == 1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
@@ -74,8 +74,8 @@ class RantInFeedCell: UITableViewCell {
         } else {
             self.rantContents!.wrappedValue.vote_state = vote
             
-            if let parentTableView = self.parentTableView {
-                parentTableView.reloadData()
+            if let parentTableViewController = self.parentTableViewController {
+                parentTableViewController.tableView.reloadData()
             }
         }
     }
@@ -101,9 +101,17 @@ class RantInFeedCell: UITableViewCell {
         } else {
             self.rantContents!.wrappedValue.vote_state = vote
             
-            if let parentTableView = self.parentTableView {
-                parentTableView.reloadData()
+            if let parentTableViewController = self.parentTableViewController {
+                parentTableViewController.tableView.reloadData()
             }
+        }
+    }
+    
+    @IBAction func handleTap(_ sender: UITapGestureRecognizer) {
+        if let parentTableViewController = self.parentTableViewController {
+            let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(withIdentifier: "RantView") as! UINavigationController
+            
+            parentTableViewController.navigationController?.pushViewController(rantVC, animated: true)
         }
     }
 }
