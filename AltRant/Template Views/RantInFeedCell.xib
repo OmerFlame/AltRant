@@ -48,7 +48,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <color key="tintColor" systemColor="systemGrayColor"/>
-                                        <state key="normal" image="minusminus"/>
+                                        <state key="normal" image="minuminus"/>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -131,7 +131,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="minusminus" width="26" height="26"/>
+        <image name="minuminus" width="26" height="26"/>
         <image name="plusplus" width="26" height="26"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
