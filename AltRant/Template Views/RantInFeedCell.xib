@@ -30,6 +30,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <color key="tintColor" systemColor="systemGrayColor"/>
                                         <state key="normal" image="plusplus"/>
+                                        <connections>
+                                            <action selector="handleUpvote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jS5-Tq-7md"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="266" horizontalCompressionResistancePriority="1000" text="9999" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="foZ-h2-iwf" userLabel="Score Label">
                                         <rect key="frame" x="0.0" y="27.5" width="37.5" height="15.5"/>
@@ -49,6 +52,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <color key="tintColor" systemColor="systemGrayColor"/>
                                         <state key="normal" image="minuminus"/>
+                                        <connections>
+                                            <action selector="handleDownvote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LHT-FF-AF2"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>

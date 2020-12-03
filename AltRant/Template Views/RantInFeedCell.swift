@@ -15,24 +15,30 @@ class RantInFeedCell: UITableViewCell {
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var tagList: TagListView!
     
-    func configure(with model: Binding<RantInFeed>, image: UIImage?) {
-        upvoteButton.tintColor = (model.wrappedValue.vote_state == 1 ? UIColor(hex: model.wrappedValue.user_avatar.b)! : UIColor.systemGray)
-        scoreLabel.text = String(model.wrappedValue.score)
-        downvoteButton.tintColor = (model.wrappedValue.vote_state == -1 ? UIColor(hex: model.wrappedValue.user_avatar.b)! : UIColor.systemGray)
+    var rantContents: Binding<RantInFeed>!
+    var parentTableView: UITableView? = nil
+    
+    func configure(with model: Binding<RantInFeed>, image: UIImage?, parentTableView: UITableView?) {
+        self.parentTableView = parentTableView
+        self.rantContents = model
         
-        upvoteButton.isUserInteractionEnabled = model.wrappedValue.vote_state != -2
-        downvoteButton.isUserInteractionEnabled = model.wrappedValue.vote_state != -2
+        upvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == 1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
+        scoreLabel.text = String(rantContents!.wrappedValue.score + rantContents!.wrappedValue.vote_state)
+        downvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == -1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
+        
+        upvoteButton.isUserInteractionEnabled = rantContents!.wrappedValue.vote_state != -2
+        downvoteButton.isUserInteractionEnabled = rantContents!.wrappedValue.vote_state != -2
         
         //bodyLabel.text = model.wrappedValue.text
         
-        if model.wrappedValue.text.count > 240 {
-            bodyLabel.text = model.wrappedValue.text.prefix(240) + "... [read more]"
+        if rantContents!.wrappedValue.text.count > 240 {
+            bodyLabel.text = rantContents!.wrappedValue.text.prefix(240) + "... [read more]"
         } else {
-            bodyLabel.text = model.wrappedValue.text
+            bodyLabel.text = rantContents!.wrappedValue.text
         }
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
-        tagList.addTags(model.wrappedValue.tags)
+        tagList.addTags(rantContents!.wrappedValue.tags)
     }
     
     func testConfigure() {
@@ -45,5 +51,59 @@ class RantInFeedCell: UITableViewCell {
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
         tagList.addTags(["This", "Is", "A", "Test"])
+    }
+    
+    @IBAction func handleUpvote(_ sender: UIButton) {
+        var vote: Int {
+            switch self.rantContents!.wrappedValue.vote_state {
+            case 0:
+                return 1
+                
+            case 1:
+                return 0
+                
+            default:
+                return 1
+            }
+        }
+        
+        let success = APIRequest().voteOnRant(rantID: self.rantContents!.wrappedValue.id, vote: vote)
+        
+        if !success {
+            print("ERROR WHILE UPVOTING")
+        } else {
+            self.rantContents!.wrappedValue.vote_state = vote
+            
+            if let parentTableView = self.parentTableView {
+                parentTableView.reloadData()
+            }
+        }
+    }
+    
+    @IBAction func handleDownvote(_ sender: UIButton) {
+        var vote: Int {
+            switch self.rantContents!.wrappedValue.vote_state {
+            case 0:
+                return -1
+                
+            case -1:
+                return 0
+                
+            default:
+                return -1
+            }
+        }
+        
+        let success = APIRequest().voteOnRant(rantID: self.rantContents!.wrappedValue.id, vote: vote)
+        
+        if !success {
+            print("ERROR WHILE DOWNVOTING")
+        } else {
+            self.rantContents!.wrappedValue.vote_state = vote
+            
+            if let parentTableView = self.parentTableView {
+                parentTableView.reloadData()
+            }
+        }
     }
 }

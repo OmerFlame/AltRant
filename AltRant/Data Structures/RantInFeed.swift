@@ -12,7 +12,7 @@ public struct RantInFeed: Codable, Identifiable {
     
     public let id: Int
     let text: String
-    let score: Int
+    var score: Int
     let created_time: Int
     let attached_image: AttachedImage?
     let num_comments: Int

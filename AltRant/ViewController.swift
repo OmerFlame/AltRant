@@ -150,7 +150,7 @@ class HomeFeedTableViewController: UITableViewController {
         var cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
         
         cell = RantInFeedCell.loadFromXIB()
-        cell.configure(with: rant, image: supplementalImages[indexPath.row])
+        cell.configure(with: rant, image: supplementalImages[indexPath.row], parentTableView: tableView)
         
         return cell
         
