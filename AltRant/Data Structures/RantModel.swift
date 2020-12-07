@@ -14,7 +14,7 @@ public struct RantModel: Codable, Identifiable {
     
     public let id: Int
     let text: String
-    let score: Int
+    var score: Int
     
     let created_time: Int
     

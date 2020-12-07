@@ -86,7 +86,7 @@ class RantCell: UITableViewCell {
         }
         
         upvoteButton.tintColor = (model.vote_state == 1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
-        scoreLabel.text = String(rantContents!.score + rantContents!.vote_state)
+        scoreLabel.text = String(rantContents!.score)
         downvoteButton.tintColor = (model.vote_state == -1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
         
         if supplementalImage == nil {
@@ -160,11 +160,14 @@ class RantCell: UITableViewCell {
         
         let success = APIRequest().voteOnRant(rantID: self.rantContents!.id, vote: vote)
         
-        if !success {
+        if success == nil {
             print("ERROR WHILE UPVOTING")
         } else {
             rantInFeed!.wrappedValue.vote_state = vote
-            parentTableViewController?.rant!.vote_state = vote
+            rantInFeed!.wrappedValue.score = success!.rant.score
+            //parentTableViewController?.rant!.vote_state = vote
+            parentTableViewController?.rant!.vote_state = success!.rant.vote_state
+            parentTableViewController?.rant!.score = success!.rant.score
             
             if let parentTableViewController = self.parentTableViewController {
                 parentTableViewController.tableView.reloadData()
@@ -188,11 +191,13 @@ class RantCell: UITableViewCell {
         
         let success = APIRequest().voteOnRant(rantID: self.rantContents!.id, vote: vote)
         
-        if !success {
+        if success == nil {
             print("ERROR WHILE UPVOTING")
         } else {
             rantInFeed!.wrappedValue.vote_state = vote
-            self.rantContents!.vote_state = vote
+            rantInFeed!.wrappedValue.score = success!.rant.score
+            parentTableViewController?.rant!.vote_state = success!.rant.vote_state
+            parentTableViewController?.rant!.score = success!.rant.score
             
             if let parentTableViewController = self.parentTableViewController {
                 parentTableViewController.tableView.reloadData()

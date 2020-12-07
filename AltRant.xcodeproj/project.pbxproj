@@ -35,6 +35,9 @@
 		5990652A257668E90058C1D7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906529257668E90058C1D7 /* APIRequest.swift */; };
 		5990652D257668FD0058C1D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990652C257668FD0058C1D7 /* User.swift */; };
 		59C3A1D9257E0FAB0082E76F /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1D8257E0FAB0082E76F /* UIImage+.swift */; };
+		59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1DF257E8E990082E76F /* VoteResponse.swift */; };
+		59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1E2257E972F0082E76F /* CommentCell.swift */; };
+		59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59C3A1E3257E972F0082E76F /* CommentCell.xib */; };
 		59E671632576AD12007EEB28 /* RantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671612576AD12007EEB28 /* RantCell.swift */; };
 		59E671642576AD12007EEB28 /* RantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E671622576AD12007EEB28 /* RantCell.xib */; };
 		59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671662576BAF4007EEB28 /* PaddingLabel.swift */; };
@@ -75,6 +78,9 @@
 		59906529257668E90058C1D7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		5990652C257668FD0058C1D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		59C3A1D8257E0FAB0082E76F /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
+		59C3A1DF257E8E990082E76F /* VoteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResponse.swift; sourceTree = "<group>"; };
+		59C3A1E2257E972F0082E76F /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		59C3A1E3257E972F0082E76F /* CommentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
 		59E671612576AD12007EEB28 /* RantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantCell.swift; sourceTree = "<group>"; };
 		59E671622576AD12007EEB28 /* RantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RantCell.xib; sourceTree = "<group>"; };
 		59E671662576BAF4007EEB28 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -143,6 +149,8 @@
 				5904018125762953002B062A /* RantInFeedCell.xib */,
 				59E671612576AD12007EEB28 /* RantCell.swift */,
 				59E671622576AD12007EEB28 /* RantCell.xib */,
+				59C3A1E2257E972F0082E76F /* CommentCell.swift */,
+				59C3A1E3257E972F0082E76F /* CommentCell.xib */,
 			);
 			path = "Template Views";
 			sourceTree = "<group>";
@@ -180,6 +188,7 @@
 				5990651B25765FE10058C1D7 /* RantModel.swift */,
 				5990651C25765FE10058C1D7 /* RantResponse.swift */,
 				5990651D25765FE10058C1D7 /* RantFeed.swift */,
+				59C3A1DF257E8E990082E76F /* VoteResponse.swift */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
@@ -249,6 +258,7 @@
 				59E671642576AD12007EEB28 /* RantCell.xib in Resources */,
 				59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */,
 				59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */,
+				59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */,
 				59040173257627A5002B062A /* Assets.xcassets in Resources */,
 				59040171257627A3002B062A /* Main.storyboard in Resources */,
 				5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */,
@@ -266,6 +276,7 @@
 				59E671752576CE5B007EEB28 /* LoginViewController.swift in Sources */,
 				59E671632576AD12007EEB28 /* RantCell.swift in Sources */,
 				5990650A257643B30058C1D7 /* CloseButton.swift in Sources */,
+				59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */,
 				5990652025765FE10058C1D7 /* Profile.swift in Sources */,
 				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
 				5990650E257643D60058C1D7 /* TagListView.swift in Sources */,
@@ -289,6 +300,7 @@
 				5990652A257668E90058C1D7 /* APIRequest.swift in Sources */,
 				5904018225762953002B062A /* RantInFeedCell.swift in Sources */,
 				5958FC79257AD8B8003D1EDD /* KeyboardAvoidingView.swift in Sources */,
+				59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

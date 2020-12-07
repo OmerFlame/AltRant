@@ -28,6 +28,7 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     var commentImages = [File?]()
     
     var rant: RantModel?
+    var comments = [CommentModel]()
     var profile: Profile? = nil
     var ranterProfileImage: UIImage?
     var rantInFeed: Binding<RantInFeed>
@@ -97,6 +98,7 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
                             
                             self.tableView.dataSource = self
                             self.tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
+                            self.tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
                             self.tableView.reloadData()
                         }
                     }
@@ -122,6 +124,7 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
         do {
             let response = try APIRequest().getRantFromID(id: self.rantID!)
             self.rant = response!.rant
+            self.comments = response!.rant.comments ?? []
         } catch {
             DispatchQueue.main.async {
                 self.showAlertWithError("Could not fetch rant with ID \(self.rantID!)", retryHandler: self.getRant)
@@ -148,7 +151,15 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        if section == 0 {
+            return 1
+        } else {
+            return comments.count
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

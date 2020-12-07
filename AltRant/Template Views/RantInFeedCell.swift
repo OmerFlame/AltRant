@@ -72,7 +72,7 @@ class RantInFeedCell: UITableViewCell {
         self.rantContents = model
         
         upvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == 1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
-        scoreLabel.text = String(rantContents!.wrappedValue.score + rantContents!.wrappedValue.vote_state)
+        scoreLabel.text = String(rantContents!.wrappedValue.score)
         downvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == -1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
@@ -138,10 +138,11 @@ class RantInFeedCell: UITableViewCell {
         
         let success = APIRequest().voteOnRant(rantID: self.rantContents!.wrappedValue.id, vote: vote)
         
-        if !success {
+        if success == nil {
             print("ERROR WHILE UPVOTING")
         } else {
-            self.rantContents!.wrappedValue.vote_state = vote
+            self.rantContents!.wrappedValue.vote_state = success!.rant.vote_state
+            self.rantContents!.wrappedValue.score = success!.rant.score
             
             if let parentTableViewController = self.parentTableViewController {
                 parentTableViewController.tableView.reloadData()
@@ -165,10 +166,11 @@ class RantInFeedCell: UITableViewCell {
         
         let success = APIRequest().voteOnRant(rantID: self.rantContents!.wrappedValue.id, vote: vote)
         
-        if !success {
+        if success == nil {
             print("ERROR WHILE DOWNVOTING")
         } else {
-            self.rantContents!.wrappedValue.vote_state = vote
+            self.rantContents!.wrappedValue.vote_state = success!.rant.vote_state
+            self.rantContents!.wrappedValue.score = success!.rant.score
             
             if let parentTableViewController = self.parentTableViewController {
                 parentTableViewController.tableView.reloadData()
