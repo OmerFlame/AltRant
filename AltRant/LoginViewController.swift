@@ -10,6 +10,7 @@ import UIKit
 class LoginViewController: UIViewController, UITextFieldDelegate {
     var activityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
@@ -22,6 +23,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         usernameTextField.delegate = self
         passwordTextField.delegate = self
+        
+        KeyboardAvoiding.avoidingView = stackView
     }
     
     /*func textFieldDidEndEditing(_ textField: UITextField) {

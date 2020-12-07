@@ -83,6 +83,7 @@
                     <connections>
                         <outlet property="logInButton" destination="CUg-ZY-fIM" id="PRU-h8-pKa"/>
                         <outlet property="passwordTextField" destination="BrW-Lg-QU1" id="Hlh-2Q-iU2"/>
+                        <outlet property="stackView" destination="RYL-DL-NpL" id="14E-Gu-t6V"/>
                         <outlet property="usernameTextField" destination="V5Q-lr-3ka" id="LYW-Tt-3TL"/>
                     </connections>
                 </viewController>

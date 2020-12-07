@@ -8,7 +8,7 @@
 import Foundation
 
 struct RantResponse: Codable {
-    let rant: RantModel
+    var rant: RantModel
     
     let comments: [CommentModel]
     

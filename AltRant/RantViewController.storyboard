@@ -8,15 +8,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Rant View Controller-->
+        <!--Rant-->
         <scene sceneID="pCk-fH-rvh">
             <objects>
-                <viewController storyboardIdentifier="RantViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YEq-ap-G6c" customClass="RantViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RantViewController" title="Rant" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YEq-ap-G6c" customClass="RantViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jzS-eJ-qgR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bD6-gy-n6l">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bD6-gy-n6l">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
@@ -35,7 +35,7 @@
                             <constraint firstItem="M7h-aK-ofA" firstAttribute="centerX" secondItem="jzS-eJ-qgR" secondAttribute="centerX" id="uYQ-C7-7YC"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <connections>
                         <outlet property="loadingIndicator" destination="M7h-aK-ofA" id="oWq-ig-AKL"/>
                         <outlet property="tableView" destination="bD6-gy-n6l" id="G8e-qe-AMJ"/>

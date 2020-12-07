@@ -21,6 +21,12 @@ class HomeFeedTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //edgesForExtendedLayout = []
+        
+        //self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        //self.navigationController?.navigationBar.shadowImage = UIImage()
+        //self.navigationController?.navigationBar.isTranslucent = true
+        
         if UserDefaults.standard.integer(forKey: "DRUserID") == 0 || UserDefaults.standard.integer(forKey: "DRTokenID") == 0 || UserDefaults.standard.string(forKey: "DRTokenKey") == nil {
             
             //let loginVC = UINib(nibName: "LoginViewController", bundle: nil).instantiate(withOwner: self, options: nil)[0] as? LoginViewController
@@ -35,26 +41,35 @@ class HomeFeedTableViewController: UITableViewController {
             tableView.infiniteScrollIndicatorMargin = 40
             tableView.infiniteScrollTriggerOffset = 500
             
-            tableView.register(RantInFeedCell.self, forCellReuseIdentifier: "RantInFeedCell")
+            //tableView.register(RantInFeedCell.self, forCellReuseIdentifier: "RantInFeedCell")
+            tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
+            //tableView.register
             //tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
             
             tableView.addInfiniteScroll { tableView -> Void in
                 self.performFetch {
                     tableView.finishInfiniteScroll()
+                    self.refreshControl!.endRefreshing()
                     
-                    if self.rantFeed.rantFeed.count == 20 || self.refreshControl!.isRefreshing {
+                    /*if self.rantFeed.rantFeed.count == 20 || self.refreshControl!.isRefreshing {
                         //tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                         //tableView.contentOffset = CGPoint(x: 0, y: -self.navigationController!.navigationBar.frame.size.height)
-                        var contentOffset = tableView.contentOffset
-                        contentOffset.y += self.tableView(tableView, heightForRowAt: IndexPath(row: 0, section: 0))
+                        //var contentOffset = tableView.contentOffset
+                        //contentOffset.y += self.tableView(tableView, heightForRowAt: IndexPath(row: 0, section: 0))
                         
-                        tableView.setContentOffset(contentOffset, animated: true)
+                        //tableView.setContentOffset(contentOffset, animated: true)
+                        //tableView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
                         self.refreshControl!.endRefreshing()
-                    }
+                        
+                        //tableView.contentInset.top = self.navigationController!.navigationBar.frame.size.height
+                    }*/
                 }
             }
             
-            tableView.beginInfiniteScroll(true)
+            //tableView.beginInfiniteScroll(true)
+            self.performFetch(nil)
+            
+            //edgesForExtendedLayout = 
         }
     }
     
@@ -147,10 +162,10 @@ class HomeFeedTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let rant = $rantFeed.rantFeed[indexPath.row]
         
-        var cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
         
-        cell = RantInFeedCell.loadFromXIB()
-        cell.configure(with: rant, image: supplementalImages[indexPath.row], parentTableViewController: self)
+        //cell = RantInFeedCell.loadFromXIB()
+        cell.configure(with: Optional(rant), image: supplementalImages[indexPath.row], parentTableViewController: self)
         
         return cell
         
@@ -179,15 +194,15 @@ class HomeFeedTableViewController: UITableViewController {
         }
     }
     
-    
-    
     @IBAction func handleRefresh() {
         rantFeed.rantFeed = []
         supplementalImages = []
         
         tableView.reloadData()
         
-        tableView.beginInfiniteScroll(true)
+        //tableView.beginInfiniteScroll(true)
+        self.performFetch(nil)
+        self.refreshControl!.endRefreshing()
     }
 }
 

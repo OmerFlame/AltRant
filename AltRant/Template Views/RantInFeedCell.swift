@@ -6,20 +6,68 @@
 //
 
 import UIKit
+import QuickLook
 import SwiftUI
 
 class RantInFeedCell: UITableViewCell {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
+    @IBOutlet weak var textStackView: UIStackView!
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
     
-    var rantContents: Binding<RantInFeed>!
+    var rantContents: Binding<RantInFeed>? = nil
     var parentTableViewController: UITableViewController? = nil
     
-    func configure(with model: Binding<RantInFeed>, image: UIImage?, parentTableViewController: UITableViewController?) {
+    /*init?(coder: NSCoder, rantContents: Binding<RantInFeed>, image: UIImage?, parentTableViewController: UITableViewController?) {
+        self.parentTableViewController = parentTableViewController
+        self.rantContents = rantContents
+        
+        super.init(coder: coder)
+        
+        upvoteButton.tintColor = (rantContents.wrappedValue.vote_state == 1 ? UIColor(hex: rantContents.wrappedValue.user_avatar.b)! : UIColor.systemGray)
+        scoreLabel.text = String(rantContents.wrappedValue.score + rantContents.wrappedValue.vote_state)
+        downvoteButton.tintColor = (rantContents.wrappedValue.vote_state == -1 ? UIColor(hex: rantContents.wrappedValue.user_avatar.b)! : UIColor.systemGray)
+        
+        if image == nil {
+            supplementalImageView.isHidden = true
+        } else {
+            //let resizeMultiplier = getImageResizeMultiplier(imageWidth: image!.size.width, imageHeight: image!.size.height, multiplier: 1)
+            
+            //UIGraphicsBeginImageContextWithOptions(CGSize(width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier), false, CGFloat(1 / resizeMultiplier))
+            //image!.draw(in: CGRect(x: 0, y: 0, width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier))
+            //let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            //UIGraphicsEndImageContext()
+            
+            supplementalImageView.image = image
+        }
+        
+        upvoteButton.isUserInteractionEnabled = rantContents.wrappedValue.vote_state != -2
+        downvoteButton.isUserInteractionEnabled = rantContents.wrappedValue.vote_state != -2
+        
+        //bodyLabel.text = model.wrappedValue.text
+        
+        if rantContents.wrappedValue.text.count > 240 {
+            bodyLabel.text = rantContents.wrappedValue.text.prefix(240) + "... [read more]"
+        } else {
+            bodyLabel.text = rantContents.wrappedValue.text
+        }
+        
+        tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
+        tagList.addTags(rantContents.wrappedValue.tags)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }*/
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    func configure(with model: Binding<RantInFeed>?, image: UIImage?, parentTableViewController: UITableViewController?) {
         self.parentTableViewController = parentTableViewController
         self.rantContents = model
         
@@ -27,17 +75,22 @@ class RantInFeedCell: UITableViewCell {
         scoreLabel.text = String(rantContents!.wrappedValue.score + rantContents!.wrappedValue.vote_state)
         downvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == -1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
         
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        
+        textStackView.addGestureRecognizer(gestureRecognizer)
+        
         if image == nil {
             supplementalImageView.isHidden = true
         } else {
+            supplementalImageView.isHidden = false
             let resizeMultiplier = getImageResizeMultiplier(imageWidth: image!.size.width, imageHeight: image!.size.height, multiplier: 1)
             
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier), false, resizeMultiplier)
-            image!.draw(in: CGRect(x: 0, y: 0, width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier))
-            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
+            //UIGraphicsBeginImageContextWithOptions(CGSize(width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier), false, CGFloat(1 / resizeMultiplier))
+            //image!.draw(in: CGRect(x: 0, y: 0, width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier))
+            //let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            //UIGraphicsEndImageContext()
             
-            supplementalImageView.image = newImage
+            supplementalImageView.image = image
         }
         
         upvoteButton.isUserInteractionEnabled = rantContents!.wrappedValue.vote_state != -2
@@ -52,6 +105,8 @@ class RantInFeedCell: UITableViewCell {
         }
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
+        
+        tagList.removeAllTags()
         tagList.addTags(rantContents!.wrappedValue.tags)
     }
     
@@ -121,9 +176,14 @@ class RantInFeedCell: UITableViewCell {
         }
     }
     
-    @IBAction func handleTap(_ sender: UITapGestureRecognizer) {
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
-            let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(withIdentifier: "RantViewController") as! RantViewController
+            let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
+                return RantViewController(coder: coder, rantID: self.rantContents!.wrappedValue.id, rantInFeed: self.rantContents!, supplementalRantImage: self.supplementalImageView.image)
+            })
+            //rantVC.rantID = rantContents!.wrappedValue.id
+            //rantVC.rantInFeed = rantContents!.projectedValue
+            //rantVC.supplementalRantImage = supplementalImageView.image
             
             parentTableViewController.navigationController?.pushViewController(rantVC, animated: true)
         }

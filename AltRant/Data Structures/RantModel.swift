@@ -44,7 +44,7 @@ public struct RantModel: Codable, Identifiable {
     let c_url: String?
     
     let user_id: Int
-    let user_username: String
+    var user_username: String
     let user_score: Int
     
     let user_avatar: UserAvatar
