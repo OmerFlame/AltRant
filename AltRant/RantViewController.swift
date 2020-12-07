@@ -19,6 +19,8 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     
+    var didFinishLoading = false
+    
     var rantID: Int?
     var tappedRant: RantCell?
     var supplementalRantImage: UIImage?
@@ -59,40 +61,44 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.loadingIndicator.startAnimating()
         
-        /*DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.loadingIndicator.stopAnimating()
-            self.tableView.isHidden = false
+        if didFinishLoading == false {
+            self.loadingIndicator.startAnimating()
             
-            //let headerRant = RantCell.loadFromXIB() as! RantCell
-            //headerRant.testConfigure()
-            
-            //self.tableView.tableHeaderView = headerRant
-            
-            self.tableView.dataSource = self
-            self.tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
-            self.tableView.reloadData()
-        }*/
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            DispatchQueue.global(qos: .userInitiated).sync {
-                self.getRant()
+            /*DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.loadingIndicator.stopAnimating()
+                self.tableView.isHidden = false
                 
-                if self.rant != nil {
-                    self.getProfile()
+                //let headerRant = RantCell.loadFromXIB() as! RantCell
+                //headerRant.testConfigure()
+                
+                //self.tableView.tableHeaderView = headerRant
+                
+                self.tableView.dataSource = self
+                self.tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
+                self.tableView.reloadData()
+            }*/
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                DispatchQueue.global(qos: .userInitiated).sync {
+                    self.getRant()
                     
-                    if self.rant!.user_avatar_lg.i != nil {
-                        self.getRanterImage()
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.loadingIndicator.stopAnimating()
-                        self.tableView.isHidden = false
+                    if self.rant != nil {
+                        self.getProfile()
                         
-                        self.tableView.dataSource = self
-                        self.tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
-                        self.tableView.reloadData()
+                        if self.rant!.user_avatar_lg.i != nil {
+                            self.getRanterImage()
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.didFinishLoading = true
+                            self.loadingIndicator.stopAnimating()
+                            self.tableView.isHidden = false
+                            
+                            self.tableView.dataSource = self
+                            self.tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
+                            self.tableView.reloadData()
+                        }
                     }
                 }
             }
