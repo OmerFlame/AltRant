@@ -57,7 +57,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lVz-nD-j7E" userLabel="Text Stack View">
-                                <rect key="frame" x="47.5" y="0.0" width="304.5" height="519"/>
+                                <rect key="frame" x="47.5" y="0.0" width="304.5" height="520.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="5BQ-eC-JZ2" userLabel="User Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="126.5" height="45"/>
@@ -113,15 +113,15 @@
                                         <viewLayoutGuide key="safeArea" id="uQF-lx-xMn"/>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWZ-Hc-cet" userLabel="Body">
-                                        <rect key="frame" x="0.0" y="53" width="304.5" height="187.5"/>
+                                        <rect key="frame" x="0.0" y="53" width="304.5" height="240.5"/>
                                         <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" image="test" id="cd4-OV-uma" userLabel="Image View">
-                                        <rect key="frame" x="0.0" y="248.5" width="304.5" height="270.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
+                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" id="cd4-OV-uma" userLabel="Image View">
+                                        <rect key="frame" x="-1" y="250" width="303" height="271"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="5"/>
@@ -146,6 +146,16 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="bodyLabel" destination="YWZ-Hc-cet" id="7yi-BR-kdh"/>
+                <outlet property="downvoteButton" destination="0Ri-yD-tK8" id="2XY-RA-848"/>
+                <outlet property="scoreLabel" destination="B8v-wA-z4K" id="d6c-eR-yFg"/>
+                <outlet property="supplementalImageView" destination="cd4-OV-uma" id="T7V-dr-7Tn"/>
+                <outlet property="upvoteButton" destination="uHi-A5-NNe" id="eMV-PK-jo8"/>
+                <outlet property="userProfileImageView" destination="ZBO-rB-hit" id="qal-W0-iG9"/>
+                <outlet property="userScoreLabel" destination="7p4-UN-zba" id="T7e-Qj-goY"/>
+                <outlet property="usernameLabel" destination="qL0-Tk-Ebr" id="tNf-Fy-xmS"/>
+            </connections>
             <point key="canvasLocation" x="68" y="90"/>
         </tableViewCell>
     </objects>
@@ -161,7 +171,6 @@
         <image name="doc" catalog="system" width="115" height="128"/>
         <image name="minuminus" width="26" height="26"/>
         <image name="plusplus" width="26" height="26"/>
-        <image name="test" width="3104" height="1906"/>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

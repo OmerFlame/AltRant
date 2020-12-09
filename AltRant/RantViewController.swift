@@ -25,7 +25,7 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     var tappedRant: RantCell?
     var supplementalRantImage: UIImage?
     
-    var commentImages = [File?]()
+    var commentImages = [UIImage?]()
     
     var rant: RantModel?
     var comments = [CommentModel]()
@@ -124,7 +124,35 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
         do {
             let response = try APIRequest().getRantFromID(id: self.rantID!)
             self.rant = response!.rant
-            self.comments = response!.rant.comments ?? []
+            self.comments = (!response!.comments.isEmpty ? response!.comments : [])
+            
+            for comment in response!.comments {
+                if comment.attached_image == nil {
+                    commentImages.append(nil)
+                } else {
+                    let completionSemaphore = DispatchSemaphore(value: 0)
+                    
+                    var image = UIImage()
+                    
+                    URLSession.shared.dataTask(with: URL(string: comment.attached_image!.url!)!) { data, _, _ in
+                        image = UIImage(data: data!)!
+                        
+                        completionSemaphore.signal()
+                    }.resume()
+                    
+                    completionSemaphore.wait()
+                    let resizeMultiplier = self.getImageResizeMultiplier(imageWidth: image.size.width, imageHeight: image.size.height, multiplier: 1)
+                    
+                    let finalSize = CGSize(width: image.size.width / resizeMultiplier, height: image.size.height / resizeMultiplier)
+                    
+                    UIGraphicsBeginImageContextWithOptions(finalSize, false, resizeMultiplier)
+                    image.draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: finalSize))
+                    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    
+                    self.commentImages.append(newImage)
+                }
+            }
         } catch {
             DispatchQueue.main.async {
                 self.showAlertWithError("Could not fetch rant with ID \(self.rantID!)", retryHandler: self.getRant)
@@ -163,12 +191,21 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "RantCell") as! RantCell
-        
-        cell = RantCell.loadFromXIB() as! RantCell
-        cell.configure(with: rant!, rantInFeed: Optional(rantInFeed), userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self)
-        
-        return cell
+        if indexPath.section == 0 {
+            var cell = tableView.dequeueReusableCell(withIdentifier: "RantCell") as! RantCell
+            
+            cell = RantCell.loadFromXIB() as! RantCell
+            cell.configure(with: rant!, rantInFeed: Optional(rantInFeed), userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self)
+            
+            return cell
+        } else {
+            var cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+            
+            cell = CommentCell.loadFromXIB() as! CommentCell
+            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[indexPath.row], parentTableViewController: self)
+            
+            return cell
+        }
     }
     
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
@@ -185,6 +222,14 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     
     func previewControllerDidDismiss(_ controller: QLPreviewController) {
         tappedRant = nil
+    }
+    
+    private func getImageResizeMultiplier(imageWidth: CGFloat, imageHeight: CGFloat, multiplier: Int) -> CGFloat {
+        if imageWidth / CGFloat(multiplier) < 315 && imageHeight / CGFloat(multiplier) < 420 {
+            return CGFloat(multiplier)
+        } else {
+            return getImageResizeMultiplier(imageWidth: imageWidth, imageHeight: imageHeight, multiplier: multiplier + 2)
+        }
     }
 
     /*

@@ -80,6 +80,7 @@ class RantInFeedCell: UITableViewCell {
         textStackView.addGestureRecognizer(gestureRecognizer)
         
         if image == nil {
+            supplementalImageView.image = nil
             supplementalImageView.isHidden = true
         } else {
             supplementalImageView.isHidden = false

@@ -63,7 +63,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yuX-uq-o07" userLabel="Text Stack View">
-                                <rect key="frame" x="47.5" y="0.0" width="304.5" height="539"/>
+                                <rect key="frame" x="47.5" y="0.0" width="304.5" height="734"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Oor-eU-QMg" userLabel="User Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="126.5" height="45"/>
@@ -119,15 +119,15 @@
                                         <viewLayoutGuide key="safeArea" id="hj6-FP-oDW"/>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ZJ-4f-NKt" userLabel="Body">
-                                        <rect key="frame" x="0.0" y="53" width="304.5" height="187.5"/>
+                                        <rect key="frame" x="0.0" y="53" width="304.5" height="240.5"/>
                                         <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" image="test" id="4ah-3U-fd4" userLabel="Image View">
-                                        <rect key="frame" x="0.0" y="248.5" width="304.5" height="270.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" image="test" id="4ah-3U-fd4" userLabel="Image View">
+                                        <rect key="frame" x="0.0" y="302" width="304" height="412"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="5"/>
@@ -138,7 +138,7 @@
                                         </connections>
                                     </imageView>
                                     <view contentMode="scaleAspectFit" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Hk3-1C-ciB" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="527" width="227.5" height="12"/>
+                                        <rect key="frame" x="0.0" y="721.5" width="227.5" height="12.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="textColor">

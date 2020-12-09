@@ -56,6 +56,7 @@
 		59040177257627A5002B062A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5904018025762953002B062A /* RantInFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantInFeedCell.swift; sourceTree = "<group>"; };
 		5904018125762953002B062A /* RantInFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RantInFeedCell.xib; sourceTree = "<group>"; };
+		591A752D257F518F001E1FC2 /* AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltRant.entitlements; sourceTree = "<group>"; };
 		5922A55425778C90009F3025 /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		5922A55925779E0B009F3025 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
 		5922A55A25779E1E009F3025 /* AltRant-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AltRant-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -118,6 +119,7 @@
 		59040168257627A3002B062A /* AltRant */ = {
 			isa = PBXGroup;
 			children = (
+				591A752D257F518F001E1FC2 /* AltRant.entitlements */,
 				5922A55825779DD1009F3025 /* Extensions */,
 				5990651625765FE10058C1D7 /* Data Structures */,
 				59906508257643900058C1D7 /* TagListView */,
@@ -448,6 +450,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = AltRant/AltRant.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -457,6 +460,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cracksoftware.AltRant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AltRant/Extensions/AltRant-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -470,6 +474,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = AltRant/AltRant.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -479,6 +484,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cracksoftware.AltRant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AltRant/Extensions/AltRant-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

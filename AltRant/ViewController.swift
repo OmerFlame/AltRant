@@ -100,14 +100,15 @@ class HomeFeedTableViewController: UITableViewController {
                         completionSemaphore.wait()
                         let resizeMultiplier = self.getImageResizeMultiplier(imageWidth: image.size.width, imageHeight: image.size.height, multiplier: 1)
                         
-                        let finalSize = CGSize(width: image.size.width / resizeMultiplier, height: image.size.height / resizeMultiplier)
+                        //let finalSize = CGSize(width: image.size.width / resizeMultiplier, height: image.size.height / resizeMultiplier)
                         
-                        UIGraphicsBeginImageContextWithOptions(finalSize, false, resizeMultiplier)
-                        image.draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: finalSize))
-                        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-                        UIGraphicsEndImageContext()
+                        //UIGraphicsBeginImageContextWithOptions(finalSize, false, resizeMultiplier)
+                        //image.draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: finalSize))
+                        //let newImage = UIGraphicsGetImageFromCurrentImageContext()
+                        //UIGraphicsEndImageContext()
                         
-                        self.supplementalImages.append(newImage)
+                        //self.supplementalImages.append(newImage)
+                        self.supplementalImages.append(image)
                     } else {
                         self.supplementalImages.append(nil)
                     }
