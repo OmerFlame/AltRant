@@ -50,7 +50,7 @@
                                             <action selector="didEditUsernameOrPassword:" destination="rpj-Tk-Lvg" eventType="editingChanged" id="S6s-hy-d3c"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BrW-Lg-QU1" userLabel="Password Text Field">
+                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BrW-Lg-QU1" userLabel="Password Text Field">
                                         <rect key="frame" x="0.0" y="42" width="250" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="kcA-xa-hU4"/>

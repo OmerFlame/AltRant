@@ -18,11 +18,13 @@ class RantCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userScoreLabel: PaddingLabel!
     
+    @IBOutlet weak var textStackView: UIStackView!
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
     
     var file: File?
+    var savedPreviewImage: UIImage?
     var profile: Profile!
     var userImage: UIImage?
     var rantContents: RantModel!
@@ -68,22 +70,24 @@ class RantCell: UITableViewCell {
         tagList.addTags(["This", "Is", "A", "Test"])
     }
     
-    func configure(with model: RantModel, rantInFeed: Binding<RantInFeed>?, userImage: UIImage?, supplementalImage: UIImage?, profile: Profile, parentTableViewController: RantViewController?) {
+    func configure(with model: RantModel, rantInFeed: Binding<RantInFeed>?, userImage: UIImage?, supplementalImage: File?, profile: Profile, parentTableViewController: RantViewController?) {
         self.rantContents = model
         self.rantInFeed = rantInFeed
         self.userImage = userImage
         self.profile = profile
-        self.file = nil
+        self.file = supplementalImage
         self.parentTableViewController = parentTableViewController
         
-        if model.attached_image != nil {
+        /*if model.attached_image != nil {
             let resizeMultiplier = getImageResizeMultiplier(imageWidth: CGFloat(rantContents!.attached_image!.width!), imageHeight: CGFloat(rantContents!.attached_image!.height!), multiplier: 1)
             
             let finalWidth = CGFloat(rantContents!.attached_image!.width!) / resizeMultiplier
             let finalHeight = CGFloat(rantContents!.attached_image!.height!) / resizeMultiplier
             
             self.file = Optional(File.loadFile(image: rantContents!.attached_image!, size: CGSize(width: finalWidth, height: finalHeight)))
-        }
+        }*/
+        
+        bodyLabel.text = rantContents!.text
         
         upvoteButton.tintColor = (model.vote_state == 1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
         scoreLabel.text = String(rantContents!.score)
@@ -92,16 +96,64 @@ class RantCell: UITableViewCell {
         if supplementalImage == nil {
             supplementalImageView.isHidden = true
         } else {
-            supplementalImageView.image = supplementalImage
+            supplementalImageView.isHidden = false
+            if supplementalImageView.image == nil {
+                print("Preview image is nil, generating!")
+                
+                print("TEXT STACK VIEW WIDTH: \(textStackView.frame.size.width)")
+                
+                let resizeMultiplier = supplementalImage!.size!.width / bodyLabel.frame.size.width
+                
+                let finalWidth = supplementalImage!.size!.width / resizeMultiplier
+                let finalHeight = supplementalImage!.size!.height / resizeMultiplier
+                
+                print("FINAL WIDTH:  \(finalWidth)")
+                print("FINAL HEIGHT: \(finalHeight)")
+                
+                UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, resizeMultiplier)
+                UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
+                let newImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                supplementalImageView.image = newImage
+                
+                /*var resizeMultiplier = getImageResizeMultiplier(imageWidth: supplementalImage!.size!.width, imageHeight: supplementalImage!.size!.height, multiplier: 1)
+                
+                //let previewImage = supplementalImage!.getThumbnail(size: CGSize(width: supplementalImage!.size!.width / resizeMultiplier, height: supplementalImage!.size!.height / resizeMultiplier))
+                
+                //supplementalImageView.image = previewImage
+                
+                if resizeMultiplier == 1 {
+                    resizeMultiplier = supplementalImage!.size!.width / textStackView.frame.size.width
+                    
+                    let finalWidth = supplementalImage!.size!.width / resizeMultiplier
+                    let finalHeight = supplementalImage!.size!.height / resizeMultiplier
+                    
+                    print("FINAL WIDTH:  \(finalWidth)")
+                    print("FINAL HEIGHT: \(finalHeight)")
+                    
+                    UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, 1)
+                    UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
+                    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    
+                    supplementalImageView.image = newImage
+                } else {
+                    let imagePreview = supplementalImage!.getThumbnail(size: CGSize(width: supplementalImage!.size!.width / resizeMultiplier, height: supplementalImage!.size!.height / resizeMultiplier))
+                    
+                    
+                    supplementalImageView.image = imagePreview
+                }*/
+            }
             //supplementalImageView.frame.size = supplementalImage!.size
         }
         
         upvoteButton.isEnabled = rantContents!.vote_state != -2
         downvoteButton.isEnabled = rantContents!.vote_state != -2
         
-        bodyLabel.text = rantContents!.text
-        
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
+        
+        tagList.removeAllTags()
         tagList.addTags(rantContents!.tags)
         
         if rantContents!.user_avatar.i == nil {
@@ -133,6 +185,10 @@ class RantCell: UITableViewCell {
         userScoreLabel.backgroundColor = UIColor(hex: rantContents!.user_avatar.b)
         
         scoreLabel.text = String(rantContents!.score)
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleImageTap(_:)))
+        
+        supplementalImageView.addGestureRecognizer(gestureRecognizer)
         
         //layoutSubviews()
     }
@@ -213,7 +269,7 @@ class RantCell: UITableViewCell {
         }
     }
     
-    @IBAction func handleImageTap(_ sender: UITapGestureRecognizer) {
+    @objc func handleImageTap(_ sender: UITapGestureRecognizer) {
         guard parentTableViewController != nil else { return }
         
         let quickLookViewController = QLPreviewController()

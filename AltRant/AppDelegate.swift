@@ -33,6 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         UserDefaults.standard.setValue(nil, forKey: "DRLastSet")
+        let tmpDirectory = try! FileManager.default.contentsOfDirectory(atPath: NSTemporaryDirectory())
+        tmpDirectory.forEach { file in
+            let path = String.init(format: "%@%@", NSTemporaryDirectory(), file)
+            try! FileManager.default.removeItem(atPath: path)
+        }
     }
 }
 

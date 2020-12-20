@@ -10,14 +10,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" verticalCompressionResistancePriority="1000" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInFeedCell" rowHeight="687" translatesAutoresizingMaskIntoConstraints="NO" id="KGk-i7-Jjw" customClass="RantInFeedCell" customModule="AltRant" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="396" height="687"/>
+        <tableViewCell contentMode="scaleToFill" verticalCompressionResistancePriority="1000" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInFeedCell" rowHeight="559" translatesAutoresizingMaskIntoConstraints="NO" id="KGk-i7-Jjw" customClass="RantInFeedCell" customModule="AltRant" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="396" height="559"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="396" height="687"/>
+                <rect key="frame" x="0.0" y="0.0" width="396" height="559"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9OQ-kK-Kl5">
-                        <rect key="frame" x="20" y="15" width="352" height="657"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9OQ-kK-Kl5" userLabel="Content Stack View">
+                        <rect key="frame" x="20" y="15" width="352" height="529"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="6iZ-86-Tma" userLabel="Voting Stack View">
                                 <rect key="frame" x="0.0" y="0.0" width="37.5" height="70"/>
@@ -63,7 +63,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0jH-KK-fBq" userLabel="Text Stack View">
-                                <rect key="frame" x="47.5" y="0.0" width="304.5" height="531"/>
+                                <rect key="frame" x="47.5" y="0.0" width="304.5" height="529"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sbw-xF-aaR" userLabel="Body">
                                         <rect key="frame" x="0.0" y="0.0" width="304.5" height="293.5"/>
@@ -82,7 +82,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="e9g-Mc-TT0" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="519" width="240" height="12"/>
+                                        <rect key="frame" x="0.0" y="519" width="240" height="10"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -135,10 +135,10 @@
                 <outlet property="scoreLabel" destination="U8y-38-jZu" id="eDl-Uo-MzO"/>
                 <outlet property="supplementalImageView" destination="MBg-EW-zqK" id="XZJ-dM-qXa"/>
                 <outlet property="tagList" destination="e9g-Mc-TT0" id="7sm-oq-3zp"/>
-                <outlet property="textStackView" destination="9OQ-kK-Kl5" id="2YQ-mT-9Pk"/>
+                <outlet property="textStackView" destination="0jH-KK-fBq" id="i3Q-uY-XIK"/>
                 <outlet property="upvoteButton" destination="d8K-Xi-urA" id="FtA-JH-7PR"/>
             </connections>
-            <point key="canvasLocation" x="225" y="251"/>
+            <point key="canvasLocation" x="224.63768115942031" y="207.92410714285714"/>
         </tableViewCell>
     </objects>
     <designables>

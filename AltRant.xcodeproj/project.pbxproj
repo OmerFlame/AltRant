@@ -15,6 +15,8 @@
 		59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59040174257627A5002B062A /* LaunchScreen.storyboard */; };
 		5904018225762953002B062A /* RantInFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904018025762953002B062A /* RantInFeedCell.swift */; };
 		5904018325762953002B062A /* RantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5904018125762953002B062A /* RantInFeedCell.xib */; };
+		590A82832580AD3D0025F11A /* StretchyTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 590A82822580AD3D0025F11A /* StretchyTableHeaderView.xib */; };
+		590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590A82852580B6600025F11A /* StretchyTableHeaderView.swift */; };
 		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
 		5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */; };
 		592B1B2F2578F31300109377 /* RantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592B1B2E2578F31300109377 /* RantViewController.swift */; };
@@ -38,6 +40,8 @@
 		59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1DF257E8E990082E76F /* VoteResponse.swift */; };
 		59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1E2257E972F0082E76F /* CommentCell.swift */; };
 		59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59C3A1E3257E972F0082E76F /* CommentCell.xib */; };
+		59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA0F6F2580FB5E00AF49BB /* ProfileTableViewController.swift */; };
+		59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */; };
 		59E671632576AD12007EEB28 /* RantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671612576AD12007EEB28 /* RantCell.swift */; };
 		59E671642576AD12007EEB28 /* RantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E671622576AD12007EEB28 /* RantCell.xib */; };
 		59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671662576BAF4007EEB28 /* PaddingLabel.swift */; };
@@ -56,6 +60,8 @@
 		59040177257627A5002B062A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5904018025762953002B062A /* RantInFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantInFeedCell.swift; sourceTree = "<group>"; };
 		5904018125762953002B062A /* RantInFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RantInFeedCell.xib; sourceTree = "<group>"; };
+		590A82822580AD3D0025F11A /* StretchyTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StretchyTableHeaderView.xib; sourceTree = "<group>"; };
+		590A82852580B6600025F11A /* StretchyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableHeaderView.swift; sourceTree = "<group>"; };
 		591A752D257F518F001E1FC2 /* AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltRant.entitlements; sourceTree = "<group>"; };
 		5922A55425778C90009F3025 /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		5922A55925779E0B009F3025 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
@@ -82,6 +88,8 @@
 		59C3A1DF257E8E990082E76F /* VoteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResponse.swift; sourceTree = "<group>"; };
 		59C3A1E2257E972F0082E76F /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		59C3A1E3257E972F0082E76F /* CommentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
+		59DA0F6F2580FB5E00AF49BB /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
+		59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileTableViewController.storyboard; sourceTree = "<group>"; };
 		59E671612576AD12007EEB28 /* RantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantCell.swift; sourceTree = "<group>"; };
 		59E671622576AD12007EEB28 /* RantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RantCell.xib; sourceTree = "<group>"; };
 		59E671662576BAF4007EEB28 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -128,10 +136,10 @@
 				59906529257668E90058C1D7 /* APIRequest.swift */,
 				5990652C257668FD0058C1D7 /* User.swift */,
 				5904016B257627A3002B062A /* SceneDelegate.swift */,
-				59E671732576CE5B007EEB28 /* LoginViewController.swift */,
 				5904016D257627A3002B062A /* ViewController.swift */,
 				592B1B2E2578F31300109377 /* RantViewController.swift */,
 				59306E952578E68600F6AD08 /* RantViewController.storyboard */,
+				59E671732576CE5B007EEB28 /* LoginViewController.swift */,
 				5922A55425778C90009F3025 /* LoginViewController.storyboard */,
 				5904016F257627A3002B062A /* Main.storyboard */,
 				59040172257627A5002B062A /* Assets.xcassets */,
@@ -153,8 +161,20 @@
 				59E671622576AD12007EEB28 /* RantCell.xib */,
 				59C3A1E2257E972F0082E76F /* CommentCell.swift */,
 				59C3A1E3257E972F0082E76F /* CommentCell.xib */,
+				590A82812580ACFF0025F11A /* Profile View */,
 			);
 			path = "Template Views";
+			sourceTree = "<group>";
+		};
+		590A82812580ACFF0025F11A /* Profile View */ = {
+			isa = PBXGroup;
+			children = (
+				590A82852580B6600025F11A /* StretchyTableHeaderView.swift */,
+				590A82822580AD3D0025F11A /* StretchyTableHeaderView.xib */,
+				59DA0F6F2580FB5E00AF49BB /* ProfileTableViewController.swift */,
+				59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */,
+			);
+			path = "Profile View";
 			sourceTree = "<group>";
 		};
 		5922A55825779DD1009F3025 /* Extensions */ = {
@@ -259,9 +279,11 @@
 			files = (
 				59E671642576AD12007EEB28 /* RantCell.xib in Resources */,
 				59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */,
+				59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */,
 				59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */,
 				59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */,
 				59040173257627A5002B062A /* Assets.xcassets in Resources */,
+				590A82832580AD3D0025F11A /* StretchyTableHeaderView.xib in Resources */,
 				59040171257627A3002B062A /* Main.storyboard in Resources */,
 				5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */,
 				5904018325762953002B062A /* RantInFeedCell.xib in Resources */,
@@ -281,6 +303,7 @@
 				59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */,
 				5990652025765FE10058C1D7 /* Profile.swift in Sources */,
 				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
+				59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */,
 				5990650E257643D60058C1D7 /* TagListView.swift in Sources */,
 				59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */,
 				5990652225765FE10058C1D7 /* RantModel.swift in Sources */,
@@ -288,6 +311,7 @@
 				59C3A1D9257E0FAB0082E76F /* UIImage+.swift in Sources */,
 				5904016E257627A3002B062A /* ViewController.swift in Sources */,
 				5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */,
+				590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */,
 				5990652D257668FD0058C1D7 /* User.swift in Sources */,
 				5904016A257627A3002B062A /* AppDelegate.swift in Sources */,
 				5990652325765FE10058C1D7 /* RantResponse.swift in Sources */,

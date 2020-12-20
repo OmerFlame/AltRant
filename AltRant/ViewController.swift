@@ -16,7 +16,7 @@ class rantFeedData: ObservableObject {
 class HomeFeedTableViewController: UITableViewController {
     fileprivate var currentPage = 0
     @ObservedObject var rantFeed = rantFeedData()
-    var supplementalImages = [UIImage?]()
+    var supplementalImages = [File?]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,9 +85,11 @@ class HomeFeedTableViewController: UITableViewController {
                 
                 self.rantFeed.rantFeed.append(contentsOf: result.rants!)
                 
-                for (idx, rant) in result.rants!.enumerated() {
+                var file: File?
+                
+                for rant in result.rants! {
                     if rant.attached_image != nil {
-                        let completionSemaphore = DispatchSemaphore(value: 0)
+                        /*let completionSemaphore = DispatchSemaphore(value: 0)
                         
                         var image = UIImage()
                         
@@ -97,8 +99,10 @@ class HomeFeedTableViewController: UITableViewController {
                             completionSemaphore.signal()
                         }.resume()
                         
-                        completionSemaphore.wait()
-                        let resizeMultiplier = self.getImageResizeMultiplier(imageWidth: image.size.width, imageHeight: image.size.height, multiplier: 1)
+                        completionSemaphore.wait()*/
+                        
+                        
+                        //let resizeMultiplier = self.getImageResizeMultiplier(imageWidth: image.size.width, imageHeight: image.size.height, multiplier: 1)
                         
                         //let finalSize = CGSize(width: image.size.width / resizeMultiplier, height: image.size.height / resizeMultiplier)
                         
@@ -108,7 +112,10 @@ class HomeFeedTableViewController: UITableViewController {
                         //UIGraphicsEndImageContext()
                         
                         //self.supplementalImages.append(newImage)
-                        self.supplementalImages.append(image)
+                        
+                        file = File.loadFile(image: rant.attached_image!, size: CGSize(width: rant.attached_image!.width!, height: rant.attached_image!.height!))
+                        
+                        self.supplementalImages.append(file)
                     } else {
                         self.supplementalImages.append(nil)
                     }

@@ -27,6 +27,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         KeyboardAvoiding.avoidingView = stackView
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let nextTag = textField.tag + 1
+        
+        let nextResponder = textField.superview?.viewWithTag(nextTag) as? UIResponder
+        
+        if nextResponder != nil {
+            nextResponder?.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return false
+    }
+    
     /*func textFieldDidEndEditing(_ textField: UITextField) {
         if usernameTextField.text != nil && passwordTextField.text != nil {
             logInButton.isEnabled = true

@@ -79,7 +79,7 @@ extension File {
         }
     }
     
-    func getThumbnail(size: CGSize) -> CGImage {
+    func getThumbnail(size: CGSize) -> UIImage {
         let completionSempaphore = DispatchSemaphore(value: 0)
         
         let scale = UIScreen.main.scale
@@ -88,14 +88,14 @@ extension File {
             fileAt: url,
             size: size,
             scale: scale,
-            representationTypes: .all)
+            representationTypes: .thumbnail)
         
         let generator = QLThumbnailGenerator.shared
         
-        var finalThumbnail: CGImage? = nil
+        var finalThumbnail: UIImage? = nil
         generator.generateRepresentations(for: request) { thumbnail, _, error in
             if let thumbnail = thumbnail {
-                finalThumbnail = thumbnail.cgImage
+                finalThumbnail = thumbnail.uiImage
                 
                 completionSempaphore.signal()
             }
@@ -157,7 +157,7 @@ extension File {
         }.resume()
         
         completionSemaphore.wait()
-        let filename = UUID().uuidString + ".jpg"
+        let filename = URL(string: image.url!)!.lastPathComponent// + ".jpg"
         
         let previewURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
         try! receivedData?.write(to: previewURL, options: .atomic)

@@ -144,9 +144,9 @@ class APIRequest {
         
         var resourceURL: URL {
             if UserDefaults.standard.string(forKey: "DRLastSet") != nil {
-                return URL(string: "https://devrant.com/api/devrant/rants?app=3&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&range=week&limit=20&prev_set=\(UserDefaults.standard.string(forKey: "DRLastSet")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+                return URL(string: "https://devrant.com/api/devrant/rants?app=3&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&sort=top&range=week&limit=20&skip=\(skip)&prev_set=\(UserDefaults.standard.string(forKey: "DRLastSet")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
             } else {
-                return URL(string: "https://devrant.com/api/devrant/rants?app=3&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&range=week&limit=20")!
+                return URL(string: "https://devrant.com/api/devrant/rants?app=3&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&sort=top&range=week&limit=20&skip=\(skip)")!
             }
         }
         

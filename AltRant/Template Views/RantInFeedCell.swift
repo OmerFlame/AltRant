@@ -21,6 +21,8 @@ class RantInFeedCell: UITableViewCell {
     var rantContents: Binding<RantInFeed>? = nil
     var parentTableViewController: UITableViewController? = nil
     
+    var supplementalImage: File?
+    
     /*init?(coder: NSCoder, rantContents: Binding<RantInFeed>, image: UIImage?, parentTableViewController: UITableViewController?) {
         self.parentTableViewController = parentTableViewController
         self.rantContents = rantContents
@@ -67,8 +69,9 @@ class RantInFeedCell: UITableViewCell {
         super.init(coder: coder)
     }
     
-    func configure(with model: Binding<RantInFeed>?, image: UIImage?, parentTableViewController: UITableViewController?) {
+    func configure(with model: Binding<RantInFeed>?, image: File?, parentTableViewController: UITableViewController?) {
         self.parentTableViewController = parentTableViewController
+        self.supplementalImage = image
         self.rantContents = model
         
         upvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == 1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
@@ -84,14 +87,67 @@ class RantInFeedCell: UITableViewCell {
             supplementalImageView.isHidden = true
         } else {
             supplementalImageView.isHidden = false
-            let resizeMultiplier = getImageResizeMultiplier(imageWidth: image!.size.width, imageHeight: image!.size.height, multiplier: 1)
+            supplementalImageView.image = nil
+            
+            let resizeMultiplier = supplementalImage!.size!.width / textStackView.frame.size.width
+            
+            let finalWidth = supplementalImage!.size!.width / resizeMultiplier
+            let finalHeight = supplementalImage!.size!.height / resizeMultiplier
+            
+            print("FINAL WIDTH:  \(finalWidth)")
+            print("FINAL HEIGHT: \(finalHeight)")
+            
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, resizeMultiplier)
+            UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            supplementalImageView.image = newImage
+            
+            //var resizeMultiplier = getImageResizeMultiplier(imageWidth: image!.size!.width, imageHeight: image!.size!.height, multiplier: 1)
+            
+            /*if resizeMultiplier == 1 {
+                resizeMultiplier = image!.size!.width / textStackView.frame.size.width
+                
+                let finalWidth = image!.size!.width / resizeMultiplier
+                let finalHeight = image!.size!.height / resizeMultiplier
+                
+                print("FINAL WIDTH:  \(finalWidth)")
+                print("FINAL HEIGHT: \(finalHeight)")
+                
+                UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, 1)
+                UIImage(contentsOfFile: image!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
+                let newImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                supplementalImageView.image = newImage
+            } else {
+                let imagePreview = image!.getThumbnail(size: CGSize(width: image!.size!.width / resizeMultiplier, height: image!.size!.height / resizeMultiplier))
+                
+                
+                supplementalImageView.image = imagePreview
+            }*/
             
             //UIGraphicsBeginImageContextWithOptions(CGSize(width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier), false, CGFloat(1 / resizeMultiplier))
             //image!.draw(in: CGRect(x: 0, y: 0, width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier))
             //let newImage = UIGraphicsGetImageFromCurrentImageContext()
             //UIGraphicsEndImageContext()
             
-            supplementalImageView.image = image
+            /*if supplementalImageView.image == nil || __CGSizeEqualToSize(supplementalImageView.image!.size, .zero) {
+                print("Preview image is nil, generating!")
+                
+                let resizeMultiplier = getImageResizeMultiplier(imageWidth: image!.size!.width, imageHeight: image!.size!.height, multiplier: 1)
+                
+                //UIGraphicsBeginImageContextWithOptions(CGSize(width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier), false, CGFloat(1 / resizeMultiplier))
+                //image!.draw(in: CGRect(x: 0, y: 0, width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier))
+                //let newImage = UIGraphicsGetImageFromCurrentImageContext()
+                //UIGraphicsEndImageContext()
+                
+                let imagePreview = image!.getThumbnail(size: CGSize(width: image!.size!.width / resizeMultiplier, height: image!.size!.height / resizeMultiplier))
+                
+                
+                supplementalImageView.image = imagePreview
+            }*/
         }
         
         upvoteButton.isUserInteractionEnabled = rantContents!.wrappedValue.vote_state != -2
@@ -182,7 +238,7 @@ class RantInFeedCell: UITableViewCell {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
             let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
-                return RantViewController(coder: coder, rantID: self.rantContents!.wrappedValue.id, rantInFeed: self.rantContents!, supplementalRantImage: self.supplementalImageView.image)
+                return RantViewController(coder: coder, rantID: self.rantContents!.wrappedValue.id, rantInFeed: self.rantContents!, supplementalRantImage: self.supplementalImage)
             })
             //rantVC.rantID = rantContents!.wrappedValue.id
             //rantVC.rantInFeed = rantContents!.projectedValue

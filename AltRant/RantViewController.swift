@@ -23,7 +23,7 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     
     var rantID: Int?
     var tappedRant: RantCell?
-    var supplementalRantImage: UIImage?
+    var supplementalRantImage: File?
     
     var commentImages = [UIImage?]()
     
@@ -42,7 +42,7 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
         self.init(rantID: nil)
     }*/
     
-    init?(coder: NSCoder, rantID: Int, rantInFeed: Binding<RantInFeed>, supplementalRantImage: UIImage?) {
+    init?(coder: NSCoder, rantID: Int, rantInFeed: Binding<RantInFeed>, supplementalRantImage: File?) {
         self.rantID = rantID
         self.rantInFeed = rantInFeed
         self.supplementalRantImage = supplementalRantImage
@@ -97,8 +97,10 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
                             self.tableView.isHidden = false
                             
                             self.tableView.dataSource = self
-                            self.tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
-                            self.tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
+                            //self.tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
+                            self.tableView.register(UINib(nibName: "RantCell", bundle: nil), forCellReuseIdentifier: "RantCell")
+                            //self.tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
+                            self.tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
                             self.tableView.reloadData()
                         }
                     }
@@ -192,16 +194,16 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            var cell = tableView.dequeueReusableCell(withIdentifier: "RantCell") as! RantCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RantCell") as! RantCell
             
-            cell = RantCell.loadFromXIB() as! RantCell
+            //cell = RantCell.loadFromXIB() as! RantCell
             cell.configure(with: rant!, rantInFeed: Optional(rantInFeed), userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self)
             
             return cell
         } else {
-            var cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
             
-            cell = CommentCell.loadFromXIB() as! CommentCell
+            //cell = CommentCell.loadFromXIB() as! CommentCell
             cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[indexPath.row], parentTableViewController: self)
             
             return cell
@@ -229,6 +231,19 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
             return CGFloat(multiplier)
         } else {
             return getImageResizeMultiplier(imageWidth: imageWidth, imageHeight: imageHeight, multiplier: multiplier + 2)
+        }
+    }
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        
+        if parent == nil {
+            profile = nil
+            comments = []
+            commentImages = []
+            supplementalRantImage = nil
+            ranterProfileImage = nil
+            rant = nil
         }
     }
 
