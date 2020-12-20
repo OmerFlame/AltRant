@@ -178,8 +178,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         smallScoreLabel.layer.borderWidth = 1
         smallScoreLabel.layer.borderColor = UIColor.black.cgColor
         
-        var largeLabelHeight = UIFont.systemFont(ofSize: 34, weight: .black).lineHeight
-        var smallLabelHeight = UIFont.systemFont(ofSize: 18, weight: .bold).lineHeight
+        let largeLabelHeight = UIFont.systemFont(ofSize: 34, weight: .black).lineHeight
+        let smallLabelHeight = UIFont.systemFont(ofSize: 18, weight: .bold).lineHeight
         
         print("FONT HEIGHT: \(largeLabelHeight.rounded(.up))")
         

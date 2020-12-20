@@ -10,22 +10,36 @@
         <!--Profile Table View Controller-->
         <scene sceneID="wMP-6v-wr9">
             <objects>
-                <tableViewController storyboardIdentifier="ProfileTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LbM-To-g0d" customClass="ProfileTableViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="never" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="K1x-E0-BD3">
+                <viewController storyboardIdentifier="ProfileTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LbM-To-g0d" customClass="ProfileTableViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dmI-kd-VPL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="never" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1EP-IF-17K">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="LbM-To-g0d" id="zmf-Kj-O9O"/>
+                                    <outlet property="delegate" destination="LbM-To-g0d" id="7mB-Jh-5rM"/>
+                                </connections>
+                            </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="VWL-sS-hfX">
+                                <rect key="frame" x="169" y="387.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="LbM-To-g0d" id="FvM-yY-BjD"/>
-                            <outlet property="delegate" destination="LbM-To-g0d" id="XMu-HB-H4y"/>
-                        </connections>
-                    </tableView>
+                        <constraints>
+                            <constraint firstItem="VWL-sS-hfX" firstAttribute="centerY" secondItem="dmI-kd-VPL" secondAttribute="centerY" id="CzT-Zr-zRf"/>
+                            <constraint firstItem="1EP-IF-17K" firstAttribute="leading" secondItem="dmI-kd-VPL" secondAttribute="leading" id="LVA-uH-gvj"/>
+                            <constraint firstAttribute="trailing" secondItem="1EP-IF-17K" secondAttribute="trailing" id="aWQ-32-CWp"/>
+                            <constraint firstItem="VWL-sS-hfX" firstAttribute="centerX" secondItem="dmI-kd-VPL" secondAttribute="centerX" id="rjS-xh-m5q"/>
+                            <constraint firstAttribute="bottom" secondItem="1EP-IF-17K" secondAttribute="bottom" id="uPK-h8-dqD"/>
+                            <constraint firstItem="1EP-IF-17K" firstAttribute="top" secondItem="dmI-kd-VPL" secondAttribute="top" id="uoK-6u-SWH"/>
+                        </constraints>
+                    </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <connections>
-                        <outlet property="tableView" destination="K1x-E0-BD3" id="3w8-at-gyN"/>
-                    </connections>
-                </tableViewController>
+                </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y4Q-ae-gH9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="126" y="135"/>
