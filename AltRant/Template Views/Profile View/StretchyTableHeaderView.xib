@@ -7,34 +7,19 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StretchyTableHeaderView" customModule="AltRant" customModuleProvider="target">
-            <connections>
-                <outlet property="blurView" destination="qRh-zn-z6q" id="T80-MT-FOF"/>
-                <outlet property="containerView" destination="xcw-9k-XYt" id="U2H-Ys-wmc"/>
-                <outlet property="containerViewHeight" destination="MyW-aS-1ZX" id="qvc-xh-tIb"/>
-                <outlet property="imageContainer" destination="w2Y-oE-YUw" id="kEa-aO-4qT"/>
-                <outlet property="imageContainerBottom" destination="bOl-aX-BSt" id="9cg-42-aEr"/>
-                <outlet property="imageContainerHeight" destination="s4m-KN-6ah" id="hbT-iZ-Xpg"/>
-                <outlet property="imageView" destination="4ks-Xu-Bcz" id="3l4-YN-ChL"/>
-                <outlet property="imageViewBottom" destination="v8b-8Z-Clg" id="gHY-MQ-pi3"/>
-                <outlet property="imageViewTop" destination="a22-nE-ndn" id="g38-eP-hj0"/>
-                <outlet property="largeHeaderTitle" destination="xFJ-mi-LSo" id="vIr-xZ-fsZ"/>
-                <outlet property="segControl" destination="qcp-th-KoV" id="fp3-rR-0J5"/>
-                <outlet property="smallHeaderTitle" destination="csB-GQ-CRc" id="Grd-mw-Ew0"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Header View">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Header View" customClass="StretchyTableHeaderView" customModule="AltRant" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="414" height="482"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcw-9k-XYt" userLabel="Container View">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="482"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w2Y-oE-YUw" userLabel="Image Container">
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w2Y-oE-YUw" userLabel="Image Container">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="482"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4ks-Xu-Bcz">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4ks-Xu-Bcz">
                                     <rect key="frame" x="16" y="50" width="382" height="382"/>
                                 </imageView>
                             </subviews>
@@ -47,6 +32,12 @@
                                 <constraint firstItem="4ks-Xu-Bcz" firstAttribute="leading" secondItem="w2Y-oE-YUw" secondAttribute="leading" constant="16" id="kzW-21-LJL"/>
                                 <constraint firstAttribute="bottom" secondItem="4ks-Xu-Bcz" secondAttribute="bottom" constant="50" id="v8b-8Z-Clg" userLabel="imageViewBottom"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="bok-Fn-3vx"/>
+                                    <exclude reference="kzW-21-LJL"/>
+                                </mask>
+                            </variation>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -56,6 +47,11 @@
                         <constraint firstItem="w2Y-oE-YUw" firstAttribute="height" secondItem="xcw-9k-XYt" secondAttribute="height" id="MyW-aS-1ZX" userLabel="imageContainerHeight"/>
                         <constraint firstAttribute="bottom" secondItem="w2Y-oE-YUw" secondAttribute="bottom" id="bOl-aX-BSt" userLabel="imageContainerBottom"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="D67-uo-pTg"/>
+                        </mask>
+                    </variation>
                 </view>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qRh-zn-z6q" userLabel="Blur View">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="482"/>
@@ -73,7 +69,7 @@
                                 </segments>
                             </segmentedControl>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="xFJ-mi-LSo" userLabel="Large Header Title">
-                                <rect key="frame" x="16" y="394" width="220.5" height="41"/>
+                                <rect key="frame" x="16" y="394" width="210.5" height="41"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" minimumScaleFactor="0.20000000000000001" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vr0-xJ-mb1" userLabel="Large Title">
                                         <rect key="frame" x="0.0" y="0.0" width="174.5" height="41"/>
@@ -82,7 +78,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XC1-dZ-bfe" userLabel="Large Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="179.5" y="11" width="41" height="19.5"/>
+                                        <rect key="frame" x="179.5" y="13.5" width="31" height="14.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -108,7 +104,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" insetsLayoutMarginsFromSafeArea="NO" distribution="equalCentering" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="csB-GQ-CRc" userLabel="Small Header Title">
-                                <rect key="frame" x="140" y="413.5" width="134.5" height="21.5"/>
+                                <rect key="frame" x="145" y="413.5" width="124.5" height="21.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TFl-UB-fB4" userLabel="Small Title">
                                         <rect key="frame" x="0.0" y="0.0" width="88.5" height="21.5"/>
@@ -117,7 +113,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7d-14-7BK" userLabel="Small Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="93.5" y="1" width="41" height="19.5"/>
+                                        <rect key="frame" x="93.5" y="3.5" width="31" height="14.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -145,6 +141,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="qcp-th-KoV" firstAttribute="leading" secondItem="dgU-yF-03U" secondAttribute="leading" constant="16" id="06F-k5-KPw"/>
+                            <constraint firstItem="Vr0-xJ-mb1" firstAttribute="leading" secondItem="dgU-yF-03U" secondAttribute="leading" constant="16" id="NXd-RM-E90"/>
                             <constraint firstItem="csB-GQ-CRc" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="qcp-th-KoV" secondAttribute="trailing" id="OqY-tS-XWs"/>
                             <constraint firstItem="qcp-th-KoV" firstAttribute="top" secondItem="csB-GQ-CRc" secondAttribute="bottom" constant="8" id="QIl-Zh-hLF"/>
                             <constraint firstItem="xFJ-mi-LSo" firstAttribute="leading" secondItem="dgU-yF-03U" secondAttribute="leading" constant="16" id="cDU-9I-0pZ"/>
@@ -156,9 +153,6 @@
                             <constraint firstItem="csB-GQ-CRc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qcp-th-KoV" secondAttribute="leading" id="zSa-ue-t9h"/>
                         </constraints>
                     </view>
-                    <constraints>
-                        <constraint firstItem="Vr0-xJ-mb1" firstAttribute="leading" secondItem="qRh-zn-z6q" secondAttribute="leading" constant="16" id="2gH-MT-CZZ"/>
-                    </constraints>
                     <blurEffect style="regular"/>
                 </visualEffectView>
             </subviews>
@@ -180,15 +174,29 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="blurView" destination="qRh-zn-z6q" id="eFS-TY-L0q"/>
+                <outlet property="containerView" destination="xcw-9k-XYt" id="qkS-FV-wxT"/>
+                <outlet property="containerViewHeight" destination="s4m-KN-6ah" id="70e-86-xwr"/>
+                <outlet property="imageContainer" destination="w2Y-oE-YUw" id="ALD-VB-ADF"/>
+                <outlet property="imageContainerBottom" destination="bOl-aX-BSt" id="w0d-vB-VZ5"/>
+                <outlet property="imageContainerHeight" destination="MyW-aS-1ZX" id="itD-1L-Rfo"/>
+                <outlet property="imageView" destination="4ks-Xu-Bcz" id="zr3-FY-S1v"/>
+                <outlet property="imageViewBottom" destination="v8b-8Z-Clg" id="DmZ-X8-H04"/>
+                <outlet property="imageViewTop" destination="a22-nE-ndn" id="9a1-vu-1xc"/>
+                <outlet property="largeHeaderTitle" destination="xFJ-mi-LSo" id="OdR-WB-wc4"/>
+                <outlet property="segControl" destination="qcp-th-KoV" id="oJR-P7-3sg"/>
+                <outlet property="smallHeaderTitle" destination="csB-GQ-CRc" id="CpV-4s-Eux"/>
+            </connections>
             <point key="canvasLocation" x="-52.173913043478265" y="120.53571428571428"/>
         </view>
     </objects>
     <designables>
         <designable name="XC1-dZ-bfe">
-            <size key="intrinsicContentSize" width="41" height="19.5"/>
+            <size key="intrinsicContentSize" width="31" height="14.5"/>
         </designable>
         <designable name="c7d-14-7BK">
-            <size key="intrinsicContentSize" width="41" height="19.5"/>
+            <size key="intrinsicContentSize" width="31" height="14.5"/>
         </designable>
     </designables>
     <resources>

@@ -20,10 +20,10 @@
                         <rect key="frame" x="20" y="15" width="352" height="734"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="NNT-6H-cQJ" userLabel="Voting Stack View">
-                                <rect key="frame" x="0.0" y="0.0" width="37.5" height="70"/>
+                                <rect key="frame" x="0.0" y="0.0" width="36.5" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="744" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHi-A5-NNe" userLabel="Upvote Button">
-                                        <rect key="frame" x="6" y="0.0" width="26" height="26.5"/>
+                                        <rect key="frame" x="5.5" y="0.0" width="26" height="26.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="26" id="ukO-R6-QTB"/>
                                         </constraints>
@@ -32,7 +32,7 @@
                                         <state key="normal" image="plusplus"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="266" horizontalCompressionResistancePriority="1000" text="9999" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B8v-wA-z4K" userLabel="Score Label">
-                                        <rect key="frame" x="0.0" y="27.5" width="37.5" height="15.5"/>
+                                        <rect key="frame" x="0.0" y="27.5" width="36.5" height="15.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="26" id="uiw-Yz-kYE"/>
                                         </constraints>
@@ -41,7 +41,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ri-yD-tK8" userLabel="Downvote Button">
-                                        <rect key="frame" x="6" y="44" width="26" height="26"/>
+                                        <rect key="frame" x="5.5" y="44" width="26" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="26" id="Sgt-wk-qGC"/>
                                             <constraint firstAttribute="height" constant="26" id="vnm-aR-Ckd"/>
@@ -57,7 +57,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lVz-nD-j7E" userLabel="Text Stack View">
-                                <rect key="frame" x="47.5" y="0.0" width="304.5" height="520.5"/>
+                                <rect key="frame" x="46.5" y="0.0" width="305.5" height="572"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="5BQ-eC-JZ2" userLabel="User Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="126.5" height="45"/>
@@ -113,14 +113,14 @@
                                         <viewLayoutGuide key="safeArea" id="uQF-lx-xMn"/>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWZ-Hc-cet" userLabel="Body">
-                                        <rect key="frame" x="0.0" y="53" width="304.5" height="240.5"/>
+                                        <rect key="frame" x="0.0" y="53" width="305.5" height="240.5"/>
                                         <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" id="cd4-OV-uma" userLabel="Image View">
-                                        <rect key="frame" x="-1" y="250" width="303" height="271"/>
+                                        <rect key="frame" x="-0.5" y="302" width="303" height="271"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">

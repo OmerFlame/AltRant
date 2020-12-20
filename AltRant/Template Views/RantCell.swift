@@ -19,6 +19,7 @@ class RantCell: UITableViewCell {
     @IBOutlet weak var userScoreLabel: PaddingLabel!
     
     @IBOutlet weak var textStackView: UIStackView!
+    @IBOutlet weak var userStackView: UIStackView!
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
@@ -186,9 +187,11 @@ class RantCell: UITableViewCell {
         
         scoreLabel.text = String(rantContents!.score)
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleImageTap(_:)))
+        let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleImageTap(_:)))
+        let userGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleUserTap(_:)))
         
-        supplementalImageView.addGestureRecognizer(gestureRecognizer)
+        supplementalImageView.addGestureRecognizer(imageGestureRecognizer)
+        userStackView.addGestureRecognizer(userGestureRecognizer)
         
         //layoutSubviews()
     }
@@ -280,5 +283,15 @@ class RantCell: UITableViewCell {
         
         quickLookViewController.currentPreviewItemIndex = 0
         parentTableViewController?.present(quickLookViewController, animated: true)
+    }
+    
+    @objc func handleUserTap(_ sender: UITapGestureRecognizer) {
+        if let parentTableViewController = self.parentTableViewController {
+            let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                return ProfileTableViewController(coder: coder, userID: self.rantContents.user_id)
+            })
+            
+            parentTableViewController.navigationController?.pushViewController(profileVC, animated: true)
+        }
     }
 }

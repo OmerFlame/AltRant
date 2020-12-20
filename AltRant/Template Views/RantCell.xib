@@ -192,6 +192,7 @@
                 <outlet property="upvoteButton" destination="n40-pC-Wdm" id="N8e-eZ-8mr"/>
                 <outlet property="userProfileImageView" destination="2hb-pL-s5Y" id="dsK-B8-reb"/>
                 <outlet property="userScoreLabel" destination="jaB-qT-1n0" id="UrQ-ih-weu"/>
+                <outlet property="userStackView" destination="Oor-eU-QMg" id="1Av-Rx-B44"/>
                 <outlet property="usernameLabel" destination="EXy-0T-HQX" id="vuW-WZ-k5H"/>
             </connections>
             <point key="canvasLocation" x="-210.1449275362319" y="244.08482142857142"/>
