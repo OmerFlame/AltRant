@@ -27,6 +27,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     var scoreRect: UIView!
     var scoreLabel: PaddingLabel!
     
+    var currentBlurFrame: CGRect!
+    
     var blurViewHeight = NSLayoutConstraint()
     @IBOutlet weak var tableView: UITableView!
     
@@ -85,6 +87,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         blurView.frame = blurFrame
         headerTitle.frame = titleFrame
         
+        currentBlurFrame = blurView.frame
+        
         (tableView.tableHeaderView as! StretchyTableHeaderView).scrollViewDidScroll(scrollView: scrollView)
     }
     
@@ -118,13 +122,18 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         addTitle()
         
+        currentBlurFrame = blurView.frame
+        
         //originalBlurRect = (tableView.tableHeaderView as! StretchyTableHeaderView).blurView.frame
         //originalTitleRect = (tableView.tableHeaderView as! StretchyTableHeaderView).largeHeaderTitle.frame
         //originalSmallTitleRect = (tableView.tableHeaderView as! StretchyTableHeaderView).smallHeaderTitle.frame
         
-        scrollViewDidScroll(tableView)
+        //scrollViewDidScroll(tableView)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
+        
+        //let nc = NotificationCenter.default
+        //nc.addObserver(self, selector: #selector(shouldUpdateBlurPosition), name: Notification.Name("ShouldUpdateBlurPosition"), object: nil)
     }
     
     func addTitle() {
@@ -239,8 +248,11 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.tableHeaderView!.addSubview(blurView)
         
         blurView.translatesAutoresizingMaskIntoConstraints = false
-        blurView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        //blurView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        blurView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
         blurView.heightAnchor.constraint(equalTo: tableView.tableHeaderView!.heightAnchor).isActive = true
+        
+        //blurView.bottomAnchor.constraint(equalTo: tableView.tableHeaderView!.bottomAnchor).isActive = true
         
         blurView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width).isActive = true
         
@@ -295,6 +307,18 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        if let _ = tableView.tableHeaderView {
+            scrollViewDidScroll(tableView)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let _ = tableView.tableHeaderView {
+            scrollViewDidScroll(tableView)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -323,6 +347,24 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         cell.textLabel?.text = "\(indexPath.row)"
 
         return cell
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        //scrollViewDidScroll(tableView)
+        
+        //blurView.frame = currentBlurFrame
+        
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.shouldUpdateBlurPosition()
+        }
+    }
+    
+    @objc func shouldUpdateBlurPosition() {
+        DispatchQueue.main.async {
+            self.blurView.frame = self.currentBlurFrame
+        }
     }
     
 
