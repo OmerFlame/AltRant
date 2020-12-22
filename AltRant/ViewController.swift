@@ -33,9 +33,13 @@ class HomeFeedTableViewController: UITableViewController {
             
             let loginVC = UIStoryboard(name: "LoginViewController", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! UINavigationController
             
+            
+            
             loginVC.isModalInPresentation = true
             
             present(loginVC, animated: true)
+            
+            (loginVC.viewControllers.first as! LoginViewController).viewControllerThatPresented = self
         } else {
             tableView.infiniteScrollIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
             tableView.infiniteScrollIndicatorMargin = 40
@@ -173,7 +177,7 @@ class HomeFeedTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
         
         //cell = RantInFeedCell.loadFromXIB()
-        cell.configure(with: Optional(rant), image: supplementalImages[indexPath.row], parentTableViewController: self)
+        cell.configure(with: Optional(rant), image: supplementalImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
         
         return cell
         

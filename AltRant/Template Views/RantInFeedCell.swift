@@ -19,7 +19,8 @@ class RantInFeedCell: UITableViewCell {
     @IBOutlet weak var tagList: TagListView!
     
     var rantContents: Binding<RantInFeed>? = nil
-    var parentTableViewController: UITableViewController? = nil
+    var parentTableViewController: UIViewController? = nil
+    var parentTableView: UITableView? = nil
     
     var supplementalImage: File?
     
@@ -69,8 +70,9 @@ class RantInFeedCell: UITableViewCell {
         super.init(coder: coder)
     }
     
-    func configure(with model: Binding<RantInFeed>?, image: File?, parentTableViewController: UITableViewController?) {
+    func configure(with model: Binding<RantInFeed>?, image: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
         self.parentTableViewController = parentTableViewController
+        self.parentTableView = parentTableView
         self.supplementalImage = image
         self.rantContents = model
         
@@ -201,8 +203,8 @@ class RantInFeedCell: UITableViewCell {
             self.rantContents!.wrappedValue.vote_state = success!.rant.vote_state
             self.rantContents!.wrappedValue.score = success!.rant.score
             
-            if let parentTableViewController = self.parentTableViewController {
-                parentTableViewController.tableView.reloadData()
+            if let parentTableView = self.parentTableView {
+                parentTableView.reloadData()
             }
         }
     }
@@ -229,8 +231,8 @@ class RantInFeedCell: UITableViewCell {
             self.rantContents!.wrappedValue.vote_state = success!.rant.vote_state
             self.rantContents!.wrappedValue.score = success!.rant.score
             
-            if let parentTableViewController = self.parentTableViewController {
-                parentTableViewController.tableView.reloadData()
+            if let parentTableView = self.parentTableView {
+                parentTableView.reloadData()
             }
         }
     }

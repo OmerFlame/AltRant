@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SwiftUI
+import Combine
 
 public let secondaryProfilePages: [String] = ["Rants", "++'s", "Comments", "Favorites"]
 
@@ -31,11 +33,25 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     var blurViewHeight = NSLayoutConstraint()
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
+    var didFinishLoading = false
+    
+    //var rantTypeContent = [RantInFeed]()
+    @ObservedObject var rantTypeContent = rantFeedData()
+    
+    var commentTypeContent = [CommentModel]()
+    
+    var currentContentType: ProfileContentTypes = .rants
+    
+    var rantContentImages = [File?]()
+    var commentContentImages = [UIImage?]()
+    
+    var statusBarHeight: CGFloat = 0.0
     
     init?(coder: NSCoder, userID: Int) {
         self.userID = userID
         super.init(coder: coder)
-        //headerView = StretchyTableHeaderView.loadFromXIB()
     }
     
     required init?(coder: NSCoder) {
@@ -49,7 +65,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
         
-        
+        guard tableView.tableHeaderView != nil else { return }
         
         let headerGeometry = self.geometry(view: (tableView.tableHeaderView as! StretchyTableHeaderView), scrollView: scrollView)
         let titleGeometry = self.geometry(view: headerTitle, scrollView: scrollView)
@@ -60,10 +76,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         let largeTitleOpacity = (max(titleGeometry.largeTitleWeight, 0.5) - 0.5) * 2
         let tinyTitleOpacity = 1 - min(titleGeometry.largeTitleWeight, 0.5) * 2
         
-        //(tableView.tableHeaderView as! StretchyTableHeaderView).largeHeaderTitle.alpha = CGFloat(sqrt(largeTitleOpacity))
         headerTitle.alpha = CGFloat(sqrt(largeTitleOpacity))
         blurView.contentView.subviews[1].alpha = CGFloat(sqrt(tinyTitleOpacity))
-        //(tableView.tableHeaderView as! StretchyTableHeaderView).smallHeaderTitle.alpha = CGFloat(sqrt(tinyTitleOpacity))
         
         if let vfxSubview = blurView.subviews.first(where: {
             String(describing: type(of: $0)) == "_UIVisualEffectSubview"
@@ -75,14 +89,18 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             String(describing: type(of: $0)) == "_UIVisualEffectBackdropView"
         }) {
             vfxBackdrop.alpha = CGFloat(1 - sqrt(titleGeometry.largeTitleWeight))
-            //vfxBackdrop.alpha = 1.0
         }
         
         var blurFrame = blurView.frame
         var titleFrame = headerTitle.frame
         
         blurFrame.origin.y = max(originalBlurRect.minY, originalBlurRect.minY + titleGeometry.blurOffset)
-        titleFrame.origin.y = originalTitleRect.minY + 396
+        
+        if let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height {
+            self.statusBarHeight = statusBarHeight
+        }
+        
+        titleFrame.origin.y = originalTitleRect.minY + (413 - self.statusBarHeight)
         
         blurView.frame = blurFrame
         headerTitle.frame = titleFrame
@@ -94,46 +112,68 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         self.navigationController?.isNavigationBarHidden = true
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        //headerView = StretchyTableHeaderView.loadFromXIB()
-        tableView.tableHeaderView = StretchyTableHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 482))
+        guard didFinishLoading else { return }
         
-        (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.backgroundColor = UIColor(hex: "d55161")!
-        (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.backgroundColor = UIColor(hex: "d55161")!
-        (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.backgroundColor = UIColor(hex: "d55161")!
+        tableView.tableHeaderView = StretchyTableHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 502))
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 382, height: 382), false, CGFloat(UIImage(named: "testheader")!.size.height / 382))
-        UIImage(named: "testheader")!.draw(in: CGRect(origin: .zero, size: CGSize(width: 382, height: 382)))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.backgroundColor = UIColor(hex: profileData!.avatar.b)!
+        (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.backgroundColor = UIColor(hex: profileData!.avatar.b)!
+        (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.backgroundColor = UIColor(hex: profileData!.avatar.b)!
         
-        (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = newImage
+        if profileData!.avatar.i != nil {
+            let completionSemaphore = DispatchSemaphore(value: 0)
+            var profileImage: UIImage?
+            
+            URLSession.shared.dataTask(with: URL(string: "https://avatars.devrant.com/" + profileData!.avatar.i!)!) { data, _, _ in
+                profileImage = UIImage(data: data!)
+                completionSemaphore.signal()
+            }.resume()
+            
+            completionSemaphore.wait()
+            
+            if profileImage != nil {
+                UIGraphicsBeginImageContextWithOptions(CGSize(width: 382, height: 382), false, CGFloat(profileImage!.size.height / 382))
+                profileImage!.draw(in: CGRect(origin: .zero, size: CGSize(width: 382, height: 382)))
+                let newImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = newImage
+            } else {
+                (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = UIImage(color: UIColor(hex: profileData!.avatar.b)!, size: CGSize(width: 382, height: 382))
+            }
+        } else {
+            (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = UIImage(color: UIColor(hex: profileData!.avatar.b)!, size: CGSize(width: 382, height: 382))
+        }
         
         addTitle()
         
         currentBlurFrame = blurView.frame
         
-        //originalBlurRect = (tableView.tableHeaderView as! StretchyTableHeaderView).blurView.frame
-        //originalTitleRect = (tableView.tableHeaderView as! StretchyTableHeaderView).largeHeaderTitle.frame
-        //originalSmallTitleRect = (tableView.tableHeaderView as! StretchyTableHeaderView).smallHeaderTitle.frame
+        tableView.infiniteScrollIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        tableView.infiniteScrollIndicatorMargin = 40
+        tableView.infiniteScrollTriggerOffset = 500
         
-        //scrollViewDidScroll(tableView)
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TestCell")
-        
-        //let nc = NotificationCenter.default
-        //nc.addObserver(self, selector: #selector(shouldUpdateBlurPosition), name: Notification.Name("ShouldUpdateBlurPosition"), object: nil)
+        tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
+        tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+    }
+    
+    private func canLoadMore() -> Bool {
+        switch tableView(tableView, numberOfRowsInSection: 0) {
+        case self.profileData!.content.counts.rants,
+             self.profileData!.content.counts.upvoted,
+             self.profileData!.content.counts.comments,
+             self.profileData!.content.counts.favorites:
+            return false
+            
+        default:
+            return true
+        }
     }
     
     func addTitle() {
@@ -148,21 +188,14 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         UISegmentedControl.appearance().backgroundColor = .systemBackground
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        //UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(hex: profileData.avatar.b)!
-        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(hex: "d55161")!
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(hex: profileData!.avatar.b)!
         
-        //segmentedControl.addTarget(self, action: #selector(selectionChanged(_:)), for: .valueChanged)
-        
-        //let scoreSize = "+\(String(profileData.score))".boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width, height: CGFloat.greatestFiniteMagnitude), options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)], context: nil).size
-        //let scoreSize = "+9999".boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width, height: CGFloat.greatestFiniteMagnitude), options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)], context: nil).size
-        
-        //scoreLabel = PaddingLabel(withInsets: 2.5, 2.5, 5, 5)
         scoreLabel = PaddingLabel()
         scoreLabel.topInset = 2.5
         scoreLabel.bottomInset = 2.5
         scoreLabel.leftInset = 5
         scoreLabel.rightInset = 5
-        scoreLabel.text = "+9999"
+        scoreLabel.text = "+\(String(profileData!.score))"
         scoreLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
         scoreLabel.textColor = .black
         scoreLabel.backgroundColor = .white
@@ -170,14 +203,12 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         scoreLabel.clipsToBounds = true
         scoreLabel.layer.masksToBounds = true
         
-        //let smallScoreLabel = PaddingLabel(withInsets: 2.5, 2.5, 5, 5)
         let smallScoreLabel = PaddingLabel()
         smallScoreLabel.topInset = 2.5
         smallScoreLabel.bottomInset = 2.5
         smallScoreLabel.leftInset = 5
         smallScoreLabel.rightInset = 5
-        //smallScoreLabel.text = "+\(String(profileData.score))"
-        smallScoreLabel.text = "+9999"
+        smallScoreLabel.text = "+\(String(profileData!.score))"
         smallScoreLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
         smallScoreLabel.textColor = .black
         smallScoreLabel.backgroundColor = .white
@@ -192,19 +223,14 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         print("FONT HEIGHT: \(largeLabelHeight.rounded(.up))")
         
-        //let bigLabelSize = profileData.username.boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 34, weight: .black)], context: nil).size
+        let bigLabelSize = profileData!.username.boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 34, weight: .black)], context: nil).size
         
-        let bigLabelSize = "OmerFlame".boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 34, weight: .black)], context: nil).size
-        
-        //let smallLabelSize = profileData.username.boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)], context: nil).size
-        
-        let smallLabelSize = "OmerFlame".boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)], context: nil).size
+        let smallLabelSize = profileData!.username.boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)], context: nil).size
         
         let largeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: bigLabelSize.width, height: largeLabelHeight.rounded(.up)))
         let smallLabel = UILabel(frame: CGRect(x: 0, y: 0, width: smallLabelSize.width, height: smallLabelHeight.rounded(.up)))
         
-        largeLabel.text = "OmerFlame"
-        //largeLabel.text = profileData.username
+        largeLabel.text = profileData!.username
         largeLabel.font = .systemFont(ofSize: 34, weight: .black)
         largeLabel.textColor = .white
         largeLabel.adjustsFontSizeToFitWidth = true
@@ -212,8 +238,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         largeLabel.allowsDefaultTighteningForTruncation = true
         largeLabel.numberOfLines = 1
         
-        //smallLabel.text = profileData.username
-        smallLabel.text = "OmerFlame"
+        smallLabel.text = profileData!.username
         smallLabel.font = .systemFont(ofSize: 18, weight: .bold)
         smallLabel.textColor = .label
         smallLabel.adjustsFontSizeToFitWidth = true
@@ -248,11 +273,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.tableHeaderView!.addSubview(blurView)
         
         blurView.translatesAutoresizingMaskIntoConstraints = false
-        //blurView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        blurView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
-        blurView.heightAnchor.constraint(equalTo: tableView.tableHeaderView!.heightAnchor).isActive = true
-        
-        //blurView.bottomAnchor.constraint(equalTo: tableView.tableHeaderView!.bottomAnchor).isActive = true
+        blurView.heightAnchor.constraint(equalTo: tableView.tableHeaderView!.heightAnchor, constant: -view.window!.windowScene!.statusBarManager!.statusBarFrame.height).isActive = true
+        blurView.bottomAnchor.constraint(equalTo: tableView.tableHeaderView!.bottomAnchor).isActive = true
         
         blurView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width).isActive = true
         
@@ -308,8 +330,59 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         
-        if let _ = tableView.tableHeaderView {
-            scrollViewDidScroll(tableView)
+        if !didFinishLoading {
+            tableView.isHidden = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                DispatchQueue.global(qos: .userInitiated).sync {
+                    self.getContent(contentType: .rants) { result in
+                        DispatchQueue.main.async {
+                            self.loadingIndicator.stopAnimating()
+                            
+                            self.didFinishLoading = true
+                            self.profileData = result!.profile
+                            self.tableView.isHidden = false
+                            self.viewDidLoad()
+                            
+                            self.rantTypeContent.rantFeed = result!.profile.content.content.rants
+                            
+                            for i in self.rantTypeContent.rantFeed {
+                                if let attachedImage = i.attached_image {
+                                    self.rantContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
+                                } else {
+                                    self.rantContentImages.append(nil)
+                                }
+                            }
+                            
+                            self.tableView.reloadData()
+                            
+                            self.tableView.addInfiniteScroll { tableView -> Void in
+                                if self.canLoadMore() {
+                                    self.performFetch(contentType: self.currentContentType) {
+                                        tableView.finishInfiniteScroll()
+                                    }
+                                } else {
+                                    tableView.finishInfiniteScroll()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if let _ = tableView.tableHeaderView {
+                scrollViewDidScroll(tableView)
+                tableView.reloadData()
+            }
+        }
+    }
+    
+    func getContent(contentType: ProfileContentTypes, completion: @escaping ((ProfileResponse?) -> Void)) {
+        do {
+            let response = try APIRequest().getProfileFromID(self.userID, userContentType: contentType, skip: tableView(tableView, numberOfRowsInSection: 0))
+            completion(response)
+        } catch {
+            completion(nil)
         }
     }
     
@@ -321,6 +394,14 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    fileprivate func showAlertWithError(_ error: String, retryHandler: (() -> Void)?) {
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: (retryHandler != nil ? { _ in retryHandler!() } : nil)))
+        present(alert, animated: true, completion: nil)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -330,89 +411,143 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - Table view data source
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1000
+        if (segmentedControl == nil) || segmentedControl!.selectedSegmentIndex == 0 || segmentedControl!.selectedSegmentIndex == 1 || segmentedControl!.selectedSegmentIndex == 3  {
+            return rantTypeContent.rantFeed.count
+        } else {
+            return commentTypeContent.count
+        }
     }
-
+    
+    fileprivate func performFetch(contentType: ProfileContentTypes, _ completionHandler: (() -> Void)?) {
+        getContent(contentType: contentType) { response in
+            defer { completionHandler?() }
+            
+            guard response != nil else {
+                self.showAlertWithError("Failed to fetch user content.", retryHandler: { self.performFetch(contentType: contentType, completionHandler) })
+                return
+            }
+            
+            var start = 0
+            var end = 0
+            
+            switch contentType {
+            case .rants:
+                start = self.rantTypeContent.rantFeed.count
+                end = response!.profile.content.content.rants.count + start
+                
+                self.commentTypeContent = []
+                break
+                
+            case .upvoted:
+                start = self.rantTypeContent.rantFeed.count
+                end = response!.profile.content.content.upvoted.count + start
+                
+                self.commentTypeContent = []
+                break
+                
+            case .favorite:
+                start = self.rantTypeContent.rantFeed.count
+                end = response!.profile.content.content.favorites!.count + start
+                
+                self.commentTypeContent = []
+                break
+                
+            default:
+                start = self.commentTypeContent.count
+                end = response!.profile.content.content.comments.count + start
+                
+                self.rantTypeContent.rantFeed = []
+                break
+            }
+            
+            let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
+            
+            switch contentType {
+            case .rants:
+                self.rantTypeContent.rantFeed.append(contentsOf: response!.profile.content.content.rants)
+                break
+                
+            case .upvoted:
+                self.rantTypeContent.rantFeed.append(contentsOf: response!.profile.content.content.upvoted)
+                break
+                
+            case .favorite:
+                self.rantTypeContent.rantFeed.append(contentsOf: response!.profile.content.content.favorites!)
+                break
+                
+            default:
+                self.commentTypeContent.append(contentsOf: response!.profile.content.content.comments)
+                break
+            }
+            
+            if !self.rantTypeContent.rantFeed.isEmpty {
+                for i in self.rantTypeContent.rantFeed[start..<end] {
+                    if let attachedImage = i.attached_image {
+                        self.rantContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
+                    } else {
+                        self.rantContentImages.append(nil)
+                    }
+                }
+            } else {
+                for i in self.commentTypeContent[start..<end] {
+                    if let attachedImage = i.attached_image {
+                        let completionSemaphore = DispatchSemaphore(value: 0)
+                        
+                        var image = UIImage()
+                        
+                        URLSession.shared.dataTask(with: URL(string: attachedImage.url!)!) { data, _, _ in
+                            image = UIImage(data: data!)!
+                            
+                            completionSemaphore.signal()
+                        }.resume()
+                        
+                        completionSemaphore.wait()
+                        
+                        self.commentContentImages.append(image)
+                    } else {
+                        self.commentContentImages.append(nil)
+                    }
+                }
+            }
+            
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: indexPaths, with: .automatic)
+            self.tableView.endUpdates()
+            
+            self.scrollViewDidScroll(self.tableView)
+        }
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TestCell", for: indexPath)
-
-        // Configure the cell...
-        cell.textLabel?.text = "\(indexPath.row)"
-
-        return cell
+        if !rantTypeContent.rantFeed.isEmpty {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
+            cell.configure(with: $rantTypeContent.rantFeed[indexPath.row], image: rantContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+            cell.configure(with: commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
+            
+            return cell
+        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        
-        //scrollViewDidScroll(tableView)
-        
-        //blurView.frame = currentBlurFrame
-        
         DispatchQueue.global(qos: .userInteractive).async {
             self.shouldUpdateBlurPosition()
         }
     }
     
-    @objc func shouldUpdateBlurPosition() {
+    func shouldUpdateBlurPosition() {
         DispatchQueue.main.async {
             self.blurView.frame = self.currentBlurFrame
         }
     }
-    
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
 }
 
 extension ProfileTableViewController {

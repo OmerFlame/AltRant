@@ -204,7 +204,7 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
             
             //cell = CommentCell.loadFromXIB() as! CommentCell
-            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[indexPath.row], parentTableViewController: self)
+            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
             
             return cell
         }

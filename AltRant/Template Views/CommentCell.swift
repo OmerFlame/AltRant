@@ -21,17 +21,19 @@ class CommentCell: UITableViewCell {
     
     var file: File?
     var commentContents: CommentModel!
-    var parentTableViewController: RantViewController? = nil
+    var parentTableViewController: UIViewController? = nil
+    var parentTableView: UITableView? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    func configure(with model: CommentModel, supplementalImage: UIImage?, parentTableViewController: RantViewController?) {
+    func configure(with model: CommentModel, supplementalImage: UIImage?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
         self.commentContents = model
         self.file = nil
         self.parentTableViewController = parentTableViewController
+        self.parentTableView = parentTableView
         
         if model.attached_image != nil {
             let resizeMultiplier = getImageResizeMultiplier(imageWidth: CGFloat(commentContents!.attached_image!.width!), imageHeight: CGFloat(commentContents!.attached_image!.height!), multiplier: 1)

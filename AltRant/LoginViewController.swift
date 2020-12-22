@@ -15,6 +15,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
     
+    var viewControllerThatPresented: UIViewController? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -110,10 +112,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     
                     self.present(errorAlert, animated: true, completion: nil)
                 } else {
-                    let viewControllerThatInitiatedSelf = (self.navigationController!.presentingViewController as! UINavigationController).viewControllers.first!
+                    //let viewControllerThatInitiatedSelf = (self.navigationController!.presentingViewController as! UINavigationController).viewControllers.first!
+                    //let viewControllerThatInitiatedSelf = self.presentingViewController!.navigationController!.viewControllers.first!
                     
-                    (viewControllerThatInitiatedSelf as! HomeFeedTableViewController).viewDidLoad()
-                    (viewControllerThatInitiatedSelf as! HomeFeedTableViewController).tableView.reloadData()
+                    //(viewControllerThatInitiatedSelf as! HomeFeedTableViewController).viewDidLoad()
+                    //(viewControllerThatInitiatedSelf as! HomeFeedTableViewController).tableView.reloadData()
+                    
+                    (self.viewControllerThatPresented as! HomeFeedTableViewController).viewDidLoad()
+                    (self.viewControllerThatPresented as! HomeFeedTableViewController).tableView.reloadData()
                     
                     self.navigationController!.dismiss(animated: true, completion: nil)
                 }
