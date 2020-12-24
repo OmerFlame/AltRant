@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct VoteResponse: Codable {
+struct RantVoteResponse: Codable {
     let success: Bool
     let rant: RantModel
+}
+
+struct CommentVoteResponse: Codable {
+    let success: Bool
+    let comment: CommentModel
 }

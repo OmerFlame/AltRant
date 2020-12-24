@@ -11,6 +11,10 @@ import Combine
 
 public let secondaryProfilePages: [String] = ["Rants", "++'s", "Comments", "Favorites"]
 
+class commentFeedData: ObservableObject {
+    @Published var commentTypeContent = [CommentModel]()
+}
+
 class ProfileTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //@IBOutlet weak var headerView: StretchyTableHeaderView!
     var profileData: Profile?
@@ -40,12 +44,13 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     //var rantTypeContent = [RantInFeed]()
     @ObservedObject var rantTypeContent = rantFeedData()
     
-    var commentTypeContent = [CommentModel]()
+    //var commentTypeContent = [CommentModel]()
+    @ObservedObject var commentTypeContent = commentFeedData()
     
     var currentContentType: ProfileContentTypes = .rants
     
     var rantContentImages = [File?]()
-    var commentContentImages = [UIImage?]()
+    var commentContentImages = [File?]()
     
     var statusBarHeight: CGFloat = 0.0
     
@@ -158,6 +163,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.infiniteScrollIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         tableView.infiniteScrollIndicatorMargin = 40
         tableView.infiniteScrollTriggerOffset = 500
+        
+        segmentedControl.addTarget(self, action: #selector(segmentedControlSelectionChanged(_:)), for: .valueChanged)
         
         tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
@@ -407,6 +414,36 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
+    
+    @objc func segmentedControlSelectionChanged(_ sender: UISegmentedControl) {
+        rantTypeContent.rantFeed = []
+        commentTypeContent.commentTypeContent = []
+        rantContentImages = []
+        commentContentImages = []
+        
+        tableView.reloadData()
+        
+        switch sender.selectedSegmentIndex {
+        case 0:
+            performFetch(contentType: .rants, nil)
+            break
+            
+        case 1:
+            performFetch(contentType: .upvoted, nil)
+            break
+            
+        case 2:
+            performFetch(contentType: .comments, nil)
+            break
+            
+        case 3:
+            performFetch(contentType: .favorite, nil)
+            break
+            
+        default:
+            fatalError("How the fuck")
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -418,7 +455,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         if (segmentedControl == nil) || segmentedControl!.selectedSegmentIndex == 0 || segmentedControl!.selectedSegmentIndex == 1 || segmentedControl!.selectedSegmentIndex == 3  {
             return rantTypeContent.rantFeed.count
         } else {
-            return commentTypeContent.count
+            return commentTypeContent.commentTypeContent.count
         }
     }
     
@@ -439,25 +476,25 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 start = self.rantTypeContent.rantFeed.count
                 end = response!.profile.content.content.rants.count + start
                 
-                self.commentTypeContent = []
+                self.commentTypeContent.commentTypeContent = []
                 break
                 
             case .upvoted:
                 start = self.rantTypeContent.rantFeed.count
                 end = response!.profile.content.content.upvoted.count + start
                 
-                self.commentTypeContent = []
+                self.commentTypeContent.commentTypeContent = []
                 break
                 
             case .favorite:
                 start = self.rantTypeContent.rantFeed.count
                 end = response!.profile.content.content.favorites!.count + start
                 
-                self.commentTypeContent = []
+                self.commentTypeContent.commentTypeContent = []
                 break
                 
             default:
-                start = self.commentTypeContent.count
+                start = self.commentTypeContent.commentTypeContent.count
                 end = response!.profile.content.content.comments.count + start
                 
                 self.rantTypeContent.rantFeed = []
@@ -480,7 +517,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 break
                 
             default:
-                self.commentTypeContent.append(contentsOf: response!.profile.content.content.comments)
+                self.commentTypeContent.commentTypeContent.append(contentsOf: response!.profile.content.content.comments)
                 break
             }
             
@@ -493,21 +530,22 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     }
                 }
             } else {
-                for i in self.commentTypeContent[start..<end] {
+                for i in self.commentTypeContent.commentTypeContent[start..<end] {
                     if let attachedImage = i.attached_image {
-                        let completionSemaphore = DispatchSemaphore(value: 0)
+                        //let completionSemaphore = DispatchSemaphore(value: 0)
                         
-                        var image = UIImage()
+                        //var image = UIImage()
                         
-                        URLSession.shared.dataTask(with: URL(string: attachedImage.url!)!) { data, _, _ in
+                        /*URLSession.shared.dataTask(with: URL(string: attachedImage.url!)!) { data, _, _ in
                             image = UIImage(data: data!)!
                             
                             completionSemaphore.signal()
                         }.resume()
                         
-                        completionSemaphore.wait()
+                        completionSemaphore.wait()*/
                         
-                        self.commentContentImages.append(image)
+                        self.commentContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
+                        //self.commentContentImages.
                     } else {
                         self.commentContentImages.append(nil)
                     }
@@ -530,7 +568,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-            cell.configure(with: commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
+            cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, commentInFeed: $commentTypeContent.commentTypeContent[indexPath.row], allowedToPreview: false)
             
             return cell
         }

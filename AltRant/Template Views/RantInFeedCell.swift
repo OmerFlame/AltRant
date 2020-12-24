@@ -80,6 +80,9 @@ class RantInFeedCell: UITableViewCell {
         scoreLabel.text = String(rantContents!.wrappedValue.score)
         downvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == -1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
         
+        upvoteButton.isEnabled = rantContents!.wrappedValue.vote_state != -2
+        downvoteButton.isEnabled = rantContents!.wrappedValue.vote_state != -2
+        
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         
         textStackView.addGestureRecognizer(gestureRecognizer)
@@ -240,7 +243,7 @@ class RantInFeedCell: UITableViewCell {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
             let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
-                return RantViewController(coder: coder, rantID: self.rantContents!.wrappedValue.id, rantInFeed: self.rantContents!, supplementalRantImage: self.supplementalImage)
+                return RantViewController(coder: coder, rantID: self.rantContents!.wrappedValue.id, rantInFeed: self.rantContents!, supplementalRantImage: self.supplementalImage, doesSupplementalImageExist: true, loadCompletionHandler: nil)
             })
             //rantVC.rantID = rantContents!.wrappedValue.id
             //rantVC.rantInFeed = rantContents!.projectedValue

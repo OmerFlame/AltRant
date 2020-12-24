@@ -17,6 +17,7 @@ class HomeFeedTableViewController: UITableViewController {
     fileprivate var currentPage = 0
     @ObservedObject var rantFeed = rantFeedData()
     var supplementalImages = [File?]()
+    @IBOutlet weak var menuBarButtonItem: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +73,34 @@ class HomeFeedTableViewController: UITableViewController {
             
             //tableView.beginInfiniteScroll(true)
             self.performFetch(nil)
+            
+            let mainMenu = UIMenu(title: "", children: [
+                                    UIAction(title: "Settings", image: UIImage(systemName: "gearshape.fill")!) { action in
+                                        print("Tapped on Settings")
+                                    },
+                
+                                    UIAction(title: "Log Out", image: UIImage(systemName: "lock.fill")!) { action in
+                                        print("Tapped on Log Out")
+                                        
+                                        self.rantFeed.rantFeed = []
+                                        self.supplementalImages = []
+                                        
+                                        self.tableView.reloadData {
+                                            UserDefaults.standard.setValue(0, forKey: "DRUserID")
+                                            UserDefaults.standard.setValue(0, forKey: "DRTokenID")
+                                            UserDefaults.standard.setValue(nil, forKey: "DRTokenKey")
+                                            
+                                            let loginVC = UIStoryboard(name: "LoginViewController", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! UINavigationController
+                                            loginVC.isModalInPresentation = true
+                                            
+                                            self.present(loginVC, animated: true)
+                                            
+                                            (loginVC.viewControllers.first as! LoginViewController).viewControllerThatPresented = self
+                                        }
+                                    }
+            ])
+            
+            menuBarButtonItem.menu = mainMenu
             
             //edgesForExtendedLayout = 
         }

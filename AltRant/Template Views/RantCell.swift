@@ -91,7 +91,8 @@ class RantCell: UITableViewCell {
         bodyLabel.text = rantContents!.text
         
         upvoteButton.tintColor = (model.vote_state == 1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
-        scoreLabel.text = String(rantContents!.score)
+        //scoreLabel.text = String(rantContents!.score)
+        scoreLabel.text = formatNumber(rantContents!.score)
         downvoteButton.tintColor = (model.vote_state == -1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
         
         if supplementalImage == nil {

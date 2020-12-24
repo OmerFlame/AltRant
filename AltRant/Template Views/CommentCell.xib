@@ -20,19 +20,22 @@
                         <rect key="frame" x="20" y="15" width="352" height="734"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="NNT-6H-cQJ" userLabel="Voting Stack View">
-                                <rect key="frame" x="0.0" y="0.0" width="36.5" height="70"/>
+                                <rect key="frame" x="0.0" y="0.0" width="35.5" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="744" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHi-A5-NNe" userLabel="Upvote Button">
-                                        <rect key="frame" x="5.5" y="0.0" width="26" height="26.5"/>
+                                        <rect key="frame" x="5" y="0.0" width="26" height="26.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="26" id="ukO-R6-QTB"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <color key="tintColor" systemColor="systemGrayColor"/>
                                         <state key="normal" image="plusplus"/>
+                                        <connections>
+                                            <action selector="handleUpvote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vv8-HI-hHe"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="266" horizontalCompressionResistancePriority="1000" text="9999" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B8v-wA-z4K" userLabel="Score Label">
-                                        <rect key="frame" x="0.0" y="27.5" width="36.5" height="15.5"/>
+                                        <rect key="frame" x="0.0" y="27.5" width="35.5" height="15.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="26" id="uiw-Yz-kYE"/>
                                         </constraints>
@@ -41,7 +44,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ri-yD-tK8" userLabel="Downvote Button">
-                                        <rect key="frame" x="5.5" y="44" width="26" height="26"/>
+                                        <rect key="frame" x="5" y="44" width="26" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="26" id="Sgt-wk-qGC"/>
                                             <constraint firstAttribute="height" constant="26" id="vnm-aR-Ckd"/>
@@ -49,6 +52,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <color key="tintColor" systemColor="systemGrayColor"/>
                                         <state key="normal" image="minuminus"/>
+                                        <connections>
+                                            <action selector="handleDownvote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="f3U-st-23O"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -57,7 +63,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lVz-nD-j7E" userLabel="Text Stack View">
-                                <rect key="frame" x="46.5" y="0.0" width="305.5" height="572"/>
+                                <rect key="frame" x="45.5" y="0.0" width="306.5" height="571.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="5BQ-eC-JZ2" userLabel="User Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="126.5" height="45"/>
@@ -79,7 +85,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7p4-UN-zba" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="23" width="41" height="22"/>
+                                                        <rect key="frame" x="0.0" y="23" width="31" height="22"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -113,14 +119,14 @@
                                         <viewLayoutGuide key="safeArea" id="uQF-lx-xMn"/>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWZ-Hc-cet" userLabel="Body">
-                                        <rect key="frame" x="0.0" y="53" width="305.5" height="240.5"/>
+                                        <rect key="frame" x="0.0" y="53" width="306.5" height="240.5"/>
                                         <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" id="cd4-OV-uma" userLabel="Image View">
-                                        <rect key="frame" x="-0.5" y="302" width="303" height="271"/>
+                                        <rect key="frame" x="-1" y="301" width="303" height="271"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -151,9 +157,11 @@
                 <outlet property="downvoteButton" destination="0Ri-yD-tK8" id="2XY-RA-848"/>
                 <outlet property="scoreLabel" destination="B8v-wA-z4K" id="d6c-eR-yFg"/>
                 <outlet property="supplementalImageView" destination="cd4-OV-uma" id="T7V-dr-7Tn"/>
+                <outlet property="textStackView" destination="lVz-nD-j7E" id="zzb-B7-NTf"/>
                 <outlet property="upvoteButton" destination="uHi-A5-NNe" id="eMV-PK-jo8"/>
                 <outlet property="userProfileImageView" destination="ZBO-rB-hit" id="qal-W0-iG9"/>
                 <outlet property="userScoreLabel" destination="7p4-UN-zba" id="T7e-Qj-goY"/>
+                <outlet property="userStackView" destination="5BQ-eC-JZ2" id="BK2-ws-yf4"/>
                 <outlet property="usernameLabel" destination="qL0-Tk-Ebr" id="tNf-Fy-xmS"/>
             </connections>
             <point key="canvasLocation" x="68" y="90"/>
@@ -161,7 +169,7 @@
     </objects>
     <designables>
         <designable name="7p4-UN-zba">
-            <size key="intrinsicContentSize" width="41" height="19.5"/>
+            <size key="intrinsicContentSize" width="31" height="14.5"/>
         </designable>
         <designable name="ZBO-rB-hit">
             <size key="intrinsicContentSize" width="18" height="20"/>

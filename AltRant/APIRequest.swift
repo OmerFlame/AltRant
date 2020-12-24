@@ -234,7 +234,7 @@ class APIRequest {
         }
     }
     
-    func voteOnRant(rantID: Int, vote: Int) -> VoteResponse? {
+    func voteOnRant(rantID: Int, vote: Int) -> RantVoteResponse? {
         if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
             logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
         }
@@ -249,7 +249,7 @@ class APIRequest {
         request.httpBody = "app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(String(UserDefaults.standard.string(forKey: "DRTokenKey")!))&vote=\(String(vote))".data(using: .utf8)
         
         let completionSemaphore = DispatchSemaphore(value: 0)
-        var voteResponse: VoteResponse? = nil
+        var voteResponse: RantVoteResponse? = nil
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             let body = String(data: data!, encoding: .utf8)!
@@ -257,7 +257,7 @@ class APIRequest {
             print(body)
             
             let decoder = JSONDecoder()
-            voteResponse = try? decoder.decode(VoteResponse.self, from: data!)
+            voteResponse = try? decoder.decode(RantVoteResponse.self, from: data!)
             
             /*if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
                 success = true
@@ -274,7 +274,7 @@ class APIRequest {
         return voteResponse
     }
     
-    func voteOnComment(commentID: Int, vote: Int) -> Bool {
+    func voteOnComment(commentID: Int, vote: Int) -> CommentVoteResponse? {
         if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
             logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
         }
@@ -288,18 +288,21 @@ class APIRequest {
         request.httpBody = "app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_key=\(String(UserDefaults.standard.string(forKey: "DRTokenKey")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&vote=\(String(vote).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)".data(using: .utf8)
         
         let completionSemaphore = DispatchSemaphore(value: 0)
-        var success = false
+        var voteResponse: CommentVoteResponse? = nil
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            let body = String(data: data!, encoding: .utf8)!
+            //let body = String(data: data!, encoding: .utf8)!
             
-            print(body)
+            //print(body)
             
-            if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+            /*if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
                 success = true
             } else {
                 success = false
-            }
+            }*/
+            
+            let decoder = JSONDecoder()
+            voteResponse = try? decoder.decode(CommentVoteResponse.self, from: data!)
             
             completionSemaphore.signal()
         }
@@ -307,7 +310,7 @@ class APIRequest {
         task.resume()
         
         completionSemaphore.wait()
-        return success
+        return voteResponse
     }
     
     func getProfileFromID(_ profileID: Int, userContentType: ProfileContentTypes, skip: Int) throws -> ProfileResponse? {

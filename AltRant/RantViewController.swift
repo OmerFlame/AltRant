@@ -13,7 +13,7 @@ protocol RantViewControllerDelegate {
     func vote(_ rantViewController: RantViewController, vote: Int)
 }
 
-class RantViewController: UIViewController, UITableViewDataSource, QLPreviewControllerDelegate, QLPreviewControllerDataSource {
+class RantViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource {
     var delegate: RantViewControllerDelegate?
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
@@ -23,15 +23,21 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     
     var rantID: Int?
     var tappedRant: RantCell?
+    var tappedComment: CommentCell?
     var supplementalRantImage: File?
     
-    var commentImages = [UIImage?]()
+    var commentImages = [File?]()
     
     var rant: RantModel?
     var comments = [CommentModel]()
     var profile: Profile? = nil
     var ranterProfileImage: UIImage?
-    var rantInFeed: Binding<RantInFeed>
+    var rantInFeed: Binding<RantInFeed>?
+    var doesSupplementalImageExist = false
+    
+    var loadCompletionHandler: ((RantViewController?) -> Void)?
+    
+    var rowHeights = [IndexPath:CGFloat]()
     
     /*init(rantID: Int?) {
         self.rantID = rantID
@@ -42,10 +48,12 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
         self.init(rantID: nil)
     }*/
     
-    init?(coder: NSCoder, rantID: Int, rantInFeed: Binding<RantInFeed>, supplementalRantImage: File?) {
+    init?(coder: NSCoder, rantID: Int, rantInFeed: Binding<RantInFeed>?, supplementalRantImage: File?, doesSupplementalImageExist: Bool, loadCompletionHandler: ((RantViewController?) -> Void)?) {
         self.rantID = rantID
         self.rantInFeed = rantInFeed
         self.supplementalRantImage = supplementalRantImage
+        self.loadCompletionHandler = loadCompletionHandler
+        self.doesSupplementalImageExist = doesSupplementalImageExist
         super.init(coder: coder)
     }
     
@@ -85,7 +93,11 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
                     self.getRant()
                     
                     if self.rant != nil {
-                        self.getProfile()
+                        //self.getProfile()
+                        
+                        if self.supplementalRantImage == nil && self.doesSupplementalImageExist == true {
+                            self.supplementalRantImage = File.loadFile(image: self.rant!.attached_image!, size: CGSize(width: self.rant!.attached_image!.width!, height: self.rant!.attached_image!.height!))
+                        }
                         
                         if self.rant!.user_avatar_lg.i != nil {
                             self.getRanterImage()
@@ -97,16 +109,26 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
                             self.tableView.isHidden = false
                             
                             self.tableView.dataSource = self
+                            self.tableView.delegate = self
                             //self.tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
                             self.tableView.register(UINib(nibName: "RantCell", bundle: nil), forCellReuseIdentifier: "RantCell")
                             //self.tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
                             self.tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
-                            self.tableView.reloadData()
+                            
+                            self.tableView.reloadData {
+                                self.loadCompletionHandler?(self)
+                            }
                         }
                     }
                 }
             }
         }
+    }
+    
+    func reloadData(completion: ((UITableView?) -> Void)?) {
+        tableView.reloadData()
+        
+        completion?(tableView)
     }
     
     private func getRanterImage() {
@@ -132,7 +154,7 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
                 if comment.attached_image == nil {
                     commentImages.append(nil)
                 } else {
-                    let completionSemaphore = DispatchSemaphore(value: 0)
+                    /*let completionSemaphore = DispatchSemaphore(value: 0)
                     
                     var image = UIImage()
                     
@@ -150,9 +172,9 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
                     UIGraphicsBeginImageContextWithOptions(finalSize, false, resizeMultiplier)
                     image.draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: finalSize))
                     let newImage = UIGraphicsGetImageFromCurrentImageContext()
-                    UIGraphicsEndImageContext()
+                    UIGraphicsEndImageContext()*/
                     
-                    self.commentImages.append(newImage)
+                    self.commentImages.append(File.loadFile(image: comment.attached_image!, size: CGSize(width: comment.attached_image!.width!, height: comment.attached_image!.height!)))
                 }
             }
         } catch {
@@ -192,26 +214,44 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
         2
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        rowHeights[indexPath] = cell.frame.size.height
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return rowHeights[indexPath] ?? UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RantCell") as! RantCell
             
             //cell = RantCell.loadFromXIB() as! RantCell
-            cell.configure(with: rant!, rantInFeed: Optional(rantInFeed), userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self)
+            cell.configure(with: rant!, rantInFeed: rantInFeed, userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self)
             
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
             
             //cell = CommentCell.loadFromXIB() as! CommentCell
-            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
+            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, commentInFeed: nil, allowedToPreview: true)
             
             return cell
         }
     }
     
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-        return PreviewItem(url: tappedRant?.file?.previewItemURL, title: "Picture from \(tappedRant!.rantContents!.user_username)")
+        /*if index == 0 {
+            return PreviewItem(url: tappedRant?.file?.previewItemURL, title: "Picture from \(tappedRant!.rantContents!.user_username)")
+        } else {
+            return PreviewItem(url: tappedComment?.file?.previewItemURL, title: "Picture from \(tappedComment!.commentContents!.user_username)")
+        }*/
+        
+        if tappedComment == nil {
+            return PreviewItem(url: tappedRant?.file?.previewItemURL, title: "Picture from \(tappedRant!.rantContents!.user_username)")
+        } else {
+            return PreviewItem(url: tappedComment?.file?.previewItemURL, title: "Picture from \(tappedComment!.commentContents!.user_username)")
+        }
     }
     
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
@@ -219,11 +259,16 @@ class RantViewController: UIViewController, UITableViewDataSource, QLPreviewCont
     }
     
     func previewController(_ controller: QLPreviewController, transitionViewFor item: QLPreviewItem) -> UIView? {
-        tappedRant?.supplementalImageView
+        if tappedComment == nil {
+            return tappedRant?.supplementalImageView
+        } else {
+            return tappedComment?.supplementalImageView
+        }
     }
     
     func previewControllerDidDismiss(_ controller: QLPreviewController) {
         tappedRant = nil
+        tappedComment = nil
     }
     
     private func getImageResizeMultiplier(imageWidth: CGFloat, imageHeight: CGFloat, multiplier: Int) -> CGFloat {
