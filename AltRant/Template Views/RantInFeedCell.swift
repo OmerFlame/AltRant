@@ -243,7 +243,7 @@ class RantInFeedCell: UITableViewCell {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
             let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
-                return RantViewController(coder: coder, rantID: self.rantContents!.wrappedValue.id, rantInFeed: self.rantContents!, supplementalRantImage: self.supplementalImage, doesSupplementalImageExist: true, loadCompletionHandler: nil)
+                return RantViewController(coder: coder, rantID: self.rantContents!.wrappedValue.id, rantInFeed: self.rantContents!, supplementalRantImage: self.supplementalImage, loadCompletionHandler: nil)
             })
             //rantVC.rantID = rantContents!.wrappedValue.id
             //rantVC.rantInFeed = rantContents!.projectedValue

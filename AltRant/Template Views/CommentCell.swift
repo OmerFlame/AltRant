@@ -264,7 +264,7 @@ class CommentCell: UITableViewCell {
                 
                 //let rantFile = File.loadFile(image: rant!.rant.attached_image, size: <#T##CGSize#>)
                 
-                return RantViewController(coder: coder, rantID: self.commentContents.rant_id, rantInFeed: nil, supplementalRantImage: nil, doesSupplementalImageExist: true, loadCompletionHandler: { tableViewController in
+                return RantViewController(coder: coder, rantID: self.commentContents.rant_id, rantInFeed: nil, supplementalRantImage: nil, loadCompletionHandler: { tableViewController in
                     DispatchQueue.global(qos: .userInteractive).async {
                         /*for i in (tableViewController!.comments) {
                             print(i.id == self.commentContents.id)

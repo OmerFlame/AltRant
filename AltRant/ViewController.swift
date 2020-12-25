@@ -18,6 +18,9 @@ class HomeFeedTableViewController: UITableViewController {
     @ObservedObject var rantFeed = rantFeedData()
     var supplementalImages = [File?]()
     @IBOutlet weak var menuBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var composeBarButtonItem: UIBarButtonItem!
+    
+    var cellHeights = [IndexPath:CGFloat]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +107,14 @@ class HomeFeedTableViewController: UITableViewController {
             
             //edgesForExtendedLayout = 
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cellHeights[indexPath] = cell.frame.size.height
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeights[indexPath] ?? UITableView.automaticDimension
     }
     
     fileprivate func performFetch(_ completionHandler: (() -> Void)?) {
@@ -244,6 +255,17 @@ class HomeFeedTableViewController: UITableViewController {
         //tableView.beginInfiniteScroll(true)
         self.performFetch(nil)
         self.refreshControl!.endRefreshing()
+    }
+    
+    @IBAction func openComposeView(_ sender: UIBarButtonItem) {
+        let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
+        (composeVC.viewControllers.first as! ComposeViewController).rantID = nil
+        (composeVC.viewControllers.first as! ComposeViewController).isComment = false
+        (composeVC.viewControllers.first as! ComposeViewController).viewControllerThatPresented = self
+        
+        composeVC.isModalInPresentation = true
+        
+        present(composeVC, animated: true, completion: nil)
     }
 }
 

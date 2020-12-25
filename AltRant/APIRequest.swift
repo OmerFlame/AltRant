@@ -134,21 +134,21 @@ class APIRequest {
         //print("TOKEN ID:  \(String(UserDefaults.standard.integer(forKey: "DRTokenID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")
         //print("TOKEN KEY: \(String(UserDefaults.standard.string(forKey: "DRTokenKey")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")
         
-        /*var resourceURL: URL {
+        var resourceURL: URL {
             if UserDefaults.standard.string(forKey: "DRLastSet") != nil {
                 return URL(string: "https://devrant.com/api/devrant/rants?limit=20&skip=\(String(skip).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&sort=algo&prev_set=\(String(UserDefaults.standard.string(forKey: "DRLastSet")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&app=3&plat=1&nari=1&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_key=\(String(UserDefaults.standard.string(forKey: "DRTokenKey")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
             } else {
                 return URL(string: "https://devrant.com/api/devrant/rants?limit=20&skip=\(String(skip).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&sort=algo&app=3&plat=1&nari=1&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_key=\(String(UserDefaults.standard.string(forKey: "DRTokenKey")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
             }
-        }*/
+        }
         
-        var resourceURL: URL {
+        /*var resourceURL: URL {
             if UserDefaults.standard.string(forKey: "DRLastSet") != nil {
                 return URL(string: "https://devrant.com/api/devrant/rants?app=3&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&sort=top&range=week&limit=20&skip=\(skip)&prev_set=\(UserDefaults.standard.string(forKey: "DRLastSet")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
             } else {
                 return URL(string: "https://devrant.com/api/devrant/rants?app=3&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&sort=top&range=week&limit=20&skip=\(skip)")!
             }
-        }
+        }*/
         
         //var resourceURL = URL(string: "https://devrant.com/api/devrant/rants?limit=20&skip=\(String(skip).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&sort=algo&app=3&plat=1&nari=1&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_key=\(String(UserDefaults.standard.string(forKey: "DRTokenKey")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
         
@@ -188,9 +188,8 @@ class APIRequest {
         return extractedData!
     }
     
-    func getRantFromID(id: Int) throws -> RantResponse? {
-        
-        let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(id))?app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&token_key=\(String(UserDefaults.standard.string(forKey: "DRTokenKey")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
+    func getRantFromID(id: Int, lastCommentID: Int?) throws -> RantResponse? {
+        let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(id))?app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(String(UserDefaults.standard.string(forKey: "DRTokenKey")!))\(lastCommentID != nil ? "&last_comment_id=\(String(lastCommentID!))" : "")".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         
         //self.resourceURL = URL(string: "https://proxy.devrant.app/api/devrant/rants/\(String(id))?app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "UserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "TokenID")))&token_key=\(String(UserDefaults.standard.string(forKey: "TokenKey")!))")
         var request = URLRequest(url: resourceURL)
@@ -384,58 +383,88 @@ class APIRequest {
             logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
         }
         
-        let url = URL(string: "https://devrant.com/api/devrant/rants?cb=\(String(Int(Date().timeIntervalSince1970)).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
-        
-        var request = URLRequest(url: url)
-        
-        let boundary = UUID().uuidString
-        
-        request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        request.httpMethod = "POST"
-        
-        let paramList: [String: String] = [
-            "app": "3",
-            "rant": content,
-            "tags": (tags != nil ? tags! : ""),
-            "token_id": String(UserDefaults.standard.integer(forKey: "DRTokenID")),
-            "token_key": UserDefaults.standard.string(forKey: "DRTokenKey")!,
-            "user_id": String(UserDefaults.standard.integer(forKey: "DRUserID")),
-            "type": String(postType.rawValue),
-            //"plat": "1",
-            //"nari": "-1",
-        ]
-        
-        request.httpBody = createBody(parameters: paramList, boundary: boundary, data: image?.jpegData(compressionQuality: 1.0))
-        
-        print("REQUEST BODY:")
-        //print(String(data: request.httpBody!, encoding: .utf8))
-        print(String(decoding: request.httpBody!, as: UTF8.self))
-        
-        let completionSemaphore = DispatchSemaphore(value: 0)
-        
-        var postID = 0
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            let body = String(data: data!, encoding: .utf8)!
+        if image != nil {
+            let url = URL(string: "https://devrant.com/api/devrant/rants?cb=\(String(Int(Date().timeIntervalSince1970)).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
             
-            print("RESPONSE BODY: ")
-            print(body)
+            var request = URLRequest(url: url)
             
-            //receivedRawJSON = body
+            let boundary = UUID().uuidString
             
-            let decoder = JSONDecoder()
-            let result = try! decoder.decode(RantPOSTResponse.self, from: data!)
+            request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
             
-            postID = result.rantID!
+            request.httpMethod = "POST"
             
-            completionSemaphore.signal()
+            let paramList: [String: String] = [
+                "app": "3",
+                "rant": content,
+                "tags": (tags != nil ? tags! : ""),
+                "token_id": String(UserDefaults.standard.integer(forKey: "DRTokenID")),
+                "token_key": UserDefaults.standard.string(forKey: "DRTokenKey")!,
+                "user_id": String(UserDefaults.standard.integer(forKey: "DRUserID")),
+                "type": String(postType.rawValue),
+                //"plat": "1",
+                //"nari": "-1",
+            ]
+            
+            request.httpBody = createBody(parameters: paramList, boundary: boundary, data: image?.jpegData(compressionQuality: 1.0))
+            
+            print("REQUEST BODY:")
+            //print(String(data: request.httpBody!, encoding: .utf8))
+            print(String(decoding: request.httpBody!, as: UTF8.self))
+            
+            let completionSemaphore = DispatchSemaphore(value: 0)
+            
+            var postID = 0
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                let body = String(data: data!, encoding: .utf8)!
+                
+                print("RESPONSE BODY: ")
+                print(body)
+                
+                //receivedRawJSON = body
+                
+                let decoder = JSONDecoder()
+                let result = try! decoder.decode(RantPOSTResponse.self, from: data!)
+                
+                postID = result.rantID!
+                
+                completionSemaphore.signal()
+            }
+            
+            task.resume()
+            
+            completionSemaphore.wait()
+            return postID
+        } else {
+            let url = URL(string: "https://devrant.com/api/devrant/rants?cb=\(String(Int(Date().timeIntervalSince1970)).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpBody = "token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)&rant=\(content)&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&tags=\(tags ?? "")&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&type=\(String(postType.rawValue))&app=3".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.data(using: .utf8)
+            
+            let completionSemaphore = DispatchSemaphore(value: 0)
+            var postID = 0
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                let body = String(data: data!, encoding: .utf8)!
+                
+                print("RESPONSE BODY:")
+                print(body)
+                
+                let decoder = JSONDecoder()
+                let result = try? decoder.decode(RantPOSTResponse.self, from: data!)
+                
+                postID = result?.rantID ?? -1
+                
+                completionSemaphore.signal()
+            }.resume()
+            
+            completionSemaphore.wait()
+            return postID
         }
-        
-        task.resume()
-        
-        completionSemaphore.wait()
-        return postID
     }
     
     func postComment(rantID: Int, content: String, image: UIImage?) -> Bool {
@@ -443,66 +472,97 @@ class APIRequest {
             logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
         }
         
-        let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(rantID))/comments?cb=\(String(Int(Date().timeIntervalSince1970)))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-        
-        var request = URLRequest(url: resourceURL)
-        request.httpMethod = "POST"
-        
-        let boundary = UUID().uuidString
-        
-        request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        let paramList: [String: String] = [
-            "app": "3",
-            "comment": content,
-            "token_id": String(UserDefaults.standard.integer(forKey: "DRTokenID")),
-            "token_key": UserDefaults.standard.string(forKey: "DRTokenKey")!,
-            "user_id": String(UserDefaults.standard.integer(forKey: "DRUserID"))
-        ]
-        
-        let body = createBody(parameters: paramList, boundary: boundary, data: image?.pngData())
-        
-        request.httpBody = body
-        
-        //print(String(decoding: image!.pngData()!, as: UTF8.self))
-        //print(String(decoding: request.httpBody!, as: UTF8.self))
-        
-        //print(String(data: request.httpBody!, encoding: .utf8)!)
-        
-        let completionSemaphore = DispatchSemaphore(value: 0)
-        
-        var success = false
-        
-        /*let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            let body = String(data: data!, encoding: .utf8)!
+        if image != nil {
+            let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(rantID))/comments?cb=\(String(Int(Date().timeIntervalSince1970)))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
             
-            print(body)
+            var request = URLRequest(url: resourceURL)
+            request.httpMethod = "POST"
             
-            if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
-                success = true
-            } else {
-                success = false
-            }
+            let boundary = UUID().uuidString
             
-            completionSemaphore.signal()
-        }*/
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            let body = String(data: data!, encoding: .utf8)!
+            request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
             
-            print(body)
+            let paramList: [String: String] = [
+                "app": "3",
+                "comment": content,
+                "token_id": String(UserDefaults.standard.integer(forKey: "DRTokenID")),
+                "token_key": UserDefaults.standard.string(forKey: "DRTokenKey")!,
+                "user_id": String(UserDefaults.standard.integer(forKey: "DRUserID"))
+            ]
             
-            if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
-                success = true
-            } else {
-                success = false
-            }
+            let body = createBody(parameters: paramList, boundary: boundary, data: image?.pngData())
             
-            completionSemaphore.signal()
-        }.resume()
-        
-        completionSemaphore.wait()
-        return success
+            request.httpBody = body
+            
+            //print(String(decoding: image!.pngData()!, as: UTF8.self))
+            //print(String(decoding: request.httpBody!, as: UTF8.self))
+            
+            //print(String(data: request.httpBody!, encoding: .utf8)!)
+            
+            let completionSemaphore = DispatchSemaphore(value: 0)
+            
+            var success = false
+            
+            /*let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                let body = String(data: data!, encoding: .utf8)!
+                
+                print(body)
+                
+                if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                    success = true
+                } else {
+                    success = false
+                }
+                
+                completionSemaphore.signal()
+            }*/
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                let body = String(data: data!, encoding: .utf8)!
+                
+                print(body)
+                
+                if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                    success = true
+                } else {
+                    success = false
+                }
+                
+                completionSemaphore.signal()
+            }.resume()
+            
+            completionSemaphore.wait()
+            return success
+        } else {
+            let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(rantID))/comments?cb=\(String(Int(Date().timeIntervalSince1970)))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+            
+            var request = URLRequest(url: resourceURL)
+            request.httpMethod = "POST"
+            
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            
+            request.httpBody = "comment=\(content)&app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))".data(using: .utf8)
+            
+            let completionSemaphore = DispatchSemaphore(value: 0)
+            var success = false
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                let body = String(data: data!, encoding: .utf8)!
+                
+                print(body)
+                
+                if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                    success = true
+                } else {
+                    success = false
+                }
+                
+                completionSemaphore.signal()
+            }.resume()
+            
+            completionSemaphore.wait()
+            return success
+        }
     }
     
     private func createBody(parameters: [String: String],

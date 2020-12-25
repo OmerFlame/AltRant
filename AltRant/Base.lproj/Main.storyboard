@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -45,6 +45,12 @@
                         <barButtonItem key="leftBarButtonItem" id="FDx-nt-acY">
                             <imageReference key="image" image="ellipsis.circle.fill" catalog="system" symbolScale="large"/>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="Dn7-le-YMO" userLabel="Compose Bar Button Item">
+                            <imageReference key="image" image="square.and.pencil" catalog="system" symbolScale="large"/>
+                            <connections>
+                                <action selector="openComposeView:" destination="k5x-zg-0Zb" id="vbd-ef-s49"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="1bh-iT-tPK">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -54,6 +60,7 @@
                         </connections>
                     </refreshControl>
                     <connections>
+                        <outlet property="composeBarButtonItem" destination="Dn7-le-YMO" id="NIM-eA-Xix"/>
                         <outlet property="menuBarButtonItem" destination="FDx-nt-acY" id="run-ww-5y2"/>
                     </connections>
                 </tableViewController>
@@ -150,6 +157,7 @@
     <resources>
         <image name="doc.text.fill" catalog="system" width="115" height="128"/>
         <image name="ellipsis.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="square.stack.fill" catalog="system" width="113" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="yKl-WP-sRL">
+            <objects>
+                <navigationController storyboardIdentifier="ComposeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KdP-bH-S7m" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zTx-cx-8cg">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="U1i-2A-rdn" kind="relationship" relationship="rootViewController" id="KDo-2Q-LF5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MVz-5h-ihO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-62" y="60"/>
+        </scene>
+        <!--New Post-->
+        <scene sceneID="vmO-nO-HV9">
+            <objects>
+                <viewController id="U1i-2A-rdn" customClass="ComposeViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="enB-Wc-cYf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Bhb-2M-adc" userLabel="Main Stack View">
+                                <rect key="frame" x="16" y="96" width="382" height="276.5"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ztY-Yh-X3U" userLabel="Content Text View">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="220"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="220" id="2yh-Eg-X3N"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="GPw-Jd-hhZ" userLabel="Properties Stack View">
+                                        <rect key="frame" x="0.0" y="224" width="382" height="14.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="5000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3je-MC-ohL" userLabel="Remaining Letter Counter">
+                                                <rect key="frame" x="0.0" y="0.0" width="282.5" height="14.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gau-o8-NFT" userLabel="Attachement Button">
+                                                <rect key="frame" x="282.5" y="0.0" width="99.5" height="14.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <state key="normal" title="Attach img/gif">
+                                                    <color key="titleColor" name="AccentColor"/>
+                                                    <imageReference key="image" image="photo" catalog="system" symbolScale="small"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="selectImage:" destination="U1i-2A-rdn" eventType="touchUpInside" id="O3K-Yf-ajS"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tags (comma separated)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qiU-06-ej1" userLabel="Tag Text Field">
+                                        <rect key="frame" x="0.0" y="242.5" width="382" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="GPw-Jd-hhZ" secondAttribute="trailing" id="HGj-oz-nkJ"/>
+                                    <constraint firstItem="ztY-Yh-X3U" firstAttribute="leading" secondItem="Bhb-2M-adc" secondAttribute="leading" id="Hcg-uD-Lcr"/>
+                                    <constraint firstAttribute="trailing" secondItem="ztY-Yh-X3U" secondAttribute="trailing" id="QpK-d3-y1F"/>
+                                    <constraint firstItem="qiU-06-ej1" firstAttribute="width" secondItem="GPw-Jd-hhZ" secondAttribute="width" id="XbB-ue-AXS"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="msl-x3-NT0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Bhb-2M-adc" firstAttribute="top" secondItem="msl-x3-NT0" secondAttribute="top" constant="8" id="0w1-Bo-RjI"/>
+                            <constraint firstItem="msl-x3-NT0" firstAttribute="trailing" secondItem="Bhb-2M-adc" secondAttribute="trailing" constant="16" id="HRr-bg-uV6"/>
+                            <constraint firstItem="Bhb-2M-adc" firstAttribute="centerX" secondItem="msl-x3-NT0" secondAttribute="centerX" id="MlQ-aK-OKp"/>
+                            <constraint firstItem="Bhb-2M-adc" firstAttribute="leading" secondItem="msl-x3-NT0" secondAttribute="leading" constant="16" id="j0l-0L-j87"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Post" largeTitleDisplayMode="always" id="uKB-uU-clV">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="UgN-uD-sWU">
+                            <connections>
+                                <action selector="cancel:" destination="U1i-2A-rdn" id="ntK-T4-eYe"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="paperplane" catalog="system" id="CP1-9I-U2b" userLabel="Submit Button">
+                            <connections>
+                                <action selector="submit:" destination="U1i-2A-rdn" id="Fkn-au-sXm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="attachmentButton" destination="Gau-o8-NFT" id="s4b-t5-9Va"/>
+                        <outlet property="cancelButton" destination="UgN-uD-sWU" id="8fm-bx-AYG"/>
+                        <outlet property="contentTextView" destination="ztY-Yh-X3U" id="hOm-UM-jBI"/>
+                        <outlet property="mainStackView" destination="Bhb-2M-adc" id="uXH-E3-8lb"/>
+                        <outlet property="remainingLettersLabel" destination="3je-MC-ohL" id="6pa-VI-KbP"/>
+                        <outlet property="submitButton" destination="CP1-9I-U2b" id="pZa-Av-1FX"/>
+                        <outlet property="tagTextField" destination="qiU-06-ej1" id="EjE-fA-zI8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IaZ-d9-Zgq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="712" y="60"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="paperplane" catalog="system" width="128" height="118"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

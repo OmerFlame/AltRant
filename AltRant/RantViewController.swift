@@ -33,7 +33,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var profile: Profile? = nil
     var ranterProfileImage: UIImage?
     var rantInFeed: Binding<RantInFeed>?
-    var doesSupplementalImageExist = false
+    //var doesSupplementalImageExist = false
     
     var loadCompletionHandler: ((RantViewController?) -> Void)?
     
@@ -48,12 +48,12 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.init(rantID: nil)
     }*/
     
-    init?(coder: NSCoder, rantID: Int, rantInFeed: Binding<RantInFeed>?, supplementalRantImage: File?, doesSupplementalImageExist: Bool, loadCompletionHandler: ((RantViewController?) -> Void)?) {
+    init?(coder: NSCoder, rantID: Int, rantInFeed: Binding<RantInFeed>?, supplementalRantImage: File?, loadCompletionHandler: ((RantViewController?) -> Void)?) {
         self.rantID = rantID
         self.rantInFeed = rantInFeed
         self.supplementalRantImage = supplementalRantImage
         self.loadCompletionHandler = loadCompletionHandler
-        self.doesSupplementalImageExist = doesSupplementalImageExist
+        //self.doesSupplementalImageExist = doesSupplementalImageExist
         super.init(coder: coder)
     }
     
@@ -93,11 +93,15 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self.getRant()
                     
                     if self.rant != nil {
-                        //self.getProfile()
+                        self.getProfile()
                         
-                        if self.supplementalRantImage == nil && self.doesSupplementalImageExist == true {
+                        if self.rant!.attached_image != nil && self.supplementalRantImage == nil {
                             self.supplementalRantImage = File.loadFile(image: self.rant!.attached_image!, size: CGSize(width: self.rant!.attached_image!.width!, height: self.rant!.attached_image!.height!))
                         }
+                        
+                        /*if self.supplementalRantImage == nil && self.doesSupplementalImageExist == true {
+                            self.supplementalRantImage = File.loadFile(image: self.rant!.attached_image!, size: CGSize(width: self.rant!.attached_image!.width!, height: self.rant!.attached_image!.height!))
+                        }*/
                         
                         if self.rant!.user_avatar_lg.i != nil {
                             self.getRanterImage()
@@ -146,7 +150,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func getRant() {
         do {
-            let response = try APIRequest().getRantFromID(id: self.rantID!)
+            let response = try APIRequest().getRantFromID(id: self.rantID!, lastCommentID: nil)
             self.rant = response!.rant
             self.comments = (!response!.comments.isEmpty ? response!.comments : [])
             
@@ -291,7 +295,18 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             rant = nil
         }
     }
-
+    
+    @IBAction func compose(_ sender: Any) {
+        let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
+        (composeVC.viewControllers.first as! ComposeViewController).rantID = rantID
+        (composeVC.viewControllers.first as! ComposeViewController).isComment = true
+        (composeVC.viewControllers.first as! ComposeViewController).viewControllerThatPresented = self
+        
+        composeVC.isModalInPresentation = true
+        
+        present(composeVC, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

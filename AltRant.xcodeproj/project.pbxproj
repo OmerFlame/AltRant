@@ -15,6 +15,7 @@
 		59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59040174257627A5002B062A /* LaunchScreen.storyboard */; };
 		5904018225762953002B062A /* RantInFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904018025762953002B062A /* RantInFeedCell.swift */; };
 		5904018325762953002B062A /* RantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5904018125762953002B062A /* RantInFeedCell.xib */; };
+		59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59095F5D25961CB40074BABC /* ComposeViewController.storyboard */; };
 		590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590A82852580B6600025F11A /* StretchyTableHeaderView.swift */; };
 		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
 		5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */; };
@@ -48,6 +49,8 @@
 		59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671662576BAF4007EEB28 /* PaddingLabel.swift */; };
 		59E6716A2576BD74007EEB28 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671692576BD74007EEB28 /* RoundedImageView.swift */; };
 		59E671752576CE5B007EEB28 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671732576CE5B007EEB28 /* LoginViewController.swift */; };
+		59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */; };
+		59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +64,7 @@
 		59040177257627A5002B062A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5904018025762953002B062A /* RantInFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantInFeedCell.swift; sourceTree = "<group>"; };
 		5904018125762953002B062A /* RantInFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RantInFeedCell.xib; sourceTree = "<group>"; };
+		59095F5D25961CB40074BABC /* ComposeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeViewController.storyboard; sourceTree = "<group>"; };
 		590A82852580B6600025F11A /* StretchyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableHeaderView.swift; sourceTree = "<group>"; };
 		591A752D257F518F001E1FC2 /* AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltRant.entitlements; sourceTree = "<group>"; };
 		5922A55425778C90009F3025 /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
@@ -97,6 +101,9 @@
 		59E671662576BAF4007EEB28 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		59E671692576BD74007EEB28 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		59E671732576CE5B007EEB28 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
+		59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
+		59FFE6F32594C12E00C3AB0B /* UITextView+Placeholder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +149,8 @@
 				59306E952578E68600F6AD08 /* RantViewController.storyboard */,
 				59E671732576CE5B007EEB28 /* LoginViewController.swift */,
 				5922A55425778C90009F3025 /* LoginViewController.storyboard */,
+				59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */,
+				59095F5D25961CB40074BABC /* ComposeViewController.storyboard */,
 				5904016D257627A3002B062A /* ViewController.swift */,
 				5904016F257627A3002B062A /* Main.storyboard */,
 				59040172257627A5002B062A /* Assets.xcassets */,
@@ -189,6 +198,8 @@
 				59C3A1D8257E0FAB0082E76F /* UIImage+.swift */,
 				59D253552593334400BEA35A /* Double+truncate.swift */,
 				59B842EB25947876007F16FC /* UITableView+getAllCells.swift */,
+				59FFE6F32594C12E00C3AB0B /* UITextView+Placeholder.h */,
+				59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -286,6 +297,7 @@
 				59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */,
 				59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */,
 				59040173257627A5002B062A /* Assets.xcassets in Resources */,
+				59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */,
 				59040171257627A3002B062A /* Main.storyboard in Resources */,
 				5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */,
 				5904018325762953002B062A /* RantInFeedCell.xib in Resources */,
@@ -304,7 +316,9 @@
 				5990650A257643B30058C1D7 /* CloseButton.swift in Sources */,
 				59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */,
 				5990652025765FE10058C1D7 /* Profile.swift in Sources */,
+				59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */,
 				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
+				59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */,
 				59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */,
 				5990650E257643D60058C1D7 /* TagListView.swift in Sources */,
 				59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */,
