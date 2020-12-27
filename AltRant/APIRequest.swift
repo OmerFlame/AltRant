@@ -467,6 +467,172 @@ class APIRequest {
         }
     }
     
+    func deleteRant(rantID: Int) -> Bool {
+        if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+            logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+        }
+        
+        let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(rantID))?app=3&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        
+        var request = URLRequest(url: resourceURL)
+        
+        request.httpMethod = "DELETE"
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let completionSemaphore = DispatchSemaphore(value: 0)
+        var success = false
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                success = true
+            } else {
+                success = false
+            }
+            
+            completionSemaphore.signal()
+        }.resume()
+        
+        completionSemaphore.wait()
+        return success
+    }
+    
+    func favoriteRant(rantID: Int) -> Bool {
+        if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+            logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+        }
+        
+        let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(rantID))/favorite".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        var request = URLRequest(url: resourceURL)
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        request.httpMethod = "POST"
+        request.httpBody = "app=3&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.data(using: .utf8)
+        
+        let completionSemaphore = DispatchSemaphore(value: 0)
+        var success = false
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                success = true
+            } else {
+                success = false
+            }
+            
+            completionSemaphore.signal()
+        }.resume()
+        
+        completionSemaphore.wait()
+        return success
+    }
+    
+    func unfavoriteRant(rantID: Int) -> Bool {
+        if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+            logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+        }
+        
+        let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(rantID))/unfavorite".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        var request = URLRequest(url: resourceURL)
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        request.httpMethod = "POST"
+        request.httpBody = "app=3&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.data(using: .utf8)
+        
+        let completionSemaphore = DispatchSemaphore(value: 0)
+        var success = false
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                success = true
+            } else {
+                success = false
+            }
+            
+            completionSemaphore.signal()
+        }.resume()
+        
+        completionSemaphore.wait()
+        return success
+    }
+    
+    func editRant(rantID: Int, postType: RantType, content: String, tags: String?, image: UIImage?) -> Bool {
+        if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+            logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+        }
+        
+        if image != nil {
+            let url = URL(string: "https://devrant.com/api/devrant/rants/\(String(rantID))?cb=\(String(Int(Date().timeIntervalSince1970)).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
+            
+            var request = URLRequest(url: url)
+            
+            let boundary = UUID().uuidString
+            
+            request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+            
+            request.httpMethod = "POST"
+            
+            let paramList: [String: String] = [
+                "app": "3",
+                "rant": content,
+                "tags": (tags != nil ? tags! : ""),
+                "token_id": String(UserDefaults.standard.integer(forKey: "DRTokenID")),
+                "token_key": UserDefaults.standard.string(forKey: "DRTokenKey")!,
+                "user_id": String(UserDefaults.standard.integer(forKey: "DRUserID")),
+                "type": String(postType.rawValue),
+                //"plat": "1",
+                //"nari": "-1",
+            ]
+            
+            request.httpBody = createBody(parameters: paramList, boundary: boundary, data: image?.jpegData(compressionQuality: 1.0))
+            
+            print("REQUEST BODY:")
+            //print(String(data: request.httpBody!, encoding: .utf8))
+            print(String(decoding: request.httpBody!, as: UTF8.self))
+            
+            let completionSemaphore = DispatchSemaphore(value: 0)
+            
+            var success = false
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                    success = true
+                } else {
+                    success = false
+                }
+                
+                completionSemaphore.signal()
+            }
+            
+            task.resume()
+            
+            completionSemaphore.wait()
+            return success
+        } else {
+            let url = URL(string: "https://devrant.com/api/devrant/rants/\(String(rantID))?cb=\(String(Int(Date().timeIntervalSince1970)).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)")!
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpBody = "token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)&rant=\(content)&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&tags=\(tags ?? "")&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&type=\(String(postType.rawValue))&app=3".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.data(using: .utf8)
+            
+            let completionSemaphore = DispatchSemaphore(value: 0)
+            var success = false
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                    success = true
+                } else {
+                    success = false
+                }
+                
+                completionSemaphore.signal()
+            }.resume()
+            
+            completionSemaphore.wait()
+            return success
+        }
+    }
+    
     func postComment(rantID: Int, content: String, image: UIImage?) -> Bool {
         if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
             logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)

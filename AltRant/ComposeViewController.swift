@@ -20,8 +20,14 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     var viewControllerThatPresented: UIViewController!
     
     //let placeholder: String
+    var content: String?
+    var tags: String?
+    
     var isComment: Bool!
+    var isEdit: Bool!
     var rantID: Int?
+    
+    var rantType: RantType = .rant
     
     var inputImage: UIImage? {
         didSet {
@@ -54,7 +60,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "464649") : UIColor(hex: "c5c5c7")
         contentTextView.delegate = self
         
-        remainingLettersLabel.text = !isComment ? String(5000 - contentTextView.text.count) : String(1000 - contentTextView.text.count)
+        
+        
+        //remainingLettersLabel.text = !isComment ? String(5000 - contentTextView.text.count) : String(1000 - contentTextView.text.count)
         
         let keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()
@@ -67,7 +75,30 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         contentTextView.inputAccessoryView = keyboardToolbar
         tagTextField.inputAccessoryView = keyboardToolbar
         
-        navigationItem.title = self.isComment ? "New Comment" : "New Rant/Story"
+        //navigationItem.title = self.isComment ? "New Comment" : "New Rant/Story"
+        
+        if !isComment && !isEdit {
+            navigationItem.title = "New Rant/Story"
+        } else if isComment {
+            navigationItem.title = "New Comment"
+        } else if isEdit {
+            navigationItem.title = "Edit"
+            contentTextView.text = content
+            
+            if !isComment {
+                tagTextField.text = tags
+                
+                if (viewControllerThatPresented as! RantViewController).supplementalRantImage == nil {
+                    inputImage = nil
+                } else {
+                    inputImage = UIImage(contentsOfFile: (viewControllerThatPresented as! RantViewController).supplementalRantImage?.previewItemURL.relativePath ?? "")
+                }
+            }
+            
+            
+        }
+        
+        remainingLettersLabel.text = !isComment ? String(5000 - contentTextView.text.count) : String(1000 - contentTextView.text.count)
         
         if isComment {
             tagTextField.isHidden = true
@@ -311,26 +342,51 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                     }
                 }
             } else {
-                let rantID = APIRequest().postRant(postType: .rant, content: self.contentTextView.text, tags: self.tagTextField.text, image: self.inputImage)
-                
-                DispatchQueue.main.async {
-                    //self.submitButton = originalSubmitButton
-                    //self.navigationItem.setRightBarButton(originalSubmitButton, animated: false)
-                    self.navigationItem.rightBarButtonItem?.isEnabled = true
-                    self.navigationItem.leftBarButtonItem?.isEnabled = true
+                if !self.isEdit {
+                    let rantID = APIRequest().postRant(postType: self.rantType, content: self.contentTextView.text, tags: self.tagTextField.text, image: self.inputImage)
                     
-                    if rantID == -1 {
-                        self.showAlertWithError("An error occurred while posting the rant. Please revise the content that you are trying to send and try again.", retryHandler: { self.submit(sender) })
-                    } else {
-                        let viewControllerThatPresented = self.viewControllerThatPresented!
+                    DispatchQueue.main.async {
+                        //self.submitButton = originalSubmitButton
+                        //self.navigationItem.setRightBarButton(originalSubmitButton, animated: false)
+                        self.navigationItem.rightBarButtonItem?.isEnabled = true
+                        self.navigationItem.leftBarButtonItem?.isEnabled = true
                         
-                        self.navigationController?.dismiss(animated: true, completion: {
-                            let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
-                                return RantViewController(coder: coder, rantID: rantID, rantInFeed: nil, supplementalRantImage: nil, loadCompletionHandler: nil)
-                            })
+                        if rantID == -1 {
+                            self.showAlertWithError("An error occurred while posting the rant. Please revise the content that you are trying to send and try again.", retryHandler: { self.submit(sender) })
+                        } else {
+                            let viewControllerThatPresented = self.viewControllerThatPresented!
                             
-                            viewControllerThatPresented.navigationController?.pushViewController(rantVC, animated: true)
-                        })
+                            self.navigationController?.dismiss(animated: true, completion: {
+                                let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
+                                    return RantViewController(coder: coder, rantID: rantID, rantInFeed: nil, supplementalRantImage: nil, loadCompletionHandler: nil)
+                                })
+                                
+                                viewControllerThatPresented.navigationController?.pushViewController(rantVC, animated: true)
+                            })
+                        }
+                    }
+                } else {
+                    let success = APIRequest().editRant(rantID: self.rantID!, postType: self.rantType, content: self.contentTextView.text, tags: self.tagTextField.text, image: self.inputImage)
+                    
+                    if success {
+                        var file: File?
+                        
+                        let updatedRant = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: (self.viewControllerThatPresented as! RantViewController).comments.last?.id ?? 0)!.rant
+                        
+                        if updatedRant.attached_image != nil {
+                            file = File.loadFile(image: updatedRant.attached_image!, size: CGSize(width: updatedRant.attached_image!.width!, height: updatedRant.attached_image!.height!))
+                        }
+                        
+                        DispatchQueue.main.async {
+                            let viewControllerThatPresented = self.viewControllerThatPresented!
+                            
+                            self.navigationController?.dismiss(animated: true, completion: {
+                                (viewControllerThatPresented as! RantViewController).rant = updatedRant
+                                (viewControllerThatPresented as! RantViewController).supplementalRantImage = file
+                                
+                                (viewControllerThatPresented as! RantViewController).tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                            })
+                        }
                     }
                 }
             }

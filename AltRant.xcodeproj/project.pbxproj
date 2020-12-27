@@ -17,6 +17,7 @@
 		5904018325762953002B062A /* RantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5904018125762953002B062A /* RantInFeedCell.xib */; };
 		59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59095F5D25961CB40074BABC /* ComposeViewController.storyboard */; };
 		590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590A82852580B6600025F11A /* StretchyTableHeaderView.swift */; };
+		5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921F2C12598E53900540CF5 /* MoreTableViewController.swift */; };
 		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
 		5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */; };
 		592B1B2F2578F31300109377 /* RantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592B1B2E2578F31300109377 /* RantViewController.swift */; };
@@ -37,6 +38,8 @@
 		5990652A257668E90058C1D7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906529257668E90058C1D7 /* APIRequest.swift */; };
 		5990652D257668FD0058C1D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990652C257668FD0058C1D7 /* User.swift */; };
 		59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B842EB25947876007F16FC /* UITableView+getAllCells.swift */; };
+		59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CBD25988DA300E46948 /* UINavigationController+.swift */; };
+		59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CC02598DAD900E46948 /* MoreCell.swift */; };
 		59C3A1D9257E0FAB0082E76F /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1D8257E0FAB0082E76F /* UIImage+.swift */; };
 		59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1DF257E8E990082E76F /* VoteResponse.swift */; };
 		59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1E2257E972F0082E76F /* CommentCell.swift */; };
@@ -67,6 +70,7 @@
 		59095F5D25961CB40074BABC /* ComposeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeViewController.storyboard; sourceTree = "<group>"; };
 		590A82852580B6600025F11A /* StretchyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableHeaderView.swift; sourceTree = "<group>"; };
 		591A752D257F518F001E1FC2 /* AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltRant.entitlements; sourceTree = "<group>"; };
+		5921F2C12598E53900540CF5 /* MoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewController.swift; sourceTree = "<group>"; };
 		5922A55425778C90009F3025 /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		5922A55925779E0B009F3025 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
 		5922A55A25779E1E009F3025 /* AltRant-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AltRant-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -89,6 +93,8 @@
 		59906529257668E90058C1D7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		5990652C257668FD0058C1D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		59B842EB25947876007F16FC /* UITableView+getAllCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+getAllCells.swift"; sourceTree = "<group>"; };
+		59B85CBD25988DA300E46948 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
+		59B85CC02598DAD900E46948 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		59C3A1D8257E0FAB0082E76F /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		59C3A1DF257E8E990082E76F /* VoteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResponse.swift; sourceTree = "<group>"; };
 		59C3A1E2257E972F0082E76F /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -153,6 +159,7 @@
 				59095F5D25961CB40074BABC /* ComposeViewController.storyboard */,
 				5904016D257627A3002B062A /* ViewController.swift */,
 				5904016F257627A3002B062A /* Main.storyboard */,
+				5921F2C12598E53900540CF5 /* MoreTableViewController.swift */,
 				59040172257627A5002B062A /* Assets.xcassets */,
 				59040174257627A5002B062A /* LaunchScreen.storyboard */,
 				59040177257627A5002B062A /* Info.plist */,
@@ -172,6 +179,7 @@
 				59E671622576AD12007EEB28 /* RantCell.xib */,
 				59C3A1E2257E972F0082E76F /* CommentCell.swift */,
 				59C3A1E3257E972F0082E76F /* CommentCell.xib */,
+				59B85CC02598DAD900E46948 /* MoreCell.swift */,
 				590A82812580ACFF0025F11A /* Profile View */,
 			);
 			path = "Template Views";
@@ -200,6 +208,7 @@
 				59B842EB25947876007F16FC /* UITableView+getAllCells.swift */,
 				59FFE6F32594C12E00C3AB0B /* UITextView+Placeholder.h */,
 				59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */,
+				59B85CBD25988DA300E46948 /* UINavigationController+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -319,12 +328,14 @@
 				59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */,
 				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
 				59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */,
+				59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */,
 				59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */,
 				5990650E257643D60058C1D7 /* TagListView.swift in Sources */,
 				59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */,
 				5990652225765FE10058C1D7 /* RantModel.swift in Sources */,
 				59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */,
 				59C3A1D9257E0FAB0082E76F /* UIImage+.swift in Sources */,
+				5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */,
 				5904016E257627A3002B062A /* ViewController.swift in Sources */,
 				5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */,
 				590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */,
@@ -332,6 +343,7 @@
 				59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */,
 				5904016A257627A3002B062A /* AppDelegate.swift in Sources */,
 				5990652325765FE10058C1D7 /* RantResponse.swift in Sources */,
+				59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */,
 				592B1B2F2578F31300109377 /* RantViewController.swift in Sources */,
 				59906511257644120058C1D7 /* TagView.swift in Sources */,
 				5904016C257627A3002B062A /* SceneDelegate.swift in Sources */,

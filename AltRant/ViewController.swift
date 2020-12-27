@@ -261,6 +261,7 @@ class HomeFeedTableViewController: UITableViewController {
         let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
         (composeVC.viewControllers.first as! ComposeViewController).rantID = nil
         (composeVC.viewControllers.first as! ComposeViewController).isComment = false
+        (composeVC.viewControllers.first as! ComposeViewController).isEdit = false
         (composeVC.viewControllers.first as! ComposeViewController).viewControllerThatPresented = self
         
         composeVC.isModalInPresentation = true

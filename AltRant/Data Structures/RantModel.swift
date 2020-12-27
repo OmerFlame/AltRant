@@ -28,6 +28,8 @@ public struct RantModel: Codable, Identifiable {
     
     let edited: Bool
     
+    var favorited: Int?
+    
     let link: String?
     
     let rt: Int
@@ -65,6 +67,7 @@ public struct RantModel: Codable, Identifiable {
              vote_state,
              weekly,
              edited,
+             favorited,
              link,
              rt,
              rc,
@@ -94,6 +97,7 @@ public struct RantModel: Codable, Identifiable {
          vote_state: Int,
          weekly: Weekly?,
          edited: Bool,
+         favorited: Int?,
          link: String?,
          rt: Int,
          rc: Int,
@@ -122,6 +126,7 @@ public struct RantModel: Codable, Identifiable {
         self.vote_state = vote_state
         self.weekly = weekly
         self.edited = edited
+        self.favorited = favorited
         self.link = link
         self.rt = rt
         self.rc = rc
@@ -159,6 +164,7 @@ public struct RantModel: Codable, Identifiable {
         vote_state = try values.decode(Int.self, forKey: .vote_state)
         weekly = try? values.decode(Weekly.self, forKey: .weekly)
         edited = try values.decode(Bool.self, forKey: .edited)
+        favorited = try? values.decode(Int.self, forKey: .favorited)
         link = try? values.decode(String.self, forKey: .link)
         rt = try values.decode(Int.self, forKey: .rt)
         rc = try values.decode(Int.self, forKey: .rc)

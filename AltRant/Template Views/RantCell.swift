@@ -23,6 +23,7 @@ class RantCell: UITableViewCell {
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
+    @IBOutlet weak var favoriteModifyButton: UIButton!
     
     var file: File?
     var savedPreviewImage: UIImage?
@@ -191,10 +192,134 @@ class RantCell: UITableViewCell {
         let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleImageTap(_:)))
         let userGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleUserTap(_:)))
         
+        if rantContents.user_id == UserDefaults.standard.integer(forKey: "DRUserID") {
+            favoriteModifyButton.setTitle("Modify", for: .normal)
+            
+            let actionsMenu = UIMenu(title: "", children: [
+                                        UIAction(title: "Edit", image: UIImage(systemName: "square.and.pencil")!) { action in
+                                            if Double(Date().timeIntervalSince1970) - Double(self.rantContents.created_time) >= 300 {
+                                                let alert = UIAlertController(title: "Editing Disabled", message: "Rants and comments can only be edited for 5 mins (30 mins for devRant++ subscribers) after they are posted.", preferredStyle: .alert)
+                                                
+                                                alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: nil))
+                                                
+                                                self.parentTableViewController?.present(alert, animated: true, completion: nil)
+                                            } else {
+                                                let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
+                                                (composeVC.viewControllers.first as! ComposeViewController).rantID = self.rantContents.id
+                                                (composeVC.viewControllers.first as! ComposeViewController).isComment = false
+                                                (composeVC.viewControllers.first as! ComposeViewController).isEdit = true
+                                                (composeVC.viewControllers.first as! ComposeViewController).content = self.rantContents.text
+                                                //(composeVC.viewControllers.first as! ComposeViewController).inputImage = UIImage(contentsOfFile: self.file?.previewItemURL.relativePath ?? "")
+                                                
+                                                var sanitizedTagArray = self.rantContents.tags
+                                                sanitizedTagArray.remove(at: sanitizedTagArray.firstIndex(where: {
+                                                    $0 == "rant" || $0 == "joke/meme" || $0 == "question" || $0 == "collab" || $0 == "devrant" || $0 == "random"
+                                                })!)
+                                                
+                                                (composeVC.viewControllers.first as! ComposeViewController).tags = sanitizedTagArray.joined(separator: ",")
+                                                
+                                                if self.rantContents.tags.contains("rant") {
+                                                    (composeVC.viewControllers.first as! ComposeViewController).rantType = .rant
+                                                } else if self.rantContents.tags.contains("joke/meme") {
+                                                    (composeVC.viewControllers.first as! ComposeViewController).rantType = .meme
+                                                } else if self.rantContents.tags.contains("question") {
+                                                    (composeVC.viewControllers.first as! ComposeViewController).rantType = .question
+                                                } else if self.rantContents.tags.contains("devrant") {
+                                                    (composeVC.viewControllers.first as! ComposeViewController).rantType = .question
+                                                } else {
+                                                    (composeVC.viewControllers.first as! ComposeViewController).rantType = .random
+                                                }
+                                                
+                                                (composeVC.viewControllers.first as! ComposeViewController).viewControllerThatPresented = self.parentTableViewController
+                                                
+                                                composeVC.isModalInPresentation = true
+                                                
+                                                self.parentTableViewController!.present(composeVC, animated: true, completion: nil)
+                                            }
+                                        },
+                
+                                        UIAction(title: "Delete", image: UIImage(systemName: "trash")!) { action in
+                                            let alert = UIAlertController(title: "Confirm Delete", message: "Are you sure you want to delete this rant?", preferredStyle: .alert)
+                                            
+                                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                                            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in self.delete() }))
+                                            
+                                            self.parentTableViewController?.present(alert, animated: true, completion: nil)
+                                        }
+            ])
+            
+            favoriteModifyButton.showsMenuAsPrimaryAction = true
+            favoriteModifyButton.menu = actionsMenu
+        } else {
+            //favoriteModifyButton.setTitle("Favorite", for: .normal)
+            if rantContents.favorited == nil {
+                favoriteModifyButton.setTitle("Favorite", for: .normal)
+                favoriteModifyButton.addTarget(self, action: #selector(handleFavorite), for: .touchUpInside)
+            } else {
+                favoriteModifyButton.setTitle("Unfavorite", for: .normal)
+                favoriteModifyButton.addTarget(self, action: #selector(handleFavorite), for: .touchUpInside)
+            }
+        }
+        
         supplementalImageView.addGestureRecognizer(imageGestureRecognizer)
         userStackView.addGestureRecognizer(userGestureRecognizer)
         
         //layoutSubviews()
+    }
+    
+    @objc func handleFavorite() {
+        if rantContents.favorited == nil {
+            let success = APIRequest().favoriteRant(rantID: rantContents.id)
+            
+            if success {
+                parentTableViewController?.rant?.favorited = 1
+                
+                parentTableViewController?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+            }
+        } else {
+            let success = APIRequest().unfavoriteRant(rantID: rantContents.id)
+            
+            if success {
+                parentTableViewController?.rant?.favorited = nil
+                
+                parentTableViewController?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+            }
+        }
+    }
+    
+    func delete() {
+        self.parentTableViewController?.navigationItem.leftBarButtonItem?.isEnabled = false
+        self.parentTableViewController?.navigationItem.rightBarButtonItem?.isEnabled = false
+        
+        self.parentTableViewController?.title = "Deleting..."
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let success = APIRequest().deleteRant(rantID: self.rantContents.id)
+            
+            if success {
+                let successAlertController = UIAlertController(title: "Success", message: "Rant successfully deleted!", preferredStyle: .alert)
+                
+                successAlertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                DispatchQueue.main.async {
+                    let navigationController = self.parentTableViewController?.navigationController
+                    
+                    self.parentTableViewController?.navigationController?.popViewController(animated: true) {
+                        
+                        navigationController?.topViewController?.present(successAlertController, animated: true, completion: nil)
+                    }
+                }
+            } else {
+                let failureAlertController = UIAlertController(title: "Error", message: "Failed to delete rant. Please try again later.", preferredStyle: .alert)
+                
+                failureAlertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                failureAlertController.addAction(UIAlertAction(title: "Retry", style: .destructive, handler: { _ in self.delete() }))
+                
+                DispatchQueue.main.async {
+                    self.parentTableViewController?.present(failureAlertController, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     /*override func layoutSubviews() {
