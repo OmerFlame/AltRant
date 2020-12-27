@@ -425,18 +425,22 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         switch sender.selectedSegmentIndex {
         case 0:
+            currentContentType = .rants
             performFetch(contentType: .rants, nil)
             break
             
         case 1:
+            currentContentType = .upvoted
             performFetch(contentType: .upvoted, nil)
             break
             
         case 2:
+            currentContentType = .comments
             performFetch(contentType: .comments, nil)
             break
             
         case 3:
+            currentContentType = .favorite
             performFetch(contentType: .favorite, nil)
             break
             
