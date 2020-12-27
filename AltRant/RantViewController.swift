@@ -283,13 +283,13 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
+    override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
         
         if parent == nil {
             profile = nil
-            comments = []
-            commentImages = []
+            comments.removeAll()
+            commentImages.removeAll()
             supplementalRantImage = nil
             ranterProfileImage = nil
             rant = nil
