@@ -79,6 +79,54 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         
         if !isComment && !isEdit {
             navigationItem.title = "New Rant/Story"
+            
+            let contentTypeMenu = UIMenu(title: "", children: [
+                UIAction(title: "Rant/Story", handler: { _ in
+                    (self.navigationItem.titleView as! UIButton).setTitle("New Rant/Story", for: .normal)
+                    (self.navigationItem.titleView as! UIButton).sizeToFit()
+                    self.rantType = .rant
+                }),
+                UIAction(title: "Joke/Meme", handler: { _ in
+                    (self.navigationItem.titleView as! UIButton).setTitle("New Joke/Meme", for: .normal)
+                    (self.navigationItem.titleView as! UIButton).sizeToFit()
+                    self.rantType = .meme
+                    
+                }),
+                UIAction(title: "Question", handler: { _ in
+                    (self.navigationItem.titleView as! UIButton).setTitle("New Question", for: .normal)
+                    (self.navigationItem.titleView as! UIButton).sizeToFit()
+                    self.rantType = .question
+                }),
+                UIAction(title: "devRant", handler: { _ in
+                    (self.navigationItem.titleView as! UIButton).setTitle("New devRant-related Post", for: .normal)
+                    (self.navigationItem.titleView as! UIButton).sizeToFit()
+                    self.rantType = .devRant
+                }),
+                UIAction(title: "Random", handler: { _ in
+                    (self.navigationItem.titleView as! UIButton).setTitle("New Random Post", for: .normal)
+                    (self.navigationItem.titleView as! UIButton).sizeToFit()
+                    self.rantType = .random
+                })
+            ])
+            
+            /*let contentTypeMenu = UIMenu(title: "", children: [
+                UIAction(title: "Rant/Story", handler: { _ in self.navigationItem.title = "New Rant/Story"; self.rantType = .rant }),
+                UIAction(title: "Joke/Meme", handler: { _ in self.navigationItem.title = "New Joke/Meme"; self.rantType = .meme }),
+                UIAction(title: "Question", handler: { _ in self.navigationItem.title = "New Question"; self.rantType = .question }),
+                UIAction(title: "devRant", handler: { _ in self.navigationItem.title = "New devRant-related Post"; self.rantType = .devRant }),
+                UIAction(title: "Random", handler: { _ in self.navigationItem.title = "New Random Post"; self.rantType = .random })
+            ])*/
+            
+            let titleButton = UIButton()
+            titleButton.showsMenuAsPrimaryAction = true
+            titleButton.menu = contentTypeMenu
+            titleButton.setTitleColor(.label, for: .normal)
+            titleButton.setTitle("New Rant/Story", for: .normal)
+            titleButton.sizeToFit()
+            titleButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+            
+            navigationItem.titleView = titleButton
+            
         } else if isComment {
             navigationItem.title = "New Comment"
         } else if isEdit {
