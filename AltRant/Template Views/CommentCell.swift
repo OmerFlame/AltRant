@@ -251,6 +251,19 @@ class CommentCell: UITableViewCell {
         }
     }
     
+    @IBAction func reply(_ sender: Any) {
+        let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
+        
+        (composeVC.viewControllers.first! as! ComposeViewController).content = "@\(commentContents.user_username) "
+        (composeVC.viewControllers.first! as! ComposeViewController).rantID = commentContents.rant_id
+        (composeVC.viewControllers.first! as! ComposeViewController).isComment = true
+        (composeVC.viewControllers.first! as! ComposeViewController).isEdit = false
+        (composeVC.viewControllers.first! as! ComposeViewController).viewControllerThatPresented = parentTableViewController
+        
+        composeVC.isModalInPresentation = true
+        parentTableViewController?.present(composeVC, animated: true, completion: nil)
+    }
+    
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
             let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in

@@ -76,6 +76,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
             
         } else if isComment {
             navigationItem.title = "New Comment"
+            contentTextView.text = content
         } else if isEdit {
             navigationItem.title = "Edit"
             contentTextView.text = content
@@ -233,15 +234,17 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         DispatchQueue.global(qos: .userInitiated).async {
             if self.isComment {
                 var addedContent = [CommentModel]()
-                let lastCommentID = (self.viewControllerThatPresented as! RantViewController).comments.last!.id
+                let lastCommentID = (self.viewControllerThatPresented as! RantViewController).comments.last?.id ?? 0
                 
                 let success = APIRequest().postComment(rantID: self.rantID!, content: self.contentTextView.text, image: self.inputImage)
                 
-                if (self.viewControllerThatPresented as! RantViewController).comments.isEmpty {
+                /*if (self.viewControllerThatPresented as! RantViewController).comments.isEmpty {
                     addedContent = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: 0)!.comments
                 } else {
                     addedContent = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: lastCommentID)!.comments
-                }
+                }*/
+                
+                addedContent = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: lastCommentID)!.comments
                 
                 let start = (self.viewControllerThatPresented as! RantViewController).comments.count
                 //var end = response!.profile.content.content.rants.count + start
