@@ -28,6 +28,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     var isComment: Bool!
     var isEdit: Bool!
     var rantID: Int?
+    var commentID: Int?
     
     var rantType: RantType = .rant
     
@@ -90,8 +91,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                     inputImage = UIImage(contentsOfFile: (viewControllerThatPresented as! RantViewController).supplementalRantImage?.previewItemURL.relativePath ?? "")
                 }
             }
-            
-            
+        } else if isEdit && isComment {
+            navigationItem.title = "Edit"
+            contentTextView.text = content
         }
         
         remainingLettersLabel.text = !isComment ? String(5000 - contentTextView.text.count) : String(1000 - contentTextView.text.count)
@@ -233,50 +235,90 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         
         DispatchQueue.global(qos: .userInitiated).async {
             if self.isComment {
-                var addedContent = [CommentModel]()
-                let lastCommentID = (self.viewControllerThatPresented as! RantViewController).comments.last?.id ?? 0
-                
-                let success = APIRequest().postComment(rantID: self.rantID!, content: self.contentTextView.text, image: self.inputImage)
-                
-                /*if (self.viewControllerThatPresented as! RantViewController).comments.isEmpty {
-                    addedContent = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: 0)!.comments
-                } else {
-                    addedContent = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: lastCommentID)!.comments
-                }*/
-                
-                addedContent = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: lastCommentID)!.comments
-                
-                let start = (self.viewControllerThatPresented as! RantViewController).comments.count
-                //var end = response!.profile.content.content.rants.count + start
-                let end = addedContent.count + start
-                
-                (self.viewControllerThatPresented as! RantViewController).comments.append(contentsOf: addedContent)
-                
-                let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 1) }
-                
-                for i in (self.viewControllerThatPresented as! RantViewController).comments[start..<end] {
-                    if let attachedImage = i.attached_image {
-                        (self.viewControllerThatPresented as! RantViewController).commentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
-                    } else {
-                        (self.viewControllerThatPresented as! RantViewController).commentImages.append(nil)
-                    }
-                }
-                
-                DispatchQueue.main.async {
-                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                if !self.isEdit {
+                    var addedContent = [CommentModel]()
+                    let lastCommentID = (self.viewControllerThatPresented as! RantViewController).comments.last?.id ?? 0
                     
-                    if !success {
-                        self.showAlertWithError("An error occurred while posting the rant. Please revise the content that you are trying to send and try again.", retryHandler: { self.submit(sender) })
+                    let success = APIRequest().postComment(rantID: self.rantID!, content: self.contentTextView.text, image: self.inputImage)
+                    
+                    /*if (self.viewControllerThatPresented as! RantViewController).comments.isEmpty {
+                        addedContent = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: 0)!.comments
                     } else {
-                        let viewControllerThatPresented = self.viewControllerThatPresented
+                        addedContent = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: lastCommentID)!.comments
+                    }*/
+                    
+                    addedContent = try! APIRequest().getRantFromID(id: self.rantID!, lastCommentID: lastCommentID)!.comments
+                    
+                    let start = (self.viewControllerThatPresented as! RantViewController).comments.count
+                    //var end = response!.profile.content.content.rants.count + start
+                    let end = addedContent.count + start
+                    
+                    (self.viewControllerThatPresented as! RantViewController).comments.append(contentsOf: addedContent)
+                    
+                    let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 1) }
+                    
+                    for i in (self.viewControllerThatPresented as! RantViewController).comments[start..<end] {
+                        if let attachedImage = i.attached_image {
+                            (self.viewControllerThatPresented as! RantViewController).commentImages[i.id] = File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!))
+                        } else {
+                            (self.viewControllerThatPresented as! RantViewController).commentImages[i.id] = nil
+                        }
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.navigationItem.rightBarButtonItem?.isEnabled = true
                         
-                        self.navigationController?.dismiss(animated: true, completion: {
-                            (viewControllerThatPresented as! RantViewController).tableView.beginUpdates()
-                            (viewControllerThatPresented as! RantViewController).tableView.insertRows(at: indexPaths, with: .automatic)
-                            (viewControllerThatPresented as! RantViewController).tableView.endUpdates()
+                        if !success {
+                            self.showAlertWithError("An error occurred while posting the rant. Please revise the content that you are trying to send and try again.", retryHandler: { self.submit(sender) })
+                        } else {
+                            let viewControllerThatPresented = self.viewControllerThatPresented
                             
-                            (viewControllerThatPresented as! RantViewController).tableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: true)
-                        })
+                            self.navigationController?.dismiss(animated: true, completion: {
+                                (viewControllerThatPresented as! RantViewController).tableView.beginUpdates()
+                                (viewControllerThatPresented as! RantViewController).tableView.insertRows(at: indexPaths, with: .automatic)
+                                (viewControllerThatPresented as! RantViewController).tableView.endUpdates()
+                                
+                                (viewControllerThatPresented as! RantViewController).tableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: true)
+                            })
+                        }
+                    }
+                } else {
+                    let success = APIRequest().editComment(commentID: self.commentID!, content: self.contentTextView.text, image: self.inputImage)
+                    
+                    
+                    if success {
+                        let newComment = APIRequest().getCommentFromID(self.commentID!)
+                        
+                        if (self.viewControllerThatPresented as! RantViewController).commentImages[self.commentID!] != nil {
+                            if UIImage(contentsOfFile: ((self.viewControllerThatPresented as! RantViewController).commentImages[self.commentID!]!!.previewItemURL.relativePath))! != self.inputImage {
+                                
+                                if newComment!.comment!.attached_image != nil {
+                                    (self.viewControllerThatPresented as! RantViewController).commentImages[self.commentID!] = File.loadFile(image: newComment!.comment!.attached_image!, size: CGSize(width: newComment!.comment!.attached_image!.width!, height: newComment!.comment!.attached_image!.height!))
+                                } else {
+                                    (self.viewControllerThatPresented as! RantViewController).commentImages[self.commentID!] = nil
+                                }
+                            }
+                        } else {
+                            if newComment!.comment!.attached_image != nil {
+                                (self.viewControllerThatPresented as! RantViewController).commentImages[self.commentID!] = File.loadFile(image: newComment!.comment!.attached_image!, size: CGSize(width: newComment!.comment!.attached_image!.width!, height: newComment!.comment!.attached_image!.height!))
+                            } else {
+                                (self.viewControllerThatPresented as! RantViewController).commentImages[self.commentID!] = nil
+                            }
+                        }
+                        
+                        DispatchQueue.main.async {
+                            let viewControllerThatPresented = self.viewControllerThatPresented!
+                            let commentID = self.commentID!
+                            
+                            self.navigationController?.dismiss(animated: true, completion: {
+                                let row = (viewControllerThatPresented as! RantViewController).comments.firstIndex(where: {
+                                    $0.id == commentID
+                                })!
+                                
+                                (viewControllerThatPresented as! RantViewController).comments[row] = newComment!.comment!
+                                (viewControllerThatPresented as! RantViewController).tableView.reloadRows(at: [IndexPath(row: row, section: 1)], with: .none)
+                            })
+                        }
                     }
                 }
             } else {
