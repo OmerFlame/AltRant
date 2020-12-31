@@ -233,6 +233,30 @@ class APIRequest {
         }
     }
     
+    func getCommentFromID(_ id: Int) -> CommentResponse? {
+        if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+            logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+        }
+        
+        let resourceURL = URL(string: "https://devrant.com/api/comments/\(String(id))?app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        var request = URLRequest(url: resourceURL)
+        request.httpMethod = "GET"
+        request.addValue("application/x-form-www-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let completionSemaphore = DispatchSemaphore(value: 0)
+        var result: CommentResponse?
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            let decoder = JSONDecoder()
+            result = try? decoder.decode(CommentResponse.self, from: data!)
+            
+            completionSemaphore.signal()
+        }.resume()
+        
+        completionSemaphore.wait()
+        return result
+    }
+    
     func voteOnRant(rantID: Int, vote: Int) -> RantVoteResponse? {
         if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
             logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
@@ -717,6 +741,99 @@ class APIRequest {
                 
                 print(body)
                 
+                if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                    success = true
+                } else {
+                    success = false
+                }
+                
+                completionSemaphore.signal()
+            }.resume()
+            
+            completionSemaphore.wait()
+            return success
+        }
+    }
+    
+    func editComment(commentID: Int, content: String, image: UIImage?) -> Bool {
+        if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+            logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+        }
+        
+        if image != nil {
+            let resourceURL = URL(string: "https://devrant.com/api/comments/\(String(commentID))?cb=\(String(Int(Date().timeIntervalSince1970)))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+            
+            var request = URLRequest(url: resourceURL)
+            request.httpMethod = "POST"
+            
+            let boundary = UUID().uuidString
+            
+            request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+            
+            let paramList: [String: String] = [
+                "app": "3",
+                "comment": content,
+                "token_id": String(UserDefaults.standard.integer(forKey: "DRTokenID")),
+                "token_key": UserDefaults.standard.string(forKey: "DRTokenKey")!,
+                "user_id": String(UserDefaults.standard.integer(forKey: "DRUserID"))
+            ]
+            
+            let body = createBody(parameters: paramList, boundary: boundary, data: image?.pngData())
+            
+            request.httpBody = body
+            
+            //print(String(decoding: image!.pngData()!, as: UTF8.self))
+            //print(String(decoding: request.httpBody!, as: UTF8.self))
+            
+            //print(String(data: request.httpBody!, encoding: .utf8)!)
+            
+            let completionSemaphore = DispatchSemaphore(value: 0)
+            
+            var success = false
+            
+            /*let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                let body = String(data: data!, encoding: .utf8)!
+                
+                print(body)
+                
+                if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                    success = true
+                } else {
+                    success = false
+                }
+                
+                completionSemaphore.signal()
+            }*/
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                let body = String(data: data!, encoding: .utf8)!
+                
+                print(body)
+                
+                if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                    success = true
+                } else {
+                    success = false
+                }
+                
+                completionSemaphore.signal()
+            }.resume()
+            
+            completionSemaphore.wait()
+            return success
+        } else {
+            let resourceURL = URL(string: "https://devrant.com/api/comments/\(String(commentID))?cb=\(String(Int(Date().timeIntervalSince1970)))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+            
+            var request = URLRequest(url: resourceURL)
+            request.httpMethod = "POST"
+            
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpBody = "comment=\(content)&app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!.data(using: .utf8)
+            
+            let completionSemaphore = DispatchSemaphore(value: 0)
+            var success = false
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
                 if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
                     success = true
                 } else {
