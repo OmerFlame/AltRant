@@ -14,3 +14,8 @@ struct RantResponse: Codable {
     
     let success: Bool
 }
+
+struct CommentResponse: Codable {
+    let success: Bool
+    let comment: CommentModel?
+}

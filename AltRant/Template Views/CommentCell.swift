@@ -19,9 +19,11 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userScoreLabel: PaddingLabel!
     @IBOutlet weak var userStackView: UIStackView!
+    @IBOutlet weak var actionsStackView: UIStackView!
     
     @IBOutlet weak var bodyLabel: UILabel!
     @IBOutlet weak var supplementalImageView: UIImageView!
+    @IBOutlet weak var reportModifyButton: UIButton!
     
     var file: File?
     var attachedRantFile: File?
@@ -118,15 +120,111 @@ class CommentCell: UITableViewCell {
             
             let usernameGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleUsernameTap(_:)))
             userStackView.addGestureRecognizer(usernameGestureRecognizer)
+            
+            if commentContents.user_id == UserDefaults.standard.integer(forKey: "DRUserID") && commentContents.user_username == UserDefaults.standard.string(forKey: "DRUsername")! {
+                reportModifyButton.setTitle("Modify", for: .normal)
+                
+                let actionsMenu = UIMenu(title: "", children: [
+                    UIAction(title: "Edit", image: UIImage(systemName: "square.and.pencil")!, handler: { _ in
+                        if Double(Date().timeIntervalSince1970) - Double(self.commentContents.created_time) >= 300 {
+                            let alert = UIAlertController(title: "Editing Disabled", message: "Rants and comments can only be edited for 5 mins (30 mins for devRant++ subscribers) after they are posted.", preferredStyle: .alert)
+                            
+                            alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: nil))
+                            
+                            self.parentTableViewController?.present(alert, animated: true, completion: nil)
+                        } else {
+                            let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
+                            (composeVC.viewControllers.first as! ComposeViewController).commentID = self.commentContents.id
+                            (composeVC.viewControllers.first as! ComposeViewController).isComment = true
+                            (composeVC.viewControllers.first as! ComposeViewController).isEdit = true
+                            (composeVC.viewControllers.first as! ComposeViewController).content = self.commentContents.body
+                            
+                            (composeVC.viewControllers.first as! ComposeViewController).viewControllerThatPresented = self.parentTableViewController
+                            
+                            composeVC.isModalInPresentation = true
+                            
+                            self.parentTableViewController!.present(composeVC, animated: true, completion: nil)
+                        }
+                    }),
+                    
+                    UIAction(title: "Delete", image: UIImage(systemName: "trash")!, handler: { _ in
+                        let alert = UIAlertController(title: "Confirm Delete", message: "Are you sure you want to delete this comment?", preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in self.delete() }))
+                        
+                        self.parentTableViewController?.present(alert, animated: true, completion: nil)
+                    })
+                ])
+                
+                reportModifyButton.showsMenuAsPrimaryAction = true
+                reportModifyButton.menu = actionsMenu
+            } else {
+                reportModifyButton.setTitle("Report", for: .normal)
+            }
         }
         
         if !allowedToPreview {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
             textStackView.addGestureRecognizer(tapGesture)
             
+            actionsStackView.isHidden = true
+            
             /*if let rantAttachedImage = try! APIRequest().getRantFromID(id: commentContents.rant_id)!.rant.attached_image, self.attachedRantFile == nil {
                 self.attachedRantFile = File.loadFile(image: rantAttachedImage, size: CGSize(width: rantAttachedImage.width!, height: rantAttachedImage.height!))
             }*/
+        }
+    }
+    
+    func delete() {
+        let originalColor = self.parentTableViewController?.navigationController?.navigationBar.tintColor
+        
+        self.parentTableViewController?.navigationController?.navigationBar.isUserInteractionEnabled = false
+        self.parentTableViewController?.navigationController?.navigationBar.tintColor = UIColor.systemGray
+        
+        let originalTitle = self.parentTableViewController?.title
+        
+        self.parentTableViewController?.title = "Deleting your comment..."
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let success = APIRequest().deleteComment(commentID: self.commentContents.id)
+            
+            if success {
+                let typeCastedController = self.parentTableViewController as! RantViewController
+                let commentIdx = typeCastedController.comments.firstIndex(where: {
+                    $0.uuid == self.commentContents.uuid
+                })!
+                
+                /*(self.parentTableViewController as! RantViewController).comments[(self.parentTableViewController as! RantViewController).comments.firstIndex(where: {
+                    $0.uuid == self.commentContents.uuid
+                })!]*/
+                
+                typeCastedController.comments.remove(at: commentIdx)
+                typeCastedController.commentImages[self.commentContents.id] = nil
+                
+                DispatchQueue.main.async {
+                    self.parentTableViewController?.title = originalTitle
+                    self.parentTableViewController?.navigationController?.navigationBar.isUserInteractionEnabled = true
+                    self.parentTableViewController?.navigationController?.navigationBar.tintColor = originalColor
+                    
+                    typeCastedController.tableView.deleteRows(at: [IndexPath(row: commentIdx, section: 1)], with: .fade)
+                    
+                    
+                }
+            } else {
+                let failureAlertController = UIAlertController(title: "Error", message: "Failed to delete comment. Please try again later.", preferredStyle: .alert)
+                
+                failureAlertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                failureAlertController.addAction(UIAlertAction(title: "Retry", style: .destructive, handler: { _ in self.delete() }))
+                
+                DispatchQueue.main.async {
+                    self.parentTableViewController?.title = originalTitle
+                    self.parentTableViewController?.navigationController?.navigationBar.isUserInteractionEnabled = true
+                    self.parentTableViewController?.navigationController?.navigationBar.tintColor = originalColor
+                    
+                    self.parentTableViewController?.present(failureAlertController, animated: true, completion: nil)
+                }
+            }
         }
     }
     

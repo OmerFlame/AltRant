@@ -134,7 +134,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="9Ge-5u-DQt">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="9Ge-5u-DQt" userLabel="Actions Stack View">
                                         <rect key="frame" x="0.0" y="518" width="304.5" height="12"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8K-gQ-61B" userLabel="Reply Button">
@@ -176,8 +176,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="actionsStackView" destination="9Ge-5u-DQt" id="asY-Ti-tFI"/>
                 <outlet property="bodyLabel" destination="YWZ-Hc-cet" id="7yi-BR-kdh"/>
                 <outlet property="downvoteButton" destination="0Ri-yD-tK8" id="2XY-RA-848"/>
+                <outlet property="reportModifyButton" destination="HSn-sU-391" id="72H-DL-n6g"/>
                 <outlet property="scoreLabel" destination="B8v-wA-z4K" id="d6c-eR-yFg"/>
                 <outlet property="supplementalImageView" destination="cd4-OV-uma" id="T7V-dr-7Tn"/>
                 <outlet property="textStackView" destination="lVz-nD-j7E" id="zzb-B7-NTf"/>

@@ -291,6 +291,8 @@ class RantCell: UITableViewCell {
         self.parentTableViewController?.navigationItem.leftBarButtonItem?.isEnabled = false
         self.parentTableViewController?.navigationItem.rightBarButtonItem?.isEnabled = false
         
+        let originalTitle = self.parentTableViewController?.title
+        
         self.parentTableViewController?.title = "Deleting..."
         
         DispatchQueue.global(qos: .userInitiated).async {
@@ -316,6 +318,10 @@ class RantCell: UITableViewCell {
                 failureAlertController.addAction(UIAlertAction(title: "Retry", style: .destructive, handler: { _ in self.delete() }))
                 
                 DispatchQueue.main.async {
+                    self.parentTableViewController?.title = originalTitle
+                    self.parentTableViewController?.navigationItem.leftBarButtonItem?.isEnabled = true
+                    self.parentTableViewController?.navigationItem.rightBarButtonItem?.isEnabled = true
+                    
                     self.parentTableViewController?.present(failureAlertController, animated: true, completion: nil)
                 }
             }
