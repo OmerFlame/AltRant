@@ -12,6 +12,7 @@ import UIKit
 enum APIError: Error {
     case responseError
     case decodingError
+    case badCredentialsError
     case otherError
 }
 
@@ -846,6 +847,35 @@ class APIRequest {
             completionSemaphore.wait()
             return success
         }
+    }
+    
+    func deleteComment(commentID: Int) -> Bool {
+        if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+            logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+        }
+        
+        let resourceURL = URL(string: "https://devrant.com/api/comments/\(String(commentID))?app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        
+        var request = URLRequest(url: resourceURL)
+        
+        request.httpMethod = "DELETE"
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let completionSemaphore = DispatchSemaphore(value: 0)
+        var success = false
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if (200..<300).contains((response as? HTTPURLResponse)!.statusCode) {
+                success = true
+            } else {
+                success = false
+            }
+            
+            completionSemaphore.signal()
+        }.resume()
+        
+        completionSemaphore.wait()
+        return success
     }
     
     private func createBody(parameters: [String: String],
