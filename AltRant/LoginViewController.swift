@@ -93,6 +93,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         DispatchQueue.global(qos: .userInitiated).async {
             APIRequest().logIn(username: self.usernameTextField.text!, password: self.passwordTextField.text!)
             
+            if UserDefaults.standard.integer(forKey: "DRUserID") != 0 {
+                let userColor = UIColor(hex: try! APIRequest().getProfileFromID(UserDefaults.standard.integer(forKey: "DRUserID"), userContentType: .rants, skip: 0)!.profile.avatar.b)
+                
+                UserDefaults.standard.set(userColor, forKey: "DRUserColor")
+            }
+            
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.logInButton.setTitle("Log In", for: .normal)
@@ -112,6 +118,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     
                     self.present(errorAlert, animated: true, completion: nil)
                 } else {
+                    
                     //let viewControllerThatInitiatedSelf = (self.navigationController!.presentingViewController as! UINavigationController).viewControllers.first!
                     //let viewControllerThatInitiatedSelf = self.presentingViewController!.navigationController!.viewControllers.first!
                     
