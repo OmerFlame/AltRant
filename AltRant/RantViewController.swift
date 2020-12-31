@@ -26,7 +26,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var tappedComment: CommentCell?
     var supplementalRantImage: File?
     
-    var commentImages = [File?]()
+    var commentImages = [Int:File?]()
     
     var rant: RantModel?
     var comments = [CommentModel]()
@@ -156,7 +156,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             for comment in response!.comments {
                 if comment.attached_image == nil {
-                    commentImages.append(nil)
+                    //commentImages.append(nil)
+                    commentImages[comment.id] = nil
                 } else {
                     /*let completionSemaphore = DispatchSemaphore(value: 0)
                     
@@ -178,7 +179,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     let newImage = UIGraphicsGetImageFromCurrentImageContext()
                     UIGraphicsEndImageContext()*/
                     
-                    self.commentImages.append(File.loadFile(image: comment.attached_image!, size: CGSize(width: comment.attached_image!.width!, height: comment.attached_image!.height!)))
+                    self.commentImages[comment.id] = File.loadFile(image: comment.attached_image!, size: CGSize(width: comment.attached_image!.width!, height: comment.attached_image!.height!))
                 }
             }
         } catch {
@@ -238,7 +239,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
             
             //cell = CommentCell.loadFromXIB() as! CommentCell
-            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, commentInFeed: nil, allowedToPreview: true)
+            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[comments[indexPath.row].id] ?? nil, parentTableViewController: self, parentTableView: tableView, commentInFeed: nil, allowedToPreview: true)
             
             return cell
         }
@@ -299,6 +300,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func compose(_ sender: Any) {
         let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
         (composeVC.viewControllers.first as! ComposeViewController).rantID = rantID
+        (composeVC.viewControllers.first as! ComposeViewController).isEdit = false
         (composeVC.viewControllers.first as! ComposeViewController).isComment = true
         (composeVC.viewControllers.first as! ComposeViewController).viewControllerThatPresented = self
         
