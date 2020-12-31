@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -37,6 +37,7 @@
 		59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906526257660AF0058C1D7 /* ColorFromHexString.swift */; };
 		5990652A257668E90058C1D7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906529257668E90058C1D7 /* APIRequest.swift */; };
 		5990652D257668FD0058C1D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990652C257668FD0058C1D7 /* User.swift */; };
+		59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 59A1B8CB259DD766007DE862 /* NotificationBannerSwift */; };
 		59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B842EB25947876007F16FC /* UITableView+getAllCells.swift */; };
 		59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CBD25988DA300E46948 /* UINavigationController+.swift */; };
 		59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CC02598DAD900E46948 /* MoreCell.swift */; };
@@ -117,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +257,7 @@
 			);
 			name = AltRant;
 			packageProductDependencies = (
+				59A1B8CB259DD766007DE862 /* NotificationBannerSwift */,
 			);
 			productName = AltRant;
 			productReference = 59040166257627A3002B062A /* AltRant.app */;
@@ -285,6 +288,7 @@
 			);
 			mainGroup = 5904015D257627A3002B062A;
 			packageReferences = (
+				59A1B8CA259DD766007DE862 /* XCRemoteSwiftPackageReference "NotificationBanner" */,
 			);
 			productRefGroup = 59040167257627A3002B062A /* Products */;
 			projectDirPath = "";
@@ -567,6 +571,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		59A1B8CA259DD766007DE862 /* XCRemoteSwiftPackageReference "NotificationBanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Daltron/NotificationBanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		59A1B8CB259DD766007DE862 /* NotificationBannerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59A1B8CA259DD766007DE862 /* XCRemoteSwiftPackageReference "NotificationBanner" */;
+			productName = NotificationBannerSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5904015E257627A3002B062A /* Project object */;
 }
