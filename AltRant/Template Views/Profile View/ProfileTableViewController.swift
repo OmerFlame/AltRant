@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import ADNavigationBarExtension
 
 public let secondaryProfilePages: [String] = ["Rants", "++'s", "Comments", "Favorites"]
 
@@ -118,7 +119,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.isNavigationBarHidden = true
+        //self.navigationController?.isNavigationBarHidden = true
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -166,8 +167,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         segmentedControl.addTarget(self, action: #selector(segmentedControlSelectionChanged(_:)), for: .valueChanged)
         
-        tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
-        tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+        //tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
+        //tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
     }
     
     private func canLoadMore() -> Bool {
@@ -193,9 +194,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         segmentedControl.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 32, height: 32)
         
-        UISegmentedControl.appearance().backgroundColor = .systemBackground
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(hex: profileData!.avatar.b)!
+        segmentedControl.backgroundColor = .systemBackground
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.selectedSegmentTintColor = UIColor(hex: profileData!.avatar.b)!
         
         scoreLabel = PaddingLabel()
         scoreLabel.topInset = 2.5
@@ -396,6 +397,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
         if let _ = tableView.tableHeaderView {
             scrollViewDidScroll(tableView)
         }
@@ -412,7 +415,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     @objc func segmentedControlSelectionChanged(_ sender: UISegmentedControl) {
@@ -590,6 +593,34 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             self.blurView.frame = self.currentBlurFrame
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "rantInFeed", let rantViewController = segue.destination as? RantViewController {
+            let indexPath = tableView.indexPath(for: sender as! UITableViewCell)!
+            
+            rantViewController.rantID = rantTypeContent.rantFeed[indexPath.row].id
+            rantViewController.rantInFeed = $rantTypeContent.rantFeed[indexPath.row]
+            rantViewController.supplementalRantImage = rantContentImages[indexPath.row]
+            rantViewController.loadCompletionHandler = nil
+        } else if segue.identifier == "commentInFeed", let rantViewController = segue.destination as? RantViewController {
+            let indexPath = tableView.indexPath(for: sender as! UITableViewCell)!
+            
+            rantViewController.rantID = commentTypeContent.commentTypeContent[indexPath.row].rant_id
+            rantViewController.rantInFeed = nil
+            rantViewController.supplementalRantImage = nil
+            rantViewController.loadCompletionHandler = { tableViewController in
+                DispatchQueue.global(qos: .userInitiated).async {
+                    if let idx = tableViewController!.comments.firstIndex(where: {
+                        $0.id == self.commentTypeContent.commentTypeContent[indexPath.row].id
+                    }) {
+                        DispatchQueue.main.async {
+                            tableViewController!.tableView.scrollToRow(at: IndexPath(row: idx, section: 1), at: .middle, animated: true)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension ProfileTableViewController {
@@ -642,6 +673,10 @@ extension ProfileTableViewController {
         
         return HeaderGeometry(width: (tableView.tableHeaderView as! StretchyTableHeaderView).frame.size.width, headerHeight: headerHeight, elementsHeight: elementsHeight, headerOffset: headerOffset, blurOffset: blurOffset, elementsOffset: elementsOffset, largeTitleWeight: largeTitleWeight)
     }
+}
+
+extension ProfileTableViewController: ExtensibleNavigationBarInformationProvider {
+    var shouldExtendNavigationBar: Bool { return false }
 }
 
 extension UINavigationController: UIGestureRecognizerDelegate {

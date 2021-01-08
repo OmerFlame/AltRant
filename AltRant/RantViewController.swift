@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import QuickLook
+import ADNavigationBarExtension
 
 protocol RantViewControllerDelegate {
     func vote(_ rantViewController: RantViewController, vote: Int)
@@ -48,7 +49,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.init(rantID: nil)
     }*/
     
-    init?(coder: NSCoder, rantID: Int, rantInFeed: Binding<RantInFeed>?, supplementalRantImage: File?, loadCompletionHandler: ((RantViewController?) -> Void)?) {
+    /*init?(coder: NSCoder, rantID: Int, rantInFeed: Binding<RantInFeed>?, supplementalRantImage: File?, loadCompletionHandler: ((RantViewController?) -> Void)?) {
         self.rantID = rantID
         self.rantInFeed = rantInFeed
         self.supplementalRantImage = supplementalRantImage
@@ -60,7 +61,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     required init?(coder: NSCoder) {
         //super.init(coder: coder)
         fatalError("You must use the special coder init!")
-    }
+    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -319,6 +320,10 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     */
 
+}
+
+extension RantViewController: ExtensibleNavigationBarInformationProvider {
+    var shouldExtendNavigationBar: Bool { return false }
 }
 
 class PreviewItem: NSObject, QLPreviewItem {

@@ -8,12 +8,13 @@
 import UIKit
 import Combine
 import SwiftUI
+import ADNavigationBarExtension
 
 class rantFeedData: ObservableObject {
     @Published var rantFeed = [RantInFeed]()
 }
 
-class HomeFeedTableViewController: UITableViewController {
+class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate {
     fileprivate var currentPage = 0
     @ObservedObject var rantFeed = rantFeedData()
     var supplementalImages = [File?]()
@@ -50,7 +51,7 @@ class HomeFeedTableViewController: UITableViewController {
             tableView.infiniteScrollTriggerOffset = 500
             
             //tableView.register(RantInFeedCell.self, forCellReuseIdentifier: "RantInFeedCell")
-            tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
+            //tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
             //tableView.register
             //tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
             
@@ -257,6 +258,20 @@ class HomeFeedTableViewController: UITableViewController {
         self.refreshControl!.endRefreshing()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "RantInFeedCell", let rantViewController = segue.destination as? RantViewController {
+            rantViewController.rantID = rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row].id
+            rantViewController.rantInFeed = $rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row]
+            rantViewController.supplementalRantImage = supplementalImages[tableView.indexPath(for: sender as! UITableViewCell)!.row]
+            rantViewController.loadCompletionHandler = nil
+        } else if segue.identifier == "AfterCompose", let rantViewController = segue.destination as? RantViewController {
+            rantViewController.rantID = sender as! Int
+            rantViewController.rantInFeed = nil
+            rantViewController.supplementalRantImage = nil
+            rantViewController.loadCompletionHandler = nil
+        }
+    }
+    
     @IBAction func openComposeView(_ sender: UIBarButtonItem) {
         let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
         (composeVC.viewControllers.first as! ComposeViewController).rantID = nil
@@ -268,5 +283,18 @@ class HomeFeedTableViewController: UITableViewController {
         
         present(composeVC, animated: true, completion: nil)
     }
+    
+    // MARK: - Tab Bar Controller Delegate
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if let notificationsViewController = (viewController as? ExtensibleNavigationBarNavigationController) {
+            (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = Timer(timeInterval: 5, repeats: true) { _ in
+                (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).getAllData(notificationType: (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).currentNotificationType, shouldGetNewData: true, completion: nil)
+            }
+        } else {
+            ((tabBarController.viewControllers![2] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer.invalidate()
+            
+            ((tabBarController.viewControllers![2] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = nil
+        }
+    }
 }
-

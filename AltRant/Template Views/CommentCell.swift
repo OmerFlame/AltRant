@@ -165,8 +165,8 @@ class CommentCell: UITableViewCell {
         }
         
         if !allowedToPreview {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-            textStackView.addGestureRecognizer(tapGesture)
+            //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+            //textStackView.addGestureRecognizer(tapGesture)
             
             actionsStackView.isHidden = true
             
@@ -362,7 +362,7 @@ class CommentCell: UITableViewCell {
         parentTableViewController?.present(composeVC, animated: true, completion: nil)
     }
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+    /*@objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
             let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
                 //let rant = try! APIRequest().getRantFromID(id: self.commentContents.rant_id)
@@ -405,7 +405,7 @@ class CommentCell: UITableViewCell {
             
             parentTableViewController.navigationController?.pushViewController(rantVC, animated: true)
         }
-    }
+    }*/
     
     private func getImageResizeMultiplier(imageWidth: CGFloat, imageHeight: CGFloat, multiplier: Int) -> CGFloat {
         if imageWidth / CGFloat(multiplier) < 315 && imageHeight / CGFloat(multiplier) < 420 {

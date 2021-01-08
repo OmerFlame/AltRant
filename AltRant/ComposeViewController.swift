@@ -335,11 +335,13 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                             let viewControllerThatPresented = self.viewControllerThatPresented!
                             
                             self.navigationController?.dismiss(animated: true, completion: {
-                                let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
+                                /*let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
                                     return RantViewController(coder: coder, rantID: rantID, rantInFeed: nil, supplementalRantImage: nil, loadCompletionHandler: nil)
                                 })
                                 
-                                viewControllerThatPresented.navigationController?.pushViewController(rantVC, animated: true)
+                                viewControllerThatPresented.navigationController?.pushViewController(rantVC, animated: true)*/
+                                
+                                viewControllerThatPresented.performSegue(withIdentifier: "AfterCompose", sender: rantID)
                             })
                         }
                     }

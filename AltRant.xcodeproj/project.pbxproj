@@ -15,13 +15,18 @@
 		59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59040174257627A5002B062A /* LaunchScreen.storyboard */; };
 		5904018225762953002B062A /* RantInFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904018025762953002B062A /* RantInFeedCell.swift */; };
 		5904018325762953002B062A /* RantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5904018125762953002B062A /* RantInFeedCell.xib */; };
+		59046D9F25A31F0D00C9B4D3 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59046D9E25A31F0D00C9B4D3 /* NotificationsTableViewController.swift */; };
+		59046DA225A3257400C9B4D3 /* ScrollUISegmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59046DA125A3257400C9B4D3 /* ScrollUISegmentController.swift */; };
+		59046DA625A33A0D00C9B4D3 /* NotificationFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59046DA525A33A0D00C9B4D3 /* NotificationFeed.swift */; };
 		59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59095F5D25961CB40074BABC /* ComposeViewController.storyboard */; };
 		590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590A82852580B6600025F11A /* StretchyTableHeaderView.swift */; };
 		5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921F2C12598E53900540CF5 /* MoreTableViewController.swift */; };
 		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
 		5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */; };
 		592B1B2F2578F31300109377 /* RantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592B1B2E2578F31300109377 /* RantViewController.swift */; };
+		592F7D2725A4486C005813FA /* RantUpvoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F7D2625A4486C005813FA /* RantUpvoteCell.swift */; };
 		59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59306E952578E68600F6AD08 /* RantViewController.storyboard */; };
+		594F4AAD25A88A6100923B0E /* ADNavigationBarExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */; };
 		5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */; };
 		5958FC79257AD8B8003D1EDD /* KeyboardAvoidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC78257AD8B8003D1EDD /* KeyboardAvoidingView.swift */; };
 		5990650A257643B30058C1D7 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906509257643B30058C1D7 /* CloseButton.swift */; };
@@ -53,11 +58,14 @@
 		59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671662576BAF4007EEB28 /* PaddingLabel.swift */; };
 		59E6716A2576BD74007EEB28 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671692576BD74007EEB28 /* RoundedImageView.swift */; };
 		59E671752576CE5B007EEB28 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671732576CE5B007EEB28 /* LoginViewController.swift */; };
+		59E70C6925A5B8FA00F45626 /* NotificationsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */; };
 		59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */; };
 		59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */; };
+		DF10AD75D2E40D5986941820 /* Pods_AltRant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0041FA4FBD2B07EA6643FBBE /* Pods-AltRant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AltRant.debug.xcconfig"; path = "Target Support Files/Pods-AltRant/Pods-AltRant.debug.xcconfig"; sourceTree = "<group>"; };
 		59040166257627A3002B062A /* AltRant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AltRant.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59040169257627A3002B062A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5904016B257627A3002B062A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +76,9 @@
 		59040177257627A5002B062A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5904018025762953002B062A /* RantInFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantInFeedCell.swift; sourceTree = "<group>"; };
 		5904018125762953002B062A /* RantInFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RantInFeedCell.xib; sourceTree = "<group>"; };
+		59046D9E25A31F0D00C9B4D3 /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
+		59046DA125A3257400C9B4D3 /* ScrollUISegmentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollUISegmentController.swift; sourceTree = "<group>"; };
+		59046DA525A33A0D00C9B4D3 /* NotificationFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFeed.swift; sourceTree = "<group>"; };
 		59095F5D25961CB40074BABC /* ComposeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeViewController.storyboard; sourceTree = "<group>"; };
 		590A82852580B6600025F11A /* StretchyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableHeaderView.swift; sourceTree = "<group>"; };
 		591A752D257F518F001E1FC2 /* AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltRant.entitlements; sourceTree = "<group>"; };
@@ -77,7 +88,9 @@
 		5922A55A25779E1E009F3025 /* AltRant-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AltRant-Bridging-Header.h"; sourceTree = "<group>"; };
 		5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
 		592B1B2E2578F31300109377 /* RantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantViewController.swift; sourceTree = "<group>"; };
+		592F7D2625A4486C005813FA /* RantUpvoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantUpvoteCell.swift; sourceTree = "<group>"; };
 		59306E952578E68600F6AD08 /* RantViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RantViewController.storyboard; sourceTree = "<group>"; };
+		594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ADNavigationBarExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		5958FC78257AD8B8003D1EDD /* KeyboardAvoidingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoidingView.swift; sourceTree = "<group>"; };
 		59906509257643B30058C1D7 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
@@ -108,9 +121,12 @@
 		59E671662576BAF4007EEB28 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		59E671692576BD74007EEB28 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		59E671732576CE5B007EEB28 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsNavigationViewController.swift; sourceTree = "<group>"; };
 		59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 		59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
 		59FFE6F32594C12E00C3AB0B /* UITextView+Placeholder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
+		6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AltRant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E06FD8442697EB807AAE111D /* Pods-AltRant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AltRant.release.xcconfig"; path = "Target Support Files/Pods-AltRant/Pods-AltRant.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +135,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */,
+				594F4AAD25A88A6100923B0E /* ADNavigationBarExtension.framework in Frameworks */,
+				DF10AD75D2E40D5986941820 /* Pods_AltRant.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +148,8 @@
 			children = (
 				59040168257627A3002B062A /* AltRant */,
 				59040167257627A3002B062A /* Products */,
+				8E4192960C2659B5F29215A8 /* Pods */,
+				9BDBB6D9485395515B96ED21 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,6 +181,8 @@
 				59095F5D25961CB40074BABC /* ComposeViewController.storyboard */,
 				5904016D257627A3002B062A /* ViewController.swift */,
 				5904016F257627A3002B062A /* Main.storyboard */,
+				59046D9E25A31F0D00C9B4D3 /* NotificationsTableViewController.swift */,
+				59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */,
 				5921F2C12598E53900540CF5 /* MoreTableViewController.swift */,
 				59040172257627A5002B062A /* Assets.xcassets */,
 				59040174257627A5002B062A /* LaunchScreen.storyboard */,
@@ -182,6 +204,8 @@
 				59C3A1E2257E972F0082E76F /* CommentCell.swift */,
 				59C3A1E3257E972F0082E76F /* CommentCell.xib */,
 				59B85CC02598DAD900E46948 /* MoreCell.swift */,
+				59046DA125A3257400C9B4D3 /* ScrollUISegmentController.swift */,
+				592F7D2625A4486C005813FA /* RantUpvoteCell.swift */,
 				590A82812580ACFF0025F11A /* Profile View */,
 			);
 			path = "Template Views";
@@ -236,8 +260,27 @@
 				5990651C25765FE10058C1D7 /* RantResponse.swift */,
 				5990651D25765FE10058C1D7 /* RantFeed.swift */,
 				59C3A1DF257E8E990082E76F /* VoteResponse.swift */,
+				59046DA525A33A0D00C9B4D3 /* NotificationFeed.swift */,
 			);
 			path = "Data Structures";
+			sourceTree = "<group>";
+		};
+		8E4192960C2659B5F29215A8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0041FA4FBD2B07EA6643FBBE /* Pods-AltRant.debug.xcconfig */,
+				E06FD8442697EB807AAE111D /* Pods-AltRant.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		9BDBB6D9485395515B96ED21 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */,
+				6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,9 +290,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5904017A257627A5002B062A /* Build configuration list for PBXNativeTarget "AltRant" */;
 			buildPhases = (
+				EFBFA567C38906DD82D102AE /* [CP] Check Pods Manifest.lock */,
 				59040162257627A3002B062A /* Sources */,
 				59040163257627A3002B062A /* Frameworks */,
 				59040164257627A3002B062A /* Resources */,
+				2ACCDF485ED975C01E78EEC6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -319,6 +364,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2ACCDF485ED975C01E78EEC6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AltRant/Pods-AltRant-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AltRant/Pods-AltRant-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AltRant/Pods-AltRant-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EFBFA567C38906DD82D102AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AltRant-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		59040162257627A3002B062A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -328,6 +415,8 @@
 				59E671632576AD12007EEB28 /* RantCell.swift in Sources */,
 				5990650A257643B30058C1D7 /* CloseButton.swift in Sources */,
 				59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */,
+				59046DA625A33A0D00C9B4D3 /* NotificationFeed.swift in Sources */,
+				592F7D2725A4486C005813FA /* RantUpvoteCell.swift in Sources */,
 				5990652025765FE10058C1D7 /* Profile.swift in Sources */,
 				59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */,
 				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
@@ -335,6 +424,7 @@
 				59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */,
 				59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */,
 				5990650E257643D60058C1D7 /* TagListView.swift in Sources */,
+				59E70C6925A5B8FA00F45626 /* NotificationsNavigationViewController.swift in Sources */,
 				59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */,
 				5990652225765FE10058C1D7 /* RantModel.swift in Sources */,
 				59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */,
@@ -346,8 +436,10 @@
 				5990652D257668FD0058C1D7 /* User.swift in Sources */,
 				59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */,
 				5904016A257627A3002B062A /* AppDelegate.swift in Sources */,
+				59046D9F25A31F0D00C9B4D3 /* NotificationsTableViewController.swift in Sources */,
 				5990652325765FE10058C1D7 /* RantResponse.swift in Sources */,
 				59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */,
+				59046DA225A3257400C9B4D3 /* ScrollUISegmentController.swift in Sources */,
 				592B1B2F2578F31300109377 /* RantViewController.swift in Sources */,
 				59906511257644120058C1D7 /* TagView.swift in Sources */,
 				5904016C257627A3002B062A /* SceneDelegate.swift in Sources */,
@@ -504,6 +596,7 @@
 		};
 		5904017B257627A5002B062A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0041FA4FBD2B07EA6643FBBE /* Pods-AltRant.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -528,6 +621,7 @@
 		};
 		5904017C257627A5002B062A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E06FD8442697EB807AAE111D /* Pods-AltRant.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

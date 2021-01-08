@@ -1,0 +1,24 @@
+PODS:
+  - ADNavigationBarExtension (1.0.2):
+    - ADUtils (~> 11.0)
+  - ADUtils (11.0.0):
+    - ADUtils/objc (= 11.0.0)
+  - ADUtils/objc (11.0.0):
+    - ADUtils/Swift
+  - ADUtils/Swift (11.0.0)
+
+DEPENDENCIES:
+  - ADNavigationBarExtension (~> 1.0.2)
+
+SPEC REPOS:
+  trunk:
+    - ADNavigationBarExtension
+    - ADUtils
+
+SPEC CHECKSUMS:
+  ADNavigationBarExtension: f7f791cbad7ca548cf007f582e3d12907583f109
+  ADUtils: 5f5f1ad7a097dcf7104f9c160bc23a30d7943eb8
+
+PODFILE CHECKSUM: 80dd8e6f2c817915f4c5ff52337ff1ce4292197b
+
+COCOAPODS: 1.9.3

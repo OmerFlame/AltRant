@@ -37,7 +37,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Rant" id="Rfv-CX-FDp">
+                    <navigationItem key="navigationItem" title="Rant" largeTitleDisplayMode="never" id="Rfv-CX-FDp">
                         <barButtonItem key="rightBarButtonItem" id="uj7-U4-A9d" userLabel="Compose Button Item">
                             <imageReference key="image" image="square.and.pencil" catalog="system" symbolScale="large"/>
                             <connections>

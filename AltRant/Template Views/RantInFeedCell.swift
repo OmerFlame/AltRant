@@ -83,9 +83,9 @@ class RantInFeedCell: UITableViewCell {
         upvoteButton.isEnabled = rantContents!.wrappedValue.vote_state != -2
         downvoteButton.isEnabled = rantContents!.wrappedValue.vote_state != -2
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        //let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         
-        textStackView.addGestureRecognizer(gestureRecognizer)
+        //textStackView.addGestureRecognizer(gestureRecognizer)
         
         if image == nil {
             supplementalImageView.image = nil
@@ -240,7 +240,7 @@ class RantInFeedCell: UITableViewCell {
         }
     }
     
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+    /*@objc func handleTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
             let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
                 return RantViewController(coder: coder, rantID: self.rantContents!.wrappedValue.id, rantInFeed: self.rantContents!, supplementalRantImage: self.supplementalImage, loadCompletionHandler: nil)
@@ -251,7 +251,7 @@ class RantInFeedCell: UITableViewCell {
             
             parentTableViewController.navigationController?.pushViewController(rantVC, animated: true)
         }
-    }
+    }*/
     
     private func getImageResizeMultiplier(imageWidth: CGFloat, imageHeight: CGFloat, multiplier: Int) -> CGFloat {
         if imageWidth / CGFloat(multiplier) < 315 && imageHeight / CGFloat(multiplier) < 420 {

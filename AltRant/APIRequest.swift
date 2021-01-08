@@ -26,6 +26,11 @@ enum RantType: Int {
     case undefined = 7
 }
 
+enum NotificationContentCategory: String {
+    case all
+    case upvotes
+}
+
 class APIRequest {
     var resourceURL: URL!
     var request: URLRequest!
@@ -187,6 +192,43 @@ class APIRequest {
         completionSemaphore.wait()
         UserDefaults.standard.setValue(extractedData!.set, forKey: "DRLastSet")
         return extractedData!
+    }
+    
+    func getNotificationFeed(shouldGetNewNotifs: Bool, category: NotificationContentCategory) -> NotificationFeed {
+        if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+            logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+        }
+        
+        var resourceURL: URL!
+        
+        if category == .all {
+            resourceURL = URL(string: "https://devrant.com/api/users/me/notif-feed?last_time=\(String(shouldGetNewNotifs ? UserDefaults.standard.integer(forKey: "DRLastNotifCheckTime") : 0))&ext_prof=1&app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        } else {
+            resourceURL = URL(string: "https://devrant.com/api/users/me/notif-feed/\(category.rawValue)?last_time=\(String(shouldGetNewNotifs ? UserDefaults.standard.integer(forKey: "DRLastNotifCheckTime") : 0))&ext_prof=1&app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        }
+        
+        var request = URLRequest(url: resourceURL)
+        
+        request.httpMethod = "GET"
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let completionSemaphore = DispatchSemaphore(value: 0)
+        var content: NotificationFeed? = nil
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            UserDefaults.standard.setValue(Int(Date().timeIntervalSince1970), forKey: "DRLastNotifCheckTime")
+            let body = String(data: data!, encoding: .utf8)!
+            
+            debugPrint(body)
+            
+            let decoder = JSONDecoder()
+            content = try! decoder.decode(NotificationFeed.self, from: body.data(using: .utf8)!)
+            
+            completionSemaphore.signal()
+        }.resume()
+        
+        completionSemaphore.wait()
+        return content!
     }
     
     func getRantFromID(id: Int, lastCommentID: Int?) throws -> RantResponse? {
@@ -903,7 +945,6 @@ class APIRequest {
         
         return body
     }
-
 }
 
 extension Data {
