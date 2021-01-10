@@ -23,8 +23,12 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     
     var cellHeights = [IndexPath:CGFloat]()
     
+    var timer: Timer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.tabBarController?.delegate = self
         
         //edgesForExtendedLayout = []
         
@@ -105,6 +109,14 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             ])
             
             menuBarButtonItem.menu = mainMenu
+            
+            timer = Timer.scheduledTimer(withTimeInterval: 21, repeats: true) { _ in
+                debugPrint("Running extended notification timer!")
+                
+                let response = APIRequest().getRantFeed(skip: 0)
+                
+                self.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = response.num_notifs != nil ? String(response.num_notifs!) : nil
+            }
             
             //edgesForExtendedLayout = 
         }
@@ -288,10 +300,14 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if let notificationsViewController = (viewController as? ExtensibleNavigationBarNavigationController) {
+            debugPrint("Creating notification refresh timer!")
+            
             (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = Timer(timeInterval: 5, repeats: true) { _ in
                 (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).getAllData(notificationType: (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).currentNotificationType, shouldGetNewData: true, completion: nil)
             }
         } else {
+            debugPrint("Destroying notification refresh timer!")
+            
             ((tabBarController.viewControllers![2] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer.invalidate()
             
             ((tabBarController.viewControllers![2] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = nil
