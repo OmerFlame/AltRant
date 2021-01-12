@@ -120,6 +120,9 @@ class RantCell: UITableViewCell {
                 
                 supplementalImageView.image = newImage
                 
+                supplementalImageView.frame.size.width = finalWidth
+                supplementalImageView.frame.size.height = finalHeight
+                
                 /*var resizeMultiplier = getImageResizeMultiplier(imageWidth: supplementalImage!.size!.width, imageHeight: supplementalImage!.size!.height, multiplier: 1)
                 
                 //let previewImage = supplementalImage!.getThumbnail(size: CGSize(width: supplementalImage!.size!.width / resizeMultiplier, height: supplementalImage!.size!.height / resizeMultiplier))

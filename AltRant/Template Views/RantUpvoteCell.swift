@@ -8,7 +8,7 @@
 import UIKit
 
 class RantUpvoteCell: UITableViewCell {
-    override var reuseIdentifier: String? { return "RantUpvoteCell" }
+    //override var reuseIdentifier: String? { return "RantUpvoteCell" }
     
     @IBOutlet weak var profileImageView: RoundedImageView!
     @IBOutlet weak var usernameUpvoteLabel: UILabel!

@@ -29,6 +29,9 @@ enum RantType: Int {
 enum NotificationContentCategory: String {
     case all
     case upvotes
+    case mentions
+    case comments
+    case subs
 }
 
 class APIRequest {

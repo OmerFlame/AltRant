@@ -27,6 +27,8 @@
 		592F7D2725A4486C005813FA /* RantUpvoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F7D2625A4486C005813FA /* RantUpvoteCell.swift */; };
 		59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59306E952578E68600F6AD08 /* RantViewController.storyboard */; };
 		594F4AAD25A88A6100923B0E /* ADNavigationBarExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */; };
+		5954C26525AD78D1008B70D2 /* ExpandingSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954C26425AD78D1008B70D2 /* ExpandingSegmentedView.swift */; };
+		5954C26825AD8E9B008B70D2 /* RantCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */; };
 		5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */; };
 		5958FC79257AD8B8003D1EDD /* KeyboardAvoidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC78257AD8B8003D1EDD /* KeyboardAvoidingView.swift */; };
 		5990650A257643B30058C1D7 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906509257643B30058C1D7 /* CloseButton.swift */; };
@@ -43,6 +45,7 @@
 		5990652A257668E90058C1D7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906529257668E90058C1D7 /* APIRequest.swift */; };
 		5990652D257668FD0058C1D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990652C257668FD0058C1D7 /* User.swift */; };
 		59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 59A1B8CB259DD766007DE862 /* NotificationBannerSwift */; };
+		59AD346125ADB1C6004D5DD6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AD346025ADB1C6004D5DD6 /* Cache.swift */; };
 		59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B842EB25947876007F16FC /* UITableView+getAllCells.swift */; };
 		59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CBD25988DA300E46948 /* UINavigationController+.swift */; };
 		59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CC02598DAD900E46948 /* MoreCell.swift */; };
@@ -91,6 +94,8 @@
 		592F7D2625A4486C005813FA /* RantUpvoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantUpvoteCell.swift; sourceTree = "<group>"; };
 		59306E952578E68600F6AD08 /* RantViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RantViewController.storyboard; sourceTree = "<group>"; };
 		594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ADNavigationBarExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5954C26425AD78D1008B70D2 /* ExpandingSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandingSegmentedView.swift; sourceTree = "<group>"; };
+		5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantCommentCell.swift; sourceTree = "<group>"; };
 		5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		5958FC78257AD8B8003D1EDD /* KeyboardAvoidingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoidingView.swift; sourceTree = "<group>"; };
 		59906509257643B30058C1D7 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
@@ -106,6 +111,7 @@
 		59906526257660AF0058C1D7 /* ColorFromHexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFromHexString.swift; sourceTree = "<group>"; };
 		59906529257668E90058C1D7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		5990652C257668FD0058C1D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		59AD346025ADB1C6004D5DD6 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		59B842EB25947876007F16FC /* UITableView+getAllCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+getAllCells.swift"; sourceTree = "<group>"; };
 		59B85CBD25988DA300E46948 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		59B85CC02598DAD900E46948 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
@@ -190,6 +196,8 @@
 				59906526257660AF0058C1D7 /* ColorFromHexString.swift */,
 				59E671662576BAF4007EEB28 /* PaddingLabel.swift */,
 				59E671692576BD74007EEB28 /* RoundedImageView.swift */,
+				5954C26425AD78D1008B70D2 /* ExpandingSegmentedView.swift */,
+				59AD346025ADB1C6004D5DD6 /* Cache.swift */,
 			);
 			path = AltRant;
 			sourceTree = "<group>";
@@ -206,6 +214,7 @@
 				59B85CC02598DAD900E46948 /* MoreCell.swift */,
 				59046DA125A3257400C9B4D3 /* ScrollUISegmentController.swift */,
 				592F7D2625A4486C005813FA /* RantUpvoteCell.swift */,
+				5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */,
 				590A82812580ACFF0025F11A /* Profile View */,
 			);
 			path = "Template Views";
@@ -412,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59E671752576CE5B007EEB28 /* LoginViewController.swift in Sources */,
+				59AD346125ADB1C6004D5DD6 /* Cache.swift in Sources */,
 				59E671632576AD12007EEB28 /* RantCell.swift in Sources */,
 				5990650A257643B30058C1D7 /* CloseButton.swift in Sources */,
 				59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */,
@@ -422,10 +432,12 @@
 				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
 				59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */,
 				59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */,
+				5954C26525AD78D1008B70D2 /* ExpandingSegmentedView.swift in Sources */,
 				59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */,
 				5990650E257643D60058C1D7 /* TagListView.swift in Sources */,
 				59E70C6925A5B8FA00F45626 /* NotificationsNavigationViewController.swift in Sources */,
 				59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */,
+				5954C26825AD8E9B008B70D2 /* RantCommentCell.swift in Sources */,
 				5990652225765FE10058C1D7 /* RantModel.swift in Sources */,
 				59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */,
 				59C3A1D9257E0FAB0082E76F /* UIImage+.swift in Sources */,

@@ -117,11 +117,11 @@ struct NotificationsUnread: Codable {
     let upvotes: Int
 }
 
-struct Notification: Codable {
+struct Notification: Codable, Equatable {
     let commentID: Int?
     let createdTime: Int
     let rantID: Int
-    let read: Int
+    var read: Int
     let type: NotificationType
     let uid: Int
     
@@ -143,6 +143,16 @@ struct Notification: Codable {
         read = try values.decode(Int.self, forKey: .read)
         type = try values.decode(NotificationType.self, forKey: .type)
         uid = try values.decode(Int.self, forKey: .uid)
+    }
+    
+    static func == (lhs: Notification, rhs: Notification) -> Bool {
+        return
+            lhs.commentID == rhs.commentID &&
+            lhs.createdTime == rhs.createdTime &&
+            lhs.rantID == rhs.rantID &&
+            lhs.read == rhs.read &&
+            lhs.type == rhs.type &&
+            lhs.uid == rhs.uid
     }
 }
 

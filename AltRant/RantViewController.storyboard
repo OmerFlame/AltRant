@@ -49,11 +49,21 @@
                     <connections>
                         <outlet property="loadingIndicator" destination="M7h-aK-ofA" id="oWq-ig-AKL"/>
                         <outlet property="tableView" destination="bD6-gy-n6l" id="G8e-qe-AMJ"/>
+                        <segue destination="Pmp-sq-gwn" kind="unwind" identifier="unwindToNotifications" unwindAction="unwindToNotifications:" id="vfM-6O-Ith"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2vZ-xz-tRL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="317" y="112"/>
+        </scene>
+        <!--rantUpvoteCell-->
+        <scene sceneID="SJ9-p6-beZ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="rantUpvoteCell" id="Q9g-Qe-BND" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zsE-2o-Q4f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Pmp-sq-gwn" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-336" y="112"/>
         </scene>
     </scenes>
     <resources>

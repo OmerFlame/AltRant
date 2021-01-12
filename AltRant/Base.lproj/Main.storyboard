@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,15 +19,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" verticalCompressionResistancePriority="1000" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInFeedCell" rowHeight="559" id="GAl-E3-BRU" customClass="RantInFeedCell" customModule="AltRant" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" verticalCompressionResistancePriority="1000" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantInFeedCell" rowHeight="559" id="GAl-E3-BRU" customClass="RantInFeedCell" customModule="AltRant" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="559"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GAl-E3-BRU" id="7Rk-Gd-Fwr">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="559"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="559"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7MR-e5-T3g" userLabel="Content Stack View">
-                                            <rect key="frame" x="20" y="15" width="370" height="529"/>
+                                            <rect key="frame" x="20" y="15" width="351" height="529"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="rEn-9r-qWV" userLabel="Voting Stack View">
                                                     <rect key="frame" x="0.0" y="0.0" width="37.5" height="70"/>
@@ -72,17 +73,17 @@
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="D6R-9h-dK4" userLabel="Text Stack View">
-                                                    <rect key="frame" x="47.5" y="0.0" width="322.5" height="246.5"/>
+                                                    <rect key="frame" x="47.5" y="0.0" width="303.5" height="268.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="al6-fy-gs8" userLabel="Body">
-                                                            <rect key="frame" x="0.0" y="0.0" width="322.5" height="218.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="303.5" height="240.5"/>
                                                             <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" id="Agh-p3-1Un" userLabel="Image View">
-                                                            <rect key="frame" x="0.0" y="226.5" width="0.0" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="248.5" width="0.0" height="0.0"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -91,7 +92,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="TcB-Zi-tfY" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="234.5" width="240" height="12"/>
+                                                            <rect key="frame" x="0.0" y="256.5" width="240" height="12"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -145,9 +146,9 @@
                                     <outlet property="tagList" destination="TcB-Zi-tfY" id="2Lg-yv-Afc"/>
                                     <outlet property="textStackView" destination="D6R-9h-dK4" id="Ks4-qM-1rr"/>
                                     <outlet property="upvoteButton" destination="OFh-Sk-DHx" id="VoL-OT-Cid"/>
-                                    <segue destination="Ov0-L0-pQX" kind="show" identifier="RantInFeedCell" id="oJf-Ix-CWM">
-                                        <segue key="commit" inheritsFrom="parent" id="2zk-Gk-O3x"/>
-                                        <segue key="preview" inheritsFrom="commit" id="vcg-LZ-cjF"/>
+                                    <segue destination="MPb-1i-mOS" kind="show" identifier="RantInFeedCell" id="PU5-is-Rce">
+                                        <segue key="commit" inheritsFrom="parent" id="Cta-jL-1UM"/>
+                                        <segue key="preview" inheritsFrom="commit" id="Er3-sQ-bs7"/>
                                     </segue>
                                 </connections>
                             </tableViewCell>
@@ -178,7 +179,7 @@
                     <connections>
                         <outlet property="composeBarButtonItem" destination="Dn7-le-YMO" id="NIM-eA-Xix"/>
                         <outlet property="menuBarButtonItem" destination="FDx-nt-acY" id="run-ww-5y2"/>
-                        <segue destination="Ov0-L0-pQX" kind="show" identifier="AfterCompose" id="0bM-CA-afG"/>
+                        <segue destination="MPb-1i-mOS" kind="show" identifier="AfterCompose" id="tBo-8G-Lbg"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pmc-NV-DnK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -392,33 +393,16 @@
         <!--Notifications-->
         <scene sceneID="pL2-xW-ODc">
             <objects>
-                <viewController id="5Kg-FT-4Ff" customClass="NotificationsTableViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NotificationsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5Kg-FT-4Ff" customClass="NotificationsTableViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pSn-y3-f4C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzZ-1O-46K" userLabel="Bar Extension View">
-                                <rect key="frame" x="0.0" y="90" width="414" height="50"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This label appears as part of the navigation bar." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="183" translatesAutoresizingMaskIntoConstraints="NO" id="zpG-fw-bwT" userLabel="Test Label">
-                                        <rect key="frame" x="115.5" y="10.5" width="183" height="29"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="5rK-Cl-Xgj"/>
-                                    <constraint firstItem="zpG-fw-bwT" firstAttribute="centerX" secondItem="xzZ-1O-46K" secondAttribute="centerX" id="DAU-sc-2qq"/>
-                                    <constraint firstItem="zpG-fw-bwT" firstAttribute="centerY" secondItem="xzZ-1O-46K" secondAttribute="centerY" id="uIV-jG-LbU"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kTz-cX-3qO">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantUpvoteCell" id="MYW-6G-aVF" customClass="RantUpvoteCell" customModule="AltRant" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantUpvoteCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantUpvoteCell" id="MYW-6G-aVF" customClass="RantUpvoteCell" customModule="AltRant" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MYW-6G-aVF" id="ule-Rk-pyy">
@@ -473,9 +457,358 @@
                                             <outlet property="profileImageView" destination="VcW-CU-p2L" id="njk-Kq-pbi"/>
                                             <outlet property="upvoteBadge" destination="69L-0b-9f7" id="xAV-9O-VTv"/>
                                             <outlet property="usernameUpvoteLabel" destination="ql4-YB-qN5" id="gOU-oD-XJw"/>
-                                            <segue destination="Ov0-L0-pQX" kind="show" identifier="rantUpvote" id="7BQ-42-yS6">
-                                                <segue key="commit" inheritsFrom="parent" id="Wgj-r5-trP"/>
-                                                <segue key="preview" inheritsFrom="commit" id="S9x-7r-D9Q"/>
+                                            <segue destination="MPb-1i-mOS" kind="show" identifier="rantUpvote" id="Asw-OH-GXV">
+                                                <segue key="commit" inheritsFrom="parent" id="n1U-N1-afJ"/>
+                                                <segue key="preview" destination="MPb-1i-mOS" identifier="previewRantUpvote" id="G54-kZ-zAO"/>
+                                            </segue>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantCommentCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantCommentCell" id="oPd-jA-4ew" customClass="RantCommentCell" customModule="AltRant" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="93.5" width="414" height="65.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oPd-jA-4ew" id="qOG-Ii-T1H">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="65.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="oUA-DT-poP" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="10.5" width="45" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="45" id="rMV-zu-dBy"/>
+                                                        <constraint firstAttribute="height" constant="45" id="sfT-QZ-hag"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VF0-28-PYb" userLabel="Comment Badge" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="54" y="5.5" width="22.5" height="22.5"/>
+                                                    <color key="backgroundColor" name="AccentColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22.5" id="Fs3-d9-hZM"/>
+                                                        <constraint firstAttribute="width" constant="22.5" id="JXe-Kb-fLU"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eBK-r6-YsQ" userLabel="Icon Image View">
+                                                    <rect key="frame" x="58.5" y="8.5" width="13.5" height="17.5"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="13.5" id="eZF-yI-RA2"/>
+                                                        <constraint firstAttribute="height" constant="13.5" id="kfy-V7-RlJ"/>
+                                                    </constraints>
+                                                    <imageReference key="image" image="text.bubble.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username commented on your rant!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ytk-O3-b4r" userLabel="User Comment Label">
+                                                    <rect key="frame" x="80" y="10" width="303" height="45.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Ytk-O3-b4r" secondAttribute="bottom" constant="10" id="4eJ-JV-rnB"/>
+                                                <constraint firstItem="eBK-r6-YsQ" firstAttribute="centerY" secondItem="VF0-28-PYb" secondAttribute="centerY" id="Hgy-RK-JHA"/>
+                                                <constraint firstItem="VF0-28-PYb" firstAttribute="leading" secondItem="oUA-DT-poP" secondAttribute="centerX" constant="11.25" id="Tlo-sw-8G8"/>
+                                                <constraint firstItem="oUA-DT-poP" firstAttribute="centerY" secondItem="qOG-Ii-T1H" secondAttribute="centerY" id="Z0h-63-3Zj"/>
+                                                <constraint firstItem="Ytk-O3-b4r" firstAttribute="top" secondItem="qOG-Ii-T1H" secondAttribute="top" constant="10" id="cuE-iJ-8Y3"/>
+                                                <constraint firstItem="oUA-DT-poP" firstAttribute="centerY" secondItem="VF0-28-PYb" secondAttribute="bottom" constant="5" id="eqi-N9-SUO"/>
+                                                <constraint firstItem="oUA-DT-poP" firstAttribute="leading" secondItem="qOG-Ii-T1H" secondAttribute="leading" constant="20" symbolic="YES" id="ezY-r4-ODJ"/>
+                                                <constraint firstItem="oUA-DT-poP" firstAttribute="trailing" secondItem="Ytk-O3-b4r" secondAttribute="leading" constant="-15" id="gI7-Gw-5Qw"/>
+                                                <constraint firstItem="eBK-r6-YsQ" firstAttribute="centerX" secondItem="VF0-28-PYb" secondAttribute="centerX" id="hDf-LC-NW7"/>
+                                                <constraint firstItem="oUA-DT-poP" firstAttribute="top" relation="greaterThanOrEqual" secondItem="qOG-Ii-T1H" secondAttribute="top" constant="10" id="hTJ-ry-u71"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ytk-O3-b4r" secondAttribute="trailing" id="jMm-wk-0r0"/>
+                                                <constraint firstAttribute="bottom" secondItem="oUA-DT-poP" secondAttribute="bottom" constant="10" id="uA4-zZ-eyc"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="uA4-zZ-eyc"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstItem="qOG-Ii-T1H" firstAttribute="leading" secondItem="oPd-jA-4ew" secondAttribute="leading" id="t8F-kU-TSm"/>
+                                            <constraint firstItem="qOG-Ii-T1H" firstAttribute="top" secondItem="oPd-jA-4ew" secondAttribute="top" id="wCF-Xr-hRT"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="commentBadgeImageView" destination="VF0-28-PYb" id="Oam-F2-Jk6"/>
+                                            <outlet property="profileImageView" destination="oUA-DT-poP" id="Rpf-FC-vOt"/>
+                                            <outlet property="usernameCommentLabel" destination="Ytk-O3-b4r" id="jmX-2f-6Ff"/>
+                                            <segue destination="MPb-1i-mOS" kind="show" identifier="rantComment" id="JqV-Fj-ku6">
+                                                <segue key="commit" inheritsFrom="parent" id="TKu-9v-oT0"/>
+                                                <segue key="preview" destination="MPb-1i-mOS" identifier="previewRantComment" id="mJY-yU-NJg"/>
+                                            </segue>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantCommentDiscussCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantCommentDiscussCell" id="Nyv-Os-niS" userLabel="RantCommentDiscussCell" customClass="RantCommentCell" customModule="AltRant" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="159" width="414" height="65.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nyv-Os-niS" id="OII-TE-6Jq">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="65.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="gS2-Cn-WCp" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="10.5" width="45" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="Kw9-3d-oq6"/>
+                                                        <constraint firstAttribute="width" constant="45" id="TqI-xt-o2o"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CPJ-e5-Gsy" userLabel="Comment Badge" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="54" y="5.5" width="22.5" height="22.5"/>
+                                                    <color key="backgroundColor" name="AccentColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22.5" id="dZ5-Ot-B4o"/>
+                                                        <constraint firstAttribute="height" constant="22.5" id="xv7-Ae-kSe"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pkq-Bh-B3w" userLabel="Icon Image View">
+                                                    <rect key="frame" x="58.5" y="8.5" width="13.5" height="17.5"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="13.5" id="F9F-Yk-Iny"/>
+                                                        <constraint firstAttribute="width" constant="13.5" id="FF8-TR-0ys"/>
+                                                    </constraints>
+                                                    <imageReference key="image" image="text.bubble.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username commented on a rant you commented on!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enV-Pg-dcM" userLabel="User Comment Label">
+                                                    <rect key="frame" x="80" y="10" width="303" height="45.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gS2-Cn-WCp" firstAttribute="trailing" secondItem="enV-Pg-dcM" secondAttribute="leading" constant="-15" id="0cm-hR-TMy"/>
+                                                <constraint firstItem="Pkq-Bh-B3w" firstAttribute="centerY" secondItem="CPJ-e5-Gsy" secondAttribute="centerY" id="8IP-Sc-1uD"/>
+                                                <constraint firstItem="CPJ-e5-Gsy" firstAttribute="leading" secondItem="gS2-Cn-WCp" secondAttribute="centerX" constant="11.25" id="Aex-ms-vVr"/>
+                                                <constraint firstItem="gS2-Cn-WCp" firstAttribute="top" relation="greaterThanOrEqual" secondItem="OII-TE-6Jq" secondAttribute="top" constant="10" id="Bod-0Z-mck"/>
+                                                <constraint firstAttribute="trailing" secondItem="enV-Pg-dcM" secondAttribute="trailing" id="SOf-Yi-iiy"/>
+                                                <constraint firstAttribute="bottom" secondItem="gS2-Cn-WCp" secondAttribute="bottom" constant="10" id="Uvy-QZ-pHZ"/>
+                                                <constraint firstAttribute="bottom" secondItem="enV-Pg-dcM" secondAttribute="bottom" constant="10" id="Xf7-Ag-WDr"/>
+                                                <constraint firstItem="gS2-Cn-WCp" firstAttribute="leading" secondItem="OII-TE-6Jq" secondAttribute="leading" constant="20" symbolic="YES" id="aAx-Dy-bQR"/>
+                                                <constraint firstItem="gS2-Cn-WCp" firstAttribute="centerY" secondItem="OII-TE-6Jq" secondAttribute="centerY" id="gtN-Up-Oas"/>
+                                                <constraint firstItem="Pkq-Bh-B3w" firstAttribute="centerX" secondItem="CPJ-e5-Gsy" secondAttribute="centerX" id="oeJ-6R-KlF"/>
+                                                <constraint firstItem="gS2-Cn-WCp" firstAttribute="centerY" secondItem="CPJ-e5-Gsy" secondAttribute="bottom" constant="5" id="uiL-xh-aJp"/>
+                                                <constraint firstItem="enV-Pg-dcM" firstAttribute="top" secondItem="OII-TE-6Jq" secondAttribute="top" constant="10" id="wPA-8Q-VAK"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Uvy-QZ-pHZ"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstItem="OII-TE-6Jq" firstAttribute="leading" secondItem="Nyv-Os-niS" secondAttribute="leading" id="Lzp-iq-zsB"/>
+                                            <constraint firstItem="OII-TE-6Jq" firstAttribute="top" secondItem="Nyv-Os-niS" secondAttribute="top" id="fXS-Ym-3gh"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="commentBadgeImageView" destination="CPJ-e5-Gsy" id="LEf-DJ-7dK"/>
+                                            <outlet property="profileImageView" destination="gS2-Cn-WCp" id="hrZ-E0-pKK"/>
+                                            <outlet property="usernameCommentLabel" destination="enV-Pg-dcM" id="wg9-VP-Bpo"/>
+                                            <segue destination="MPb-1i-mOS" kind="show" identifier="rantCommentDiscuss" id="CXx-Xd-M5I">
+                                                <segue key="commit" inheritsFrom="parent" id="Der-M6-lcY"/>
+                                                <segue key="preview" destination="MPb-1i-mOS" identifier="previewRantCommentDiscuss" id="fp8-Kd-8x1"/>
+                                            </segue>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantCommentMentionCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantCommentMentionCell" id="OlH-uQ-wFl" userLabel="RantCommentMentionCell" customClass="RantCommentCell" customModule="AltRant" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="224.5" width="414" height="65.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OlH-uQ-wFl" id="nWo-M9-TGz">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="65.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="wFH-ky-5Lb" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="10.5" width="45" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="Vzi-Qc-wn0"/>
+                                                        <constraint firstAttribute="width" constant="45" id="pYr-2e-2Yq"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LDb-dZ-LbT" userLabel="Comment Badge" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="54" y="5.5" width="22.5" height="22.5"/>
+                                                    <color key="backgroundColor" name="AccentColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22.5" id="Et0-0J-bIQ"/>
+                                                        <constraint firstAttribute="width" constant="22.5" id="n2D-Ka-CfM"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ntj-CT-8Xk" userLabel="Icon Image View">
+                                                    <rect key="frame" x="58.5" y="8.5" width="13.5" height="17.5"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="13.5" id="CTe-tg-kJs"/>
+                                                        <constraint firstAttribute="height" constant="13.5" id="yw8-8N-ty5"/>
+                                                    </constraints>
+                                                    <imageReference key="image" image="text.bubble.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username mentioned you in a comment!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRb-9V-2v9" userLabel="User Comment Label">
+                                                    <rect key="frame" x="80" y="10" width="303" height="45.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="LDb-dZ-LbT" firstAttribute="leading" secondItem="wFH-ky-5Lb" secondAttribute="centerX" constant="11.25" id="0w8-cL-sUX"/>
+                                                <constraint firstItem="wFH-ky-5Lb" firstAttribute="centerY" secondItem="nWo-M9-TGz" secondAttribute="centerY" id="Aks-re-QpC"/>
+                                                <constraint firstItem="wFH-ky-5Lb" firstAttribute="trailing" secondItem="yRb-9V-2v9" secondAttribute="leading" constant="-15" id="Cvt-iQ-gbw"/>
+                                                <constraint firstItem="Ntj-CT-8Xk" firstAttribute="centerY" secondItem="LDb-dZ-LbT" secondAttribute="centerY" id="DsV-pK-fwx"/>
+                                                <constraint firstAttribute="trailing" secondItem="yRb-9V-2v9" secondAttribute="trailing" id="PHk-S1-GrU"/>
+                                                <constraint firstItem="Ntj-CT-8Xk" firstAttribute="centerX" secondItem="LDb-dZ-LbT" secondAttribute="centerX" id="RoB-iY-uHv"/>
+                                                <constraint firstAttribute="bottom" secondItem="yRb-9V-2v9" secondAttribute="bottom" constant="10" id="UCf-Cd-BeX"/>
+                                                <constraint firstItem="wFH-ky-5Lb" firstAttribute="centerY" secondItem="LDb-dZ-LbT" secondAttribute="bottom" constant="5" id="eoR-wl-ebT"/>
+                                                <constraint firstItem="yRb-9V-2v9" firstAttribute="top" secondItem="nWo-M9-TGz" secondAttribute="top" constant="10" id="og9-cN-hjH"/>
+                                                <constraint firstItem="wFH-ky-5Lb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="nWo-M9-TGz" secondAttribute="top" constant="10" id="pIy-N0-tcz"/>
+                                                <constraint firstAttribute="bottom" secondItem="wFH-ky-5Lb" secondAttribute="bottom" constant="10" id="qz5-py-ilJ"/>
+                                                <constraint firstItem="wFH-ky-5Lb" firstAttribute="leading" secondItem="nWo-M9-TGz" secondAttribute="leading" constant="20" symbolic="YES" id="w7y-Eo-rNu"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="qz5-py-ilJ"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstItem="nWo-M9-TGz" firstAttribute="leading" secondItem="OlH-uQ-wFl" secondAttribute="leading" id="Drn-H1-W7H"/>
+                                            <constraint firstItem="nWo-M9-TGz" firstAttribute="top" secondItem="OlH-uQ-wFl" secondAttribute="top" id="NJq-ZY-Q6W"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="commentBadgeImageView" destination="LDb-dZ-LbT" id="jhm-hB-KCc"/>
+                                            <outlet property="profileImageView" destination="wFH-ky-5Lb" id="jrv-0B-QBO"/>
+                                            <outlet property="usernameCommentLabel" destination="yRb-9V-2v9" id="228-cy-ZsD"/>
+                                            <segue destination="MPb-1i-mOS" kind="show" identifier="rantCommentMention" id="LbA-5a-noE">
+                                                <segue key="commit" inheritsFrom="parent" id="zrC-vz-wVK"/>
+                                                <segue key="preview" destination="MPb-1i-mOS" identifier="previewRantCommentMention" id="CVj-7b-udj"/>
+                                            </segue>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantCommentUpvoteCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantCommentUpvoteCell" id="Zhg-iz-9d9" userLabel="RantCommentUpvoteCell" customClass="RantUpvoteCell" customModule="AltRant" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="290" width="414" height="65.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zhg-iz-9d9" id="Es4-AO-Jdy">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="65.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="DLD-ic-PP6" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="10.5" width="45" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="45" id="Dm5-N5-2Qb"/>
+                                                        <constraint firstAttribute="height" constant="45" id="N6X-mO-6R1"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusplus" translatesAutoresizingMaskIntoConstraints="NO" id="lN7-Eb-p47" userLabel="Upvote Badge" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="54" y="5.5" width="22.5" height="22.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22.5" id="FJg-SX-dMq"/>
+                                                        <constraint firstAttribute="height" constant="22.5" id="N0b-wm-a92"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username ++'d your comment!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQR-rw-7f6" userLabel="User Upvote Label">
+                                                    <rect key="frame" x="80" y="10" width="303" height="45.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="DLD-ic-PP6" secondAttribute="bottom" constant="10" id="2qb-LH-J62"/>
+                                                <constraint firstAttribute="bottom" secondItem="SQR-rw-7f6" secondAttribute="bottom" constant="10" id="4s8-i0-cea"/>
+                                                <constraint firstItem="SQR-rw-7f6" firstAttribute="top" secondItem="Es4-AO-Jdy" secondAttribute="top" constant="10" id="9q6-Zf-WIi"/>
+                                                <constraint firstItem="lN7-Eb-p47" firstAttribute="leading" secondItem="DLD-ic-PP6" secondAttribute="centerX" constant="11.25" id="N6m-3P-6Og"/>
+                                                <constraint firstItem="DLD-ic-PP6" firstAttribute="trailing" secondItem="SQR-rw-7f6" secondAttribute="leading" constant="-15" id="WqS-8t-eRu"/>
+                                                <constraint firstItem="DLD-ic-PP6" firstAttribute="leading" secondItem="Es4-AO-Jdy" secondAttribute="leading" constant="20" symbolic="YES" id="XqT-Cs-zx4"/>
+                                                <constraint firstItem="DLD-ic-PP6" firstAttribute="centerY" secondItem="Es4-AO-Jdy" secondAttribute="centerY" id="kQC-1p-IS4"/>
+                                                <constraint firstAttribute="trailing" secondItem="SQR-rw-7f6" secondAttribute="trailing" id="m8g-C7-dX5"/>
+                                                <constraint firstItem="DLD-ic-PP6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Es4-AO-Jdy" secondAttribute="top" constant="10" id="mfj-lC-1G9"/>
+                                                <constraint firstItem="DLD-ic-PP6" firstAttribute="centerY" secondItem="lN7-Eb-p47" secondAttribute="bottom" constant="5" id="pBp-sJ-NFE"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="2qb-LH-J62"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstItem="Es4-AO-Jdy" firstAttribute="top" secondItem="Zhg-iz-9d9" secondAttribute="top" id="clf-EC-euy"/>
+                                            <constraint firstItem="Es4-AO-Jdy" firstAttribute="leading" secondItem="Zhg-iz-9d9" secondAttribute="leading" id="qTy-cb-xn3"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="profileImageView" destination="DLD-ic-PP6" id="KaY-Uf-djB"/>
+                                            <outlet property="upvoteBadge" destination="lN7-Eb-p47" id="bmb-zs-nKB"/>
+                                            <outlet property="usernameUpvoteLabel" destination="SQR-rw-7f6" id="4BQ-lU-REY"/>
+                                            <segue destination="MPb-1i-mOS" kind="show" identifier="rantCommentUpvote" id="6sh-It-1NR">
+                                                <segue key="commit" inheritsFrom="parent" id="IQZ-dV-LI9"/>
+                                                <segue key="preview" destination="MPb-1i-mOS" identifier="previewRantCommentUpvote" id="TOg-kW-Gz9"/>
+                                            </segue>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantSubCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantSubCell" id="Xak-F2-NFF" userLabel="RantSubCell" customClass="RantCommentCell" customModule="AltRant" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="355.5" width="414" height="65.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xak-F2-NFF" id="iBK-o4-fnC">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="65.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="RlT-SO-2eI" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="20" y="10.5" width="45" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="4FX-Qk-AfF"/>
+                                                        <constraint firstAttribute="width" constant="45" id="Waw-P8-JuM"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6HS-BD-Ke3" userLabel="Comment Badge" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                                    <rect key="frame" x="54" y="5.5" width="22.5" height="22.5"/>
+                                                    <color key="backgroundColor" name="AccentColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22.5" id="Pw8-pz-FPJ"/>
+                                                        <constraint firstAttribute="height" constant="22.5" id="zM9-JZ-dH8"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f54-Ts-UIO" userLabel="Icon Image View">
+                                                    <rect key="frame" x="58.5" y="8.5" width="13.5" height="17.5"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="13.5" id="0Ak-OX-Fgg"/>
+                                                        <constraint firstAttribute="height" constant="13.5" id="PDx-g0-dNt"/>
+                                                    </constraints>
+                                                    <imageReference key="image" image="plus.bubble.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username posted a new rant!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sHx-8v-Jh5" userLabel="User Comment Label">
+                                                    <rect key="frame" x="80" y="10" width="303" height="45.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="sHx-8v-Jh5" firstAttribute="top" secondItem="iBK-o4-fnC" secondAttribute="top" constant="10" id="0Rh-gp-FSu"/>
+                                                <constraint firstAttribute="trailing" secondItem="sHx-8v-Jh5" secondAttribute="trailing" id="2lW-tI-joK"/>
+                                                <constraint firstItem="RlT-SO-2eI" firstAttribute="centerY" secondItem="6HS-BD-Ke3" secondAttribute="bottom" constant="5" id="4nd-RF-ezI"/>
+                                                <constraint firstItem="f54-Ts-UIO" firstAttribute="centerX" secondItem="6HS-BD-Ke3" secondAttribute="centerX" id="6E3-9w-39M"/>
+                                                <constraint firstItem="6HS-BD-Ke3" firstAttribute="leading" secondItem="RlT-SO-2eI" secondAttribute="centerX" constant="11.25" id="6py-nV-i8D"/>
+                                                <constraint firstItem="RlT-SO-2eI" firstAttribute="centerY" secondItem="iBK-o4-fnC" secondAttribute="centerY" id="EF1-Tg-N6V"/>
+                                                <constraint firstItem="f54-Ts-UIO" firstAttribute="centerY" secondItem="6HS-BD-Ke3" secondAttribute="centerY" id="IHS-nf-aNK"/>
+                                                <constraint firstAttribute="bottom" secondItem="RlT-SO-2eI" secondAttribute="bottom" constant="10" id="T3d-u1-F2W"/>
+                                                <constraint firstItem="RlT-SO-2eI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iBK-o4-fnC" secondAttribute="top" constant="10" id="mb6-mN-CZB"/>
+                                                <constraint firstItem="RlT-SO-2eI" firstAttribute="leading" secondItem="iBK-o4-fnC" secondAttribute="leading" constant="20" symbolic="YES" id="tm8-gc-xe0"/>
+                                                <constraint firstAttribute="bottom" secondItem="sHx-8v-Jh5" secondAttribute="bottom" constant="10" id="yKM-VH-uFd"/>
+                                                <constraint firstItem="RlT-SO-2eI" firstAttribute="trailing" secondItem="sHx-8v-Jh5" secondAttribute="leading" constant="-15" id="ygb-5x-cDR"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="T3d-u1-F2W"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstItem="iBK-o4-fnC" firstAttribute="top" secondItem="Xak-F2-NFF" secondAttribute="top" id="PXs-uy-jm5"/>
+                                            <constraint firstItem="iBK-o4-fnC" firstAttribute="leading" secondItem="Xak-F2-NFF" secondAttribute="leading" id="aMm-Cr-whH"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="commentBadgeImageView" destination="6HS-BD-Ke3" id="sml-Ae-puV"/>
+                                            <outlet property="profileImageView" destination="RlT-SO-2eI" id="76K-J5-P76"/>
+                                            <outlet property="usernameCommentLabel" destination="sHx-8v-Jh5" id="DPX-KV-f5Y"/>
+                                            <segue destination="MPb-1i-mOS" kind="show" identifier="rantUpvote" id="Ycd-MP-tpr">
+                                                <segue key="commit" inheritsFrom="parent" id="n97-IB-iqs"/>
+                                                <segue key="preview" destination="MPb-1i-mOS" identifier="previewRantUpvote" id="JTu-6o-Ebu"/>
                                             </segue>
                                         </connections>
                                     </tableViewCell>
@@ -488,21 +821,13 @@
                         <viewLayoutGuide key="safeArea" id="uFr-Uk-Gjc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="xzZ-1O-46K" firstAttribute="top" secondItem="uFr-Uk-Gjc" secondAttribute="top" constant="-50" id="0NJ-hv-kvt"/>
-                            <constraint firstItem="uFr-Uk-Gjc" firstAttribute="trailing" secondItem="xzZ-1O-46K" secondAttribute="trailing" id="5Lv-7B-nd4"/>
                             <constraint firstItem="uFr-Uk-Gjc" firstAttribute="bottom" secondItem="kTz-cX-3qO" secondAttribute="bottom" id="651-8M-sVZ"/>
-                            <constraint firstItem="xzZ-1O-46K" firstAttribute="leading" secondItem="uFr-Uk-Gjc" secondAttribute="leading" id="Gic-hN-IqH"/>
                             <constraint firstItem="uFr-Uk-Gjc" firstAttribute="trailing" secondItem="kTz-cX-3qO" secondAttribute="trailing" id="IHc-31-Nvb"/>
                             <constraint firstItem="kTz-cX-3qO" firstAttribute="leading" secondItem="uFr-Uk-Gjc" secondAttribute="leading" id="OQ1-lv-Wts"/>
                             <constraint firstItem="P7c-5c-Gpn" firstAttribute="centerY" secondItem="pSn-y3-f4C" secondAttribute="centerY" id="otF-9H-b8o"/>
                             <constraint firstItem="P7c-5c-Gpn" firstAttribute="centerX" secondItem="uFr-Uk-Gjc" secondAttribute="centerX" id="ovS-yp-Vdv"/>
                             <constraint firstItem="kTz-cX-3qO" firstAttribute="top" secondItem="uFr-Uk-Gjc" secondAttribute="top" id="zNi-DM-C2Q"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="xzZ-1O-46K"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Notifications" largeTitleDisplayMode="always" id="Jza-f9-jIc"/>
                     <connections>
@@ -514,15 +839,58 @@
             </objects>
             <point key="canvasLocation" x="2021.7391304347827" y="1301.7857142857142"/>
         </scene>
-        <!--RantViewController-->
-        <scene sceneID="DBB-f4-8ej">
+        <!--Rant-->
+        <scene sceneID="ODc-dZ-EY3">
             <objects>
-                <viewControllerPlaceholder storyboardName="RantViewController" referencedIdentifier="RantViewController" id="Ov0-L0-pQX" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" title="Rant" largeTitleDisplayMode="never" id="XX3-pr-BuU"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="z5Z-9i-T9G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="RantViewController" title="Rant" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MPb-1i-mOS" customClass="RantViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="48o-7g-wgm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="V13-YA-JaQ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="CHA-Iv-ydR">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WGn-pW-mEn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="V13-YA-JaQ" secondAttribute="trailing" id="1jD-Wk-ElV"/>
+                            <constraint firstItem="CHA-Iv-ydR" firstAttribute="centerY" secondItem="48o-7g-wgm" secondAttribute="centerY" id="ETt-Xv-zLL"/>
+                            <constraint firstAttribute="bottom" secondItem="V13-YA-JaQ" secondAttribute="bottom" id="Gmi-cG-Lhw"/>
+                            <constraint firstItem="CHA-Iv-ydR" firstAttribute="centerX" secondItem="48o-7g-wgm" secondAttribute="centerX" id="IQJ-41-aLA"/>
+                            <constraint firstItem="V13-YA-JaQ" firstAttribute="leading" secondItem="48o-7g-wgm" secondAttribute="leading" id="k4g-cq-NlC"/>
+                            <constraint firstItem="V13-YA-JaQ" firstAttribute="top" secondItem="48o-7g-wgm" secondAttribute="top" id="nO0-20-6Pu"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Rant" largeTitleDisplayMode="never" id="auQ-be-PHO">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="4SL-TD-fFz">
+                            <connections>
+                                <action selector="goBack:" destination="MPb-1i-mOS" id="VBj-ud-eau"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="JTp-qS-SaQ" userLabel="Compose Button Item">
+                            <imageReference key="image" image="square.and.pencil" catalog="system" symbolScale="large"/>
+                            <connections>
+                                <action selector="compose:" destination="MPb-1i-mOS" id="Vu0-9z-1lt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="loadingIndicator" destination="CHA-Iv-ydR" id="kpR-tg-dGa"/>
+                        <outlet property="tableView" destination="V13-YA-JaQ" id="siE-NK-n0e"/>
+                        <segue destination="6fM-JA-ZpD" kind="unwind" identifier="unwindToNotifications" unwindAction="unwindToNotifications:" id="m0o-4j-aqK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nzt-OA-Uai" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="6fM-JA-ZpD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2894" y="1302"/>
+            <point key="canvasLocation" x="2893" y="1302"/>
         </scene>
     </scenes>
     <designables>
@@ -532,9 +900,12 @@
         <designable name="TcB-Zi-tfY">
             <size key="intrinsicContentSize" width="240" height="12"/>
         </designable>
+        <designable name="lN7-Eb-p47">
+            <size key="intrinsicContentSize" width="26" height="26"/>
+        </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="S9x-7r-D9Q"/>
+        <segue reference="6sh-It-1NR"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="bell.fill" catalog="system" width="128" height="124"/>
@@ -542,9 +913,14 @@
         <image name="ellipsis.circle.fill" catalog="system" width="128" height="121"/>
         <image name="minuminus" width="26" height="26"/>
         <image name="person.crop.square.fill" catalog="system" width="128" height="114"/>
+        <image name="plus.bubble.fill" catalog="system" width="128" height="110"/>
         <image name="plusplus" width="26" height="26"/>
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="square.stack.fill" catalog="system" width="113" height="128"/>
+        <image name="text.bubble.fill" catalog="system" width="128" height="110"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

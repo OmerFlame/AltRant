@@ -389,6 +389,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
+            print("IMAGE WIDTH:  \(image.size.width)")
+            print("IMAGE HEIGHT: \(image.size.height)")
+            
             self.inputImage = image
         }
         

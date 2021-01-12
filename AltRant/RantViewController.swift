@@ -272,6 +272,29 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    /*func previewController(_ controller: QLPreviewController, frameFor item: QLPreviewItem, inSourceView view: AutoreleasingUnsafeMutablePointer<UIView?>) -> CGRect {
+        //print("SOURCE VIEW WIDTH:  \(view.pointee!.frame.size.width)")
+        //print("SOURCE VIEW HEIGHT: \(view.pointee!.frame.size.height)")
+        
+        
+        
+        if tappedComment == nil {
+            print("IMAGE VIEW FRAME: \(tappedRant!.supplementalImageView.frame)")
+            return (tappedRant?.supplementalImageView.frame)!
+        } else {
+            print("IMAGE VIEW FRAME: \(tappedComment!.supplementalImageView.frame)")
+            return (tappedComment?.supplementalImageView.frame)!
+        }
+    }*/
+    
+    func previewController(_ controller: QLPreviewController, transitionImageFor item: QLPreviewItem, contentRect: UnsafeMutablePointer<CGRect>) -> UIImage? {
+        if tappedComment == nil {
+            return tappedRant?.supplementalImageView.image
+        } else {
+            return tappedComment?.supplementalImageView.image
+        }
+    }
+    
     func previewControllerDidDismiss(_ controller: QLPreviewController) {
         tappedRant = nil
         tappedComment = nil
@@ -310,6 +333,11 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         present(composeVC, animated: true, completion: nil)
     }
     
+    @IBAction func goBack(_ sender: Any) {
+        if type(of: navigationController?.viewControllers.first!) == NotificationsTableViewController.self {
+            performSegue(withIdentifier: "unwindToNotifications", sender: self)
+        }
+    }
     /*
     // MARK: - Navigation
 
