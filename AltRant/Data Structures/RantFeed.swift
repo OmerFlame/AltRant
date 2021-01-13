@@ -63,14 +63,20 @@ struct RantFeed: Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         success = try values.decode(Bool.self, forKey: .success)
-        rants = try values.decode([RantInFeed].self, forKey: .rants)
+        
+        do {
+            rants = try values.decode([RantInFeed].self, forKey: .rants)
+        } catch {
+            rants = []
+        }
+        
         settings = try? values.decode(RantFeedSettings.self, forKey: .settings)
-        set = try values.decode(String.self, forKey: .set)
-        wrw = try? values.decode(Int.self, forKey: .wrw)
-        dpp = try? values.decode(Int.self, forKey: .dpp)
-        num_notifs = try? values.decode(Int.self, forKey: .num_notifs)
-        unread = try? values.decode(RantFeedUnread.self, forKey: .unread)
-        news = try? values.decode(RantFeedNews.self, forKey: .news)
+        set = try values.decodeIfPresent(String.self, forKey: .set)
+        wrw = try? values.decodeIfPresent(Int.self, forKey: .wrw)
+        dpp = try? values.decodeIfPresent(Int.self, forKey: .dpp)
+        num_notifs = try? values.decodeIfPresent(Int.self, forKey: .num_notifs)
+        unread = try? values.decodeIfPresent(RantFeedUnread.self, forKey: .unread)
+        news = try? values.decodeIfPresent(RantFeedNews.self, forKey: .news)
     }
     
     init(success: Bool,

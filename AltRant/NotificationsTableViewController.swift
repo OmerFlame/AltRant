@@ -8,8 +8,8 @@
 import UIKit
 import ADNavigationBarExtension
 
-class NotificationsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ScrollUISegmentControllerDelegate {
-    var segmentedControl: ScrollUISegmentController!
+class NotificationsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     var barExtension: UIView!
@@ -33,118 +33,39 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        //self.additionalSafeAreaInsets = UIEdgeInsets(top: 50)
         
+        let containerView = UIView()
         
+        segmentedControl = UISegmentedControl(frame: CGRect(x: 20, y: 0, width: 0, height: 43))
+        segmentedControl.apportionsSegmentWidthsByContent = true
         
-        /*barExtension = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
-        //barExtension.effect = UIBlurEffect(style: UITraitCollection.current.userInterfaceStyle == .dark ? .dark : .light)
-        let testLabel = UILabel(frame: CGRect(x: 115.5, y: 10.5, width: 183, height: 29))
+        segmentedControl.insertSegment(withTitle: "All", at: 0, animated: false)
+        segmentedControl.insertSegment(withTitle: "++'s", at: 1, animated: false)
+        segmentedControl.insertSegment(withTitle: "Mentions", at: 2, animated: false)
+        segmentedControl.insertSegment(withTitle: "Comments", at: 3, animated: false)
+        segmentedControl.insertSegment(withTitle: "Subscriptions", at: 4, animated: false)
         
-        testLabel.font = .systemFont(ofSize: 12)
-        testLabel.text = "This label appears as part of the navigation bar."
-        testLabel.numberOfLines = 0
-        testLabel.preferredMaxLayoutWidth = 183
+        containerView.addSubview(segmentedControl)
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
-        barExtension.addSubview(testLabel)
+        segmentedControl.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20).isActive = true
+        segmentedControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20).isActive = true
+        segmentedControl.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+        segmentedControl.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10).isActive = true
         
-        testLabel.translatesAutoresizingMaskIntoConstraints = false
-        testLabel.centerXAnchor.constraint(equalTo: barExtension.centerXAnchor).isActive = true
-        testLabel.centerYAnchor.constraint(equalTo: barExtension.centerYAnchor).isActive = true
+        segmentedControl.selectedSegmentIndex = 0
         
-        (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(barExtension, forHeight: 50)*/
+        (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(containerView, forHeight: 43)
         
-        segmentedControl = ScrollUISegmentController()
-        segmentedControl.frame.size.height = 32
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.clipsToBounds = true
         
-        let itemWidth = ("Subscriptions" as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: .greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13)], context: nil).size.width
-        
-        segmentedControl.itemWidth = itemWidth + 10
-        
-        segmentedControl.segmentItems = ["All", "++'s", "Mentions", "Comments", "Subscriptions"]
-        
-        segmentedControl.segmentDelegate = self
-        
-        //visualEffectView.contentView.addSubview(segmentedControl)
-        //visualEffectView.sizeToFit()
-        
-        (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(segmentedControl, forHeight: 33)
-        
-        //view.addSubview(barExtension)
-        //barExtension.translatesAutoresizingMaskIntoConstraints = false
-        //barExtension.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        //barExtension.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -50).isActive = true
-        //barExtension.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        //barExtension.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        //barExtension.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        //barExtension.frame.origin.y += 193
-        
-        //self.additionalSafeAreaInsets = UIEdgeInsets(top: 50)
-        
-        //tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        segmentedControl.addTarget(self, action: #selector(handleChange(_:)), for: .valueChanged)
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
         
         tableView.refreshControl = refreshControl
-        
-        /*for i in navigationController!.navigationBar.subviews {
-            print(String(describing: type(of: i)))
-        }
-        
-        for i in navigationController!.navigationBar.subviews.first!.subviews {
-            print(String(describing: type(of: i)))
-        }
-        
-        /*let visualEffectsView = navigationController?.navigationBar.subviews.first(where: {
-            String(describing: type(of: $0)) == "_UIBarBackground"
-        })?.subviews.first(where: {
-            String(describing: type(of: $0)) == "UIVisualEffectView"
-        }) as! UIVisualEffectView*/
-        
-        
-        //visualEffectsView.frame.size.height = 32
-        
-        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UITraitCollection.current.userInterfaceStyle == .dark ? .dark : .light))
-        
-        segmentedControl = ScrollUISegmentController()
-        segmentedControl.frame.size.height = 32
-        
-        visualEffectView.frame = segmentedControl.frame
-        
-        let itemWidth = ("Subscriptions" as NSString).boundingRect(with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: .greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13)], context: nil).size.width
-        
-        segmentedControl.itemWidth = itemWidth + 10
-        
-        segmentedControl.segmentItems = ["All", "++'s", "Mentions", "Comments", "Subscriptions"]
-        
-        //visualEffectView.contentView.addSubview(segmentedControl)
-        //visualEffectView.sizeToFit()
-        
-        (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(visualEffectView, forHeight: 32)
-        
-        visualEffectView.contentView.addSubview(segmentedControl)
-        
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.topAnchor.constraint(equalTo: visualEffectView.contentView.topAnchor).isActive = true
-        segmentedControl.bottomAnchor.constraint(equalTo: visualEffectView.contentView.bottomAnchor).isActive = true
-        segmentedControl.leadingAnchor.constraint(equalTo: visualEffectView.contentView.leadingAnchor).isActive = true
-        segmentedControl.trailingAnchor.constraint(equalTo: visualEffectView.contentView.trailingAnchor).isActive = true*/
-        
-        //navigationController?.navigationBar.isTranslucent = false
-        
-        //originalExtensionFrame = barExtension.frame
-        
-        //originalExtensionFrame = barExtension.convert(barExtension.frame, to: view)
-        
-        //print("ORIGINAL EXTENSION FRAME Y: \(originalExtensionFrame.origin.y)")
         
         originalNavbarMaxY = navigationController!.navigationBar.frame.maxY
         
@@ -178,51 +99,12 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         }
     }
     
-    /*func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        //print("NEW CONTENT OFFSET: \(scrollView.contentOffset)")
-        print("NAVIGATION BAR MAX Y: \(navigationController!.navigationBar.frame.maxY)")
-        
-        if navigationController!.navigationBar.frame.maxY > originalNavbarMaxY {
-            barExtension.frame.origin.y = navigationController!.navigationBar.frame.maxY
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        scrollViewDidScroll(tableView)
-        
-        transitionCoordinator?.animate(alongsideTransition: { [weak self](context) in
-            self?.barExtension.alpha = 1
-            self?.barExtension.frame.origin.y = (self?.navigationController!.navigationBar.frame.maxY)!
-        }, completion: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print(tableView.frame.minY)
-        
-        transitionCoordinator?.animate(alongsideTransition: { [weak self](context) in
-            self?.barExtension.alpha = 0
-            self?.barExtension.frame.origin.y -= 50
-        }, completion: { _ in
-            self.navigationController?.navigationBar.shadowImage = nil
-            self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        })
-    }*/
-    
     @objc func didPullToRefresh(_ sender: UIRefreshControl) {
-        //notifications = []
         unreadNotificationCounters = nil
-        //userImages.removeAll()
-        //usernameMap = nil
         
         tableView.reloadData()
-        //tableView.isHidden = true
         
         getAllData(notificationType: currentNotificationType, shouldGetNewData: true, completion: { sender.endRefreshing() })
-        
-        //sender.endRefreshing()
     }
 
     // MARK: - Table View Data Source
@@ -393,10 +275,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 }
                 
                 let indexPaths = !shouldGetNewData ? (0..<100).map { IndexPath(row: $0, section: 0) } : (0..<notificationsData.items.count).map { IndexPath(row: $0, section: 0) }
-                //self.notifications = Array(notificationsData.items[0...99])
                 self.notifications.insert(contentsOf: notificationsData.items[!shouldGetNewData ? 0..<100 : 0..<notificationsData.items.count], at: 0)
-                
-                
                 
                 self.unreadNotificationCounters = notificationsData.unread
                 
@@ -421,12 +300,6 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     self.tableView.insertRows(at: indexPaths, with: .automatic)
                     self.tableView.endUpdates()
                     
-                    /*if shouldGetNewData {
-                        self.tabBarItem.badgeValue = "\(notificationsData.items.count)"
-                    } else {
-                        self.tabBarItem.badgeValue = nil
-                    }*/
-                    
                     self.navigationController!.tabBarItem.badgeValue = self.unreadNotificationCounters!.all != 0 ? String(self.unreadNotificationCounters!.all) : nil
                     
                     completion?()
@@ -443,14 +316,6 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             }
         }
     }
-    
-    // MARK: - Trait Collection Changes
-    
-    /*override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        barExtension.effect = UIBlurEffect(style: UITraitCollection.current.userInterfaceStyle == .dark ? .dark : .light)
-    }*/
     
     // MARK: - Navigation
     
@@ -471,17 +336,10 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     notifications[j].read = 1
                     
                     if tableView.indexPathsForVisibleRows!.contains(IndexPath(row: j, section: 0)) {
-                        /*if let cell = tableView.cellForRow(at: IndexPath(row: j, section: 0)) as? RantUpvoteCell {
-                            cell.usernameUpvoteLabel.font = .systemFont(ofSize: 17)
-                            cell.usernameUpvoteLabel.isEnabled = false
-                        }*/
-                        
                         tableView.reloadRows(at: [IndexPath(row: j, section: 0)], with: .none)
                     }
                 }
             }
-            
-            //let currentTabBarBadgeNumber = Int(navigationController!.tabBarItem.badgeValue ?? "")
             
             if let currentTabBarBadgeNumber = Int(navigationController!.tabBarItem.badgeValue ?? "") {
                 if currentTabBarBadgeNumber - notificationsToModify.count == 0 {
@@ -490,14 +348,6 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     navigationController!.tabBarItem.badgeValue = String(currentTabBarBadgeNumber - notificationsToModify.count)
                 }
             }
-            
-            /*if (tableView.cellForRow(at: indexPath) as! RantUpvoteCell).usernameUpvoteLabel.font == UIFont.systemFont(ofSize: 17, weight: .semibold) {
-                (tableView.cellForRow(at: indexPath) as! RantUpvoteCell).usernameUpvoteLabel.font = .systemFont(ofSize: 17)
-                (tableView.cellForRow(at: indexPath) as! RantUpvoteCell).usernameUpvoteLabel.isEnabled = false
-                
-                let currentTabBarBadgeNumber = Int(navigationController!.tabBarItem.badgeValue!)!
-                navigationController!.tabBarItem.badgeValue = String(currentTabBarBadgeNumber - 1)
-            }*/
             
             rantViewController.rantID = notifications[indexPath.row].rantID
             
@@ -563,32 +413,19 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         }
     }
     
-    @IBAction func unwindToNotifications(_ unwindSegue: UIStoryboardSegue) {
-        print("running this shit")
-        //let sourceViewController = unwindSegue.source
-        
-        // Use data from the view controller which initiated the unwind segue
-        
-        if unwindSegue.identifier == "unwindToNotifications" {
-            notifRefreshTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
-                self.getAllData(notificationType: self.currentNotificationType, shouldGetNewData: true, completion: nil)
-            }
-        }
-    }
-    
-    func selectItemAt(index: Int, onScrollUISegmentController scrollUISegmentController: ScrollUISegmentController) {
+    @objc func handleChange(_ sender: UISegmentedControl) {
         notifRefreshTimer.invalidate()
         notifRefreshTimer = nil
         
-        if index == 0 {
+        if sender.selectedSegmentIndex == 0 {
             currentNotificationType = .all
-        } else if index == 1 {
+        } else if sender.selectedSegmentIndex == 1 {
             currentNotificationType = .upvotes
-        } else if index == 2 {
+        } else if sender.selectedSegmentIndex == 2 {
             currentNotificationType = .mentions
-        } else if index == 3 {
+        } else if sender.selectedSegmentIndex == 3 {
             currentNotificationType = .comments
-        } else if index == 4 {
+        } else if sender.selectedSegmentIndex == 4 {
             currentNotificationType = .subs
         }
         
@@ -600,9 +437,6 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         didSuccessfullyFetchNotifications = false
         
         tableView.deleteRows(at: indexPaths, with: .automatic)
-        
-        //notifRefreshTimer.invalidate()
-        //notifRefreshTimer = nil
         
         getAllData(notificationType: currentNotificationType, shouldGetNewData: false, completion: { self.scheduleNotificationFetches() })
     }

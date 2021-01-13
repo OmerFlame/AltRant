@@ -115,7 +115,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 
                 let response = APIRequest().getRantFeed(skip: 0)
                 
-                self.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = response.num_notifs != nil ? String(response.num_notifs!) : nil
+                if let numNotifs = response.num_notifs {
+                    self.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = numNotifs != 0 ? String(response.num_notifs!) : nil
+                }
             }
             
             //edgesForExtendedLayout = 
@@ -143,6 +145,10 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 self.rantFeed.rantFeed.append(contentsOf: result.rants!)
                 
                 var file: File?
+                
+                if let numNotifs = result.num_notifs {
+                    self.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = numNotifs != 0 ? String(numNotifs) : nil
+                }
                 
                 for rant in result.rants! {
                     if rant.attached_image != nil {
