@@ -34,7 +34,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let containerView = UIView()
+        let containerView = UIToolbar()
         
         segmentedControl = UISegmentedControl(frame: CGRect(x: 20, y: 0, width: 0, height: 43))
         segmentedControl.apportionsSegmentWidthsByContent = true
@@ -46,6 +46,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         segmentedControl.insertSegment(withTitle: "Subscriptions", at: 4, animated: false)
         
         containerView.addSubview(segmentedControl)
+        (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(containerView, forHeight: 43)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
         segmentedControl.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20).isActive = true
@@ -54,8 +55,6 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         segmentedControl.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10).isActive = true
         
         segmentedControl.selectedSegmentIndex = 0
-        
-        (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(containerView, forHeight: 43)
         
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.clipsToBounds = true
