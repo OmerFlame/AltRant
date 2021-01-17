@@ -374,7 +374,6 @@
         <scene sceneID="Onk-Lf-t6q">
             <objects>
                 <navigationController title="Notifications" automaticallyAdjustsScrollViewInsets="NO" id="4AD-kg-9B9" customClass="ExtensibleNavigationBarNavigationController" customModule="ADNavigationBarExtension" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Notifications" image="bell.fill" catalog="system" id="VO0-bB-XJB"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="dUD-vp-XyM">
@@ -905,7 +904,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="6sh-It-1NR"/>
+        <segue reference="Ycd-MP-tpr"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="bell.fill" catalog="system" width="128" height="124"/>

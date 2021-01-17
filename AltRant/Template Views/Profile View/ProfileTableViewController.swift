@@ -85,6 +85,24 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         headerTitle.alpha = CGFloat(sqrt(largeTitleOpacity))
         blurView.contentView.subviews[1].alpha = CGFloat(sqrt(tinyTitleOpacity))
         
+        if largeTitleOpacity == 1 {
+            if blurView.contentView.gestureRecognizers == nil {
+                let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap(_:)))
+                tableView.tableHeaderView!.addGestureRecognizer(gestureRecognizer)
+                
+                //blurView.contentView.addGestureRecognizer(gestureRecognizer)
+                
+                //blurView.contentView.isUserInteractionEnabled = true
+                //blurView.isUserInteractionEnabled = true
+            }
+        } else {
+            //blurView.contentView.gestureRecognizers!.forEach(blurView.contentView.removeGestureRecognizer)
+            tableView.tableHeaderView!.gestureRecognizers!.forEach(tableView.tableHeaderView!.removeGestureRecognizer)
+            
+            blurView.contentView.isUserInteractionEnabled = false
+            blurView.isUserInteractionEnabled = false
+        }
+        
         if let vfxSubview = blurView.subviews.first(where: {
             String(describing: type(of: $0)) == "_UIVisualEffectSubview"
         }) {
@@ -166,6 +184,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.infiniteScrollTriggerOffset = 500
         
         segmentedControl.addTarget(self, action: #selector(segmentedControlSelectionChanged(_:)), for: .valueChanged)
+        
+        //let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap(_:)))
+        //blurView.addGestureRecognizer(gestureRecognizer)
         
         //tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
         //tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
@@ -620,6 +641,19 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }
         }
+    }
+    
+    @objc func handleProfileImageTap(_ sender: UITapGestureRecognizer) {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("\(profileData!.username).png")
+        
+        try! (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image!.pngData()!.write(to: url)
+        
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = view
+        
+        activityViewController.completionWithItemsHandler = { _, _, _, _ in try! FileManager.default.removeItem(at: url) }
+        
+        present(activityViewController, animated: true, completion: nil)
     }
 }
 

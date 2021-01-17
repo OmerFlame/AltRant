@@ -162,6 +162,32 @@ class CommentCell: UITableViewCell {
             } else {
                 reportModifyButton.setTitle("Report", for: .normal)
             }
+            
+            if let links = commentContents.links {
+                let semiboldAttrString = NSMutableAttributedString(string: commentContents.body)
+                
+                for i in links {
+                    if i.start == nil && i.end == nil {
+                        let range = (commentContents.body as NSString).range(of: i.title)
+                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font.pointSize, weight: .semibold), range: range)
+                        
+                        //bodyLabel.attributedText = semiboldAttrString
+                        //bodyLabel.isUserInteractionEnabled = true
+                        //bodyLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleURLTap(_:))))
+                    } else {
+                        
+                        
+                        let range = NSRange(location: i.start! - 2 * (semiboldAttrString.string.components(separatedBy: "\n").count - 1), length: i.end! - i.start!)
+                        
+                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font.pointSize, weight: .semibold), range: range)
+                        //bodyLabel.isUserInteractionEnabled = true
+                    }
+                }
+                
+                bodyLabel.attributedText = semiboldAttrString
+                bodyLabel.isUserInteractionEnabled = true
+                bodyLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleURLTap(_:))))
+            }
         }
         
         if !allowedToPreview {
@@ -346,6 +372,54 @@ class CommentCell: UITableViewCell {
             print(String(describing: type(of: self)))
             
             parentTableViewController.navigationController?.pushViewController(profileVC, animated: true)
+        }
+    }
+    
+    @objc func handleURLTap(_ sender: UITapGestureRecognizer) {
+        if let links = commentContents.links {
+            for link in links {
+                if link.start == nil && link.end == nil {
+                    let range = (commentContents.body as NSString).range(of: link.title)
+                    
+                    if sender.didTapInsideWrappedTextInLabel(label: bodyLabel, range: range) {
+                        if link.type == "url" {
+                            UIApplication.shared.open(URL(string: link.url)!)
+                        } else if link.type == "mention" {
+                            if let parentTableViewController = self.parentTableViewController {
+                                let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                                    return ProfileTableViewController(coder: coder, userID: Int(link.url)!)
+                                })
+                                
+                                print(String(describing: type(of: parentTableViewController)))
+                                print(String(describing: type(of: self)))
+                                
+                                parentTableViewController.navigationController?.pushViewController(profileVC, animated: true)
+                            }
+                        }
+                    }
+                } else {
+                    let range = NSRange(location: link.start!, length: link.end! - link.start!)
+                    
+                    if sender.didTapInsideWrappedTextInLabel(label: bodyLabel, range: range) {
+                        if link.type == "url" {
+                            UIApplication.shared.open(URL(string: link.url)!)
+                        } else if link.type == "mention" {
+                            if let parentTableViewController = self.parentTableViewController {
+                                let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                                    return ProfileTableViewController(coder: coder, userID: Int(link.url)!)
+                                })
+                                
+                                print(String(describing: type(of: parentTableViewController)))
+                                print(String(describing: type(of: self)))
+                                
+                                parentTableViewController.navigationController?.pushViewController(profileVC, animated: true)
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            debugPrint("Tapped on nothing")
         }
     }
     

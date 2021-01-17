@@ -52,7 +52,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         segmentedControl.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20).isActive = true
         segmentedControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20).isActive = true
         segmentedControl.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        segmentedControl.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10).isActive = true
+        segmentedControl.heightAnchor.constraint(equalTo: containerView.heightAnchor, constant: -10).isActive = true
         
         segmentedControl.selectedSegmentIndex = 0
         

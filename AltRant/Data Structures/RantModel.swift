@@ -168,7 +168,7 @@ public struct RantModel: Codable, Identifiable {
         link = try? values.decode(String.self, forKey: .link)
         rt = try values.decode(Int.self, forKey: .rt)
         rc = try values.decode(Int.self, forKey: .rc)
-        links = try? values.decode([Link].self, forKey: .links)
+        links = try? values.decodeIfPresent([Link].self, forKey: .links)
         special = try? values.decode(Int.self, forKey: .special)
         c_type_long = try? values.decode(String.self, forKey: .c_type_long)
         c_description = try? values.decode(String.self, forKey: .c_description)
@@ -230,11 +230,40 @@ struct UserAvatar: Codable {
 public struct Link: Codable {
     let type: String
     let url: String
-    let short_url: String
+    let shortURL: String?
     let title: String
-    let start: Int
-    let end: Int
+    let start: Int?
+    let end: Int?
     let special: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case type,
+             url,
+             shortURL = "short_url",
+             title,
+             start,
+             end,
+             special
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        type = try values.decode(String.self, forKey: .type)
+        
+        do {
+            url = try values.decode(String.self, forKey: .url)
+        } catch {
+            url = try String(values.decode(Int.self, forKey: .url))
+        }
+        
+        //url = try values.decodeIfPresent(String.self, forKey: .url) ?? String(values.decode(Int.self, forKey: .url))
+        shortURL = try values.decodeIfPresent(String.self, forKey: .shortURL)
+        title = try values.decode(String.self, forKey: .title)
+        start = try values.decodeIfPresent(Int.self, forKey: .start)
+        end = try values.decodeIfPresent(Int.self, forKey: .end)
+        special = try values.decode(Int.self, forKey: .special)
+    }
 }
 
 public struct Weekly: Codable {

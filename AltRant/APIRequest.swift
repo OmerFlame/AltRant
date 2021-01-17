@@ -235,7 +235,7 @@ class APIRequest {
     }
     
     func getRantFromID(id: Int, lastCommentID: Int?) throws -> RantResponse? {
-        let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(id))?app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(String(UserDefaults.standard.string(forKey: "DRTokenKey")!))\(lastCommentID != nil ? "&last_comment_id=\(String(lastCommentID!))" : "")".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        let resourceURL = URL(string: "https://devrant.com/api/devrant/rants/\(String(id))?app=3&ver=1.17.0.4&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(String(UserDefaults.standard.string(forKey: "DRTokenKey")!))\(lastCommentID != nil ? "&last_comment_id=\(String(lastCommentID!))" : "")".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         
         //self.resourceURL = URL(string: "https://proxy.devrant.app/api/devrant/rants/\(String(id))?app=3&user_id=\(String(UserDefaults.standard.integer(forKey: "UserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "TokenID")))&token_key=\(String(UserDefaults.standard.string(forKey: "TokenKey")!))")
         var request = URLRequest(url: resourceURL)
@@ -254,7 +254,7 @@ class APIRequest {
                     
                     receivedRawJSON = body
                     
-                    print(body)
+                    debugPrint(body)
                     
                     completionSemaphore.signal()
                 }
@@ -921,6 +921,34 @@ class APIRequest {
         
         completionSemaphore.wait()
         return success
+    }
+    
+    func getAvatarCustomizationOptions(option: String, subOption: String?, currentImageURL: String, shouldGetPossibleOptions: Bool) -> AvatarCustomizationResults? {
+        if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+            logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+        }
+        
+        let resourceURL = URL(string: "https://devrant.com/api/devrant/avatars/build?option=\(option)&image_id=\(currentImageURL)&features=\(shouldGetPossibleOptions ? String(1) : String(0))\(subOption != nil ? "&sub_option=\(subOption!)" : "")&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        
+        var request = URLRequest(url: resourceURL)
+        
+        request.httpMethod = "GET"
+        request.addValue("x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let completionSemaphore = DispatchSemaphore(value: 0)
+        
+        var results: AvatarCustomizationResults? = nil
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            let decoder = JSONDecoder()
+            
+            results = try? decoder.decode(AvatarCustomizationResults.self, from: data!)
+            
+            completionSemaphore.signal()
+        }.resume()
+        
+        completionSemaphore.wait()
+        return results
     }
     
     private func createBody(parameters: [String: String],

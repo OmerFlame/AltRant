@@ -77,7 +77,7 @@ struct CommentModel: Codable, Identifiable {
         score = try values.decode(Int.self, forKey: .score)
         created_time = try values.decode(Int.self, forKey: .created_time)
         vote_state = try values.decode(Int.self, forKey: .vote_state)
-        links = try? values.decode([Link].self, forKey: .links)
+        links = try? values.decodeIfPresent([Link].self, forKey: .links)
         user_id = try values.decode(Int.self, forKey: .user_id)
         user_username = try values.decode(String.self, forKey: .user_username)
         user_score = try values.decode(Int.self, forKey: .user_score)

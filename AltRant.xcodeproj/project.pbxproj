@@ -31,6 +31,7 @@
 		5954C26825AD8E9B008B70D2 /* RantCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */; };
 		5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */; };
 		5958FC79257AD8B8003D1EDD /* KeyboardAvoidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC78257AD8B8003D1EDD /* KeyboardAvoidingView.swift */; };
+		596B819F25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */; };
 		5990650A257643B30058C1D7 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906509257643B30058C1D7 /* CloseButton.swift */; };
 		5990650E257643D60058C1D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990650D257643D60058C1D7 /* TagListView.swift */; };
 		59906511257644120058C1D7 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906510257644120058C1D7 /* TagView.swift */; };
@@ -49,6 +50,7 @@
 		59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B842EB25947876007F16FC /* UITableView+getAllCells.swift */; };
 		59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CBD25988DA300E46948 /* UINavigationController+.swift */; };
 		59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CC02598DAD900E46948 /* MoreCell.swift */; };
+		59BB224C25B42B5E00B4B177 /* AvatarCustomizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB224B25B42B5E00B4B177 /* AvatarCustomizationOptions.swift */; };
 		59C3A1D9257E0FAB0082E76F /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1D8257E0FAB0082E76F /* UIImage+.swift */; };
 		59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1DF257E8E990082E76F /* VoteResponse.swift */; };
 		59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1E2257E972F0082E76F /* CommentCell.swift */; };
@@ -98,6 +100,7 @@
 		5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantCommentCell.swift; sourceTree = "<group>"; };
 		5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		5958FC78257AD8B8003D1EDD /* KeyboardAvoidingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoidingView.swift; sourceTree = "<group>"; };
+		596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+didTapInsideWrappedText.swift"; sourceTree = "<group>"; };
 		59906509257643B30058C1D7 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		5990650D257643D60058C1D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 		59906510257644120058C1D7 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
@@ -115,6 +118,7 @@
 		59B842EB25947876007F16FC /* UITableView+getAllCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+getAllCells.swift"; sourceTree = "<group>"; };
 		59B85CBD25988DA300E46948 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		59B85CC02598DAD900E46948 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
+		59BB224B25B42B5E00B4B177 /* AvatarCustomizationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCustomizationOptions.swift; sourceTree = "<group>"; };
 		59C3A1D8257E0FAB0082E76F /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		59C3A1DF257E8E990082E76F /* VoteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResponse.swift; sourceTree = "<group>"; };
 		59C3A1E2257E972F0082E76F /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -244,6 +248,7 @@
 				59FFE6F32594C12E00C3AB0B /* UITextView+Placeholder.h */,
 				59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */,
 				59B85CBD25988DA300E46948 /* UINavigationController+.swift */,
+				596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				5990651D25765FE10058C1D7 /* RantFeed.swift */,
 				59C3A1DF257E8E990082E76F /* VoteResponse.swift */,
 				59046DA525A33A0D00C9B4D3 /* NotificationFeed.swift */,
+				59BB224B25B42B5E00B4B177 /* AvatarCustomizationOptions.swift */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
@@ -430,6 +436,7 @@
 				5990652025765FE10058C1D7 /* Profile.swift in Sources */,
 				59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */,
 				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
+				59BB224C25B42B5E00B4B177 /* AvatarCustomizationOptions.swift in Sources */,
 				59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */,
 				59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */,
 				5954C26525AD78D1008B70D2 /* ExpandingSegmentedView.swift in Sources */,
@@ -464,6 +471,7 @@
 				5990652A257668E90058C1D7 /* APIRequest.swift in Sources */,
 				5904018225762953002B062A /* RantInFeedCell.swift in Sources */,
 				5958FC79257AD8B8003D1EDD /* KeyboardAvoidingView.swift in Sources */,
+				596B819F25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift in Sources */,
 				59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
