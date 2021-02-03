@@ -357,11 +357,16 @@ class RantCell: UITableViewCell {
         if success == nil {
             print("ERROR WHILE UPVOTING")
         } else {
-            rantInFeed!.wrappedValue.vote_state = vote
-            rantInFeed!.wrappedValue.score = success!.rant.score
+            if rantInFeed != nil {
+                rantInFeed!.wrappedValue.vote_state = vote
+                rantInFeed!.wrappedValue.score = success!.rant.score
+            }
             //parentTableViewController?.rant!.vote_state = vote
-            parentTableViewController?.rant!.vote_state = success!.rant.vote_state
-            parentTableViewController?.rant!.score = success!.rant.score
+            
+            if parentTableViewController != nil {
+                parentTableViewController?.rant!.vote_state = success!.rant.vote_state
+                parentTableViewController?.rant!.score = success!.rant.score
+            }
             
             if let parentTableViewController = self.parentTableViewController {
                 parentTableViewController.tableView.reloadData()

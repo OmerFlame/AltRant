@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59007D8F25C1703D0088EC33 /* ActiveLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 59007D8E25C1703D0088EC33 /* ActiveLabel */; };
 		5904016A257627A3002B062A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59040169257627A3002B062A /* AppDelegate.swift */; };
 		5904016C257627A3002B062A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904016B257627A3002B062A /* SceneDelegate.swift */; };
 		5904016E257627A3002B062A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904016D257627A3002B062A /* ViewController.swift */; };
@@ -55,6 +56,7 @@
 		59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1DF257E8E990082E76F /* VoteResponse.swift */; };
 		59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1E2257E972F0082E76F /* CommentCell.swift */; };
 		59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59C3A1E3257E972F0082E76F /* CommentCell.xib */; };
+		59CA4FB125CA8BB6005FB279 /* PullUpController in Frameworks */ = {isa = PBXBuildFile; productRef = 59CA4FB025CA8BB6005FB279 /* PullUpController */; };
 		59D253562593334400BEA35A /* Double+truncate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D253552593334400BEA35A /* Double+truncate.swift */; };
 		59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA0F6F2580FB5E00AF49BB /* ProfileTableViewController.swift */; };
 		59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */; };
@@ -144,9 +146,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59CA4FB125CA8BB6005FB279 /* PullUpController in Frameworks */,
 				59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */,
 				594F4AAD25A88A6100923B0E /* ADNavigationBarExtension.framework in Frameworks */,
 				DF10AD75D2E40D5986941820 /* Pods_AltRant.framework in Frameworks */,
+				59007D8F25C1703D0088EC33 /* ActiveLabel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +322,8 @@
 			name = AltRant;
 			packageProductDependencies = (
 				59A1B8CB259DD766007DE862 /* NotificationBannerSwift */,
+				59007D8E25C1703D0088EC33 /* ActiveLabel */,
+				59CA4FB025CA8BB6005FB279 /* PullUpController */,
 			);
 			productName = AltRant;
 			productReference = 59040166257627A3002B062A /* AltRant.app */;
@@ -349,6 +355,8 @@
 			mainGroup = 5904015D257627A3002B062A;
 			packageReferences = (
 				59A1B8CA259DD766007DE862 /* XCRemoteSwiftPackageReference "NotificationBanner" */,
+				59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */,
+				59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */,
 			);
 			productRefGroup = 59040167257627A3002B062A /* Products */;
 			projectDirPath = "";
@@ -687,6 +695,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/optonaut/ActiveLabel.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.5;
+			};
+		};
 		59A1B8CA259DD766007DE862 /* XCRemoteSwiftPackageReference "NotificationBanner" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Daltron/NotificationBanner";
@@ -695,13 +711,31 @@
 				minimumVersion = 3.0.6;
 			};
 		};
+		59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MarioIannotta/PullUpController";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		59007D8E25C1703D0088EC33 /* ActiveLabel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */;
+			productName = ActiveLabel;
+		};
 		59A1B8CB259DD766007DE862 /* NotificationBannerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 59A1B8CA259DD766007DE862 /* XCRemoteSwiftPackageReference "NotificationBanner" */;
 			productName = NotificationBannerSwift;
+		};
+		59CA4FB025CA8BB6005FB279 /* PullUpController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */;
+			productName = PullUpController;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

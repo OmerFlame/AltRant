@@ -118,7 +118,7 @@
                                         </subviews>
                                         <viewLayoutGuide key="safeArea" id="uQF-lx-xMn"/>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWZ-Hc-cet" userLabel="Body">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWZ-Hc-cet" userLabel="Body" customClass="ActiveLabel" customModule="ActiveLabel">
                                         <rect key="frame" x="0.0" y="53" width="304.5" height="240"/>
                                         <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -195,6 +195,9 @@
     <designables>
         <designable name="7p4-UN-zba">
             <size key="intrinsicContentSize" width="41" height="19.5"/>
+        </designable>
+        <designable name="YWZ-Hc-cet">
+            <size key="intrinsicContentSize" width="3034.5" height="20.5"/>
         </designable>
         <designable name="ZBO-rB-hit">
             <size key="intrinsicContentSize" width="18" height="20"/>

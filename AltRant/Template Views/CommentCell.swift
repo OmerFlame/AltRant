@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 import QuickLook
+import ActiveLabel
 
 class CommentCell: UITableViewCell {
     @IBOutlet weak var upvoteButton: UIButton!
@@ -21,10 +22,11 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var userStackView: UIStackView!
     @IBOutlet weak var actionsStackView: UIStackView!
     
-    @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var bodyLabel: ActiveLabel!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var reportModifyButton: UIButton!
     
+    var attributedBodyString: NSAttributedString?
     var file: File?
     var attachedRantFile: File?
     var commentContents: CommentModel!
@@ -164,12 +166,26 @@ class CommentCell: UITableViewCell {
             }
             
             if let links = commentContents.links {
+                //var textLinks = [TextLink]()
                 let semiboldAttrString = NSMutableAttributedString(string: commentContents.body)
                 
                 for i in links {
                     if i.start == nil && i.end == nil {
                         let range = (commentContents.body as NSString).range(of: i.title)
-                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font.pointSize, weight: .semibold), range: range)
+                        
+                        if i.type == "url" {
+                            semiboldAttrString.replaceCharacters(in: range, with: i.url)
+                            
+                            let newRange = (semiboldAttrString.string as NSString).range(of: i.url)
+                            
+                            semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font.pointSize, weight: .semibold), range: newRange)
+                        } else {
+                            semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font.pointSize, weight: .semibold), range: range)
+                        }
+                        
+                        /*if i.type == "url" {
+                            textLinks.append(TextLink(text: i.title, range: range, action: {}))
+                        }*/
                         
                         //bodyLabel.attributedText = semiboldAttrString
                         //bodyLabel.isUserInteractionEnabled = true
@@ -179,14 +195,87 @@ class CommentCell: UITableViewCell {
                         
                         let range = NSRange(location: i.start! - 2 * (semiboldAttrString.string.components(separatedBy: "\n").count - 1), length: i.end! - i.start!)
                         
-                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font.pointSize, weight: .semibold), range: range)
+                        if i.type == "url" {
+                            semiboldAttrString.replaceCharacters(in: range, with: i.url)
+                            
+                            let newLength = i.url.count - i.title.count
+                            
+                            let newRange = NSRange(location: i.start! - 2 * (semiboldAttrString.string.components(separatedBy: "\n").count - 1), length: i.end! + newLength - i.start!)
+                            
+                            semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font.pointSize, weight: .semibold), range: newRange)
+                        }
+                        
+                        /*if i.type == "url" {
+                            textLinks.append(TextLink(text: i.title, range: range, action: {}))
+                        }*/
+                        
+                        
                         //bodyLabel.isUserInteractionEnabled = true
                     }
                 }
                 
+                bodyLabel.urlMaximumLength = 27
+                
                 bodyLabel.attributedText = semiboldAttrString
                 bodyLabel.isUserInteractionEnabled = true
-                bodyLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleURLTap(_:))))
+                
+                bodyLabel.mentionColor = .label
+                bodyLabel.URLColor = .label
+                
+                bodyLabel.highlightFontName = ".AppleSystemUIFontEmphasized"
+                bodyLabel.highlightFontSize = bodyLabel.font.pointSize
+                
+                print("FONT NAMES: \(UIFont.fontNames(forFamilyName: bodyLabel.font.familyName))")
+                
+                bodyLabel.enabledTypes = [.mention, .url]
+                
+                attributedBodyString = bodyLabel.attributedText
+                
+                /*bodyLabel.textFont = { _ in
+                    return .systemFont(ofSize: self.bodyLabel.font.pointSize, weight: .semibold)
+                }*/
+                
+                /*bodyLabel.underlineStyle = { linkResult in
+                    return []
+                }
+                
+                bodyLabel.foregroundColor = { _ in
+                    return .label
+                }*/
+                
+                bodyLabel.textColor = .label
+                
+                bodyLabel.handleMentionTap { handle in
+                    if let links = self.commentContents.links {
+                        for link in links {
+                            if link.title == "@\(handle)" {
+                                if let parentTableViewController = self.parentTableViewController {
+                                    let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                                        return ProfileTableViewController(coder: coder, userID: Int(link.url)!)
+                                    })
+                                    
+                                    print(String(describing: type(of: parentTableViewController)))
+                                    print(String(describing: type(of: self)))
+                                    
+                                    parentTableViewController.navigationController?.pushViewController(profileVC, animated: true)
+                                    
+                                    break
+                                    
+                                    //bodyLabel.attributedText = attributedBodyString
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                bodyLabel.handleURLTap { url in
+                    UIApplication.shared.open(url)
+                }
+                
+                /*bodyLabel.didTouch = { touchResult in
+                    self.handleURLTap(result: touchResult)
+                }*/
+                //bodyLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleURLTap(_:))))
             }
         }
         
@@ -375,8 +464,8 @@ class CommentCell: UITableViewCell {
         }
     }
     
-    @objc func handleURLTap(_ sender: UITapGestureRecognizer) {
-        if let links = commentContents.links {
+    /*func handleURLTap(result: TouchResult) {
+        /*if let links = commentContents.links {
             for link in links {
                 if link.start == nil && link.end == nil {
                     let range = (commentContents.body as NSString).range(of: link.title)
@@ -420,8 +509,35 @@ class CommentCell: UITableViewCell {
             }
         } else {
             debugPrint("Tapped on nothing")
+        }*/
+        
+        if result.state == .ended {
+            if let links = commentContents.links {
+                for link in links {
+                    if let linkResult = result.linkResult {
+                        if linkResult.text == link.title {
+                            if link.type == "url" {
+                                UIApplication.shared.open(URL(string: link.url)!)
+                            } else if link.type == "mention" {
+                                if let parentTableViewController = self.parentTableViewController {
+                                    let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                                        return ProfileTableViewController(coder: coder, userID: Int(link.url)!)
+                                    })
+                                    
+                                    print(String(describing: type(of: parentTableViewController)))
+                                    print(String(describing: type(of: self)))
+                                    
+                                    parentTableViewController.navigationController?.pushViewController(profileVC, animated: true)
+                                    
+                                    bodyLabel.attributedText = attributedBodyString
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-    }
+    }*/
     
     @IBAction func reply(_ sender: Any) {
         let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController

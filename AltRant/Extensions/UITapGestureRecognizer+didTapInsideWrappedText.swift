@@ -25,7 +25,7 @@ extension UITapGestureRecognizer {
         layoutManager.characterRange(forGlyphRange: range, actualGlyphRange: &glyphRange!)
         
         var characterRangeInSingleLine = [0]
-        var lastPosition = CGRect.zero
+        var lastPosition = layoutManager.boundingRect(forGlyphRange: NSRange(location: range.location, length: 1), in: textContainer)
         
         
         let rangeStart = label.attributedText!.string.index(label.attributedText!.string.startIndex, offsetBy: range.location != 0 ? range.location - 2 * (label.attributedText!.string.components(separatedBy: "\n").count - 1) : 0)
@@ -34,7 +34,7 @@ extension UITapGestureRecognizer {
         for (idx, _) in label.attributedText!.string[rangeStart...rangeEnd].enumerated() {
             let boundingRect = layoutManager.boundingRect(forGlyphRange: NSRange(location: range.location + idx, length: 1), in: textContainer)
             
-            if boundingRect.minY > lastPosition.minY {
+            if boundingRect.minY > lastPosition.minY || characterRangeInSingleLine.isEmpty {
                 characterRangeInSingleLine.append(1)
                 
                 lastPosition = boundingRect
@@ -69,4 +69,32 @@ extension UITapGestureRecognizer {
         
         return false
     }
+    
+    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: CGSize.zero)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+
+        // Configure layoutManager and textStorage
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+
+        // Configure textContainer
+        textContainer.lineFragmentPadding = 0.0
+        textContainer.lineBreakMode = label.lineBreakMode
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        let labelSize = label.bounds.size
+        textContainer.size = labelSize
+
+        // Find the tapped character location and compare it to the specified range
+        let locationOfTouchInLabel = self.location(in: label)
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y);
+        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y);
+        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+
+        return NSLocationInRange(indexOfCharacter, targetRange)
+    }
+
 }

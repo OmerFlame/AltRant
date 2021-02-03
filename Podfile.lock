@@ -6,19 +6,23 @@ PODS:
   - ADUtils/objc (11.0.0):
     - ADUtils/Swift
   - ADUtils/Swift (11.0.0)
+  - ContextLabel (1.5.0)
 
 DEPENDENCIES:
   - ADNavigationBarExtension (~> 1.0.2)
+  - ContextLabel (~> 1.5.0)
 
 SPEC REPOS:
   trunk:
     - ADNavigationBarExtension
     - ADUtils
+    - ContextLabel
 
 SPEC CHECKSUMS:
   ADNavigationBarExtension: f7f791cbad7ca548cf007f582e3d12907583f109
   ADUtils: 5f5f1ad7a097dcf7104f9c160bc23a30d7943eb8
+  ContextLabel: 1cda17e227fc6efdb1a6df6fb7a5a1597d353cd3
 
-PODFILE CHECKSUM: 80dd8e6f2c817915f4c5ff52337ff1ce4292197b
+PODFILE CHECKSUM: fb88aa4e872e4204841d26ba970f1ea71747310f
 
 COCOAPODS: 1.9.3

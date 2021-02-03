@@ -7,4 +7,5 @@ target 'AltRant' do
 
   # Pods for AltRant
   pod 'ADNavigationBarExtension', '~> 1.0.2'
+  pod 'ContextLabel', '~> 1.5.0'
 end

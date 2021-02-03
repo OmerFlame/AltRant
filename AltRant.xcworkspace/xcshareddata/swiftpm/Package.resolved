@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "ActiveLabel",
+        "repositoryURL": "https://github.com/optonaut/ActiveLabel.swift",
+        "state": {
+          "branch": null,
+          "revision": "36949c1a69ef8b40574da20c9e24b115f387b1cf",
+          "version": "1.1.5"
+        }
+      },
+      {
         "package": "MarqueeLabel",
         "repositoryURL": "https://github.com/cbpowell/MarqueeLabel",
         "state": {
@@ -17,6 +26,15 @@
           "branch": null,
           "revision": "2ce5c49d8ee4865f01a3ce3bbe078664c78c7a3c",
           "version": "3.0.6"
+        }
+      },
+      {
+        "package": "PullUpController",
+        "repositoryURL": "https://github.com/MarioIannotta/PullUpController",
+        "state": {
+          "branch": null,
+          "revision": "6192b4745a4423e8fd2dc0a4eb8d34ca247a5163",
+          "version": "0.8.0"
         }
       },
       {
