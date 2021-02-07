@@ -231,12 +231,12 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let rant = $rantFeed.rantFeed[indexPath.row]
+        //let rant = rantFeed.rantFeed[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
         
         //cell = RantInFeedCell.loadFromXIB()
-        cell.configure(with: Optional(rant), image: supplementalImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
+        cell.configure(with: Optional(&rantFeed.rantFeed[indexPath.row]), image: supplementalImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
         
         return cell
         

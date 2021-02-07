@@ -47,6 +47,8 @@
 		5990652A257668E90058C1D7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906529257668E90058C1D7 /* APIRequest.swift */; };
 		5990652D257668FD0058C1D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990652C257668FD0058C1D7 /* User.swift */; };
 		59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 59A1B8CB259DD766007DE862 /* NotificationBannerSwift */; };
+		59A9E69925CFCA3500DC6065 /* SecondaryRantInFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */; };
+		59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */; };
 		59AD346125ADB1C6004D5DD6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AD346025ADB1C6004D5DD6 /* Cache.swift */; };
 		59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B842EB25947876007F16FC /* UITableView+getAllCells.swift */; };
 		59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CBD25988DA300E46948 /* UINavigationController+.swift */; };
@@ -116,6 +118,8 @@
 		59906526257660AF0058C1D7 /* ColorFromHexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFromHexString.swift; sourceTree = "<group>"; };
 		59906529257668E90058C1D7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		5990652C257668FD0058C1D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryRantInFeed.swift; sourceTree = "<group>"; };
+		59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondaryRantInFeedCell.xib; sourceTree = "<group>"; };
 		59AD346025ADB1C6004D5DD6 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		59B842EB25947876007F16FC /* UITableView+getAllCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+getAllCells.swift"; sourceTree = "<group>"; };
 		59B85CBD25988DA300E46948 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
@@ -215,6 +219,8 @@
 			children = (
 				5904018025762953002B062A /* RantInFeedCell.swift */,
 				5904018125762953002B062A /* RantInFeedCell.xib */,
+				59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */,
+				59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */,
 				59E671612576AD12007EEB28 /* RantCell.swift */,
 				59E671622576AD12007EEB28 /* RantCell.xib */,
 				59C3A1E2257E972F0082E76F /* CommentCell.swift */,
@@ -377,6 +383,7 @@
 				59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */,
 				59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */,
 				59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */,
+				59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */,
 				59040173257627A5002B062A /* Assets.xcassets in Resources */,
 				59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */,
 				59040171257627A3002B062A /* Main.storyboard in Resources */,
@@ -462,6 +469,7 @@
 				590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */,
 				5990652D257668FD0058C1D7 /* User.swift in Sources */,
 				59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */,
+				59A9E69925CFCA3500DC6065 /* SecondaryRantInFeed.swift in Sources */,
 				5904016A257627A3002B062A /* AppDelegate.swift in Sources */,
 				59046D9F25A31F0D00C9B4D3 /* NotificationsTableViewController.swift in Sources */,
 				5990652325765FE10058C1D7 /* RantResponse.swift in Sources */,
