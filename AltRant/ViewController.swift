@@ -10,14 +10,14 @@ import Combine
 import SwiftUI
 import ADNavigationBarExtension
 
-class rantFeedData: ObservableObject {
-    @Published var rantFeed = [RantInFeed]()
+class rantFeedData {
+    var rantFeed = [RantInFeed]()
 }
 
 class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate {
     fileprivate var currentPage = 0
-    @ObservedObject var rantFeed = rantFeedData()
-    var supplementalImages = [File?]()
+    var rantFeed = rantFeedData()
+    var supplementalImages = [IndexPath:File]()
     @IBOutlet weak var menuBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var composeBarButtonItem: UIBarButtonItem!
     
@@ -29,6 +29,8 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         super.viewDidLoad()
         
         navigationController?.tabBarController?.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(checkForSharedURL), name: UIWindowScene.didActivateNotification, object: nil)
         
         //edgesForExtendedLayout = []
         
@@ -91,7 +93,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                                         print("Tapped on Log Out")
                                         
                                         self.rantFeed.rantFeed = []
-                                        self.supplementalImages = []
+                                        self.supplementalImages = [:]
                                         
                                         self.tableView.reloadData {
                                             UserDefaults.standard.setValue(0, forKey: "DRUserID")
@@ -144,13 +146,13 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 
                 self.rantFeed.rantFeed.append(contentsOf: result.rants!)
                 
-                var file: File?
+                //var file: File?
                 
                 if let numNotifs = result.num_notifs {
                     self.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = numNotifs != 0 ? String(numNotifs) : nil
                 }
                 
-                for rant in result.rants! {
+                for (idx, rant) in result.rants!.enumerated() {
                     if rant.attached_image != nil {
                         /*let completionSemaphore = DispatchSemaphore(value: 0)
                         
@@ -176,12 +178,17 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                         
                         //self.supplementalImages.append(newImage)
                         
-                        file = File.loadFile(image: rant.attached_image!, size: CGSize(width: rant.attached_image!.width!, height: rant.attached_image!.height!))
+                        //file = File.loadFile(image: rant.attached_image!, size: CGSize(width: rant.attached_image!.width!, height: rant.attached_image!.height!))
                         
-                        self.supplementalImages.append(file)
-                    } else {
+                        //self.supplementalImages.append(Optional(File.loadFile(image: rant.attached_image!, size: CGSize(width: rant.attached_image!.width!, height: rant.attached_image!.height!))))
+                        if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attached_image!.url!)!.lastPathComponent).relativePath) {
+                            self.supplementalImages[indexPaths[idx]] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attached_image!.url!)!.lastPathComponent), size: CGSize(width: rant.attached_image!.width!, height: rant.attached_image!.height!))
+                        }
+                        
+                        self.supplementalImages[indexPaths[idx]] = File.loadFile(image: rant.attached_image!, size: CGSize(width: rant.attached_image!.width!, height: rant.attached_image!.height!))
+                    }/* else {
                         self.supplementalImages.append(nil)
-                    }
+                    }*/
                 }
                 
                 self.currentPage += 1
@@ -212,6 +219,27 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         tableView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //var defaults = UserDefaults.group.dictionaryRepresentation()
+        
+        checkForSharedURL()
+    }
+    
+    @objc func checkForSharedURL() {
+        if let sharedURL = UserDefaults.group.url(forKey: "ARSharedLink") {
+            /*let alertController = UIAlertController(title: "SUCCESS", message: "GOT SHARED URL: \(sharedURL.absoluteString)", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "YAS", style: .default, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)*/
+            
+            performSegue(withIdentifier: "AfterCompose", sender: Int(sharedURL.absoluteString.components(separatedBy: "/").last!)!)
+            
+            UserDefaults.group.set(nil, forKey: "ARSharedLink")
+        }
+    }
+    
     fileprivate func fetchData(handler: @escaping ((RantFeed) -> Void)) {
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + .seconds((rantFeed.rantFeed.count == 0 ? 0 : 1))) {
             let data = APIRequest().getRantFeed(skip: self.rantFeed.rantFeed.count)
@@ -235,8 +263,10 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
         
+        //let image = supplementalImages[indexPath.row]
+        
         //cell = RantInFeedCell.loadFromXIB()
-        cell.configure(with: Optional(&rantFeed.rantFeed[indexPath.row]), image: supplementalImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
+        cell.configure(with: Optional(&rantFeed.rantFeed[indexPath.row]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
         
         return cell
         
@@ -267,7 +297,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     
     @IBAction func handleRefresh() {
         rantFeed.rantFeed = []
-        supplementalImages = []
+        supplementalImages = [:]
         
         tableView.reloadData()
         
@@ -279,8 +309,12 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "RantInFeedCell", let rantViewController = segue.destination as? RantViewController {
             rantViewController.rantID = rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row].id
-            rantViewController.rantInFeed = $rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row]
-            rantViewController.supplementalRantImage = supplementalImages[tableView.indexPath(for: sender as! UITableViewCell)!.row]
+            
+            withUnsafeMutablePointer(to: &rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row], { pointer in
+                rantViewController.rantInFeed = pointer
+            })
+            
+            rantViewController.supplementalRantImage = supplementalImages[tableView.indexPath(for: sender as! UITableViewCell)!]
             rantViewController.loadCompletionHandler = nil
         } else if segue.identifier == "AfterCompose", let rantViewController = segue.destination as? RantViewController {
             rantViewController.rantID = sender as! Int
@@ -319,6 +353,14 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 
                 ((tabBarController.viewControllers![2] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = nil
             }
+        }
+    }
+}
+
+extension HomeFeedTableViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: { $0.row >= rantFeed.rantFeed.count }) {
+            performFetch(nil)
         }
     }
 }

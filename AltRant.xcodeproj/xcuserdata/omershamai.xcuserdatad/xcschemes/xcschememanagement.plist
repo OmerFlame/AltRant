@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Open with AltRant.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 		<key>SnapKitPlayground (Playground) 1.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -33,6 +38,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>59039EBA25DE484800584667</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>59040165257627A3002B062A</key>
 		<dict>
 			<key>primary</key>

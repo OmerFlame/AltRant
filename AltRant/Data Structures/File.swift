@@ -8,6 +8,7 @@
 import UIKit
 import QuickLook
 
+/// - Tag: File
 struct File {
     var url: URL
     var size: CGSize? = nil
@@ -127,9 +128,9 @@ extension File {
             }.resume()
             
             innerCompletionSemaphore.wait()
-            let filename = UUID().uuidString + ".jpg"
+            let filename = URL(string: image.url!)!.lastPathComponent
             
-            var previewURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
+            let previewURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(filename)
             try! receivedData?.write(to: previewURL, options: .atomic)
             //previewURL.hasHiddenExtension = true
             
@@ -159,7 +160,7 @@ extension File {
         completionSemaphore.wait()
         let filename = URL(string: image.url!)!.lastPathComponent// + ".jpg"
         
-        let previewURL = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
+        let previewURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(filename)
         try! receivedData?.write(to: previewURL, options: .atomic)
         
         let finalFile = File(url: previewURL, size: size)

@@ -56,6 +56,11 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         
         segmentedControl.selectedSegmentIndex = 0
         
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.shadowColor = .clear
+        
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.clipsToBounds = true
         

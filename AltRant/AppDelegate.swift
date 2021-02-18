@@ -31,6 +31,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        print("APPLICATION ACTIVE")
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        print("APPLICATION INACTIVE")
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        print("APPLICATION IN BACKGROUND")
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        print("APPLICATION IN FOREGROUND")
+    }
+    
     func applicationWillTerminate(_ application: UIApplication) {
         UserDefaults.standard.setValue(nil, forKey: "DRLastSet")
         let tmpDirectory = try! FileManager.default.contentsOfDirectory(atPath: NSTemporaryDirectory())

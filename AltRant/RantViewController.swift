@@ -33,7 +33,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var comments = [CommentModel]()
     var profile: Profile? = nil
     var ranterProfileImage: UIImage?
-    var rantInFeed: Binding<RantInFeed>?
+    var rantInFeed: UnsafeMutablePointer<RantInFeed>?
+    var commentInFeed: UnsafeMutablePointer<CommentModel>?
     //var doesSupplementalImageExist = false
     
     var loadCompletionHandler: ((RantViewController?) -> Void)?
@@ -240,7 +241,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
             
             //cell = CommentCell.loadFromXIB() as! CommentCell
-            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[comments[indexPath.row].id] ?? nil, parentTableViewController: self, parentTableView: tableView, commentInFeed: nil, allowedToPreview: true)
+            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[comments[indexPath.row].id] ?? nil, parentTableViewController: self, parentTableView: tableView, commentInFeed: (commentInFeed != nil && commentInFeed!.pointee.id == comments[indexPath.row].id ? commentInFeed : nil), allowedToPreview: true)
             
             return cell
         }

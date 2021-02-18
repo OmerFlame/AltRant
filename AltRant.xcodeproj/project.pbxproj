@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		59007D8F25C1703D0088EC33 /* ActiveLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 59007D8E25C1703D0088EC33 /* ActiveLabel */; };
+		59039EB225DE3EC800584667 /* UserDefaults+group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59039EB125DE3EC800584667 /* UserDefaults+group.swift */; };
+		59039EB525DE47D700584667 /* ios-76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = 59039EB425DE47D700584667 /* ios-76x76.png */; };
+		59039EBE25DE484800584667 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59039EBD25DE484800584667 /* ShareViewController.swift */; };
+		59039EC125DE484800584667 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59039EBF25DE484800584667 /* MainInterface.storyboard */; };
+		59039EC525DE484800584667 /* Open with AltRant.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 59039EBB25DE484800584667 /* Open with AltRant.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		59039ED425DE7F1500584667 /* UserDefaults+group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59039ED325DE7F1500584667 /* UserDefaults+group.swift */; };
+		59039EEA25DE901200584667 /* ExtensionAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59039EE925DE901200584667 /* ExtensionAssets.xcassets */; };
 		5904016A257627A3002B062A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59040169257627A3002B062A /* AppDelegate.swift */; };
 		5904016C257627A3002B062A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904016B257627A3002B062A /* SceneDelegate.swift */; };
 		5904016E257627A3002B062A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904016D257627A3002B062A /* ViewController.swift */; };
@@ -27,7 +34,7 @@
 		592B1B2F2578F31300109377 /* RantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592B1B2E2578F31300109377 /* RantViewController.swift */; };
 		592F7D2725A4486C005813FA /* RantUpvoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F7D2625A4486C005813FA /* RantUpvoteCell.swift */; };
 		59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59306E952578E68600F6AD08 /* RantViewController.storyboard */; };
-		594F4AAD25A88A6100923B0E /* ADNavigationBarExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */; };
+		593B17B025D14C41001FAF6F /* StoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B17AF25D14C41001FAF6F /* StoriesViewController.swift */; };
 		5954C26525AD78D1008B70D2 /* ExpandingSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954C26425AD78D1008B70D2 /* ExpandingSegmentedView.swift */; };
 		5954C26825AD8E9B008B70D2 /* RantCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */; };
 		5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */; };
@@ -50,6 +57,8 @@
 		59A9E69925CFCA3500DC6065 /* SecondaryRantInFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */; };
 		59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */; };
 		59AD346125ADB1C6004D5DD6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AD346025ADB1C6004D5DD6 /* Cache.swift */; };
+		59B6F34E25D43E0200F0887E /* Pods_AltRant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */; };
+		59B6F35125D43E0400F0887E /* ADNavigationBarExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */; };
 		59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B842EB25947876007F16FC /* UITableView+getAllCells.swift */; };
 		59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CBD25988DA300E46948 /* UINavigationController+.swift */; };
 		59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CC02598DAD900E46948 /* MoreCell.swift */; };
@@ -70,11 +79,43 @@
 		59E70C6925A5B8FA00F45626 /* NotificationsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */; };
 		59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */; };
 		59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */; };
-		DF10AD75D2E40D5986941820 /* Pods_AltRant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		59039EC325DE484800584667 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5904015E257627A3002B062A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59039EBA25DE484800584667;
+			remoteInfo = "Open with AltRant";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		59039ECA25DE484800584667 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				59039EC525DE484800584667 /* Open with AltRant.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0041FA4FBD2B07EA6643FBBE /* Pods-AltRant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AltRant.debug.xcconfig"; path = "Target Support Files/Pods-AltRant/Pods-AltRant.debug.xcconfig"; sourceTree = "<group>"; };
+		59039EB125DE3EC800584667 /* UserDefaults+group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+group.swift"; sourceTree = "<group>"; };
+		59039EB425DE47D700584667 /* ios-76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios-76x76.png"; sourceTree = "<group>"; };
+		59039EBB25DE484800584667 /* Open with AltRant.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Open with AltRant.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59039EBD25DE484800584667 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		59039EC025DE484800584667 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		59039EC225DE484800584667 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59039EC625DE484800584667 /* Open with AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Open with AltRant.entitlements"; sourceTree = "<group>"; };
+		59039ED325DE7F1500584667 /* UserDefaults+group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+group.swift"; sourceTree = "<group>"; };
+		59039EE925DE901200584667 /* ExtensionAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ExtensionAssets.xcassets; sourceTree = "<group>"; };
 		59040166257627A3002B062A /* AltRant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AltRant.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59040169257627A3002B062A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5904016B257627A3002B062A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +140,7 @@
 		592B1B2E2578F31300109377 /* RantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantViewController.swift; sourceTree = "<group>"; };
 		592F7D2625A4486C005813FA /* RantUpvoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantUpvoteCell.swift; sourceTree = "<group>"; };
 		59306E952578E68600F6AD08 /* RantViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RantViewController.storyboard; sourceTree = "<group>"; };
+		593B17AF25D14C41001FAF6F /* StoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesViewController.swift; sourceTree = "<group>"; };
 		594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ADNavigationBarExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5954C26425AD78D1008B70D2 /* ExpandingSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandingSegmentedView.swift; sourceTree = "<group>"; };
 		5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantCommentCell.swift; sourceTree = "<group>"; };
@@ -146,14 +188,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		59039EB825DE484800584667 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59040163257627A3002B062A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59B6F35125D43E0400F0887E /* ADNavigationBarExtension.framework in Frameworks */,
+				59B6F34E25D43E0200F0887E /* Pods_AltRant.framework in Frameworks */,
 				59CA4FB125CA8BB6005FB279 /* PullUpController in Frameworks */,
 				59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */,
-				594F4AAD25A88A6100923B0E /* ADNavigationBarExtension.framework in Frameworks */,
-				DF10AD75D2E40D5986941820 /* Pods_AltRant.framework in Frameworks */,
 				59007D8F25C1703D0088EC33 /* ActiveLabel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,10 +210,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59039EBC25DE484800584667 /* Open with AltRant */ = {
+			isa = PBXGroup;
+			children = (
+				59039EC625DE484800584667 /* Open with AltRant.entitlements */,
+				59039EBD25DE484800584667 /* ShareViewController.swift */,
+				59039EBF25DE484800584667 /* MainInterface.storyboard */,
+				59039EC225DE484800584667 /* Info.plist */,
+				59039ED325DE7F1500584667 /* UserDefaults+group.swift */,
+				59039EE925DE901200584667 /* ExtensionAssets.xcassets */,
+			);
+			path = "Open with AltRant";
+			sourceTree = "<group>";
+		};
 		5904015D257627A3002B062A = {
 			isa = PBXGroup;
 			children = (
+				59039EB425DE47D700584667 /* ios-76x76.png */,
 				59040168257627A3002B062A /* AltRant */,
+				59039EBC25DE484800584667 /* Open with AltRant */,
 				59040167257627A3002B062A /* Products */,
 				8E4192960C2659B5F29215A8 /* Pods */,
 				9BDBB6D9485395515B96ED21 /* Frameworks */,
@@ -175,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				59040166257627A3002B062A /* AltRant.app */,
+				59039EBB25DE484800584667 /* Open with AltRant.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -200,6 +265,7 @@
 				5904016D257627A3002B062A /* ViewController.swift */,
 				5904016F257627A3002B062A /* Main.storyboard */,
 				59046D9E25A31F0D00C9B4D3 /* NotificationsTableViewController.swift */,
+				593B17AF25D14C41001FAF6F /* StoriesViewController.swift */,
 				59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */,
 				5921F2C12598E53900540CF5 /* MoreTableViewController.swift */,
 				59040172257627A5002B062A /* Assets.xcassets */,
@@ -259,6 +325,7 @@
 				59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */,
 				59B85CBD25988DA300E46948 /* UINavigationController+.swift */,
 				596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */,
+				59039EB125DE3EC800584667 /* UserDefaults+group.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -311,6 +378,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		59039EBA25DE484800584667 /* Open with AltRant */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59039EC725DE484800584667 /* Build configuration list for PBXNativeTarget "Open with AltRant" */;
+			buildPhases = (
+				59039EB725DE484800584667 /* Sources */,
+				59039EB825DE484800584667 /* Frameworks */,
+				59039EB925DE484800584667 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Open with AltRant";
+			productName = "Open with AltRant";
+			productReference = 59039EBB25DE484800584667 /* Open with AltRant.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		59040165257627A3002B062A /* AltRant */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5904017A257627A5002B062A /* Build configuration list for PBXNativeTarget "AltRant" */;
@@ -320,10 +404,12 @@
 				59040163257627A3002B062A /* Frameworks */,
 				59040164257627A3002B062A /* Resources */,
 				2ACCDF485ED975C01E78EEC6 /* [CP] Embed Pods Frameworks */,
+				59039ECA25DE484800584667 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				59039EC425DE484800584667 /* PBXTargetDependency */,
 			);
 			name = AltRant;
 			packageProductDependencies = (
@@ -341,9 +427,12 @@
 		5904015E257627A3002B062A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1220;
+				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
+					59039EBA25DE484800584667 = {
+						CreatedOnToolsVersion = 12.3;
+					};
 					59040165257627A3002B062A = {
 						CreatedOnToolsVersion = 12.2;
 						LastSwiftMigration = 1220;
@@ -369,17 +458,28 @@
 			projectRoot = "";
 			targets = (
 				59040165257627A3002B062A /* AltRant */,
+				59039EBA25DE484800584667 /* Open with AltRant */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		59039EB925DE484800584667 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59039EEA25DE901200584667 /* ExtensionAssets.xcassets in Resources */,
+				59039EC125DE484800584667 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59040164257627A3002B062A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				59E671642576AD12007EEB28 /* RantCell.xib in Resources */,
 				59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */,
+				59039EB525DE47D700584667 /* ios-76x76.png in Resources */,
 				59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */,
 				59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */,
 				59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */,
@@ -437,6 +537,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		59039EB725DE484800584667 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59039ED425DE7F1500584667 /* UserDefaults+group.swift in Sources */,
+				59039EBE25DE484800584667 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59040162257627A3002B062A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -466,6 +575,7 @@
 				5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */,
 				5904016E257627A3002B062A /* ViewController.swift in Sources */,
 				5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */,
+				593B17B025D14C41001FAF6F /* StoriesViewController.swift in Sources */,
 				590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */,
 				5990652D257668FD0058C1D7 /* User.swift in Sources */,
 				59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */,
@@ -484,6 +594,7 @@
 				5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */,
 				59E6716A2576BD74007EEB28 /* RoundedImageView.swift in Sources */,
 				5990652425765FE10058C1D7 /* RantFeed.swift in Sources */,
+				59039EB225DE3EC800584667 /* UserDefaults+group.swift in Sources */,
 				5990652A257668E90058C1D7 /* APIRequest.swift in Sources */,
 				5904018225762953002B062A /* RantInFeedCell.swift in Sources */,
 				5958FC79257AD8B8003D1EDD /* KeyboardAvoidingView.swift in Sources */,
@@ -494,7 +605,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		59039EC425DE484800584667 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59039EBA25DE484800584667 /* Open with AltRant */;
+			targetProxy = 59039EC325DE484800584667 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		59039EBF25DE484800584667 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59039EC025DE484800584667 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		5904016F257627A3002B062A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -514,10 +641,63 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		59039EC825DE484800584667 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				CODE_SIGN_ENTITLEMENTS = "Open with AltRant/Open with AltRant.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 666F768P5J;
+				INFOPLIST_FILE = "Open with AltRant/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cracksoftware.AltRant.Open-with-AltRant";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		59039EC925DE484800584667 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				CODE_SIGN_ENTITLEMENTS = "Open with AltRant/Open with AltRant.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 666F768P5J;
+				INFOPLIST_FILE = "Open with AltRant/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cracksoftware.AltRant.Open-with-AltRant";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		59040178257627A5002B062A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -549,6 +729,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 666F768P5J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -579,6 +760,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -610,6 +792,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 666F768P5J;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -634,10 +817,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0041FA4FBD2B07EA6643FBBE /* Pods-AltRant.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AltRant/AltRant.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -647,6 +833,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cracksoftware.AltRant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AltRant/Extensions/AltRant-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -659,10 +847,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E06FD8442697EB807AAE111D /* Pods-AltRant.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AltRant/AltRant.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -672,6 +863,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cracksoftware.AltRant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AltRant/Extensions/AltRant-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -682,6 +875,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		59039EC725DE484800584667 /* Build configuration list for PBXNativeTarget "Open with AltRant" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59039EC825DE484800584667 /* Debug */,
+				59039EC925DE484800584667 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		59040161257627A3002B062A /* Build configuration list for PBXProject "AltRant" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

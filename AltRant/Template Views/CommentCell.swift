@@ -10,6 +10,7 @@ import SwiftUI
 import QuickLook
 import ActiveLabel
 
+
 class CommentCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -26,21 +27,64 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var reportModifyButton: UIButton!
     
-    var attributedBodyString: NSAttributedString?
+    /**
+     The `File` instance for a possible image.
+     
+     # See Also
+        [File](x-source-tag://File)
+     */
     var file: File?
-    var attachedRantFile: File?
+    
+    /**
+     The data for the comment.
+     
+     # See Also
+     [CommentModel](x-source-tag://CommentModel)
+     */
     var commentContents: CommentModel!
+    
+    /**
+     The parent view controller.
+     
+     - important: This technically can be any UIViewController, but it is advised to only put UITableViewControllers in this variable.
+     */
     var parentTableViewController: UIViewController? = nil
+    
+    /**
+     The parent table view.
+     */
     var parentTableView: UITableView? = nil
     
-    var commentInFeed: Binding<CommentModel>?
+    /**
+     A pointer holding the data for the same comment in another table view.
+     
+     If the comment data was also represented somewhere else (for example, in another table view) and you want to sync the data between both instances of the same comment (for continuity's sake), set this property's value to your other instance's pointer.
+     
+     # See Also
+     [CommentModel](x-source-tag://CommentModel)
+     */
+    var commentInFeed: UnsafeMutablePointer<CommentModel>?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    //- commentInFeed: An [`UnsafeMutablePointer`]() pointer holding the data for the same comment in another table view. Optional.
     
-    func configure(with model: CommentModel, supplementalImage: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?, commentInFeed: Binding<CommentModel>?, allowedToPreview: Bool) {
+    /**
+     Configures the comment cell with the required data.
+     
+     - parameters:
+        - model: The `CommentModel` full of the data given from the devRant API.
+        - supplementalImage: If there is an image associated with the comment, this is the parameter that you need to set in order to give the cache URL for the image. Optional.
+        - parentTableViewController: The table view controller that shows this cell. Optional.
+        - parentTableView: The table view that shows this cell. Optional.
+        - commentInFeed: An `UnsafeMutablePointer` that holds the address for the data for the same `CommentModel` in another table view. Optional.
+        - allowedToPreview: A boolean value that tells the cell if it should allow special functionality, like previewing attached images and opening the comment's poster's profile page.
+     
+     - returns: Nothing.
+     */
+    func configure(with model: CommentModel, supplementalImage: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?, commentInFeed: UnsafeMutablePointer<CommentModel>?, allowedToPreview: Bool) {
         self.commentContents = model
         self.file = supplementalImage
         self.parentTableViewController = parentTableViewController
@@ -154,33 +198,50 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             }
             
             if let links = commentContents.links {
+                // We create the variables that we will use in the loop in order to avoid excessive RAM usage.
+                
                 let semiboldAttrString = NSMutableAttributedString(string: commentContents.body)
+                let stringAsData = commentContents.body.data(using: .utf8)!
+                
+                var temporaryStringBytes = Data()
+                var temporaryGenericUseString = ""
+                
+                var temporaryRange = NSRange(location: 0, length: 1)
                 
                 semiboldAttrString.addAttribute(.font, value: bodyLabel.font!, range: (commentContents.body as NSString).range(of: commentContents.body))
                 semiboldAttrString.addAttribute(.foregroundColor, value: UIColor.label, range: (commentContents.body as NSString).range(of: commentContents.body))
                 
                 for i in links {
+                    
                     if i.start == nil && i.end == nil {
-                        let range = (commentContents.body as NSString).range(of: i.title)
+                        temporaryRange = (commentContents.body as NSString).range(of: i.title)
                         
-                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: range)
+                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: temporaryRange)
                         
                         if i.type == "mention" {
-                            semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: range)
+                            semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: temporaryRange)
                         } else {
-                            semiboldAttrString.addAttribute(.link, value: i.url, range: range)
+                            semiboldAttrString.addAttribute(.link, value: i.url, range: temporaryRange)
                         }
                     } else {
+                        // The devRant API returns offsets for links in byte offsets, not in normalized character offsets, so we need to get the raw bytes between the start offset (i.start) and end offset (i.end) and turn the entire thing to a String again, encoded in UTF-8.
                         
+                        // Get the raw bytes in the given range from the devRant API
+                        temporaryStringBytes = stringAsData[stringAsData.index(stringAsData.startIndex, offsetBy: i.start!)..<stringAsData.index(stringAsData.startIndex, offsetBy: i.end!)]
                         
-                        let range = NSRange(location: i.start! - 2 * (semiboldAttrString.string.components(separatedBy: "\n").count - 1), length: i.end! - i.start!)
+                        // Turn the raw data into a String again
+                        temporaryGenericUseString = String(data: temporaryStringBytes, encoding: .utf8)!
                         
-                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: range)
+                        // Get the range using the sanitized String that we just got from the raw data
+                        temporaryRange = (commentContents.body as NSString).range(of: temporaryGenericUseString)
+                        
+                        // And use it to add our desired attributes
+                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: temporaryRange)
                         
                         if i.type == "mention" {
-                            semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: range)
+                            semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: temporaryRange)
                         } else {
-                            semiboldAttrString.addAttribute(.link, value: i.url, range: range)
+                            semiboldAttrString.addAttribute(.link, value: i.url, range: temporaryRange)
                         }
                     }
                 }
@@ -265,8 +326,8 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             print("ERROR WHILE UPVOTING")
         } else {
             if let commentInFeed = self.commentInFeed {
-                commentInFeed.wrappedValue.vote_state = vote
-                commentInFeed.wrappedValue.score = success!.comment.score
+                commentInFeed.pointee.vote_state = vote
+                commentInFeed.pointee.score = success!.comment.score
             }
             
             if let idx = (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent.firstIndex(where: {
@@ -305,8 +366,8 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             print("ERROR WHILE DOWNVOTING")
         } else {
             if let commentInFeed = self.commentInFeed {
-                commentInFeed.wrappedValue.vote_state = vote
-                commentInFeed.wrappedValue.score = success!.comment.score
+                commentInFeed.pointee.vote_state = vote
+                commentInFeed.pointee.score = success!.comment.score
             }
             
             if let idx = (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent.firstIndex(where: {

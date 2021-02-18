@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 import QuickLook
 
-class RantCell: UITableViewCell {
+class RantCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
@@ -20,7 +20,7 @@ class RantCell: UITableViewCell {
     
     @IBOutlet weak var textStackView: UIStackView!
     @IBOutlet weak var userStackView: UIStackView!
-    @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var bodyLabel: UITextView!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
     @IBOutlet weak var favoriteModifyButton: UIButton!
@@ -30,7 +30,7 @@ class RantCell: UITableViewCell {
     var profile: Profile!
     var userImage: UIImage?
     var rantContents: RantModel!
-    var rantInFeed: Binding<RantInFeed>!
+    var rantInFeed: UnsafeMutablePointer<RantInFeed>!
     var parentTableViewController: RantViewController? = nil
     
     override func awakeFromNib() {
@@ -72,7 +72,7 @@ class RantCell: UITableViewCell {
         tagList.addTags(["This", "Is", "A", "Test"])
     }
     
-    func configure(with model: RantModel, rantInFeed: Binding<RantInFeed>?, userImage: UIImage?, supplementalImage: File?, profile: Profile, parentTableViewController: RantViewController?) {
+    func configure(with model: RantModel, rantInFeed: UnsafeMutablePointer<RantInFeed>?, userImage: UIImage?, supplementalImage: File?, profile: Profile, parentTableViewController: RantViewController?) {
         self.rantContents = model
         self.rantInFeed = rantInFeed
         self.userImage = userImage
@@ -264,6 +264,84 @@ class RantCell: UITableViewCell {
             }
         }
         
+        if let links = rantContents.links {
+            let semiboldAttrString = NSMutableAttributedString(string: rantContents.text)
+            
+            let stringAsData = rantContents.text.data(using: .utf8)!
+            
+            var temporaryStringBytes = Data()
+            var temporaryGenericUseString = ""
+            
+            var temporaryRange = NSRange(location: 0, length: 1)
+            
+            semiboldAttrString.addAttribute(.font, value: bodyLabel.font!, range: (rantContents.text as NSString).range(of: rantContents.text))
+            semiboldAttrString.addAttribute(.foregroundColor, value: UIColor.label, range: (rantContents.text as NSString).range(of: rantContents.text))
+            
+            for i in links {
+                
+                if i.start == nil && i.end == nil {
+                    temporaryRange = (rantContents.text as NSString).range(of: i.title)
+                    
+                    semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: temporaryRange)
+                    
+                    if i.type == "mention" {
+                        semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: temporaryRange)
+                    } else {
+                        semiboldAttrString.addAttribute(.link, value: i.url, range: temporaryRange)
+                    }
+                } else {
+                    // The devRant API returns offsets for links in byte offsets, not in normalized character offsets, so we need to get the raw bytes between the start offset (i.start) and end offset (i.end) and turn the entire thing to a String again, encoded in UTF-8.
+                    
+                    // Get the raw bytes in the given range from the devRant API
+                    //(stringAsData as NSMutableData).getBytes(&temporaryStringBytes, range: NSRange(location: i.start!, length: i.end! - i.start!))
+                    
+                    let debugRange = stringAsData.index(stringAsData.startIndex, offsetBy: i.start!)..<stringAsData.index(stringAsData.startIndex, offsetBy: i.end!)
+                    
+                    temporaryStringBytes = stringAsData[stringAsData.index(stringAsData.startIndex, offsetBy: i.start!)..<stringAsData.index(stringAsData.startIndex, offsetBy: i.end!)]
+                    
+                    // Turn the raw data into a String again
+                    temporaryGenericUseString = String(data: temporaryStringBytes, encoding: .utf8)!
+                    
+                    // Get the range using the sanitized String that we just got from the raw data
+                    temporaryRange = (rantContents.text as NSString).range(of: temporaryGenericUseString)
+                    
+                    // And use it to add our desired attributes
+                    semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: temporaryRange)
+                    
+                    if i.type == "mention" {
+                        semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: temporaryRange)
+                    } else {
+                        semiboldAttrString.addAttribute(.link, value: i.url, range: temporaryRange)
+                    }
+                }
+            }
+            
+            bodyLabel.attributedText = semiboldAttrString
+            
+            /*semiboldAttrString.addAttribute(.font, value: bodyLabel.font!, range: (rantContents.text as NSString).range(of: rantContents.text))
+            semiboldAttrString.addAttribute(.foregroundColor, value: UIColor.label, range: (rantContents.text as NSString).range(of: rantContents.text))
+            
+            for link in links {
+                if link.start == nil && link.end == nil {
+                    let range = (rantContents.text as NSString).range(of: link.title)
+                    
+                    semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: range)
+                    
+                    semiboldAttrString.addAttribute(.link, value: link.url, range: range)
+                } else {
+                    //let range = NSRange(location: link.start! - 2 * (semiboldAttrString.string.components(separatedBy: "\n").count - 1), length: link.end! - link.start!)
+                    let range = NSRange(location: link.start!, length: link.end! - link.start!)
+                    
+                    semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: range)
+                    
+                    semiboldAttrString.addAttribute(.link, value: link.url, range: range)
+                }
+            }*/
+            
+            bodyLabel.isUserInteractionEnabled = true
+            bodyLabel.delegate = self
+        }
+        
         supplementalImageView.addGestureRecognizer(imageGestureRecognizer)
         userStackView.addGestureRecognizer(userGestureRecognizer)
         
@@ -358,8 +436,8 @@ class RantCell: UITableViewCell {
             print("ERROR WHILE UPVOTING")
         } else {
             if rantInFeed != nil {
-                rantInFeed!.wrappedValue.vote_state = vote
-                rantInFeed!.wrappedValue.score = success!.rant.score
+                rantInFeed!.pointee.vote_state = vote
+                rantInFeed!.pointee.score = success!.rant.score
             }
             //parentTableViewController?.rant!.vote_state = vote
             
@@ -393,8 +471,8 @@ class RantCell: UITableViewCell {
         if success == nil {
             print("ERROR WHILE UPVOTING")
         } else {
-            rantInFeed!.wrappedValue.vote_state = vote
-            rantInFeed!.wrappedValue.score = success!.rant.score
+            rantInFeed!.pointee.vote_state = vote
+            rantInFeed!.pointee.score = success!.rant.score
             parentTableViewController?.rant!.vote_state = success!.rant.vote_state
             parentTableViewController?.rant!.score = success!.rant.score
             
@@ -410,6 +488,11 @@ class RantCell: UITableViewCell {
         } else {
             return getImageResizeMultiplier(imageWidth: imageWidth, imageHeight: imageHeight, multiplier: multiplier + 2)
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        UIApplication.shared.open(URL)
+        return false
     }
     
     @objc func handleImageTap(_ sender: UITapGestureRecognizer) {
