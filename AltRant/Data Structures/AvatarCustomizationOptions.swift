@@ -9,13 +9,55 @@ import Foundation
 
 struct AvatarCustomizationImage: Decodable {
     let backgroundColor: String
-    let fullImage: String
-    let midCompleteImage: String
+    var fullImage: UIImage
+    var midCompleteImage: UIImage
     
     enum CodingKeys: String, CodingKey {
         case backgroundColor = "b",
              fullImage = "full",
              midCompleteImage = "mid"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        backgroundColor = try values.decode(String.self, forKey: .backgroundColor)
+        
+        var temporaryImage = UIImage()
+        
+        let midURL = URL(string: "https://avatars.devrant.com/\(try values.decode(String.self, forKey: .midCompleteImage))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        
+        var request = URLRequest(url: midURL)
+        
+        request.httpMethod = "GET"
+        
+        let completionSemaphore = DispatchSemaphore(value: 0)
+        
+        URLSession.shared.dataTask(with: request) { data, _, _ in
+            temporaryImage = UIImage(data: data!)!
+            
+            completionSemaphore.signal()
+        }.resume()
+        
+        completionSemaphore.wait()
+        
+        midCompleteImage = temporaryImage
+        
+        let fullImageURL = URL(string: "https://avatars.devrant.com/\(try values.decode(String.self, forKey: .fullImage))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        
+        request = URLRequest(url: fullImageURL)
+        
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, _, _ in
+            temporaryImage = UIImage(data: data!)!
+            
+            completionSemaphore.signal()
+        }.resume()
+        
+        completionSemaphore.wait()
+        
+        fullImage = temporaryImage
     }
 }
 

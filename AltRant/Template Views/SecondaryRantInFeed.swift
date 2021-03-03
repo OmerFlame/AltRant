@@ -16,6 +16,7 @@ class SecondaryRantInFeedCell: UITableViewCell {
     @IBOutlet weak var bodyLabel: UITextView!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     
     var rantContents: UnsafeMutablePointer<RantInFeed>? = nil
     var parentTableViewController: UIViewController? = nil
@@ -126,7 +127,15 @@ class SecondaryRantInFeedCell: UITableViewCell {
             let finalWidth = supplementalImage!.size!.width / resizeMultiplier
             let finalHeight = supplementalImage!.size!.height / resizeMultiplier
             
-            if UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.size.width > textStackView.frame.size.width {
+            supplementalImageView.image = UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!
+            
+            supplementalImageView.frame.size = CGSize(width: finalWidth, height: finalHeight)
+            
+            imageViewHeightConstraint.constant = finalHeight
+            
+            print("IMAGE FRAME: \(supplementalImageView.frame.size)")
+            
+            /*if UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.size.width > textStackView.frame.size.width {
                 UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, resizeMultiplier)
                 UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
                 let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -135,7 +144,7 @@ class SecondaryRantInFeedCell: UITableViewCell {
                 supplementalImageView.image = newImage
             } else {
                 supplementalImageView.image = UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!
-            }
+            }*/
             
             //supplementalImageView.image = UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!
         }

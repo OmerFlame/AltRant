@@ -63,6 +63,10 @@
 		59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CBD25988DA300E46948 /* UINavigationController+.swift */; };
 		59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CC02598DAD900E46948 /* MoreCell.swift */; };
 		59BB224C25B42B5E00B4B177 /* AvatarCustomizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB224B25B42B5E00B4B177 /* AvatarCustomizationOptions.swift */; };
+		59C2EFE425E25C2D00BBCDAB /* AvatarEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C2EFE225E25C2D00BBCDAB /* AvatarEditorViewController.swift */; };
+		59C2EFEB25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59C2EFEA25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard */; };
+		59C2EFEF25E25E5E00BBCDAB /* AvatarEditorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C2EFEE25E25E5E00BBCDAB /* AvatarEditorPickerViewController.swift */; };
+		59C2EFF325E26D4700BBCDAB /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C2EFF225E26D4700BBCDAB /* UIViewController+.swift */; };
 		59C3A1D9257E0FAB0082E76F /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1D8257E0FAB0082E76F /* UIImage+.swift */; };
 		59C3A1E0257E8E990082E76F /* VoteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1DF257E8E990082E76F /* VoteResponse.swift */; };
 		59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3A1E2257E972F0082E76F /* CommentCell.swift */; };
@@ -167,6 +171,10 @@
 		59B85CBD25988DA300E46948 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		59B85CC02598DAD900E46948 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		59BB224B25B42B5E00B4B177 /* AvatarCustomizationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCustomizationOptions.swift; sourceTree = "<group>"; };
+		59C2EFE225E25C2D00BBCDAB /* AvatarEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarEditorViewController.swift; sourceTree = "<group>"; };
+		59C2EFEA25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AvatarEditorViewController.storyboard; sourceTree = "<group>"; };
+		59C2EFEE25E25E5E00BBCDAB /* AvatarEditorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarEditorPickerViewController.swift; sourceTree = "<group>"; };
+		59C2EFF225E26D4700BBCDAB /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		59C3A1D8257E0FAB0082E76F /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		59C3A1DF257E8E990082E76F /* VoteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteResponse.swift; sourceTree = "<group>"; };
 		59C3A1E2257E972F0082E76F /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -276,6 +284,9 @@
 				59E671692576BD74007EEB28 /* RoundedImageView.swift */,
 				5954C26425AD78D1008B70D2 /* ExpandingSegmentedView.swift */,
 				59AD346025ADB1C6004D5DD6 /* Cache.swift */,
+				59C2EFE225E25C2D00BBCDAB /* AvatarEditorViewController.swift */,
+				59C2EFEE25E25E5E00BBCDAB /* AvatarEditorPickerViewController.swift */,
+				59C2EFEA25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard */,
 			);
 			path = AltRant;
 			sourceTree = "<group>";
@@ -326,6 +337,7 @@
 				59B85CBD25988DA300E46948 /* UINavigationController+.swift */,
 				596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */,
 				59039EB125DE3EC800584667 /* UserDefaults+group.swift */,
+				59C2EFF225E26D4700BBCDAB /* UIViewController+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -477,6 +489,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59C2EFEB25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard in Resources */,
 				59E671642576AD12007EEB28 /* RantCell.xib in Resources */,
 				59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */,
 				59039EB525DE47D700584667 /* ios-76x76.png in Resources */,
@@ -561,6 +574,7 @@
 				59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */,
 				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
 				59BB224C25B42B5E00B4B177 /* AvatarCustomizationOptions.swift in Sources */,
+				59C2EFE425E25C2D00BBCDAB /* AvatarEditorViewController.swift in Sources */,
 				59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */,
 				59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */,
 				5954C26525AD78D1008B70D2 /* ExpandingSegmentedView.swift in Sources */,
@@ -577,6 +591,7 @@
 				5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */,
 				593B17B025D14C41001FAF6F /* StoriesViewController.swift in Sources */,
 				590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */,
+				59C2EFEF25E25E5E00BBCDAB /* AvatarEditorPickerViewController.swift in Sources */,
 				5990652D257668FD0058C1D7 /* User.swift in Sources */,
 				59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */,
 				59A9E69925CFCA3500DC6065 /* SecondaryRantInFeed.swift in Sources */,
@@ -587,6 +602,7 @@
 				59046DA225A3257400C9B4D3 /* ScrollUISegmentController.swift in Sources */,
 				592B1B2F2578F31300109377 /* RantViewController.swift in Sources */,
 				59906511257644120058C1D7 /* TagView.swift in Sources */,
+				59C2EFF325E26D4700BBCDAB /* UIViewController+.swift in Sources */,
 				5904016C257627A3002B062A /* SceneDelegate.swift in Sources */,
 				5990651F25765FE10058C1D7 /* RantInFeed.swift in Sources */,
 				5990652125765FE10058C1D7 /* File.swift in Sources */,

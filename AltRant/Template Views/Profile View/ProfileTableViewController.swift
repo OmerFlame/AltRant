@@ -126,7 +126,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             blurFrame.origin.y = max(originalBlurRect.minY - 36, originalBlurRect.minY + titleGeometry.blurOffset - 36)
         }
         
-        print("BLUR OFFSET: \(titleGeometry.blurOffset)")
+        //print("BLUR OFFSET: \(titleGeometry.blurOffset)")
         
         if let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height {
             self.statusBarHeight = statusBarHeight
@@ -134,7 +134,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         titleFrame.origin.y = originalTitleRect.minY + (413 - self.statusBarHeight)
         
-        print("TITLE OFFSET: \(originalTitleRect.minY + (413 - self.statusBarHeight))")
+        //print("TITLE OFFSET: \(originalTitleRect.minY + (413 - self.statusBarHeight))")
         
         blurView.frame = blurFrame
         headerTitle.frame = titleFrame

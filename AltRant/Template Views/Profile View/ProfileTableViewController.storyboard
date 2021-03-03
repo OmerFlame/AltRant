@@ -74,7 +74,7 @@
                                                             </constraints>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RDq-iU-Uwe" userLabel="Text Stack View">
-                                                            <rect key="frame" x="47.333333333333343" y="0.0" width="291.66666666666663" height="424"/>
+                                                            <rect key="frame" x="47.333333333333343" y="0.0" width="291.66666666666663" height="374"/>
                                                             <subviews>
                                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qWG-51-I7i" userLabel="Body">
                                                                     <rect key="frame" x="0.0" y="0.0" width="291.66666666666669" height="346"/>
@@ -84,25 +84,20 @@
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                                 </textView>
-                                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="999" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" translatesAutoresizingMaskIntoConstraints="NO" id="t48-gd-Elp" userLabel="Image View">
-                                                                    <rect key="frame" x="0.0" y="354" width="89" height="50"/>
+                                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="999" verticalHuggingPriority="999" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="t48-gd-Elp" userLabel="Image View">
+                                                                    <rect key="frame" x="0.0" y="354" width="89" height="0.0"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="420" id="Pgg-G2-70c"/>
-                                                                        <constraint firstAttribute="width" secondItem="t48-gd-Elp" secondAttribute="height" multiplier="16:9" id="gDi-jq-SBG"/>
+                                                                        <constraint firstAttribute="height" id="Mk0-UV-nbg"/>
+                                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" id="wba-48-P8D"/>
                                                                     </constraints>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                             <integer key="value" value="5"/>
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
-                                                                    <variation key="default">
-                                                                        <mask key="constraints">
-                                                                            <exclude reference="gDi-jq-SBG"/>
-                                                                        </mask>
-                                                                    </variation>
                                                                 </imageView>
                                                                 <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="vbb-lB-vGD" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="412" width="240" height="12"/>
+                                                                    <rect key="frame" x="0.0" y="362" width="240" height="12"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -153,6 +148,7 @@
                                         <connections>
                                             <outlet property="bodyLabel" destination="qWG-51-I7i" id="IvV-ph-iNl"/>
                                             <outlet property="downvoteButton" destination="URW-Mz-jZK" id="L4N-65-eus"/>
+                                            <outlet property="imageViewHeightConstraint" destination="Mk0-UV-nbg" id="YP0-pb-KYW"/>
                                             <outlet property="scoreLabel" destination="mdH-ak-EEp" id="EFY-hE-EMs"/>
                                             <outlet property="supplementalImageView" destination="t48-gd-Elp" id="pXv-mO-0Yn"/>
                                             <outlet property="tagList" destination="vbb-lB-vGD" id="jyh-GP-v7I"/>

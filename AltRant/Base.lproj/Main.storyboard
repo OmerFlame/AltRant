@@ -82,9 +82,12 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" id="Agh-p3-1Un" userLabel="Image View">
-                                                            <rect key="frame" x="0.0" y="248.5" width="0.0" height="0.0"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="998" translatesAutoresizingMaskIntoConstraints="NO" id="Agh-p3-1Un" userLabel="Image View">
+                                                            <rect key="frame" x="0.0" y="248.5" width="50" height="0.0"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" id="2sG-TB-O8s"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" id="jmO-JE-0PJ"/>
+                                                            </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                     <integer key="value" value="5"/>
@@ -153,14 +156,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInFeedCell" id="Bwn-Hx-Vsk" customClass="SecondaryRantInFeedCell" customModule="AltRant" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="338" width="414" height="434"/>
+                                <rect key="frame" x="0.0" y="338" width="414" height="294.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bwn-Hx-Vsk" id="nut-6w-0r6">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="434"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="294.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Lkk-j3-W3i" userLabel="Content Stack View">
-                                            <rect key="frame" x="20" y="15" width="370" height="404"/>
+                                            <rect key="frame" x="20" y="15" width="370" height="264.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="VQq-2b-abE" userLabel="Voting Stack View">
                                                     <rect key="frame" x="0.0" y="0.0" width="26" height="70"/>
@@ -206,10 +209,10 @@
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xbz-om-ezW" userLabel="Text Stack View">
-                                                    <rect key="frame" x="36" y="0.0" width="334" height="404"/>
+                                                    <rect key="frame" x="36" y="0.0" width="334" height="264.5"/>
                                                     <subviews>
                                                         <textView multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcR-Zu-vOh" userLabel="Body">
-                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="236"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="236.5"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                                             <color key="textColor" systemColor="labelColor"/>
@@ -217,24 +220,19 @@
                                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                         </textView>
                                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="L6a-Oe-RVg">
-                                                            <rect key="frame" x="0.0" y="244" width="322.5" height="140"/>
+                                                            <rect key="frame" x="0.0" y="244.5" width="50" height="0.0"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="322.5" id="1tL-Vn-YY1"/>
-                                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="420" id="wRh-BZ-CDl"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" id="1tL-Vn-YY1"/>
+                                                                <constraint firstAttribute="height" id="wRh-BZ-CDl"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                     <integer key="value" value="5"/>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
-                                                            <variation key="default">
-                                                                <mask key="constraints">
-                                                                    <exclude reference="1tL-Vn-YY1"/>
-                                                                </mask>
-                                                            </variation>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1vm-oH-mVd" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="392" width="240" height="12"/>
+                                                            <rect key="frame" x="0.0" y="252.5" width="240" height="12"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -287,6 +285,7 @@
                                 <connections>
                                     <outlet property="bodyLabel" destination="hcR-Zu-vOh" id="d7l-tU-PGf"/>
                                     <outlet property="downvoteButton" destination="iQQ-Xl-nKx" id="eUN-3s-Dqc"/>
+                                    <outlet property="imageViewHeightConstraint" destination="wRh-BZ-CDl" id="lLm-Nl-pxh"/>
                                     <outlet property="scoreLabel" destination="DIg-Q7-nwi" id="Heh-Hf-Vyj"/>
                                     <outlet property="supplementalImageView" destination="L6a-Oe-RVg" id="lvS-sj-5Ts"/>
                                     <outlet property="tagList" destination="1vm-oH-mVd" id="Wip-qe-BoY"/>
