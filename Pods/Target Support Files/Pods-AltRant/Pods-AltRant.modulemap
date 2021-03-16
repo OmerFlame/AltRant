@@ -1,0 +1,6 @@
+framework module Pods_AltRant {
+  umbrella header "Pods-AltRant-umbrella.h"
+
+  export *
+  module * { export * }
+}

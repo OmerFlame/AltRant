@@ -156,20 +156,20 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInFeedCell" id="Bwn-Hx-Vsk" customClass="SecondaryRantInFeedCell" customModule="AltRant" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="338" width="414" height="294.5"/>
+                                <rect key="frame" x="0.0" y="338" width="414" height="328.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bwn-Hx-Vsk" id="nut-6w-0r6">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="294.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="328.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Lkk-j3-W3i" userLabel="Content Stack View">
-                                            <rect key="frame" x="20" y="15" width="370" height="264.5"/>
+                                            <rect key="frame" x="20" y="15" width="370" height="298.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="VQq-2b-abE" userLabel="Voting Stack View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="26" height="70"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="26" height="80"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="744" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZdL-o6-5ge" userLabel="Upvote Button">
-                                                            <rect key="frame" x="0.0" y="0.0" width="26" height="26.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="26" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="26" id="4JH-oz-ZHz"/>
                                                             </constraints>
@@ -181,7 +181,7 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="266" horizontalCompressionResistancePriority="1000" text="9999" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIg-Q7-nwi" userLabel="Score Label">
-                                                            <rect key="frame" x="0.0" y="27.5" width="26" height="15.5"/>
+                                                            <rect key="frame" x="0.0" y="31" width="26" height="18"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="26" id="3Ac-sV-fpQ"/>
                                                             </constraints>
@@ -190,7 +190,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQQ-Xl-nKx" userLabel="Downvote Button">
-                                                            <rect key="frame" x="0.0" y="44" width="26" height="26"/>
+                                                            <rect key="frame" x="0.0" y="50" width="26" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="26" id="AY6-fw-4uL"/>
                                                                 <constraint firstAttribute="height" constant="26" id="wKR-VA-wgs"/>
@@ -198,6 +198,11 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                             <color key="tintColor" systemColor="systemGrayColor"/>
                                                             <state key="normal" image="minuminus"/>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="wKR-VA-wgs"/>
+                                                                </mask>
+                                                            </variation>
                                                             <connections>
                                                                 <action selector="handleDownvote:" destination="Bwn-Hx-Vsk" eventType="touchUpInside" id="TEM-r3-Zgr"/>
                                                             </connections>
@@ -208,11 +213,11 @@
                                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="iQQ-Xl-nKx" secondAttribute="bottom" id="kIy-lh-giG"/>
                                                     </constraints>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xbz-om-ezW" userLabel="Text Stack View">
-                                                    <rect key="frame" x="36" y="0.0" width="334" height="264.5"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="xbz-om-ezW" userLabel="Text Stack View">
+                                                    <rect key="frame" x="36" y="0.0" width="334" height="298"/>
                                                     <subviews>
                                                         <textView multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcR-Zu-vOh" userLabel="Body">
-                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="236.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="236"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                                             <color key="textColor" systemColor="labelColor"/>
@@ -220,7 +225,7 @@
                                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                         </textView>
                                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="L6a-Oe-RVg">
-                                                            <rect key="frame" x="0.0" y="244.5" width="50" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="236" width="50" height="50"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" id="1tL-Vn-YY1"/>
                                                                 <constraint firstAttribute="height" id="wRh-BZ-CDl"/>
@@ -230,9 +235,14 @@
                                                                     <integer key="value" value="5"/>
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="wRh-BZ-CDl"/>
+                                                                </mask>
+                                                            </variation>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1vm-oH-mVd" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="252.5" width="240" height="12"/>
+                                                            <rect key="frame" x="0.0" y="286" width="240" height="12"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -267,12 +277,22 @@
                                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="hcR-Zu-vOh" secondAttribute="trailing" id="mIv-r1-iJc"/>
                                                         <constraint firstAttribute="bottom" secondItem="1vm-oH-mVd" secondAttribute="bottom" id="pFy-tm-M7z"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="7MM-Rh-93I"/>
+                                                        </mask>
+                                                    </variation>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="xbz-om-ezW" secondAttribute="bottom" id="QFr-oL-4Oc"/>
                                                 <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="xbz-om-ezW" secondAttribute="trailing" id="hdN-EI-2p9"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="QFr-oL-4Oc"/>
+                                                </mask>
+                                            </variation>
                                         </stackView>
                                     </subviews>
                                     <constraints>
@@ -1059,7 +1079,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="tBo-8G-Lbg"/>
+        <segue reference="4mZ-5q-o8C"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="bell.fill" catalog="system" width="128" height="124"/>

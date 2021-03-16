@@ -23,7 +23,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     var originalBlurRect: CGRect!
     var originalTitleRect: CGRect!
-    var originalSmallTitleRect: CGRect!
+    //var originalSmallTitleRect: CGRect!
     var originalTestRect: CGRect!
     
     var segmentedControl: UISegmentedControl!
@@ -36,7 +36,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     var currentBlurFrame: CGRect!
     
-    var blurViewHeight = NSLayoutConstraint()
+    //var blurViewHeight = NSLayoutConstraint()
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
@@ -66,7 +66,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         fatalError("init(coder:) has not been implemented")
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    /*func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if self.navigationController != nil {
             if !self.navigationController!.isNavigationBarHidden {
                 self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -142,6 +142,83 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         currentBlurFrame = blurView.frame
         
         (tableView.tableHeaderView as! StretchyTableHeaderView).scrollViewDidScroll(scrollView: scrollView)
+    }*/
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard tableView.tableHeaderView != nil else { return }
+        
+        let statusBarFrame = UIApplication.shared.windows[0].windowScene?.statusBarManager?.statusBarFrame ?? .zero
+        
+        let targetHeight = blurView.frame.size.height
+        //let thresholdHeight = tableView.tableHeaderView!.frame.size.height - blurView.frame.size.height - navigationController!.navigationBar.frame.size.height - statusBarFrame.height - headerTitle.frame.size.height
+        //let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - statusBarFrame.height
+        
+        //let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - blurView.frame.size.height - headerTitle.frame.size.height
+        let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - headerTitle.frame.size.height - 2 * blurView.frame.size.height
+        
+        
+        var offset = ((scrollView.contentOffset.y - thresholdHeight) / targetHeight)
+        
+        print("OFFSET:         \(offset)")
+        print("CONTENT OFFSET: \(scrollView.contentOffset.y)")
+        
+        let visualEffectViewOffset = -(scrollView.contentOffset.y + scrollView.safeAreaInsets.top)
+        
+        var blurFrame = blurView.frame
+        var titleFrame = headerTitle.frame
+        
+        blurFrame.origin.y = max(originalBlurRect.minY, -visualEffectViewOffset)
+        //titleFrame.origin.y = originalTitleRect.minY + (413 - statusBarFrame.height)
+        
+        blurView.frame = blurFrame
+        headerTitle.frame = titleFrame
+        
+        currentBlurFrame = blurView.frame
+        
+        if offset > 1 {offset = 1}
+        
+        if offset < 0 { offset = 0 }
+        
+        navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hex: profileData!.avatar.b)!, percent: Double(sqrt(offset)))
+        
+        //navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(offset)]
+        navigationItem.titleView?.alpha = sqrt(offset)
+        
+        navigationController?.navigationBar.backgroundView?.alpha = sqrt(offset)
+        
+        blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = offset
+        blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.alpha = offset
+        
+        (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.alpha = 1 - offset
+        (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.alpha = 1 - offset
+        
+        headerTitle.alpha = 1 - offset
+        
+        if 1 - offset == 1 {
+            if blurView.contentView.gestureRecognizers == nil {
+                let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap(_:)))
+                tableView.tableHeaderView!.addGestureRecognizer(gestureRecognizer)
+                
+                //blurView.contentView.addGestureRecognizer(gestureRecognizer)
+                
+                //blurView.contentView.isUserInteractionEnabled = true
+                //blurView.isUserInteractionEnabled = true
+            }
+        } else {
+            //blurView.contentView.gestureRecognizers!.forEach(blurView.contentView.removeGestureRecognizer)
+            tableView.tableHeaderView!.gestureRecognizers!.forEach(tableView.tableHeaderView!.removeGestureRecognizer)
+            
+            blurView.contentView.isUserInteractionEnabled = false
+            blurView.isUserInteractionEnabled = false
+        }
+        
+        /*if UIDevice.current.userInterfaceIdiom == .phone {
+            blurFrame.origin.y = max(originalBlurRect.minY, originalBlurRect.minY + titleGeometry.blurOffset)
+        } else if UIDevice.current.userInterfaceIdiom == .pad {
+            blurFrame.origin.y = max(originalBlurRect.minY - 36, originalBlurRect.minY + titleGeometry.blurOffset - 36)
+        }*/
+        
+        (tableView.tableHeaderView as! StretchyTableHeaderView).scrollViewDidScroll(scrollView: scrollView)
     }
     
     override func viewDidLoad() {
@@ -150,6 +227,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.prefetchDataSource = self
+        
+        tableView.contentInsetAdjustmentBehavior = .never
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.backgroundView?.alpha = 0
         
         guard didFinishLoading else { return }
         
@@ -192,9 +273,13 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.infiniteScrollIndicatorMargin = 40
         tableView.infiniteScrollTriggerOffset = 500
         
+        //tableView.contentInset.top = 40
+        
         segmentedControl.addTarget(self, action: #selector(segmentedControlSelectionChanged(_:)), for: .valueChanged)
         
         NotificationCenter.default.addObserver(self, selector: #selector(windowDidResize), name: NSNotification.Name("WindowDidResize"), object: nil)
+        
+        //tableView.register(UINib(nibName: "SecondaryRantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
         
         //let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap(_:)))
         //blurView.addGestureRecognizer(gestureRecognizer)
@@ -216,7 +301,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    func addTitle() {
+    /*func addTitle() {
         let blurEffect = UIBlurEffect(style: UITraitCollection.current.userInterfaceStyle == .dark ? .dark : .light)
         blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: UIScreen.main.bounds.size.width, height: 44 + 32)
@@ -368,12 +453,164 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         headerTitle.updateConstraints()
         
         scrollViewDidScroll(tableView)
+    }*/
+    
+    func addTitle() {
+        blurView = navigationController?.navigationBar.visualEffectView?.copyView()
+        
+        segmentedControl = UISegmentedControl(items: secondaryProfilePages)
+        segmentedControl.selectedSegmentIndex = 0
+        
+        segmentedControl.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 32, height: 32)
+        segmentedControl.apportionsSegmentWidthsByContent = true
+        
+        segmentedControl.backgroundColor = .systemBackground
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.selectedSegmentTintColor = UIColor(hex: profileData!.avatar.b)!
+        
+        scoreLabel = PaddingLabel()
+        scoreLabel.topInset = 2.5
+        scoreLabel.bottomInset = 2.5
+        scoreLabel.leftInset = 5
+        scoreLabel.rightInset = 5
+        scoreLabel.text = "+\(String(profileData!.score))"
+        scoreLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+        scoreLabel.textColor = .black
+        scoreLabel.backgroundColor = .white
+        scoreLabel.cornerRadius = 5
+        scoreLabel.clipsToBounds = true
+        scoreLabel.layer.masksToBounds = true
+        
+        let smallScoreLabel = PaddingLabel()
+        smallScoreLabel.topInset = 2.5
+        smallScoreLabel.bottomInset = 2.5
+        smallScoreLabel.leftInset = 5
+        smallScoreLabel.rightInset = 5
+        smallScoreLabel.text = "+\(String(profileData!.score))"
+        smallScoreLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+        smallScoreLabel.textColor = .black
+        smallScoreLabel.backgroundColor = .white
+        smallScoreLabel.layer.masksToBounds = true
+        smallScoreLabel.clipsToBounds = true
+        smallScoreLabel.cornerRadius = 5
+        smallScoreLabel.layer.borderWidth = 1
+        smallScoreLabel.layer.borderColor = UIColor.black.cgColor
+        
+        smallScoreLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
+        let largeLabelHeight = UIFont.systemFont(ofSize: 34, weight: .black).lineHeight
+        let smallLabelHeight = UIFont.systemFont(ofSize: 18, weight: .bold).lineHeight
+        
+        let bigLabelSize = profileData!.username.boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 34, weight: .black)], context: nil).size
+        
+        let smallLabelSize = profileData!.username.boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)], context: nil).size
+        
+        let largeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: bigLabelSize.width, height: largeLabelHeight.rounded(.up)))
+        let smallLabel = UILabel(frame: CGRect(x: 0, y: 0, width: smallLabelSize.width, height: smallLabelHeight.rounded(.up)))
+        
+        largeLabel.text = profileData!.username
+        largeLabel.font = .systemFont(ofSize: 34, weight: .black)
+        largeLabel.textColor = .white
+        largeLabel.adjustsFontSizeToFitWidth = true
+        largeLabel.minimumScaleFactor = 0.2
+        largeLabel.allowsDefaultTighteningForTruncation = true
+        largeLabel.numberOfLines = 1
+        
+        smallLabel.text = profileData!.username
+        smallLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        smallLabel.textColor = .label
+        smallLabel.adjustsFontSizeToFitWidth = true
+        smallLabel.minimumScaleFactor = 0.1
+        smallLabel.allowsDefaultTighteningForTruncation = true
+        smallLabel.numberOfLines = 1
+        
+        largeLabel.translatesAutoresizingMaskIntoConstraints = false
+        smallLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        headerTitle = UIStackView(frame: CGRect(x: 0, y: 0, width: largeLabel.frame.size.width + 5 + scoreLabel.intrinsicContentSize.width, height: max(largeLabel.frame.size.height, scoreLabel.intrinsicContentSize.height)))
+        
+        headerTitle.axis = .horizontal
+        headerTitle.alignment = .center
+        headerTitle.distribution = .equalCentering
+        
+        headerTitle.addArrangedSubview(largeLabel)
+        headerTitle.addArrangedSubview(scoreLabel)
+        
+        let smallHeaderTitle = UIStackView(frame: CGRect(x: 0, y: 0, width: smallLabel.frame.size.width + 5 + smallScoreLabel.intrinsicContentSize.width, height: max(smallLabel.frame.size.height, smallScoreLabel.intrinsicContentSize.height)))
+        
+        smallHeaderTitle.axis = .horizontal
+        smallHeaderTitle.alignment = .center
+        smallHeaderTitle.distribution = .equalCentering
+        
+        smallHeaderTitle.addArrangedSubview(smallLabel)
+        smallHeaderTitle.addArrangedSubview(smallScoreLabel)
+        
+        blurView.contentView.addSubview(segmentedControl)
+        
+        tableView.tableHeaderView!.addSubview(headerTitle)
+        tableView.tableHeaderView!.addSubview(blurView)
+        
+        navigationItem.titleView = smallHeaderTitle
+        
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        
+        segmentedControl.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        segmentedControl.heightAnchor.constraint(equalTo: blurView.heightAnchor, constant: -8).isActive = true
+        segmentedControl.leadingAnchor.constraint(equalTo: blurView.contentView.leadingAnchor, constant: 16).isActive = true
+        segmentedControl.trailingAnchor.constraint(equalTo: blurView.contentView.trailingAnchor, constant: -16).isActive = true
+        segmentedControl.bottomAnchor.constraint(equalTo: blurView.contentView.bottomAnchor, constant: -8).isActive = true
+        segmentedControl.centerXAnchor.constraint(equalTo: blurView.contentView.centerXAnchor).isActive = true
+        
+        blurView.bottomAnchor.constraint(equalTo: tableView.tableHeaderView!.bottomAnchor).isActive = true
+        blurView.leadingAnchor.constraint(equalTo: tableView.tableHeaderView!.leadingAnchor).isActive = true
+        blurView.trailingAnchor.constraint(equalTo: tableView.tableHeaderView!.trailingAnchor).isActive = true
+        
+        largeLabel.translatesAutoresizingMaskIntoConstraints = false
+        smallLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        scoreLabel.leadingAnchor.constraint(equalTo: largeLabel.trailingAnchor, constant: 5).isActive = true
+        
+        largeLabel.centerYAnchor.constraint(equalTo: largeLabel.superview!.centerYAnchor).isActive = true
+        
+        smallHeaderTitle.translatesAutoresizingMaskIntoConstraints = false
+        smallHeaderTitle.insetsLayoutMarginsFromSafeArea = false
+        
+        smallScoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        smallScoreLabel.leadingAnchor.constraint(equalTo: smallLabel.trailingAnchor, constant: 5).isActive = true
+        smallScoreLabel.bottomAnchor.constraint(equalTo: smallLabel.bottomAnchor).isActive = true
+        
+        smallHeaderTitle.heightAnchor.constraint(equalToConstant: max(smallLabel.frame.size.height, smallScoreLabel.intrinsicContentSize.height)).isActive = true
+        smallHeaderTitle.widthAnchor.constraint(equalToConstant: smallLabel.frame.size.width + 5 + smallScoreLabel.intrinsicContentSize.width).isActive = true
+        
+        headerTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        headerTitle.bottomAnchor.constraint(equalTo: segmentedControl.topAnchor, constant: -8).isActive = true
+        headerTitle.widthAnchor.constraint(equalToConstant: largeLabel.frame.size.width + 5 + scoreLabel.intrinsicContentSize.width).isActive = true
+        headerTitle.heightAnchor.constraint(equalToConstant: max(largeLabel.frame.size.height, scoreLabel.intrinsicContentSize.height)).isActive = true
+        
+        largeLabel.leadingAnchor.constraint(equalTo: tableView.tableHeaderView!.leadingAnchor, constant: 16).isActive = true
+        
+        blurView.frame = CGRect(x: 0, y: tableView.tableHeaderView!.frame.maxY - 40, width: UIScreen.main.bounds.size.width, height: 40)
+        
+        originalBlurRect = blurView.frame
+        originalTitleRect = headerTitle.frame
+        
+        if let v = tableView.tableHeaderView as? StretchyTableHeaderView {
+            v.segControl = segmentedControl
+        }
+        
+        headerTitle.updateConstraints()
+        
+        scrollViewDidScroll(tableView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         if !didFinishLoading {
             tableView.isHidden = true
@@ -444,7 +681,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        //navigationController?.setNavigationBarHidden(true, animated: false)
         
         if let _ = tableView.tableHeaderView {
             scrollViewDidScroll(tableView)
@@ -462,7 +699,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        //navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        navigationController?.navigationBar.tintColor = .systemBlue
+        navigationController?.navigationBar.backgroundView?.alpha = 1
     }
     
     @objc func segmentedControlSelectionChanged(_ sender: UISegmentedControl) {
@@ -690,10 +930,14 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
                 cell.configureLoading()
                 
+                cell.layoutIfNeeded()
+                
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
                 cell.configure(with: &rantTypeContent.rantFeed[indexPath.row], image: rantContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
+                
+                cell.layoutIfNeeded()
                 
                 return cell
             }
@@ -705,10 +949,32 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    /*func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        
+        cell.textLabel?.text = "\(indexPath.row)"
+        
+        return cell
+    }*/
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         DispatchQueue.global(qos: .userInteractive).async {
             self.shouldUpdateBlurPosition()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        //performSegue(withIdentifier: "rantInFeed", sender: RantViewController())
+        
+        if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite || currentContentType == .viewed {
+            //var segue = UIStoryboardSegue(identifier: "rantInFeed", source: self, destination: RantViewController())
+            
+            performSegue(withIdentifier: "rantInFeed", sender: tableView.cellForRow(at: indexPath))
+        } else {
+            performSegue(withIdentifier: "commentInFeed", sender: tableView.cellForRow(at: indexPath))
         }
     }
     
@@ -840,4 +1106,26 @@ extension UINavigationController: UIGestureRecognizerDelegate {
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return viewControllers.count > 1
     }
+}
+
+func blend(from: UIColor, to: UIColor, percent: Double) -> UIColor {
+    var fR : CGFloat = 0.0
+    var fG : CGFloat = 0.0
+    var fB : CGFloat = 0.0
+    var tR : CGFloat = 0.0
+    var tG : CGFloat = 0.0
+    var tB : CGFloat = 0.0
+
+    from.getRed(&fR, green: &fG, blue: &fB, alpha: nil)
+    to.getRed(&tR, green: &tG, blue: &tB, alpha: nil)
+
+    let dR = tR - fR
+    let dG = tG - fG
+    let dB = tB - fB
+
+    let rR = fR + dR * CGFloat(percent)
+    let rG = fG + dG * CGFloat(percent)
+    let rB = fB + dB * CGFloat(percent)
+
+    return UIColor(red: rR, green: rG, blue: rB, alpha: 1.0)
 }

@@ -19,3 +19,27 @@ extension UINavigationController {
         coordinator.animate(alongsideTransition: nil, completion: { _ in completion?() })
     }
 }
+
+extension UINavigationBar {
+    var visualEffectView: UIVisualEffectView? {
+        if let barBackground = subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" }) {
+            if let effectView = barBackground.subviews.first(where: { String(describing: type(of: $0)) == "UIVisualEffectView" }) {
+                return effectView as? UIVisualEffectView
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
+    
+    var backgroundView: UIView? {
+        get {
+            if let barBackground = subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" }) {
+                return barBackground
+            }
+            
+            return nil
+        }
+    }
+}

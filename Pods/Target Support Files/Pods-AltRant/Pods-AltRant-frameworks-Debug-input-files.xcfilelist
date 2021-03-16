@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-AltRant/Pods-AltRant-frameworks.sh
+${BUILT_PRODUCTS_DIR}/ADNavigationBarExtension/ADNavigationBarExtension.framework
+${BUILT_PRODUCTS_DIR}/ADUtils/ADUtils.framework
+${BUILT_PRODUCTS_DIR}/ContextLabel/ContextLabel.framework

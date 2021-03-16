@@ -1,0 +1,6 @@
+framework module ContextLabel {
+  umbrella header "ContextLabel-umbrella.h"
+
+  export *
+  module * { export * }
+}

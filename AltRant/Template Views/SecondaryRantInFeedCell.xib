@@ -125,17 +125,16 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="wtC-lr-HPM" firstAttribute="top" secondItem="NoK-25-0mL" secondAttribute="topMargin" constant="4" id="HC1-LE-6iQ"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="wtC-lr-HPM" secondAttribute="trailing" constant="4" id="f8t-In-zBH"/>
-                    <constraint firstItem="wtC-lr-HPM" firstAttribute="leading" secondItem="NoK-25-0mL" secondAttribute="leadingMargin" id="jF0-lc-2en"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="wtC-lr-HPM" secondAttribute="bottom" constant="4" id="ywV-RU-oUw"/>
+                    <constraint firstItem="wtC-lr-HPM" firstAttribute="top" secondItem="NoK-25-0mL" secondAttribute="top" constant="15" id="HC1-LE-6iQ"/>
+                    <constraint firstAttribute="trailing" secondItem="wtC-lr-HPM" secondAttribute="trailing" constant="24" id="f8t-In-zBH"/>
+                    <constraint firstItem="wtC-lr-HPM" firstAttribute="leading" secondItem="NoK-25-0mL" secondAttribute="leading" constant="20" id="jF0-lc-2en"/>
+                    <constraint firstAttribute="bottom" secondItem="wtC-lr-HPM" secondAttribute="bottom" constant="15" id="ywV-RU-oUw"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="8nS-Ge-ygh"/>
             <connections>
                 <outlet property="bodyLabel" destination="4cl-3v-RJa" id="gI8-m5-CMp"/>
                 <outlet property="downvoteButton" destination="WGT-ji-luw" id="97Q-Nj-JuH"/>
-                <outlet property="downvoteLabel" destination="WGT-ji-luw" id="Kne-Vs-dJR"/>
                 <outlet property="scoreLabel" destination="4YU-GS-O4S" id="yxP-E1-ACI"/>
                 <outlet property="supplementalImageView" destination="QHQ-RQ-X4m" id="Rqq-bx-Egc"/>
                 <outlet property="tagList" destination="2Mj-Wv-zFa" id="g08-lq-dYK"/>

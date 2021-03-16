@@ -127,9 +127,13 @@ class SecondaryRantInFeedCell: UITableViewCell {
             let finalWidth = supplementalImage!.size!.width / resizeMultiplier
             let finalHeight = supplementalImage!.size!.height / resizeMultiplier
             
+            supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
+            
             supplementalImageView.image = UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!
             
-            supplementalImageView.frame.size = CGSize(width: finalWidth, height: finalHeight)
+            //imageViewHeightConstraint.constant = supplementalImageView.frame.size.width / supplementalImageView.image!.size.width * supplementalImageView.image!.size.height
+            
+            //supplementalImageView.frame.size = CGSize(width: finalWidth, height: finalHeight)
             
             imageViewHeightConstraint.constant = finalHeight
             
