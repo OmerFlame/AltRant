@@ -15,7 +15,7 @@
                     <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmI-kd-VPL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="200" sectionHeaderHeight="28" estimatedSectionHeaderHeight="1" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1EP-IF-17K">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="1" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1EP-IF-17K">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -95,7 +95,7 @@
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhR-lP-j3Y" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="23" width="31" height="22"/>
+                                                                                    <rect key="frame" x="0.0" y="23" width="41" height="22"/>
                                                                                     <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -181,10 +181,10 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="lZx-gb-K4F" firstAttribute="top" secondItem="uT7-s9-NiU" secondAttribute="topMargin" constant="4" id="8d6-T6-dDc"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="lZx-gb-K4F" secondAttribute="bottom" constant="4" id="Lce-4T-92t"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="lZx-gb-K4F" secondAttribute="trailing" constant="4" id="Pld-QZ-Gi5"/>
-                                                <constraint firstItem="lZx-gb-K4F" firstAttribute="leading" secondItem="uT7-s9-NiU" secondAttribute="leadingMargin" id="S6g-1y-LQC"/>
+                                                <constraint firstItem="lZx-gb-K4F" firstAttribute="top" secondItem="uT7-s9-NiU" secondAttribute="top" constant="15" id="8d6-T6-dDc"/>
+                                                <constraint firstAttribute="bottom" secondItem="lZx-gb-K4F" secondAttribute="bottom" constant="15" id="Lce-4T-92t"/>
+                                                <constraint firstAttribute="trailing" secondItem="lZx-gb-K4F" secondAttribute="trailing" constant="20" id="Pld-QZ-Gi5"/>
+                                                <constraint firstItem="lZx-gb-K4F" firstAttribute="leading" secondItem="uT7-s9-NiU" secondAttribute="leading" constant="16" id="S6g-1y-LQC"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <viewLayoutGuide key="safeArea" id="ehc-bc-RRP"/>
@@ -407,7 +407,7 @@
     </scenes>
     <designables>
         <designable name="BhR-lP-j3Y">
-            <size key="intrinsicContentSize" width="31" height="14.333333333333334"/>
+            <size key="intrinsicContentSize" width="41" height="19.333333333333336"/>
         </designable>
         <designable name="C7z-Ni-RjW">
             <size key="intrinsicContentSize" width="18" height="20.333333333333332"/>

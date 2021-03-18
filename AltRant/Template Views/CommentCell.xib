@@ -172,10 +172,10 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="KbE-Z6-FOi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="9qq-SQ-HpG"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="KbE-Z6-FOi" secondAttribute="trailing" constant="4" id="Im0-1J-nqJ"/>
-                    <constraint firstItem="KbE-Z6-FOi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="YBo-OE-WYl"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="KbE-Z6-FOi" secondAttribute="bottom" constant="4" id="dez-Yr-Grh"/>
+                    <constraint firstItem="KbE-Z6-FOi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="9qq-SQ-HpG"/>
+                    <constraint firstAttribute="trailing" secondItem="KbE-Z6-FOi" secondAttribute="trailing" constant="24" id="Im0-1J-nqJ"/>
+                    <constraint firstItem="KbE-Z6-FOi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="YBo-OE-WYl"/>
+                    <constraint firstAttribute="bottom" secondItem="KbE-Z6-FOi" secondAttribute="bottom" constant="15" id="dez-Yr-Grh"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

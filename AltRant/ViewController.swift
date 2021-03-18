@@ -9,6 +9,7 @@ import UIKit
 import Combine
 import SwiftUI
 import ADNavigationBarExtension
+import UserNotifications
 
 class rantFeedData {
     var rantFeed = [RantInFeed]()
@@ -115,10 +116,31 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             timer = Timer.scheduledTimer(withTimeInterval: 21, repeats: true) { _ in
                 debugPrint("Running extended notification timer!")
                 
-                let response = APIRequest().getRantFeed(skip: 0)
-                
-                if let numNotifs = response.num_notifs {
-                    self.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = numNotifs != 0 ? String(response.num_notifs!) : nil
+                DispatchQueue.global(qos: .background).async {
+                    let response = APIRequest().getRantFeed(skip: 0)
+                    
+                    DispatchQueue.main.async {
+                        if let numNotifs = response.num_notifs {
+                            let currentNotificationCount = Int(self.navigationController!.tabBarController!.viewControllers![2].tabBarItem.badgeValue ?? "0")!
+                            
+                            if (currentNotificationCount < numNotifs) {
+                                let content = UNMutableNotificationContent()
+                                
+                                content.title = "New devRant Notifications!"
+                                content.body = "Tap to see notifications"
+                                content.categoryIdentifier = "notification"
+                                content.userInfo = ["customData": "bruh"]
+                                content.sound = UNNotificationSound.default
+                                
+                                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+                                
+                                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                                UNUserNotificationCenter.current().add(request)
+                            }
+                            
+                            self.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = numNotifs != 0 ? String(response.num_notifs!) : nil
+                        }
+                    }
                 }
             }
             

@@ -57,6 +57,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     private var isFetchAlreadyInProgress = false
     
+    private var cellHeights = [IndexPath:CGFloat]()
+    
     init?(coder: NSCoder, userID: Int) {
         self.userID = userID
         super.init(coder: coder)
@@ -149,25 +151,39 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         let statusBarFrame = UIApplication.shared.windows[0].windowScene?.statusBarManager?.statusBarFrame ?? .zero
         
-        let targetHeight = blurView.frame.size.height
+        //let targetHeight = blurView.frame.size.height - 21
+        
+        let targetHeight: CGFloat = 21
+        
         //let thresholdHeight = tableView.tableHeaderView!.frame.size.height - blurView.frame.size.height - navigationController!.navigationBar.frame.size.height - statusBarFrame.height - headerTitle.frame.size.height
         //let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - statusBarFrame.height
         
         //let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - blurView.frame.size.height - headerTitle.frame.size.height
-        let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - headerTitle.frame.size.height - 2 * blurView.frame.size.height
+        
+        guard navigationController != nil else {
+            return
+        }
+        
+        var thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.maxY - headerTitle.frame.size.height - 2 * (blurView.frame.size.height - 21)
+        
+        thresholdHeight += 63
         
         
         var offset = ((scrollView.contentOffset.y - thresholdHeight) / targetHeight)
         
+        //print("THRES+TARGET:   \(thresholdHeight + targetHeight)")
+        
         print("OFFSET:         \(offset)")
         print("CONTENT OFFSET: \(scrollView.contentOffset.y)")
         
-        let visualEffectViewOffset = -(scrollView.contentOffset.y + scrollView.safeAreaInsets.top)
+        //let visualEffectViewOffset = -(scrollView.contentOffset.y + scrollView.safeAreaInsets.top)
+        
+        let visualEffectViewOffset = -(scrollView.contentOffset.y + scrollView.safeAreaInsets.top - 21)
         
         var blurFrame = blurView.frame
         var titleFrame = headerTitle.frame
         
-        blurFrame.origin.y = max(originalBlurRect.minY, -visualEffectViewOffset)
+        blurFrame.origin.y = max(originalBlurRect.minY - 21, -visualEffectViewOffset)
         //titleFrame.origin.y = originalTitleRect.minY + (413 - statusBarFrame.height)
         
         blurView.frame = blurFrame
@@ -192,7 +208,13 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.alpha = 1 - offset
         (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.alpha = 1 - offset
         
-        headerTitle.alpha = 1 - offset
+        headerTitle.alpha = sqrt(1 - offset)
+        
+        if headerTitle.alpha == 0 {
+            headerTitle.isHidden = true
+        } else {
+            headerTitle.isHidden = false
+        }
         
         if 1 - offset == 1 {
             if blurView.contentView.gestureRecognizers == nil {
@@ -232,6 +254,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundView?.alpha = 0
         
+        //navigationController?.title = ""
+        navigationItem.title = ""
+        
         guard didFinishLoading else { return }
         
         tableView.tableHeaderView = StretchyTableHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 502))
@@ -267,6 +292,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         addTitle()
         
+        tableView.scrollIndicatorInsets.top = tableView.tableHeaderView!.frame.maxY - (navigationController!.navigationBar.frame.size.height + navigationController!.navigationBar.frame.minY)
+        
         currentBlurFrame = blurView.frame
         
         tableView.infiniteScrollIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
@@ -286,6 +313,52 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         //tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
         //tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+    }
+    
+    /*func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let targetHeight = blurView.frame.size.height
+        
+        let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - headerTitle.frame.size.height - 2 * blurView.frame.size.height
+        
+        
+        var offset = ((scrollView.contentOffset.y - thresholdHeight) / targetHeight)
+        
+        if offset > 0 && offset < 1 {
+            scrollView.setContentOffset(CGPoint(x: 0, y: thresholdHeight + targetHeight + 21), animated: true)
+        }
+    }*/
+    
+    /*func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            let targetHeight = blurView.frame.size.height
+            
+            let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - headerTitle.frame.size.height - 2 * blurView.frame.size.height
+            
+            
+            let offset = ((scrollView.contentOffset.y - thresholdHeight) / targetHeight)
+            
+            if offset > 0 && offset < 1 {
+                scrollView.setContentOffset(CGPoint(x: 0, y: thresholdHeight + targetHeight + 42), animated: true)
+            }
+        }
+    }*/
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        debugPrint("TARGET OFFSET: \(targetContentOffset.pointee)")
+        
+        let targetHeight: CGFloat = 21
+        
+        var thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.maxY - headerTitle.frame.size.height - 2 * (blurView.frame.size.height - 21)
+        
+        thresholdHeight += 42
+        
+        //let snapThresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - headerTitle.frame.size.height - 2 * (blur
+        
+        var offset = ((scrollView.contentOffset.y - thresholdHeight) / targetHeight)
+        
+        if (offset > 0 && offset < 1) || (targetContentOffset.pointee.y > thresholdHeight && targetContentOffset.pointee.y < thresholdHeight + targetHeight + 42) {
+            targetContentOffset.pointee.y = round(targetContentOffset.pointee.y / (thresholdHeight + targetHeight + 42)) * (thresholdHeight + targetHeight + 21)
+        }
     }
     
     private func canLoadMore() -> Bool {
@@ -556,7 +629,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         blurView.translatesAutoresizingMaskIntoConstraints = false
         
         segmentedControl.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        segmentedControl.heightAnchor.constraint(equalTo: blurView.heightAnchor, constant: -8).isActive = true
+        //segmentedControl.heightAnchor.constraint(equalTo: blurView.heightAnchor, constant: -8).isActive = true
+        
+        segmentedControl.heightAnchor.constraint(equalTo: blurView.heightAnchor, constant: -29).isActive = true
         segmentedControl.leadingAnchor.constraint(equalTo: blurView.contentView.leadingAnchor, constant: 16).isActive = true
         segmentedControl.trailingAnchor.constraint(equalTo: blurView.contentView.trailingAnchor, constant: -16).isActive = true
         segmentedControl.bottomAnchor.constraint(equalTo: blurView.contentView.bottomAnchor, constant: -8).isActive = true
@@ -598,6 +673,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         originalBlurRect = blurView.frame
         originalTitleRect = headerTitle.frame
         
+        tableView.tableHeaderView!.bringSubviewToFront(headerTitle)
+        
         if let v = tableView.tableHeaderView as? StretchyTableHeaderView {
             v.segControl = segmentedControl
         }
@@ -607,7 +684,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         scrollViewDidScroll(tableView)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    /*override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -667,21 +744,95 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 tableView.reloadData()
             }
         }
-    }
+    }*/
     
-    func getContent(contentType: ProfileContentTypes, completion: @escaping ((ProfileResponse?) -> Void)) {
-        do {
-            let response = try APIRequest().getProfileFromID(self.userID, userContentType: contentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count))
-            completion(response)
-        } catch {
-            completion(nil)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !didFinishLoading {
+            tableView.isHidden = true
+            
+            APIRequest().getProfileFromID(self.userID, userContentType: .rants, skip: 0, completionHandler: { response in
+                self.rantTypeContent.rantFeed = response!.profile.content.content.rants
+                
+                for i in self.rantTypeContent.rantFeed {
+                    if let attachedImage = i.attached_image {
+                        if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent).relativePath) {
+                            self.rantContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent), size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
+                        } else {
+                            self.rantContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
+                        }
+                    } else {
+                        self.rantContentImages.append(nil)
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.loadingIndicator.stopAnimating()
+                    
+                    self.didFinishLoading = true
+                    self.profileData = response!.profile
+                    self.tableView.isHidden = false
+                    self.viewDidLoad()
+                    self.tableView.reloadData()
+                }
+            })
+        } else {
+            if let _ = tableView.tableHeaderView {
+                scrollViewDidScroll(tableView)
+                tableView.reloadData()
+            }
         }
     }
     
+    func getContent(contentType: ProfileContentTypes, completion: @escaping ((ProfileResponse?) -> Void)) {
+        /*do {
+            let response = try APIRequest().getProfileFromID(self.userID, userContentType: contentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { result in completion(result) })
+            //completion(response)
+        } catch {
+            completion(nil)
+        }*/
+        
+        APIRequest().getProfileFromID(self.userID, userContentType: contentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { result in completion(result) })
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         //navigationController?.setNavigationBarHidden(true, animated: false)
+        let targetHeight: CGFloat = 21
+        
+        //let thresholdHeight: CGFloat = 502 - self.navigationController!.navigationBar.frame.maxY - 120
+        
+        var thresholdHeight = 502 - navigationController!.navigationBar.frame.maxY - 41 - 2 * 40
+        
+        thresholdHeight += 42
+        
+        var offset = ((tableView.contentOffset.y - thresholdHeight) / targetHeight)
+        
+        if offset > 1 {offset = 1}
+        
+        if offset < 0 { offset = 0 }
+        
+        transitionCoordinator?.animate(alongsideTransition: { context in
+            self.navigationController?.navigationBar.backgroundView?.alpha = sqrt(offset)
+            
+            if let profileData = self.profileData {
+                self.navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hex: profileData.avatar.b)!, percent: Double(sqrt(offset)))
+                //self.navigationItem.backBarButtonItem?.tintColor = blend(from: .white, to: UIColor(hex: profileData.avatar.b)!, percent: Double(sqrt(offset)))
+            } else {
+                self.navigationController?.navigationBar.tintColor = .white
+                //self.navigationItem.backBarButtonItem?.tintColor = .white
+            }
+            
+            //self.navigationController?.navigationBar.tintColor = blend(from: .systemBlue, to: blend(from: .white, to: UIColor(), percent: <#T##Double#>), percent: <#T##Double#>)
+        }, completion: { context in
+            /*if context.isCancelled {
+                self.navigationController?.navigationBar.backgroundView?.alpha = 1
+                self.navigationController?.navigationBar.tintColor = .systemBlue
+            }*/
+        })
+        
+        super.viewWillAppear(animated)
         
         if let _ = tableView.tableHeaderView {
             scrollViewDidScroll(tableView)
@@ -697,12 +848,51 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        let targetHeight: CGFloat = 21
+        
+        var thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.maxY - headerTitle.frame.size.height - 2 * (blurView.frame.size.height - 21)
+        
+        thresholdHeight += 42
+        
+        let previousTintColor = navigationController!.navigationBar.tintColor
+        let previousBackgroundAlpha = navigationController!.navigationBar.backgroundView!.alpha
+        let previousTitleView = navigationItem.titleView
+        
+        var offset = ((tableView.contentOffset.y - thresholdHeight) / targetHeight)
+        
+        if offset > 1 {offset = 1}
+        
+        if offset < 0 { offset = 0 }
         
         //navigationController?.setNavigationBarHidden(false, animated: false)
         
-        navigationController?.navigationBar.tintColor = .systemBlue
-        navigationController?.navigationBar.backgroundView?.alpha = 1
+        transitionCoordinator?.animate(alongsideTransition: { context in
+            if self.navigationItem.titleView!.alpha == 0 {
+                self.navigationItem.titleView = nil
+            }
+            
+            self.navigationController?.navigationBar.backgroundView?.alpha = 1
+            self.navigationController?.navigationBar.tintColor = .systemBlue
+            //self.navigationItem.backBarButtonItem?.tintColor = .systemBlue
+        }, completion: { context in
+            if context.isCancelled {
+                //let bruh = offset
+                self.navigationItem.titleView = previousTitleView
+                self.navigationController?.navigationBar.backgroundView?.alpha = previousBackgroundAlpha
+                self.navigationController?.navigationBar.tintColor = previousTintColor
+                
+                //self.scrollViewDidScroll(self.tableView)
+                
+                
+                //self.navigationItem.backBarButtonItem?.tintColor = previousTintColor
+            }
+        })
+        
+        //scrollViewDidScroll(tableView)
+        
+        //navigationController?.navigationBar.tintColor = .systemBlue
+        //navigationController?.navigationBar.backgroundView?.alpha = 1
+        super.viewWillDisappear(animated)
     }
     
     @objc func segmentedControlSelectionChanged(_ sender: UISegmentedControl) {
@@ -710,6 +900,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         commentTypeContent.commentTypeContent = []
         rantContentImages = []
         commentContentImages = []
+        
+        cellHeights = [:]
         
         tableView.reloadData()
         
@@ -803,7 +995,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                         self.tableView.reloadData()
                     }*/
                     
-                    self.tableView.reloadRows(at: self.tableView.indexPathsForVisibleRows ?? [], with: .automatic)
+                    //self.tableView.reloadRows(at: self.tableView.indexPathsForVisibleRows ?? [], with: .automatic)
+                    
+                    self.tableView.reloadData()
                 }
             })
         }
@@ -817,67 +1011,69 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         isFetchAlreadyInProgress = true
         
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.getContent(contentType: contentType) { response in
+        APIRequest().getProfileFromID(self.userID, userContentType: currentContentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { response in
                 guard response != nil else {
-                    self.showAlertWithError("Failed to fetch user content.", retryHandler: { self.performFetch(contentType: contentType, completionHandler) })
+                    DispatchQueue.main.async {
+                        self.showAlertWithError("Failed to fetch user content.", retryHandler: { self.performFetch(contentType: contentType, completionHandler) })
+                    }
+                
                     self.isFetchAlreadyInProgress = false
                     return
                 }
-                
+            
                 var start = 0
                 var end = 0
-                
+            
                 switch contentType {
                 case .rants:
                     start = self.rantTypeContent.rantFeed.count
                     end = response!.profile.content.content.rants.count + start
-                    
+                
                     self.commentTypeContent.commentTypeContent = []
                     break
-                    
+                
                 case .upvoted:
                     start = self.rantTypeContent.rantFeed.count
                     end = response!.profile.content.content.upvoted.count + start
-                    
+                
                     self.commentTypeContent.commentTypeContent = []
                     break
-                    
+                
                 case .favorite:
                     start = self.rantTypeContent.rantFeed.count
                     end = response!.profile.content.content.favorites!.count + start
-                    
+                
                     self.commentTypeContent.commentTypeContent = []
                     break
-                    
+                
                 default:
                     start = self.commentTypeContent.commentTypeContent.count
                     end = response!.profile.content.content.comments.count + start
-                    
+                
                     self.rantTypeContent.rantFeed = []
                     break
                 }
-                
+            
                 let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
-                
+            
                 switch contentType {
                 case .rants:
                     self.rantTypeContent.rantFeed.append(contentsOf: response!.profile.content.content.rants)
                     break
-                    
+                
                 case .upvoted:
                     self.rantTypeContent.rantFeed.append(contentsOf: response!.profile.content.content.upvoted)
                     break
-                    
+                
                 case .favorite:
                     self.rantTypeContent.rantFeed.append(contentsOf: response!.profile.content.content.favorites!)
                     break
-                    
+                
                 default:
                     self.commentTypeContent.commentTypeContent.append(contentsOf: response!.profile.content.content.comments)
                     break
                 }
-                
+            
                 if !self.rantTypeContent.rantFeed.isEmpty {
                     for i in self.rantTypeContent.rantFeed[start..<end] {
                         if let attachedImage = i.attached_image {
@@ -886,25 +1082,25 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                             self.rantContentImages.append(nil)
                         }
                     }
-                    
+                
                     self.isFetchAlreadyInProgress = false
-                    
+                
                     completionHandler?()
                 } else {
                     for i in self.commentTypeContent.commentTypeContent[start..<end] {
                         if let attachedImage = i.attached_image {
                             //let completionSemaphore = DispatchSemaphore(value: 0)
-                            
+                        
                             //var image = UIImage()
-                            
+                        
                             /*URLSession.shared.dataTask(with: URL(string: attachedImage.url!)!) { data, _, _ in
                                 image = UIImage(data: data!)!
-                                
+                            
                                 completionSemaphore.signal()
                             }.resume()
-                            
+                        
                             completionSemaphore.wait()*/
-                            
+                        
                             if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent).relativePath) {
                                 self.commentContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent), size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
                             } else {
@@ -915,13 +1111,12 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                             self.commentContentImages.append(nil)
                         }
                     }
-                    
+                
                     self.isFetchAlreadyInProgress = false
-                    
+                
                     completionHandler?()
                 }
-            }
-        }
+        })
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -942,10 +1137,47 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 return cell
             }
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-            cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, commentInFeed: &commentTypeContent.commentTypeContent[indexPath.row], allowedToPreview: false)
-            
-            return cell
+            if indexPath.row >= commentTypeContent.commentTypeContent.count || indexPath.row >= commentContentImages.count {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                cell.configureLoading()
+                
+                cell.layoutIfNeeded()
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, commentInFeed: &commentTypeContent.commentTypeContent[indexPath.row], allowedToPreview: false)
+                
+                return cell
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite {
+            if indexPath.row < rantTypeContent.rantFeed.count && indexPath.row < rantContentImages.count {
+                cellHeights[indexPath] = cell.frame.size.height
+            }
+        } else {
+            if indexPath.row < commentTypeContent.commentTypeContent.count && indexPath.row < commentContentImages.count {
+                cellHeights[indexPath] = cell.frame.size.height
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite {
+            if indexPath.row >= rantTypeContent.rantFeed.count || indexPath.row >= rantContentImages.count {
+                return 80
+            } else {
+                return cellHeights[indexPath] ?? UITableView.automaticDimension
+            }
+        } else {
+            if indexPath.row >= commentTypeContent.commentTypeContent.count || indexPath.row >= commentContentImages.count {
+                return 80
+            } else {
+                return cellHeights[indexPath] ?? UITableView.automaticDimension
+            }
         }
     }
     
@@ -959,6 +1191,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+        guard blurView != nil else { return }
+        
         DispatchQueue.global(qos: .userInteractive).async {
             self.shouldUpdateBlurPosition()
         }
@@ -966,6 +1200,16 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+        
+        if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite {
+            guard indexPath.row < rantTypeContent.rantFeed.count && indexPath.row < rantContentImages.count else {
+                return
+            }
+        } else {
+            guard indexPath.row < commentTypeContent.commentTypeContent.count && indexPath.row < commentContentImages.count else {
+                return
+            }
+        }
         
         //performSegue(withIdentifier: "rantInFeed", sender: RantViewController())
         

@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import UserNotifications
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+    
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -22,7 +23,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
+        
+        let center = UNUserNotificationCenter.current()
+        
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if granted {
+                debugPrint("NOTIFICATIONS GRANTED!")
+            } else {
+                debugPrint("NOTIFICATIONS DENIED!")
+            }
+        }
+        
+        UNUserNotificationCenter.current().delegate = self
+        
+        let show = UNNotificationAction(identifier: "show", title: "Show notifications", options: .foreground)
+        let category = UNNotificationCategory(identifier: "notification", actions: [show], intentIdentifiers: [])
+        
+        UNUserNotificationCenter.current().setNotificationCategories([category])
+        
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let customData = userInfo["customData"] as? String {
+            debugPrint("Custom data received: \(customData)")
+            
+            (UIApplication.shared.windows.first!.rootViewController as! UITabBarController).selectedIndex = 2
+            
+            completionHandler()
+        }
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {

@@ -17,17 +17,27 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     var currentNotificationType: NotificationContentCategory = .all
     
     var notifications = [Notification]()
+    var notificationIndexPaths = [IndexPath]()
     var unreadNotificationCounters: NotificationsUnread?
     var usernameMap: UsernameMapArray?
     var userImages = [Int:UIImage]()
     var didSuccessfullyFetchNotifications = false
     
+    private var didAnotherRequestStart = false
     
     var didFinishLoading = false
     
     var originalNavbarMaxY: CGFloat!
     
     var notifRefreshTimer: Timer!
+    
+    //private var workItems = [DispatchWorkItem]()
+    private var dispatchGroup = DispatchGroup()
+    
+    private let accessQueue = DispatchQueue(label: "SynchronizedArrayAccess", attributes: .concurrent)
+    
+    private var indexPathsToInsert = [IndexPath]()
+    private var badgeValue: String?
     
     // MARK: - View Controller Lifecycle Overrides
     
@@ -83,6 +93,12 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             debugPrint("Notification Refresh Timer Fired!")
             
             self.getAllData(notificationType: self.currentNotificationType, shouldGetNewData: true, completion: nil)
+            
+            self.dispatchGroup.notify(queue: .main) {
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
+                self.tableView.endUpdates()
+            }
         }
         
     }
@@ -93,11 +109,20 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         if !didFinishLoading {
             loadingIndicator.startAnimating()
             
-            getAllData(notificationType: currentNotificationType, shouldGetNewData: false, completion: {
+            getAllData(notificationType: currentNotificationType, shouldGetNewData: false, completion: nil)
+            
+            dispatchGroup.notify(queue: .main) {
                 if self.didSuccessfullyFetchNotifications {
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
+                    //self.asynchronousRemoveAllFromArray(arr: &self.indexPathsToInsert)
+                    self.tableView.endUpdates()
+                    
+                    self.navigationController!.tabBarItem.badgeValue = self.badgeValue
+                    
                     self.scheduleNotificationFetches()
                 }
-            })
+            }
         } else {
             self.scheduleNotificationFetches()
         }
@@ -108,7 +133,15 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         
         tableView.reloadData()
         
-        getAllData(notificationType: currentNotificationType, shouldGetNewData: true, completion: { sender.endRefreshing() })
+        getAllData(notificationType: currentNotificationType, shouldGetNewData: true, completion: nil)
+        
+        dispatchGroup.notify(queue: .main) {
+            sender.endRefreshing()
+            
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
+            self.tableView.endUpdates()
+        }
     }
 
     // MARK: - Table View Data Source
@@ -118,7 +151,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notifications.count
+        return notifications.count// - indexPathsToInsert.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -242,7 +275,115 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     }
     
     func getAllData(notificationType: NotificationContentCategory, shouldGetNewData: Bool, completion: (() -> ())?) {
-        DispatchQueue.global(qos: .userInitiated).async {
+        debugPrint("TASK ENTERING!")
+        dispatchGroup.enter()
+        
+        APIRequest().getNotificationFeed(shouldGetNewNotifs: shouldGetNewData, category: notificationType) { result in
+            if let notificationsResult = result, let notificationsData = notificationsResult.data {
+                let completionSemaphore = DispatchSemaphore(value: 0)
+                let downloadGroup = DispatchGroup()
+                
+                for item in (!shouldGetNewData ? notificationsData.items[0...99] : notificationsData.items[..<notificationsData.items.count]) {
+                    //debugPrint("DOWNLOAD TASK ENTERING!")
+                    downloadGroup.enter()
+                    
+                    if let avatarLink = notificationsData.usernameMap!.array.first(where: {
+                        $0.uidForUsername == String(item.uid)
+                    })?.avatar.i {
+                        if let cachedFile = FileManager.default.contents(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(avatarLink).relativePath) {
+                            self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: cachedFile)!)
+                            
+                            //debugPrint("DOWNLOAD TASK LEAVING!")
+                            downloadGroup.leave()
+                        } else {
+                            let session = URLSession(configuration: .default)
+                            
+                            session.dataTask(with: URL(string: "https://avatars.devrant.com/\(avatarLink)")!) { data, _, _ in
+                                self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: data!)!)
+                                
+                                FileManager.default.createFile(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(avatarLink).relativePath, contents: data, attributes: nil)
+                                
+                                //debugPrint("DOWNLOAD TASK LEAVING!")
+                                downloadGroup.leave()
+                                
+                                //completionSemaphore.signal()
+                            }.resume()
+                            
+                            //completionSemaphore.wait()
+                            continue
+                        }
+                    } else {
+                        let avatarColor = notificationsData.usernameMap!.array.first(where: {
+                            $0.uidForUsername == String(item.uid)
+                        })!.avatar.b
+                        
+                        self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(color: UIColor(hex: avatarColor)!, size: CGSize(width: 45, height: 45))!)
+                        
+                        //debugPrint("DOWNLOAD TASK LEAVING!")
+                        downloadGroup.leave()
+                        
+                        continue
+                    }
+                }
+                
+                downloadGroup.wait()
+                //debugPrint("DOWNLOAD GROUP TASK FINISHED WAITING!")
+                
+                let indexPaths = !shouldGetNewData ? (0..<100).map { IndexPath(row: $0, section: 0) } : (0..<notificationsData.items.count).map { IndexPath(row: $0, section: 0) }
+                
+                if !shouldGetNewData { self.accessQueue.async(flags: .barrier) { self.notifications = [] } }
+                
+                self.accessQueue.async(flags: .barrier) {
+                    self.notifications.insert(contentsOf: notificationsData.items[!shouldGetNewData ? 0..<100 : 0..<notificationsData.items.count], at: 0)
+                }
+                
+                self.unreadNotificationCounters = notificationsData.unread
+                
+                if self.usernameMap != nil {
+                    if notificationsData.usernameMap != nil {
+                        self.asynchronousAppendToArray(arr: &self.usernameMap!.array, arrayToAppend: notificationsData.usernameMap!.array)
+                    }
+                } else {
+                    self.accessQueue.async(flags: .barrier) {
+                        self.usernameMap = notificationsData.usernameMap
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.didFinishLoading = true
+                    self.didSuccessfullyFetchNotifications = true
+                    self.loadingIndicator.stopAnimating()
+                    self.tableView.isHidden = false
+                    
+                    if self.tableView.dataSource == nil || self.tableView.delegate == nil {
+                        self.tableView.dataSource = self
+                        self.tableView.delegate = self
+                    }
+                    
+                    self.accessQueue.async(flags: .barrier) {
+                        self.indexPathsToInsert = indexPaths
+                    }
+                    
+                    self.badgeValue = self.unreadNotificationCounters!.all != 0 ? String(self.unreadNotificationCounters!.all) : nil
+                    
+                    debugPrint("TASK LEAVING!")
+                    self.dispatchGroup.leave()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.didFinishLoading = true
+                    self.loadingIndicator.stopAnimating()
+                    self.didSuccessfullyFetchNotifications = false
+                    
+                    debugPrint("TASK LEAVING!")
+                    self.dispatchGroup.leave()
+                }
+            }
+        }
+        
+        /*DispatchQueue.global(qos: .userInitiated).async {
+            
+            
             let notificationResult = APIRequest().getNotificationFeed(shouldGetNewNotifs: shouldGetNewData, category: notificationType)
             
             if let notificationsData = notificationResult.data {
@@ -253,11 +394,13 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                         $0.uidForUsername == String(item.uid)
                     })!.avatar.i {
                         if let cachedFile = FileManager.default.contents(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(avatarLink).relativePath) {
-                            self.userImages[item.uid] = UIImage(data: cachedFile)
+                            //self.userImages[item.uid] = UIImage(data: cachedFile)
+                            self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: cachedFile)!)
                         } else {
                             URLSession.shared.dataTask(with: URL(string: "https://avatars.devrant.com/\(avatarLink)")!) { data, _, _ in
                                 
-                                self.userImages[item.uid] = UIImage(data: data!)
+                                //self.userImages[item.uid] = UIImage(data: data!)
+                                self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: data!)!)
                                 
                                 FileManager.default.createFile(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(avatarLink).relativePath, contents: data, attributes: nil)
                                 
@@ -272,23 +415,43 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                             $0.uidForUsername == String(item.uid)
                         })!.avatar.b
                         
-                        self.userImages[item.uid] = UIImage(color: UIColor(hex: avatarColor)!, size: CGSize(width: 45, height: 45))
+                        //self.userImages[item.uid] = UIImage(color: UIColor(hex: avatarColor)!, size: CGSize(width: 45, height: 45))
+                        
+                        self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(color: UIColor(hex: avatarColor)!, size: CGSize(width: 45, height: 45))!)
                         
                         continue
                     }
                 }
                 
                 let indexPaths = !shouldGetNewData ? (0..<100).map { IndexPath(row: $0, section: 0) } : (0..<notificationsData.items.count).map { IndexPath(row: $0, section: 0) }
-                self.notifications.insert(contentsOf: notificationsData.items[!shouldGetNewData ? 0..<100 : 0..<notificationsData.items.count], at: 0)
+                
+                if !shouldGetNewData {
+                    //self.asynchronousRemoveAllFromArray(arr: &self.notifications)
+                    //self.asynchronousAppendToArray(arr: &self.notifications, arrayToAppend: Array(notificationsData.items[!shouldGetNewData ? 0..<100 : 0..<notificationsData.items.count]))
+                    self.accessQueue.async(flags: .barrier) {
+                        self.notifications = []
+                    }
+                    
+                    self.accessQueue.async(flags: .barrier) {
+                        self.notifications.insert(contentsOf: notificationsData.items[!shouldGetNewData ? 0..<100 : 0..<notificationsData.items.count], at: 0)
+                    }
+                } else {
+                    self.accessQueue.async(flags: .barrier) {
+                        self.notifications.insert(contentsOf: notificationsData.items[!shouldGetNewData ? 0..<100 : 0..<notificationsData.items.count], at: 0)
+                    }
+                }
                 
                 self.unreadNotificationCounters = notificationsData.unread
                 
                 if self.usernameMap != nil {
                     if notificationsData.usernameMap != nil {
-                        self.usernameMap!.array.append(contentsOf: notificationsData.usernameMap!.array)
+                        //self.usernameMap!.array.append(contentsOf: notificationsData.usernameMap!.array)
+                        self.asynchronousAppendToArray(arr: &self.usernameMap!.array, arrayToAppend: notificationsData.usernameMap!.array)
                     }
                 } else {
-                    self.usernameMap = notificationsData.usernameMap!
+                    self.accessQueue.async(flags: .barrier) {
+                        self.usernameMap = notificationsData.usernameMap
+                    }
                 }
                 
                 DispatchQueue.main.async {
@@ -300,24 +463,85 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     self.tableView.dataSource = self
                     self.tableView.delegate = self
                     
-                    self.tableView.beginUpdates()
-                    self.tableView.insertRows(at: indexPaths, with: .automatic)
-                    self.tableView.endUpdates()
+                    //self.tableView.beginUpdates()
+                    //self.tableView.insertRows(at: indexPaths, with: .automatic)
+                    //self.tableView.endUpdates()
                     
-                    self.navigationController!.tabBarItem.badgeValue = self.unreadNotificationCounters!.all != 0 ? String(self.unreadNotificationCounters!.all) : nil
+                    //self.navigationController!.tabBarItem.badgeValue = self.unreadNotificationCounters!.all != 0 ? String(self.unreadNotificationCounters!.all) : nil
                     
-                    completion?()
+                    //self.indexPathsToInsert = indexPaths
+                    //self.asynchronousRemoveAllFromArray(arr: &self.indexPathsToInsert)
+                    self.accessQueue.async(flags: .barrier) {
+                        self.indexPathsToInsert = indexPaths
+                    }
+                    //self.asynchronousAppendToArray(arr: &self.indexPathsToInsert, arrayToAppend: indexPaths)
+                    self.badgeValue = self.unreadNotificationCounters!.all != 0 ? String(self.unreadNotificationCounters!.all) : nil
+                    
+                    self.dispatchGroup.leave()
+                    
+                    //completion?()
                 }
             } else {
                 DispatchQueue.main.async {
                     self.didFinishLoading = true
                     self.loadingIndicator.stopAnimating()
+                    self.didSuccessfullyFetchNotifications = false
                     
-                    self.showAlertWithError("An error occurred while requesting notifications.", retryHandler: nil)
+                    /*self.showAlertWithError("An error occurred while requesting notifications.", retryHandler: nil)
                     
-                    completion?()
+                    completion?()*/
                 }
             }
+        }*/
+    }
+    
+    private func asynchronousWriteToDict<Key, Value>(dict: inout Dictionary<Key, Value>, key: Key, value: Value) {
+        /*accessQueue.async(flags: .barrier) {
+            var dict = dict
+            &dict.pointee[key] = value
+        }*/
+        
+        withUnsafeMutablePointer(to: &dict) { pointer in
+            accessQueue.async(flags: .barrier) {
+                pointer.pointee[key] = value
+            }
+        }
+    }
+    
+    private func asynchronousDeleteAllInDict<Key, Value>(dict: inout Dictionary<Key, Value>) {
+        /*let dictPointer: UnsafePointer<Dictionary<Key, Value>> = UnsafePointer(dict)
+        
+        accessQueue.async(flags: .barrier) { [dict] in
+            var dict = dict
+            dict.removeAll()
+        }*/
+        
+        withUnsafeMutablePointer(to: &dict) { pointer in
+            self.accessQueue.async(flags: .barrier) {
+                pointer.pointee.removeAll()
+            }
+        }
+    }
+    
+    private func asynchronousAppendToArray<T>(arr: inout Array<T>, element: T) {
+        withUnsafeMutablePointer(to: &arr) { pointer in
+            self.accessQueue.async(flags: .barrier) {
+                pointer.pointee.append(element)
+            }
+        }
+    }
+    
+    private func asynchronousAppendToArray<T>(arr: inout Array<T>, arrayToAppend: Array<T>) {
+        withUnsafeMutablePointer(to: &arr) { pointer in
+            self.accessQueue.async(flags: .barrier) {
+                pointer.pointee.append(contentsOf: arrayToAppend)
+            }
+        }
+    }
+    
+    private func asynchronousRemoveAllFromArray<T>(arr: inout Array<T>) {
+        withUnsafeMutablePointer(to: &arr) { pointer in
+            pointer.pointee = []
         }
     }
     
@@ -418,8 +642,18 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     }
     
     @objc func handleChange(_ sender: UISegmentedControl) {
-        notifRefreshTimer.invalidate()
-        notifRefreshTimer = nil
+        sender.isEnabled = false
+        
+        if notifRefreshTimer != nil {
+            notifRefreshTimer.invalidate()
+            notifRefreshTimer = nil
+        }
+        
+        //dispatchGroup.leave()
+        
+        /*DispatchQueue.global(qos: .background).sync {
+            dispatchGroup.wait()
+        }*/
         
         if sender.selectedSegmentIndex == 0 {
             currentNotificationType = .all
@@ -433,16 +667,84 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             currentNotificationType = .subs
         }
         
-        let indexPaths = (0..<tableView(tableView, numberOfRowsInSection: 0)).map { IndexPath(row: $0, section: 0) }
+        //let indexPaths = (0..<tableView(tableView, numberOfRowsInSection: 0)).map { IndexPath(row: $0, section: 0) }
+        let indexPaths = tableView.indexPathsForRows(in: CGRect(origin: .zero, size: tableView.contentSize)) ?? []
         
-        notifications = []
-        usernameMap = nil
-        userImages.removeAll()
+        //notifications = []
+        
+        //asynchronousRemoveAllFromArray(arr: &notifications)
+        
+        accessQueue.async(flags: .barrier) {
+            self.notifications = []
+        }
+        
+        self.notifications = []
+        
+        self.tableView.beginUpdates()
+        self.tableView.deleteRows(at: indexPaths, with: .automatic)
+        self.tableView.endUpdates()
+        
+        //usernameMap = nil
+        accessQueue.async(flags: .barrier) {
+            self.usernameMap = nil
+        }
+        //userImages.removeAll()
+        asynchronousDeleteAllInDict(dict: &userImages)
         didSuccessfullyFetchNotifications = false
         
-        tableView.deleteRows(at: indexPaths, with: .automatic)
+        accessQueue.async(flags: .barrier) {
+            self.notifications = []
+        }
         
-        getAllData(notificationType: currentNotificationType, shouldGetNewData: false, completion: { self.scheduleNotificationFetches() })
+        tableView.reloadData()
+        
+        //getAllData(notificationType: currentNotificationType, shouldGetNewData: false, completion: { self.scheduleNotificationFetches() })
+        getAllData(notificationType: currentNotificationType, shouldGetNewData: false, completion: nil)
+        
+        dispatchGroup.notify(queue: .main) {
+            debugPrint("TASK NOTIFIED!")
+            
+            if self.didSuccessfullyFetchNotifications {
+                //print("INDEX PATH COUNT: \(self.indexPathsToInsert.count)")
+                //let oldIndexPaths = (0..<self.tableView(self.tableView, numberOfRowsInSection: 0)).map { IndexPath(row: $0, section: 0) }
+                let newIndexPaths = (0..<100).map { IndexPath(row: $0, section: 0) }
+                
+                let currentNotifications = self.notifications
+                
+                self.notifications = []
+                
+                let oldIndexPaths = (0..<self.tableView(self.tableView, numberOfRowsInSection: 0)).map { IndexPath(row: $0, section: 0) }
+                
+                self.tableView.beginUpdates()
+                self.tableView.deleteRows(at: oldIndexPaths, with: .automatic)
+                self.tableView.endUpdates()
+                
+                self.notifications = currentNotifications
+                
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: newIndexPaths, with: .automatic)
+                //self.asynchronousRemoveAllFromArray(arr: &self.indexPathsToInsert)
+                //self.tableView.reloadRows(at: self.indexPathsToInsert, with: .automatic)
+                self.tableView.endUpdates()
+                
+                //self.tableView.reloadData()
+                
+                self.navigationController!.tabBarItem.badgeValue = self.badgeValue
+                
+                sender.isEnabled = true
+            } else {
+                self.showAlertWithError("An error occurred while requesting notifications.", retryHandler: { self.handleChange(sender) })
+                
+                sender.isEnabled = true
+            }
+            
+            if self.notifRefreshTimer != nil {
+                self.notifRefreshTimer.invalidate()
+                self.notifRefreshTimer = nil
+            }
+            
+            self.scheduleNotificationFetches()
+        }
     }
 }
 

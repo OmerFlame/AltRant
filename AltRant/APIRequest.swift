@@ -197,7 +197,7 @@ class APIRequest {
         return extractedData!
     }
     
-    func getNotificationFeed(shouldGetNewNotifs: Bool, category: NotificationContentCategory) -> NotificationFeed {
+    func getNotificationFeed(shouldGetNewNotifs: Bool, category: NotificationContentCategory, completionHandler: @escaping (NotificationFeed?) -> Void) {
         if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
             logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
         }
@@ -215,7 +215,7 @@ class APIRequest {
         request.httpMethod = "GET"
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let completionSemaphore = DispatchSemaphore(value: 0)
+        /*let completionSemaphore = DispatchSemaphore(value: 0)
         var content: NotificationFeed? = nil
         
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -231,7 +231,22 @@ class APIRequest {
         }.resume()
         
         completionSemaphore.wait()
-        return content!
+        return content!*/
+        
+        let session = URLSession(configuration: .default)
+        
+        session.dataTask(with: request) { data, response, error in
+            UserDefaults.standard.setValue(Int(Date().timeIntervalSince1970), forKey: "DRLastNotifCheckTime")
+            
+            if let data = data, let body = String(data: data, encoding: .utf8) {
+                debugPrint(body)
+                
+                let decoder = JSONDecoder()
+                let content = try? decoder.decode(NotificationFeed.self, from: body.data(using: .utf8)!)
+                
+                completionHandler(content)
+            }
+        }.resume()
     }
     
     func getRantFromID(id: Int, lastCommentID: Int?) throws -> RantResponse? {
@@ -382,7 +397,7 @@ class APIRequest {
         return voteResponse
     }
     
-    func getProfileFromID(_ profileID: Int, userContentType: ProfileContentTypes, skip: Int) throws -> ProfileResponse? {
+    /*func getProfileFromID(_ profileID: Int, userContentType: ProfileContentTypes, skip: Int) throws -> ProfileResponse? {
         let userID = UserDefaults.standard.integer(forKey: "DRUserID")
         let tokenID = UserDefaults.standard.integer(forKey: "DRTokenID")
         let tokenKey = UserDefaults.standard.string(forKey: "DRTokenKey")
@@ -446,6 +461,37 @@ class APIRequest {
         }
         
         //return nil
+    }*/
+    
+    func getProfileFromID(_ profileID: Int, userContentType: ProfileContentTypes, skip: Int, completionHandler: @escaping (ProfileResponse?) -> Void) {
+        let userID = UserDefaults.standard.integer(forKey: "DRUserID")
+        let tokenID = UserDefaults.standard.integer(forKey: "DRTokenID")
+        let tokenKey = UserDefaults.standard.string(forKey: "DRTokenKey")
+        
+        let resourceURL = URL(string: "https://devrant.com/api/users/\(String(profileID))?app=3&skip=\(String(skip))&content=\(String(userContentType.rawValue))&user_id=\(String(userID))&token_id=\(String(tokenID))&token_key=\(String(tokenKey!))".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        
+        var request = URLRequest(url: resourceURL)
+        
+        request.httpMethod = "GET"
+        request.addValue("application/x-www-form/urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if response != nil {
+                if let data = data, let body = String(data: data, encoding: .utf8) {
+                    let decoder = JSONDecoder()
+                    
+                    let extractedData = try? decoder.decode(ProfileResponse.self, from: body.data(using: .utf8)!)
+                    
+                    completionHandler(extractedData)
+                } else {
+                    completionHandler(nil)
+                }
+            } else {
+                completionHandler(nil)
+            }
+        }
+        
+        task.resume()
     }
     
     func postRant(postType: RantType, content: String, tags: String?, image: UIImage?) -> Int {

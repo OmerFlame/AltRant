@@ -93,13 +93,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         DispatchQueue.global(qos: .userInitiated).async {
             APIRequest().logIn(username: self.usernameTextField.text!, password: self.passwordTextField.text!)
             
-            if UserDefaults.standard.integer(forKey: "DRUserID") != 0 {
+            /*if UserDefaults.standard.integer(forKey: "DRUserID") != 0 {
                 let userInfo = try! APIRequest().getProfileFromID(UserDefaults.standard.integer(forKey: "DRUserID"), userContentType: .rants, skip: 0)!
                 let userColor = UIColor(hex: userInfo.profile.avatar.b)!
                 //let userProfileImage = userInfo.profile.avatar.i
                 
                 UserDefaults.standard.set(userColor, forKey: "DRUserColor")
                 //UserDefaults.standard.setValue(userProfileImage, forKey: "DRUserImage")
+            }*/
+            
+            if UserDefaults.standard.integer(forKey: "DRUserID") != 0 {
+                APIRequest().getProfileFromID(UserDefaults.standard.integer(forKey: "DRUserID"), userContentType: .rants, skip: 0, completionHandler: { result in
+                    UserDefaults.standard.set(UIColor(hex: result!.profile.avatar.b)!, forKey: "DRUserColor")
+                })
             }
             
             DispatchQueue.main.async {

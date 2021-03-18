@@ -65,11 +65,45 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
      */
     var commentInFeed: UnsafeMutablePointer<CommentModel>?
     
+    private var loadingIndicator = UIActivityIndicatorView(style: .medium)
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     //- commentInFeed: An [`UnsafeMutablePointer`]() pointer holding the data for the same comment in another table view. Optional.
+    
+    /**
+     Configures the comment cell to show a loading ring.
+     
+     - returns: Nothing.
+     */
+    func configureLoading() {
+        upvoteButton.isHidden = true
+        scoreLabel.isHidden = true
+        downvoteButton.isHidden = true
+        textStackView.isHidden = true
+        bodyLabel.isHidden = true
+        supplementalImageView.isHidden = true
+        
+        contentView.addSubview(loadingIndicator)
+        
+        loadingIndicator.startAnimating()
+        
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        //loadingIndicator.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        //loadingIndicator.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        loadingIndicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        
+        loadingIndicator.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -40).isActive = true
+        loadingIndicator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 40).isActive = true
+        
+        layoutIfNeeded()
+        //loadingIndicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 40).isActive = true
+        
+        //loadingIndicator.hidesWhenStopped = true
+    }
     
     /**
      Configures the comment cell with the required data.
@@ -90,6 +124,17 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         self.parentTableViewController = parentTableViewController
         self.parentTableView = parentTableView
         self.commentInFeed = commentInFeed
+        
+        if loadingIndicator.isDescendant(of: contentView) {
+            loadingIndicator.removeFromSuperview()
+        }
+        
+        upvoteButton.isHidden = false
+        scoreLabel.isHidden = false
+        downvoteButton.isHidden = false
+        textStackView.isHidden = false
+        bodyLabel.isHidden = false
+        supplementalImageView.isHidden = false
         
         upvoteButton.tintColor = (model.vote_state == 1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
         //scoreLabel.text = String(commentContents!.score)

@@ -121,7 +121,9 @@ extension File {
             
             var receivedData: Data? = nil
             
-            URLSession.shared.dataTask(with: URL(string: image.url!)!) { data, _, _ in
+            let session = URLSession(configuration: .default)
+            
+            session.dataTask(with: URL(string: image.url!)!) { data, _, _ in
                 receivedData = data
                 
                 innerCompletionSemaphore.signal()
@@ -151,7 +153,9 @@ extension File {
         let completionSemaphore = DispatchSemaphore(value: 0)
         var receivedData: Data? = nil
         
-        URLSession.shared.dataTask(with: (URL(string: image.url!)!)) { data, _, _ in
+        let session = URLSession(configuration: .default)
+        
+        session.dataTask(with: (URL(string: image.url!)!)) { data, _, _ in
             receivedData = data
             
             completionSemaphore.signal()

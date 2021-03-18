@@ -95,8 +95,13 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self.getRant()
                     
                     if self.rant != nil {
-                        self.getProfile()
+                        let completionSemaphore = DispatchSemaphore(value: 0)
                         
+                        self.getProfile(successHandler: {
+                            completionSemaphore.signal()
+                        })
+                        
+                        completionSemaphore.wait()
                         if self.rant!.attached_image != nil && self.supplementalRantImage == nil {
                             self.supplementalRantImage = File.loadFile(image: self.rant!.attached_image!, size: CGSize(width: self.rant!.attached_image!.width!, height: self.rant!.attached_image!.height!))
                         }
@@ -191,14 +196,26 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    private func getProfile() {
-        do {
+    private func getProfile(successHandler: (() -> Void)?) {
+        /*do {
             self.profile = try APIRequest().getProfileFromID(rant!.user_id, userContentType: .rants, skip: 0)?.profile
         } catch {
             DispatchQueue.main.async {
                 self.showAlertWithError("Could not fetch profile with ID \(self.rant!.user_id)", retryHandler: self.getProfile)
             }
-        }
+        }*/
+        
+        APIRequest().getProfileFromID(rant!.user_id, userContentType: .rants, skip: 0, completionHandler: { result in
+            if let profile = result {
+                self.profile = profile.profile
+                
+                successHandler?()
+            } else {
+                DispatchQueue.main.async {
+                    self.showAlertWithError("Could not fetch profile with ID \(self.rant!.user_id)", retryHandler: { self.getProfile(successHandler: successHandler) })
+                }
+            }
+        })
     }
     
     fileprivate func showAlertWithError(_ error: String, retryHandler: (() -> Void)?) {
