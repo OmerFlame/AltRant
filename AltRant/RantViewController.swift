@@ -73,6 +73,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        navigationController?.navigationBar.tintColor = .systemBlue
+        
         if didFinishLoading == false {
             self.loadingIndicator.startAnimating()
             

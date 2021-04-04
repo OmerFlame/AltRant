@@ -113,8 +113,13 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             dispatchGroup.notify(queue: .main) {
                 if self.didSuccessfullyFetchNotifications {
+                    
+                    let bruh = self.notifications
+                    
+                    let indexPaths = (0..<100).map { IndexPath(row: $0, section: 0) }
+                    
                     self.tableView.beginUpdates()
-                    self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
+                    self.tableView.insertRows(at: indexPaths, with: .automatic)
                     //self.asynchronousRemoveAllFromArray(arr: &self.indexPathsToInsert)
                     self.tableView.endUpdates()
                     
