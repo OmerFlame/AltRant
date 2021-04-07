@@ -68,170 +68,94 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         fatalError("init(coder:) has not been implemented")
     }
     
-    /*func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if self.navigationController != nil {
-            if !self.navigationController!.isNavigationBarHidden {
-                self.navigationController?.setNavigationBarHidden(true, animated: false)
-            }
-        }
-        
-        guard tableView.tableHeaderView != nil else { return }
-        
-        let headerGeometry = self.geometry(view: (tableView.tableHeaderView as! StretchyTableHeaderView), scrollView: scrollView)
-        let titleGeometry = self.geometry(view: headerTitle, scrollView: scrollView)
-        
-        (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.alpha = CGFloat(sqrt(headerGeometry.largeTitleWeight))
-        (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.alpha = CGFloat(sqrt(headerGeometry.largeTitleWeight))
-        
-        let largeTitleOpacity = (max(titleGeometry.largeTitleWeight, 0.5) - 0.5) * 2
-        let tinyTitleOpacity = 1 - min(titleGeometry.largeTitleWeight, 0.5) * 2
-        
-        headerTitle.alpha = CGFloat(sqrt(largeTitleOpacity))
-        blurView.contentView.subviews[1].alpha = CGFloat(sqrt(tinyTitleOpacity))
-        
-        if largeTitleOpacity == 1 {
-            if blurView.contentView.gestureRecognizers == nil {
-                let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap(_:)))
-                tableView.tableHeaderView!.addGestureRecognizer(gestureRecognizer)
-                
-                //blurView.contentView.addGestureRecognizer(gestureRecognizer)
-                
-                //blurView.contentView.isUserInteractionEnabled = true
-                //blurView.isUserInteractionEnabled = true
-            }
-        } else {
-            //blurView.contentView.gestureRecognizers!.forEach(blurView.contentView.removeGestureRecognizer)
-            tableView.tableHeaderView!.gestureRecognizers!.forEach(tableView.tableHeaderView!.removeGestureRecognizer)
-            
-            blurView.contentView.isUserInteractionEnabled = false
-            blurView.isUserInteractionEnabled = false
-        }
-        
-        if let vfxSubview = blurView.subviews.first(where: {
-            String(describing: type(of: $0)) == "_UIVisualEffectSubview"
-        }) {
-            vfxSubview.backgroundColor = UIColor.systemBackground.withAlphaComponent(0)
-        }
-        
-        if let vfxBackdrop = blurView.subviews.first(where: {
-            String(describing: type(of: $0)) == "_UIVisualEffectBackdropView"
-        }) {
-            vfxBackdrop.alpha = CGFloat(1 - sqrt(titleGeometry.largeTitleWeight))
-        }
-        
-        var blurFrame = blurView.frame
-        var titleFrame = headerTitle.frame
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            blurFrame.origin.y = max(originalBlurRect.minY, originalBlurRect.minY + titleGeometry.blurOffset)
-        } else if UIDevice.current.userInterfaceIdiom == .pad {
-            blurFrame.origin.y = max(originalBlurRect.minY - 36, originalBlurRect.minY + titleGeometry.blurOffset - 36)
-        }
-        
-        //print("BLUR OFFSET: \(titleGeometry.blurOffset)")
-        
-        if let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height {
-            self.statusBarHeight = statusBarHeight
-        }
-        
-        titleFrame.origin.y = originalTitleRect.minY + (413 - self.statusBarHeight)
-        
-        //print("TITLE OFFSET: \(originalTitleRect.minY + (413 - self.statusBarHeight))")
-        
-        blurView.frame = blurFrame
-        headerTitle.frame = titleFrame
-        
-        currentBlurFrame = blurView.frame
-        
-        (tableView.tableHeaderView as! StretchyTableHeaderView).scrollViewDidScroll(scrollView: scrollView)
-    }*/
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard tableView.tableHeaderView != nil else { return }
+        // If this function runs and the header view property is nil, return immediately.
+        guard tableView.tableHeaderView != nil, navigationController != nil else { return }
         
+        // Get the CGRect of the OS's status bar. If it returns nil, then just assign a 0-length, 0-origin CGRect to the variable.
         let statusBarFrame = UIApplication.shared.windows[0].windowScene?.statusBarManager?.statusBarFrame ?? .zero
         
-        //let targetHeight = blurView.frame.size.height - 21
-        
+        // The amount that you need to scroll when you pass the scrolling threshold to finish a full effect cycle of the navigation bar show/hide animation.
         let targetHeight: CGFloat = 21
         
-        //let thresholdHeight = tableView.tableHeaderView!.frame.size.height - blurView.frame.size.height - navigationController!.navigationBar.frame.size.height - statusBarFrame.height - headerTitle.frame.size.height
-        //let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - statusBarFrame.height
-        
-        //let thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.size.height - blurView.frame.size.height - headerTitle.frame.size.height
-        
-        guard navigationController != nil else {
-            return
-        }
-        
+        /* The amount that you need to scroll in order to start the actual effect of the navigation bar. This variable's value will be different between form factors.
+         * This variable consists of the height of the table view header, subtracting the full height + the vertical offset of the navigation bar, subtracting the height of the large header title, subtracting twice the half of the height of the blur view for the UISegmentedControl.
+         */
         var thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.maxY - headerTitle.frame.size.height - 2 * (blurView.frame.size.height - 21)
         
+        // Because of the complexity of the last line, the Swift compiler is complaining that the line is too complicated if we also add 63 to the equation, so I added it on a different line.
+        // I absolutely cannot recall why I am adding 63 to the threshold height, but I need to.
         thresholdHeight += 63
         
-        
+        // Calculate how much of the header (including the animation) you scrolled.
         var offset = ((scrollView.contentOffset.y - thresholdHeight) / targetHeight)
         
-        //print("THRES+TARGET:   \(thresholdHeight + targetHeight)")
-        
-        print("OFFSET:         \(offset)")
-        print("CONTENT OFFSET: \(scrollView.contentOffset.y)")
-        
-        //let visualEffectViewOffset = -(scrollView.contentOffset.y + scrollView.safeAreaInsets.top)
-        
+        // The offset of the segmented control relative to the scroll view's vertical offset, adding the top safe area insets of the scroll view, subtracting 21 and diving the result by -1.
         let visualEffectViewOffset = -(scrollView.contentOffset.y + scrollView.safeAreaInsets.top - 21)
         
+        // Get the current CGRect of the blur view that contains the segmented control.
         var blurFrame = blurView.frame
-        var titleFrame = headerTitle.frame
         
+        /* Set the origin's Y coordinate of the blur view to the biggest value out of the 2: the original blur view's CGRect minimum Y coordinate subtracting half the height of the blur view OR the negative of the blur view's offset, because the more you scroll down, the higher the visualEffectViewOffset will be because in the Core Graphics coordinate space, the closer you get to the bottom edge of the screen the bigger the Y coordinate is.
+         *
+         * The reason we are doing this is because we want the blur view to always stick to the navigation bar if we scroll past the header view, so the user can switch between the different profile post types even if they are not at the top of the scroll view.
+         */
         blurFrame.origin.y = max(originalBlurRect.minY - 21, -visualEffectViewOffset)
-        //titleFrame.origin.y = originalTitleRect.minY + (413 - statusBarFrame.height)
         
+        // Set the current frame of the blur view to the new blur frame with the newly-calculated offset.
         blurView.frame = blurFrame
-        headerTitle.frame = titleFrame
         
+        // Set the property's value to the current blur view's CGRect frame.
         currentBlurFrame = blurView.frame
         
-        if offset > 1 {offset = 1}
+        // If the offset that we calculated earlier is bigger than 1, set it to 1.
+        if offset > 1 { offset = 1 }
         
+        // If the offset that we calculated earlier is smaller than 0, set it to 0.
         if offset < 0 { offset = 0 }
         
+        // Change the tint color of the navigation bar to a color between white and the profile's background color, depending on how much we scroll.
         navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hex: profileData!.avatar.b)!, percent: Double(sqrt(offset)))
         
-        //navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label.withAlphaComponent(offset)]
+        // Set the opacity of the custom title view of the navigation bar to the square root of the offset.
         navigationItem.titleView?.alpha = sqrt(offset)
         
+        /* In here, we start to meddle with private views inside the navigation bar that provide the blur effect that the navigation bar has.
+         *
+         * We set the opacity of the navigation bar's private background and visual effect views to the square root of the offset we calculated earlier.
+         */
         navigationController?.navigationBar.backgroundView?.alpha = sqrt(offset)
         navigationController?.navigationBar.visualEffectView?.alpha = sqrt(offset)
         
+        // Set the opacity of one of the private views of the navigation bar's visual effect view. We search the subviews of the visual effect view for a view that has this private class name and the first one that pops up is the only one that exists. We set that view's alpha to the square root of the offset we calculated earlier.
         self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
         
+        // If the user pushed this view controller into view through the notifications view controller, the structure of the navigation bar is different, so we need to set the opacity of the background of the UIToolbar that the extended navigation view has (which is a private Apple view as well) to the square root of the offset that we calculated earlier.
         if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
             extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = sqrt(offset)
         }
         
+        // We repeat the same procedures above on more private Apple views that are inside the blur view for the segmented control.
         blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
         blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.alpha = sqrt(offset)
         
+        // We set the opacity of the header view's container view and image container, as well as the header title to the square root of 1 subtracted by the offset we calculated earlier.
         (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.alpha = sqrt(1 - offset)
         (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.alpha = sqrt(1 - offset)
-        
         headerTitle.alpha = sqrt(1 - offset)
         
+        // Completely hide the header title if the opacity is 0, and don't hide it if not.
         if headerTitle.alpha == 0 {
             headerTitle.isHidden = true
         } else {
             headerTitle.isHidden = false
         }
         
+        // If the effect hasn't started yet, add a gesture recognizer to the profile image. If it's started, remove the gesture recognizer.
         if 1 - offset == 1 {
             if blurView.contentView.gestureRecognizers == nil {
                 let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap(_:)))
                 tableView.tableHeaderView!.addGestureRecognizer(gestureRecognizer)
-                
-                //blurView.contentView.addGestureRecognizer(gestureRecognizer)
-                
-                //blurView.contentView.isUserInteractionEnabled = true
-                //blurView.isUserInteractionEnabled = true
             }
         } else {
             //blurView.contentView.gestureRecognizers!.forEach(blurView.contentView.removeGestureRecognizer)
@@ -241,12 +165,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             blurView.isUserInteractionEnabled = false
         }
         
-        /*if UIDevice.current.userInterfaceIdiom == .phone {
-            blurFrame.origin.y = max(originalBlurRect.minY, originalBlurRect.minY + titleGeometry.blurOffset)
-        } else if UIDevice.current.userInterfaceIdiom == .pad {
-            blurFrame.origin.y = max(originalBlurRect.minY - 36, originalBlurRect.minY + titleGeometry.blurOffset - 36)
-        }*/
-        
+        // Call the header view's scrollViewDidScroll function to handle its layout and effects as well.
         (tableView.tableHeaderView as! StretchyTableHeaderView).scrollViewDidScroll(scrollView: scrollView)
     }
     

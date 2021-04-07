@@ -66,7 +66,9 @@ class APIRequest {
         self.request = URLRequest(url: self.resourceURL)
         request.httpMethod = "POST"
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "app=3&username=\(username.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)&password=\(password.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)".data(using: .utf8)
+        request.httpBody = "app=3&username=\(username)&password=\(password.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!)".data(using: .utf8)
+        
+        print("PASSWORD: \(password.addingPercentEncoding(withAllowedCharacters: .alphanumerics))")
         
         let completionSemaphore = DispatchSemaphore(value: 0)
         var receivedRawJSON = String()
