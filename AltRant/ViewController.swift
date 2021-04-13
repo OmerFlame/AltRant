@@ -86,6 +86,12 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             self.performFetch(nil)
             
             let mainMenu = UIMenu(title: "", children: [
+                                    UIAction(title: "Test Controller", image: UIImage(systemName: "scribble")) { _ in
+                                        let avatarVC = UIStoryboard(name: "AvatarEditorViewController", bundle: nil).instantiateViewController(identifier: "AvatarEditorController") as! AvatarEditorViewController
+                                        
+                                        self.navigationController?.pushViewController(avatarVC, animated: true)
+                                    },
+                
                                     UIAction(title: "Settings", image: UIImage(systemName: "gearshape.fill")!) { action in
                                         print("Tapped on Settings")
                                     },
