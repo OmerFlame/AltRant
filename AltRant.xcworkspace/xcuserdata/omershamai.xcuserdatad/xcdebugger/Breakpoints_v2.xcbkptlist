@@ -128,8 +128,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "357"
             endingLineNumber = "357"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "goBack(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -160,8 +160,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "301"
             endingLineNumber = "301"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "RantViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -400,8 +400,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1313"
             endingLineNumber = "1313"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "handleProfileImageTap(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -800,8 +800,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "637"
             endingLineNumber = "637"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ProfileTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -816,8 +816,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "639"
             endingLineNumber = "639"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ProfileTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -832,8 +832,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1032"
             endingLineNumber = "1032"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "tableView(_:prefetchRowsAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -848,8 +848,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1031"
             endingLineNumber = "1031"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "tableView(_:prefetchRowsAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -864,8 +864,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1037"
             endingLineNumber = "1037"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "tableView(_:prefetchRowsAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -880,8 +880,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "968"
             endingLineNumber = "968"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "segmentedControlSelectionChanged(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1856,8 +1856,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1274"
             endingLineNumber = "1274"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "prepare(for:sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1872,8 +1872,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "256"
             endingLineNumber = "256"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1904,8 +1904,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "277"
             endingLineNumber = "277"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "previewController(_:previewItemAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1936,8 +1936,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "400"
             endingLineNumber = "400"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ProfileTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1952,8 +1952,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "423"
             endingLineNumber = "423"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ProfileTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1968,8 +1968,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "428"
             endingLineNumber = "428"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ProfileTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1984,8 +1984,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "436"
             endingLineNumber = "436"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ProfileTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2000,8 +2000,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1271"
             endingLineNumber = "1271"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "prepare(for:sender:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2016,8 +2016,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "932"
             endingLineNumber = "932"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewWillDisappear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2032,8 +2032,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1025"
             endingLineNumber = "1025"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "tableView(_:prefetchRowsAt:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "9891EF67-3FCA-4476-91DC-76751CDDFB09 - 704a85a4880af4eb"
@@ -2080,8 +2080,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1053"
             endingLineNumber = "1053"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "performFetch(contentType:_:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "1396C041-4127-4265-8694-296ED6136558 - 984a1af5d30af289"
@@ -2224,8 +2224,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "722"
             endingLineNumber = "722"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "getContent(contentType:completion:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2240,8 +2240,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1039"
             endingLineNumber = "1039"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "tableView(_:prefetchRowsAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2256,8 +2256,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "634"
             endingLineNumber = "634"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ProfileTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2272,8 +2272,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "623"
             endingLineNumber = "623"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ProfileTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2288,8 +2288,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1156"
             endingLineNumber = "1156"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "performFetch(contentType:_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2304,8 +2304,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1127"
             endingLineNumber = "1127"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "performFetch(contentType:_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2320,8 +2320,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1154"
             endingLineNumber = "1154"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "performFetch(contentType:_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2336,8 +2336,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1125"
             endingLineNumber = "1125"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "performFetch(contentType:_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2783,8 +2783,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "746"
             endingLineNumber = "746"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2799,8 +2799,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "842"
             endingLineNumber = "842"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewWillDisappear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2815,8 +2815,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "857"
             endingLineNumber = "857"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewWillDisappear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2831,8 +2831,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "862"
             endingLineNumber = "862"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewWillDisappear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2847,8 +2847,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "728"
             endingLineNumber = "728"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2863,8 +2863,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "755"
             endingLineNumber = "755"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2879,8 +2879,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "275"
             endingLineNumber = "275"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "scrollViewWillEndDragging(_:withVelocity:targetContentOffset:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2895,8 +2895,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "283"
             endingLineNumber = "283"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "scrollViewWillEndDragging(_:withVelocity:targetContentOffset:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2911,8 +2911,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "286"
             endingLineNumber = "286"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "scrollViewWillEndDragging(_:withVelocity:targetContentOffset:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2927,8 +2927,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "738"
             endingLineNumber = "738"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2959,8 +2959,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "76"
             endingLineNumber = "76"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "viewDidAppear(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2973,10 +2973,10 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "makePickerControllerIfNeeded()"
-            landmarkType = "7">
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "AvatarEditorViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2989,10 +2989,122 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "addPullUpController()"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "AvatarEditorViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "62788419-598A-4998-BFD3-AAD1AFD0907F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Users/omershamai/Library/Developer/Xcode/DerivedData/AltRant-ampvdjscxxeotlgoniapqtmghtyd/SourcePackages/checkouts/PullUpController/PullUpController/PullUpController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "315"
+            endingLineNumber = "315"
+            landmarkName = "handleScrollViewGestureRecognizer(_:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1BE67ED8-916A-4AC5-9382-E19D3B5BA261"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Users/omershamai/Library/Developer/Xcode/DerivedData/AltRant-ampvdjscxxeotlgoniapqtmghtyd/SourcePackages/checkouts/PullUpController/PullUpController/PullUpController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
+            landmarkName = "handlePanGestureRecognizer(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AFDF2098-2015-4C46-8CA7-8A02ED703E6B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/AvatarEditorViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "floatingPanelDidMove(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1550D195-C783-4C42-98B5-F058AC052BBD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/AvatarEditorPickerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
+            landmarkName = "shouldBeSelected"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E4F9FC0B-6C9B-4E96-9422-E9411FC175BA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/AvatarEditorPickerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "shouldBeSelected"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1DD8419D-1990-4ACC-AFC5-87AB40BE4E67"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/AvatarEditorPickerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
+            landmarkName = "shouldBeSelected"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B45DE7E1-0367-491C-A638-292413D783CA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/AvatarEditorPickerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
+            landmarkName = "shouldBeSelected"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

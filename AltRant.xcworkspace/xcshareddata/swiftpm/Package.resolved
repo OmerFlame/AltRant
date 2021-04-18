@@ -11,6 +11,24 @@
         }
       },
       {
+        "package": "FloatingPanel",
+        "repositoryURL": "https://github.com/scenee/FloatingPanel",
+        "state": {
+          "branch": null,
+          "revision": "16fea625be25d9a713630a4a43cbc0778740ebf4",
+          "version": "2.3.0"
+        }
+      },
+      {
+        "package": "Haptica",
+        "repositoryURL": "https://github.com/efremidze/Haptica",
+        "state": {
+          "branch": null,
+          "revision": "4084702c85102c2d17d58e42ec5a750094944864",
+          "version": "3.0.2"
+        }
+      },
+      {
         "package": "MarqueeLabel",
         "repositoryURL": "https://github.com/cbpowell/MarqueeLabel",
         "state": {

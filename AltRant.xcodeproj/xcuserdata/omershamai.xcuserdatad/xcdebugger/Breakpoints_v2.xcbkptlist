@@ -16,8 +16,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "620"
             endingLineNumber = "620"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ProfileTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -32,8 +32,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "332"
             endingLineNumber = "332"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "didMove(toParent:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

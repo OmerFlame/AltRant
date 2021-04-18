@@ -57,6 +57,7 @@
 		59A9E69925CFCA3500DC6065 /* SecondaryRantInFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */; };
 		59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */; };
 		59AD346125ADB1C6004D5DD6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AD346025ADB1C6004D5DD6 /* Cache.swift */; };
+		59B67FC7262C3D6C00311F65 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 59B67FC6262C3D6C00311F65 /* FloatingPanel */; };
 		59B6F34E25D43E0200F0887E /* Pods_AltRant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */; };
 		59B6F35125D43E0400F0887E /* ADNavigationBarExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */; };
 		59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B842EB25947876007F16FC /* UITableView+getAllCells.swift */; };
@@ -75,6 +76,7 @@
 		59D253562593334400BEA35A /* Double+truncate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D253552593334400BEA35A /* Double+truncate.swift */; };
 		59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA0F6F2580FB5E00AF49BB /* ProfileTableViewController.swift */; };
 		59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */; };
+		59DB9CC9262C76C4009A4704 /* Haptica in Frameworks */ = {isa = PBXBuildFile; productRef = 59DB9CC8262C76C4009A4704 /* Haptica */; };
 		59E671632576AD12007EEB28 /* RantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671612576AD12007EEB28 /* RantCell.swift */; };
 		59E671642576AD12007EEB28 /* RantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E671622576AD12007EEB28 /* RantCell.xib */; };
 		59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671662576BAF4007EEB28 /* PaddingLabel.swift */; };
@@ -171,7 +173,7 @@
 		59B85CBD25988DA300E46948 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		59B85CC02598DAD900E46948 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		59BB224B25B42B5E00B4B177 /* AvatarCustomizationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCustomizationOptions.swift; sourceTree = "<group>"; };
-		59C2EFE225E25C2D00BBCDAB /* AvatarEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarEditorViewController.swift; sourceTree = "<group>"; };
+		59C2EFE225E25C2D00BBCDAB /* AvatarEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarEditorViewController.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		59C2EFEA25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AvatarEditorViewController.storyboard; sourceTree = "<group>"; };
 		59C2EFEE25E25E5E00BBCDAB /* AvatarEditorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarEditorPickerViewController.swift; sourceTree = "<group>"; };
 		59C2EFF225E26D4700BBCDAB /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
@@ -210,6 +212,8 @@
 				59B6F35125D43E0400F0887E /* ADNavigationBarExtension.framework in Frameworks */,
 				59B6F34E25D43E0200F0887E /* Pods_AltRant.framework in Frameworks */,
 				59CA4FB125CA8BB6005FB279 /* PullUpController in Frameworks */,
+				59B67FC7262C3D6C00311F65 /* FloatingPanel in Frameworks */,
+				59DB9CC9262C76C4009A4704 /* Haptica in Frameworks */,
 				59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */,
 				59007D8F25C1703D0088EC33 /* ActiveLabel in Frameworks */,
 			);
@@ -428,6 +432,8 @@
 				59A1B8CB259DD766007DE862 /* NotificationBannerSwift */,
 				59007D8E25C1703D0088EC33 /* ActiveLabel */,
 				59CA4FB025CA8BB6005FB279 /* PullUpController */,
+				59B67FC6262C3D6C00311F65 /* FloatingPanel */,
+				59DB9CC8262C76C4009A4704 /* Haptica */,
 			);
 			productName = AltRant;
 			productReference = 59040166257627A3002B062A /* AltRant.app */;
@@ -464,6 +470,8 @@
 				59A1B8CA259DD766007DE862 /* XCRemoteSwiftPackageReference "NotificationBanner" */,
 				59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */,
 				59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */,
+				59B67FC5262C3D6C00311F65 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				59DB9CC7262C76C4009A4704 /* XCRemoteSwiftPackageReference "Haptica" */,
 			);
 			productRefGroup = 59040167257627A3002B062A /* Products */;
 			projectDirPath = "";
@@ -937,12 +945,28 @@
 				minimumVersion = 3.0.6;
 			};
 		};
+		59B67FC5262C3D6C00311F65 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scenee/FloatingPanel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
 		59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MarioIannotta/PullUpController";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.8.0;
+			};
+		};
+		59DB9CC7262C76C4009A4704 /* XCRemoteSwiftPackageReference "Haptica" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/efremidze/Haptica";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -958,10 +982,20 @@
 			package = 59A1B8CA259DD766007DE862 /* XCRemoteSwiftPackageReference "NotificationBanner" */;
 			productName = NotificationBannerSwift;
 		};
+		59B67FC6262C3D6C00311F65 /* FloatingPanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59B67FC5262C3D6C00311F65 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
+			productName = FloatingPanel;
+		};
 		59CA4FB025CA8BB6005FB279 /* PullUpController */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */;
 			productName = PullUpController;
+		};
+		59DB9CC8262C76C4009A4704 /* Haptica */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59DB9CC7262C76C4009A4704 /* XCRemoteSwiftPackageReference "Haptica" */;
+			productName = Haptica;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
