@@ -9,14 +9,6 @@ import UIKit
 import Haptica
 
 class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelegate {
-    
-    /*enum InitialState {
-        case contracted
-        case expanded
-    }
-    
-    var initialState: InitialState = .contracted*/
-    
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
     @IBOutlet weak var categoryContainerView: UIView!
     @IBOutlet weak var categorySeparatorView: UIView! {
@@ -29,29 +21,7 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pickerContainerView: UIView!
     
-    /*private var collectionViewHeight: CGFloat = 0.0 {
-        didSet {
-            if collectionViewHeight != oldValue {
-                collectionView.collectionViewLayout.invalidateLayout()
-                collectionView.collectionViewLayout.prepare()
-            }
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        collectionViewHeight = collectionView.bounds.size.height
-    }*/
-    
     var pickerView: UIPickerView!
-    
-    /*var initialPointOffset: CGFloat {
-        switch initialState {
-        case .contracted:
-            return (categoryContainerView?.frame.height ?? 0) + safeAreaAdditionalOffset
-        case .expanded:
-            return pullUpControllerPreferredSize.height
-        }
-    }*/
     
     private var categories = [AvatarCustomizationOption]()
     private var preferences = [AvatarCustomizationResult]()
@@ -67,16 +37,6 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        /*let y = pickerView.frame.origin.y
-        let x = pickerView.frame.origin.x
-        
-        pickerView.transform = CGAffineTransform(rotationAngle: -90 * (.pi / 180))
-        
-        pickerView.frame = CGRect(x: x, y: y, width: pickerView.frame.height, height: pickerView.frame.width)
-
-        portraitSize = CGSize(width: min(UIScreen.main.bounds.width, UIScreen.main.bounds.height), height: secondPreviewView.frame.maxY)
-        landscapeFrame = CGRect(x: 5, y: 50, width: 280, height: 194)*/
         
         pickerView = UIPickerView()
         
@@ -94,8 +54,6 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
         
         pickerView.centerXAnchor.constraint(equalTo: pickerContainerView.centerXAnchor).isActive = true
         pickerView.centerYAnchor.constraint(equalTo: pickerContainerView.centerYAnchor).isActive = true
-        
-        //collectionView.attach(to: self)
     }
     
 
@@ -108,14 +66,11 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
         // Pass the selected object to the new view controller.
     }
     */
-    
-    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 108, height: collectionViewHeight)
-    }*/
-
 }
 
 extension AvatarEditorPickerViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    // TODO: - Actually implement the picker data source
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -131,6 +86,7 @@ extension AvatarEditorPickerViewController: UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
         return "bruh \(row)"
     }
     
@@ -153,6 +109,8 @@ extension AvatarEditorPickerViewController: UIPickerViewDataSource, UIPickerView
 }
 
 extension AvatarEditorPickerViewController: UICollectionViewDataSource {
+    // TODO: - Actaully implement the collection view's data source
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
@@ -178,8 +136,6 @@ extension AvatarEditorPickerViewController: UICollectionViewDataSource {
         cell.imageView.image = newImage
         
         cell.shouldBeSelected = false
-        
-        cell.gestureRecognizer()
         
         return cell
     }
@@ -226,11 +182,6 @@ class PreferenceCell: UICollectionViewCell {
         }
     }
     
-    func gestureRecognizer() {
-        //imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapPreference)))
-        
-    }
-    
     @objc func didTapPreference() {
         print("TEST")
         
@@ -242,6 +193,9 @@ class PreferenceCell: UICollectionViewCell {
     }
 }
 
+// I must give credit where credit is due: THIS CLASS IS NOT MINE, I DIDN'T WRITE IT!
+// This is made by ivanvorobei on GitHub, in his package SPAlert https://github.com/ivanvorobei/SPAlert/blob/master/Sources/SPAlert/Icons/SPAlertIconDoneView.swift
+// I didn't need the full package so I just copied the code I needed into the app.
 class DoneAnimationView: UIView {
     private var animatableLayer: CAShapeLayer!
     
@@ -277,22 +231,6 @@ class DoneAnimationView: UIView {
 }
 
 class CenterViewFlowLayout: UICollectionViewFlowLayout {
-    
-    /*override func collectionViewContentSize() -> CGSize {
-        // Only support single section for now.
-        // Only support Horizontal scroll
-        let count = self.collectionView?.dataSource?.collectionView(self.collectionView!, numberOfItemsInSection: 0)
-        let canvasSize = self.collectionView!.frame.size
-        var contentSize = canvasSize
-        if self.scrollDirection == UICollectionView.ScrollDirection.horizontal {
-            let rowCount = Int((canvasSize.height - self.itemSize.height) / (self.itemSize.height + self.minimumInteritemSpacing) + 1)
-            let columnCount = Int((canvasSize.width - self.itemSize.width) / (self.itemSize.width + self.minimumLineSpacing) + 1)
-            let page = ceilf(Float(count!) / Float(rowCount * columnCount))
-            contentSize.width = CGFloat(page) * canvasSize.width
-        }
-        return contentSize
-    }*/
-    
     override var collectionViewContentSize: CGSize {
         let count = self.collectionView?.dataSource?.collectionView(self.collectionView!, numberOfItemsInSection: 0)
         let canvasSize = self.collectionView!.frame.size
@@ -331,12 +269,6 @@ class CenterViewFlowLayout: UICollectionViewFlowLayout {
         
         return cellFrame
     }
-    
-    /*override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
-        let attr = super.layoutAttributesForItem(at: indexPath as IndexPath)?.copy() as! UICollectionViewLayoutAttributes?
-        attr!.frame = self.frameForItemAtIndexPath(indexPath: indexPath)
-        return attr
-    }*/
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         let attr = super.layoutAttributesForItem(at: indexPath as IndexPath)?.copy() as! UICollectionViewLayoutAttributes?
