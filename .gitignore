@@ -2,5 +2,5 @@
 AltRant.app
 AltRant.app.dSYM.zip
 AltRant.ipa
-fastlane/Fastfile
-fastlane/report.xml
+Fastfile
+report.xml

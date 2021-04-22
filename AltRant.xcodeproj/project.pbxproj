@@ -29,7 +29,6 @@
 		59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59095F5D25961CB40074BABC /* ComposeViewController.storyboard */; };
 		590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590A82852580B6600025F11A /* StretchyTableHeaderView.swift */; };
 		590FBD2F2631BBAA001DDA9B /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2A2631BBAA001DDA9B /* Appfile */; };
-		590FBD302631BBAA001DDA9B /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2B2631BBAA001DDA9B /* Fastfile */; };
 		590FBD312631BBAA001DDA9B /* Pluginfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2C2631BBAA001DDA9B /* Pluginfile */; };
 		590FBD322631BBAA001DDA9B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2D2631BBAA001DDA9B /* README.md */; };
 		590FBD332631BBAA001DDA9B /* report.xml in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2E2631BBAA001DDA9B /* report.xml */; };
@@ -145,7 +144,6 @@
 		59095F5D25961CB40074BABC /* ComposeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeViewController.storyboard; sourceTree = "<group>"; };
 		590A82852580B6600025F11A /* StretchyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableHeaderView.swift; sourceTree = "<group>"; };
 		590FBD2A2631BBAA001DDA9B /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
-		590FBD2B2631BBAA001DDA9B /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
 		590FBD2C2631BBAA001DDA9B /* Pluginfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pluginfile; sourceTree = "<group>"; };
 		590FBD2D2631BBAA001DDA9B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		590FBD2E2631BBAA001DDA9B /* report.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = report.xml; sourceTree = "<group>"; };
@@ -345,7 +343,6 @@
 			isa = PBXGroup;
 			children = (
 				590FBD2A2631BBAA001DDA9B /* Appfile */,
-				590FBD2B2631BBAA001DDA9B /* Fastfile */,
 				590FBD2C2631BBAA001DDA9B /* Pluginfile */,
 				590FBD2D2631BBAA001DDA9B /* README.md */,
 				590FBD2E2631BBAA001DDA9B /* report.xml */,
@@ -527,7 +524,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				590FBD302631BBAA001DDA9B /* Fastfile in Resources */,
 				59C2EFEB25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard in Resources */,
 				59E671642576AD12007EEB28 /* RantCell.xib in Resources */,
 				59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */,
