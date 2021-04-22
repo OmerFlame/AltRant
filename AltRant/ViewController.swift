@@ -10,6 +10,7 @@ import Combine
 import SwiftUI
 import ADNavigationBarExtension
 import UserNotifications
+import Sentry
 
 class rantFeedData {
     var rantFeed = [RantInFeed]()
@@ -28,6 +29,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //SentrySDK.capture(message: "BRUH!!")
+        //SentrySDK.crash()
         
         navigationController?.tabBarController?.delegate = self
         
@@ -98,6 +102,8 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 
                                     UIAction(title: "Log Out", image: UIImage(systemName: "lock.fill")!) { action in
                                         print("Tapped on Log Out")
+                                        
+                                        self.timer.invalidate()
                                         
                                         self.rantFeed.rantFeed = []
                                         self.supplementalImages = [:]

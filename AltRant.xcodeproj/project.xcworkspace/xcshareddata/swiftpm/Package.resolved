@@ -2,6 +2,33 @@
   "object": {
     "pins": [
       {
+        "package": "ActiveLabel",
+        "repositoryURL": "https://github.com/optonaut/ActiveLabel.swift",
+        "state": {
+          "branch": null,
+          "revision": "36949c1a69ef8b40574da20c9e24b115f387b1cf",
+          "version": "1.1.5"
+        }
+      },
+      {
+        "package": "FloatingPanel",
+        "repositoryURL": "https://github.com/scenee/FloatingPanel",
+        "state": {
+          "branch": null,
+          "revision": "16fea625be25d9a713630a4a43cbc0778740ebf4",
+          "version": "2.3.0"
+        }
+      },
+      {
+        "package": "Haptica",
+        "repositoryURL": "https://github.com/efremidze/Haptica",
+        "state": {
+          "branch": null,
+          "revision": "4084702c85102c2d17d58e42ec5a750094944864",
+          "version": "3.0.2"
+        }
+      },
+      {
         "package": "MarqueeLabel",
         "repositoryURL": "https://github.com/cbpowell/MarqueeLabel",
         "state": {
@@ -17,6 +44,24 @@
           "branch": null,
           "revision": "2ce5c49d8ee4865f01a3ce3bbe078664c78c7a3c",
           "version": "3.0.6"
+        }
+      },
+      {
+        "package": "PullUpController",
+        "repositoryURL": "https://github.com/MarioIannotta/PullUpController",
+        "state": {
+          "branch": null,
+          "revision": "6192b4745a4423e8fd2dc0a4eb8d34ca247a5163",
+          "version": "0.8.0"
+        }
+      },
+      {
+        "package": "Sentry",
+        "repositoryURL": "https://github.com/getsentry/sentry-cocoa",
+        "state": {
+          "branch": null,
+          "revision": "946cbb6daccedf40d652a12138f78e96f660e1ad",
+          "version": "6.2.1"
         }
       },
       {

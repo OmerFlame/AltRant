@@ -92,12 +92,16 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         self.notifRefreshTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
             debugPrint("Notification Refresh Timer Fired!")
             
+            self.tableView.refreshControl!.isEnabled = false
+            
             self.getAllData(notificationType: self.currentNotificationType, shouldGetNewData: true, completion: nil)
             
             self.dispatchGroup.notify(queue: .main) {
                 self.tableView.beginUpdates()
                 self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
                 self.tableView.endUpdates()
+                
+                self.tableView.refreshControl!.isEnabled = true
             }
         }
         
@@ -116,7 +120,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     
                     let bruh = self.notifications
                     
-                    let indexPaths = (0..<100).map { IndexPath(row: $0, section: 0) }
+                    let indexPaths = (0..<self.notifications.count).map { IndexPath(row: $0, section: 0) }
                     
                     self.tableView.beginUpdates()
                     self.tableView.insertRows(at: indexPaths, with: .automatic)
@@ -138,6 +142,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         
         tableView.reloadData()
         
+        notifRefreshTimer.invalidate()
+        
         getAllData(notificationType: currentNotificationType, shouldGetNewData: true, completion: nil)
         
         dispatchGroup.notify(queue: .main) {
@@ -147,6 +153,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
             self.tableView.endUpdates()
         }
+        
+        scheduleNotificationFetches()
     }
 
     // MARK: - Table View Data Source
@@ -288,7 +296,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 let completionSemaphore = DispatchSemaphore(value: 0)
                 let downloadGroup = DispatchGroup()
                 
-                for item in (!shouldGetNewData ? notificationsData.items[0...99] : notificationsData.items[..<notificationsData.items.count]) {
+                for item in notificationsData.items {
                     //debugPrint("DOWNLOAD TASK ENTERING!")
                     downloadGroup.enter()
                     
@@ -334,12 +342,14 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 downloadGroup.wait()
                 //debugPrint("DOWNLOAD GROUP TASK FINISHED WAITING!")
                 
-                let indexPaths = !shouldGetNewData ? (0..<100).map { IndexPath(row: $0, section: 0) } : (0..<notificationsData.items.count).map { IndexPath(row: $0, section: 0) }
+                //let indexPaths = !shouldGetNewData ? (0..<100).map { IndexPath(row: $0, section: 0) } : (0..<notificationsData.items.count).map { IndexPath(row: $0, section: 0) }
+                
+                let indexPaths = (0..<notificationsData.items.count).map { IndexPath(row: $0, section: 0) }
                 
                 if !shouldGetNewData { self.accessQueue.async(flags: .barrier) { self.notifications = [] } }
                 
                 self.accessQueue.async(flags: .barrier) {
-                    self.notifications.insert(contentsOf: notificationsData.items[!shouldGetNewData ? 0..<100 : 0..<notificationsData.items.count], at: 0)
+                    self.notifications.insert(contentsOf: notificationsData.items[0..<notificationsData.items.count], at: 0)
                 }
                 
                 self.unreadNotificationCounters = notificationsData.unread

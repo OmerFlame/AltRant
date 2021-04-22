@@ -28,6 +28,11 @@
 		59046DA625A33A0D00C9B4D3 /* NotificationFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59046DA525A33A0D00C9B4D3 /* NotificationFeed.swift */; };
 		59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59095F5D25961CB40074BABC /* ComposeViewController.storyboard */; };
 		590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590A82852580B6600025F11A /* StretchyTableHeaderView.swift */; };
+		590FBD2F2631BBAA001DDA9B /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2A2631BBAA001DDA9B /* Appfile */; };
+		590FBD302631BBAA001DDA9B /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2B2631BBAA001DDA9B /* Fastfile */; };
+		590FBD312631BBAA001DDA9B /* Pluginfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2C2631BBAA001DDA9B /* Pluginfile */; };
+		590FBD322631BBAA001DDA9B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2D2631BBAA001DDA9B /* README.md */; };
+		590FBD332631BBAA001DDA9B /* report.xml in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2E2631BBAA001DDA9B /* report.xml */; };
 		5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921F2C12598E53900540CF5 /* MoreTableViewController.swift */; };
 		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
 		5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */; };
@@ -76,6 +81,7 @@
 		59D253562593334400BEA35A /* Double+truncate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D253552593334400BEA35A /* Double+truncate.swift */; };
 		59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA0F6F2580FB5E00AF49BB /* ProfileTableViewController.swift */; };
 		59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */; };
+		59DB1FC8263154C70081C6E5 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 59DB1FC7263154C70081C6E5 /* Sentry */; };
 		59DB9CC9262C76C4009A4704 /* Haptica in Frameworks */ = {isa = PBXBuildFile; productRef = 59DB9CC8262C76C4009A4704 /* Haptica */; };
 		59E671632576AD12007EEB28 /* RantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671612576AD12007EEB28 /* RantCell.swift */; };
 		59E671642576AD12007EEB28 /* RantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E671622576AD12007EEB28 /* RantCell.xib */; };
@@ -137,6 +143,11 @@
 		59046DA525A33A0D00C9B4D3 /* NotificationFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFeed.swift; sourceTree = "<group>"; };
 		59095F5D25961CB40074BABC /* ComposeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeViewController.storyboard; sourceTree = "<group>"; };
 		590A82852580B6600025F11A /* StretchyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableHeaderView.swift; sourceTree = "<group>"; };
+		590FBD2A2631BBAA001DDA9B /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
+		590FBD2B2631BBAA001DDA9B /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
+		590FBD2C2631BBAA001DDA9B /* Pluginfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pluginfile; sourceTree = "<group>"; };
+		590FBD2D2631BBAA001DDA9B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		590FBD2E2631BBAA001DDA9B /* report.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = report.xml; sourceTree = "<group>"; };
 		591A752D257F518F001E1FC2 /* AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltRant.entitlements; sourceTree = "<group>"; };
 		5921F2C12598E53900540CF5 /* MoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewController.swift; sourceTree = "<group>"; };
 		5922A55425778C90009F3025 /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
@@ -212,6 +223,7 @@
 				59B6F35125D43E0400F0887E /* ADNavigationBarExtension.framework in Frameworks */,
 				59B6F34E25D43E0200F0887E /* Pods_AltRant.framework in Frameworks */,
 				59CA4FB125CA8BB6005FB279 /* PullUpController in Frameworks */,
+				59DB1FC8263154C70081C6E5 /* Sentry in Frameworks */,
 				59B67FC7262C3D6C00311F65 /* FloatingPanel in Frameworks */,
 				59DB9CC9262C76C4009A4704 /* Haptica in Frameworks */,
 				59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */,
@@ -238,6 +250,7 @@
 		5904015D257627A3002B062A = {
 			isa = PBXGroup;
 			children = (
+				590FBD292631BBA9001DDA9B /* fastlane */,
 				59039EB425DE47D700584667 /* ios-76x76.png */,
 				59040168257627A3002B062A /* AltRant */,
 				59039EBC25DE484800584667 /* Open with AltRant */,
@@ -323,6 +336,18 @@
 				59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */,
 			);
 			path = "Profile View";
+			sourceTree = "<group>";
+		};
+		590FBD292631BBA9001DDA9B /* fastlane */ = {
+			isa = PBXGroup;
+			children = (
+				590FBD2A2631BBAA001DDA9B /* Appfile */,
+				590FBD2B2631BBAA001DDA9B /* Fastfile */,
+				590FBD2C2631BBAA001DDA9B /* Pluginfile */,
+				590FBD2D2631BBAA001DDA9B /* README.md */,
+				590FBD2E2631BBAA001DDA9B /* report.xml */,
+			);
+			path = fastlane;
 			sourceTree = "<group>";
 		};
 		5922A55825779DD1009F3025 /* Extensions */ = {
@@ -434,6 +459,7 @@
 				59CA4FB025CA8BB6005FB279 /* PullUpController */,
 				59B67FC6262C3D6C00311F65 /* FloatingPanel */,
 				59DB9CC8262C76C4009A4704 /* Haptica */,
+				59DB1FC7263154C70081C6E5 /* Sentry */,
 			);
 			productName = AltRant;
 			productReference = 59040166257627A3002B062A /* AltRant.app */;
@@ -472,6 +498,7 @@
 				59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */,
 				59B67FC5262C3D6C00311F65 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				59DB9CC7262C76C4009A4704 /* XCRemoteSwiftPackageReference "Haptica" */,
+				59DB1FC6263154C70081C6E5 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 59040167257627A3002B062A /* Products */;
 			projectDirPath = "";
@@ -497,14 +524,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				590FBD302631BBAA001DDA9B /* Fastfile in Resources */,
 				59C2EFEB25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard in Resources */,
 				59E671642576AD12007EEB28 /* RantCell.xib in Resources */,
 				59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */,
 				59039EB525DE47D700584667 /* ios-76x76.png in Resources */,
 				59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */,
 				59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */,
+				590FBD2F2631BBAA001DDA9B /* Appfile in Resources */,
 				59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */,
+				590FBD332631BBAA001DDA9B /* report.xml in Resources */,
+				590FBD312631BBAA001DDA9B /* Pluginfile in Resources */,
 				59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */,
+				590FBD322631BBAA001DDA9B /* README.md in Resources */,
 				59040173257627A5002B062A /* Assets.xcassets in Resources */,
 				59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */,
 				59040171257627A3002B062A /* Main.storyboard in Resources */,
@@ -752,7 +784,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 666F768P5J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -849,6 +881,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -961,6 +994,14 @@
 				minimumVersion = 0.8.0;
 			};
 		};
+		59DB1FC6263154C70081C6E5 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.2.1;
+			};
+		};
 		59DB9CC7262C76C4009A4704 /* XCRemoteSwiftPackageReference "Haptica" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/efremidze/Haptica";
@@ -991,6 +1032,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */;
 			productName = PullUpController;
+		};
+		59DB1FC7263154C70081C6E5 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59DB1FC6263154C70081C6E5 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
 		};
 		59DB9CC8262C76C4009A4704 /* Haptica */ = {
 			isa = XCSwiftPackageProductDependency;
