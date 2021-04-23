@@ -300,160 +300,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    /*func addTitle() {
-        let blurEffect = UIBlurEffect(style: UITraitCollection.current.userInterfaceStyle == .dark ? .dark : .light)
-        blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: UIScreen.main.bounds.size.width, height: 44 + 32)
-        
-        segmentedControl = UISegmentedControl(items: secondaryProfilePages)
-        segmentedControl.selectedSegmentIndex = 0
-        
-        segmentedControl.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width - 32, height: 32)
-        segmentedControl.apportionsSegmentWidthsByContent = true
-        
-        segmentedControl.backgroundColor = .systemBackground
-        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        segmentedControl.selectedSegmentTintColor = UIColor(hex: profileData!.avatar.b)!
-        
-        scoreLabel = PaddingLabel()
-        scoreLabel.topInset = 2.5
-        scoreLabel.bottomInset = 2.5
-        scoreLabel.leftInset = 5
-        scoreLabel.rightInset = 5
-        scoreLabel.text = "+\(String(profileData!.score))"
-        scoreLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
-        scoreLabel.textColor = .black
-        scoreLabel.backgroundColor = .white
-        scoreLabel.cornerRadius = 5
-        scoreLabel.clipsToBounds = true
-        scoreLabel.layer.masksToBounds = true
-        
-        let smallScoreLabel = PaddingLabel()
-        smallScoreLabel.topInset = 2.5
-        smallScoreLabel.bottomInset = 2.5
-        smallScoreLabel.leftInset = 5
-        smallScoreLabel.rightInset = 5
-        smallScoreLabel.text = "+\(String(profileData!.score))"
-        smallScoreLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
-        smallScoreLabel.textColor = .black
-        smallScoreLabel.backgroundColor = .white
-        smallScoreLabel.layer.masksToBounds = true
-        smallScoreLabel.clipsToBounds = true
-        smallScoreLabel.cornerRadius = 5
-        smallScoreLabel.layer.borderWidth = 1
-        smallScoreLabel.layer.borderColor = UIColor.black.cgColor
-        
-        let largeLabelHeight = UIFont.systemFont(ofSize: 34, weight: .black).lineHeight
-        let smallLabelHeight = UIFont.systemFont(ofSize: 18, weight: .bold).lineHeight
-        
-        print("FONT HEIGHT: \(largeLabelHeight.rounded(.up))")
-        
-        let bigLabelSize = profileData!.username.boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 34, weight: .black)], context: nil).size
-        
-        let smallLabelSize = profileData!.username.boundingRect(with: CGSize(width: UIScreen.main.bounds.size.width - 32 - scoreLabel.intrinsicContentSize.width, height: CGFloat.greatestFiniteMagnitude), options: [.truncatesLastVisibleLine, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .bold)], context: nil).size
-        
-        let largeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: bigLabelSize.width, height: largeLabelHeight.rounded(.up)))
-        let smallLabel = UILabel(frame: CGRect(x: 0, y: 0, width: smallLabelSize.width, height: smallLabelHeight.rounded(.up)))
-        
-        largeLabel.text = profileData!.username
-        largeLabel.font = .systemFont(ofSize: 34, weight: .black)
-        largeLabel.textColor = .white
-        largeLabel.adjustsFontSizeToFitWidth = true
-        largeLabel.minimumScaleFactor = 0.2
-        largeLabel.allowsDefaultTighteningForTruncation = true
-        largeLabel.numberOfLines = 1
-        
-        smallLabel.text = profileData!.username
-        smallLabel.font = .systemFont(ofSize: 18, weight: .bold)
-        smallLabel.textColor = .label
-        smallLabel.adjustsFontSizeToFitWidth = true
-        smallLabel.minimumScaleFactor = 0.1
-        smallLabel.allowsDefaultTighteningForTruncation = true
-        smallLabel.numberOfLines = 1
-        
-        largeLabel.translatesAutoresizingMaskIntoConstraints = false
-        smallLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        headerTitle = UIStackView(frame: CGRect(x: 0, y: 0, width: largeLabel.frame.size.width + 5 + scoreLabel.intrinsicContentSize.width, height: max(largeLabel.frame.size.height, scoreLabel.intrinsicContentSize.height)))
-        
-        headerTitle.axis = .horizontal
-        headerTitle.alignment = .center
-        headerTitle.distribution = .equalCentering
-        
-        headerTitle.addArrangedSubview(largeLabel)
-        headerTitle.addArrangedSubview(scoreLabel)
-        
-        let smallHeaderTitle = UIStackView(frame: CGRect(x: 0, y: 0, width: smallLabel.frame.size.width + 5 + smallScoreLabel.intrinsicContentSize.width, height: max(smallLabel.frame.size.height, smallScoreLabel.intrinsicContentSize.height)))
-        
-        smallHeaderTitle.axis = .horizontal
-        smallHeaderTitle.alignment = .center
-        smallHeaderTitle.distribution = .equalCentering
-        
-        smallHeaderTitle.addArrangedSubview(smallLabel)
-        smallHeaderTitle.addArrangedSubview(smallScoreLabel)
-        
-        blurView.contentView.addSubview(headerTitle)
-        blurView.contentView.addSubview(smallHeaderTitle)
-        blurView.contentView.addSubview(segmentedControl)
-        tableView.tableHeaderView!.addSubview(blurView)
-        
-        blurView.translatesAutoresizingMaskIntoConstraints = false
-        blurView.heightAnchor.constraint(equalTo: tableView.tableHeaderView!.heightAnchor, constant: -view.window!.windowScene!.statusBarManager!.statusBarFrame.height).isActive = true
-        blurView.bottomAnchor.constraint(equalTo: tableView.tableHeaderView!.bottomAnchor).isActive = true
-        
-        blurView.widthAnchor.constraint(equalTo: (tableView.tableHeaderView! as! StretchyTableHeaderView).containerView.widthAnchor).isActive = true
-        
-        largeLabel.translatesAutoresizingMaskIntoConstraints = false
-        smallLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        scoreLabel.leadingAnchor.constraint(equalTo: largeLabel.trailingAnchor, constant: 5).isActive = true
-        
-        largeLabel.centerYAnchor.constraint(equalTo: largeLabel.superview!.centerYAnchor).isActive = true
-        
-        smallHeaderTitle.translatesAutoresizingMaskIntoConstraints = false
-        smallHeaderTitle.insetsLayoutMarginsFromSafeArea = false
-        
-        smallScoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        smallScoreLabel.leadingAnchor.constraint(equalTo: smallLabel.trailingAnchor, constant: 5).isActive = true
-        smallScoreLabel.bottomAnchor.constraint(equalTo: smallLabel.bottomAnchor).isActive = true
-        
-        smallHeaderTitle.centerXAnchor.constraint(equalTo: blurView.contentView.centerXAnchor).isActive = true
-        smallHeaderTitle.heightAnchor.constraint(equalToConstant: max(smallLabel.frame.size.height, smallScoreLabel.intrinsicContentSize.height)).isActive = true
-        smallHeaderTitle.widthAnchor.constraint(equalToConstant: smallLabel.frame.size.width + 5 + smallScoreLabel.intrinsicContentSize.width).isActive = true
-        smallHeaderTitle.bottomAnchor.constraint(equalTo: segmentedControl.topAnchor, constant: -8).isActive = true
-        
-        headerTitle.translatesAutoresizingMaskIntoConstraints = false
-        
-        headerTitle.bottomAnchor.constraint(equalTo: segmentedControl.topAnchor, constant: -8).isActive = true
-        headerTitle.widthAnchor.constraint(equalToConstant: largeLabel.frame.size.width + 5 + scoreLabel.intrinsicContentSize.width).isActive = true
-        
-        headerTitle.heightAnchor.constraint(equalToConstant: max(largeLabel.frame.size.height, scoreLabel.intrinsicContentSize.height)).isActive = true
-        
-        largeLabel.leadingAnchor.constraint(equalTo: blurView.contentView.leadingAnchor, constant: 16).isActive = true
-        
-        originalBlurRect = blurView.frame
-        originalTitleRect = headerTitle.frame
-        
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.bottomAnchor.constraint(equalTo: blurView.contentView.bottomAnchor, constant: -8).isActive = true
-        
-        //segmentedControl.bottomAnchor.constraint(equalTo: (tableView.tableHeaderView! as! StretchyTableHeaderView).containerView.bottomAnchor, constant: -8).isActive = true
-        
-        //segmentedControl.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width - 32).isActive = true
-        segmentedControl.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        segmentedControl.leadingAnchor.constraint(equalTo: blurView.contentView.leadingAnchor, constant: 16).isActive = true
-        segmentedControl.trailingAnchor.constraint(equalTo: blurView.contentView.trailingAnchor, constant: -16).isActive = true
-        
-        if let v = tableView.tableHeaderView as? StretchyTableHeaderView {
-            v.segControl = segmentedControl
-        }
-        
-        headerTitle.updateConstraints()
-        
-        scrollViewDidScroll(tableView)
-    }*/
-    
+    // Add the special title subviews at the top of the screen and set up the constraints.
     func addTitle() {
         blurView = navigationController?.navigationBar.visualEffectView?.copyView()
         
@@ -610,68 +457,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         scrollViewDidScroll(tableView)
     }
     
-    /*override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        //self.navigationController?.setNavigationBarHidden(true, animated: false)
-        
-        if !didFinishLoading {
-            tableView.isHidden = true
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                DispatchQueue.global(qos: .userInitiated).sync {
-                    self.getContent(contentType: .rants) { result in
-                        DispatchQueue.main.async {
-                            self.loadingIndicator.stopAnimating()
-                            
-                            self.didFinishLoading = true
-                            self.profileData = result!.profile
-                            self.tableView.isHidden = false
-                            self.viewDidLoad()
-                            
-                            self.rantTypeContent.rantFeed = result!.profile.content.content.rants
-                            
-                            for i in self.rantTypeContent.rantFeed {
-                                if let attachedImage = i.attached_image {
-                                    if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent).relativePath) {
-                                        self.rantContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent), size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
-                                    } else {
-                                        self.rantContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
-                                    }
-                                } else {
-                                    self.rantContentImages.append(nil)
-                                }
-                            }
-                            
-                            self.tableView.reloadData()
-                            
-                            self.tableView.addInfiniteScroll { tableView -> Void in
-                                DispatchQueue.global(qos: .userInitiated).sync {
-                                    if self.canLoadMore() {
-                                        self.performFetch(contentType: self.currentContentType) {
-                                            DispatchQueue.main.async {
-                                                tableView.finishInfiniteScroll()
-                                            }
-                                        }
-                                    } else {
-                                        DispatchQueue.main.async {
-                                            tableView.finishInfiniteScroll()
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            if let _ = tableView.tableHeaderView {
-                scrollViewDidScroll(tableView)
-                tableView.reloadData()
-            }
-        }
-    }*/
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -712,22 +497,11 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func getContent(contentType: ProfileContentTypes, completion: @escaping ((ProfileResponse?) -> Void)) {
-        /*do {
-            let response = try APIRequest().getProfileFromID(self.userID, userContentType: contentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { result in completion(result) })
-            //completion(response)
-        } catch {
-            completion(nil)
-        }*/
-        
         APIRequest().getProfileFromID(self.userID, userContentType: contentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { result in completion(result) })
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        //navigationController?.setNavigationBarHidden(true, animated: false)
         let targetHeight: CGFloat = 21
-        
-        //let thresholdHeight: CGFloat = 502 - self.navigationController!.navigationBar.frame.maxY - 120
         
         var thresholdHeight = 502 - navigationController!.navigationBar.frame.maxY - 41 - 2 * 40
         
@@ -738,25 +512,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         if offset > 1 {offset = 1}
         
         if offset < 0 { offset = 0 }
-        
-        /*transitionCoordinator?.animate(alongsideTransition: { context in
-            self.navigationController?.navigationBar.backgroundView?.alpha = sqrt(offset)
-            
-            if let profileData = self.profileData {
-                self.navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hex: profileData.avatar.b)!, percent: Double(sqrt(offset)))
-                //self.navigationItem.backBarButtonItem?.tintColor = blend(from: .white, to: UIColor(hex: profileData.avatar.b)!, percent: Double(sqrt(offset)))
-            } else {
-                self.navigationController?.navigationBar.tintColor = .white
-                //self.navigationItem.backBarButtonItem?.tintColor = .white
-            }
-            
-            //self.navigationController?.navigationBar.tintColor = blend(from: .systemBlue, to: blend(from: .white, to: UIColor(), percent: <#T##Double#>), percent: <#T##Double#>)
-        }, completion: { context in
-            /*if context.isCancelled {
-                self.navigationController?.navigationBar.backgroundView?.alpha = 1
-                self.navigationController?.navigationBar.tintColor = .systemBlue
-            }*/
-        })*/
         
         print("RUNNING VIEWWILLAPPEAR")
         
@@ -776,11 +531,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     self.navigationItem.titleView!.isHidden = false
                 }
             }, completion: { context in
-                /*if context.isCancelled {
-                    extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
-                    self.navigationController?.navigationBar.tintColor = .systemBlue
-                }*/
-                
                 if context.isCancelled && self.navigationController?.topViewController != self {
                     self.navigationController?.navigationBar.tintColor = .systemBlue
                 }
@@ -793,22 +543,14 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 
                 if let profileData = self.profileData {
                     self.navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hex: profileData.avatar.b)!, percent: Double(sqrt(offset)))
-                    //self.navigationItem.backBarButtonItem?.tintColor = blend(from: .white, to: UIColor(hex: profileData.avatar.b)!, percent: Double(sqrt(offset)))
                 } else {
                     self.navigationController?.navigationBar.tintColor = .white
-                    //self.navigationItem.backBarButtonItem?.tintColor = .white
                 }
                 
                 if self.navigationItem.titleView != nil {
                     self.navigationItem.titleView!.isHidden = false
                 }
-                //self.navigationController?.navigationBar.tintColor = blend(from: .systemBlue, to: blend(from: .white, to: UIColor(), percent: <#T##Double#>), percent: <#T##Double#>)
-            }, completion: { context in
-                /*if context.isCancelled {
-                    self.navigationController?.navigationBar.backgroundView?.alpha = 1
-                    self.navigationController?.navigationBar.tintColor = .systemBlue
-                }*/
-            })
+            }, completion: nil)
         }
         
         super.viewWillAppear(animated)
@@ -842,30 +584,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         if offset > 1 {offset = 1}
         
         if offset < 0 { offset = 0 }
-        
-        //navigationController?.setNavigationBarHidden(false, animated: false)
-        
-        /*transitionCoordinator?.animate(alongsideTransition: { context in
-            if self.navigationItem.titleView!.alpha == 0 {
-                self.navigationItem.titleView = nil
-            }
-            
-            self.navigationController?.navigationBar.backgroundView?.alpha = 1
-            self.navigationController?.navigationBar.tintColor = .systemBlue
-            //self.navigationItem.backBarButtonItem?.tintColor = .systemBlue
-        }, completion: { context in
-            if context.isCancelled {
-                //let bruh = offset
-                self.navigationItem.titleView = previousTitleView
-                self.navigationController?.navigationBar.backgroundView?.alpha = previousBackgroundAlpha
-                self.navigationController?.navigationBar.tintColor = previousTintColor
-                
-                //self.scrollViewDidScroll(self.tableView)
-                
-                
-                //self.navigationItem.backBarButtonItem?.tintColor = previousTintColor
-            }
-        })*/
         
         if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
             
@@ -927,10 +645,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             })
         }
         
-        //scrollViewDidScroll(tableView)
-        
-        //navigationController?.navigationBar.tintColor = .systemBlue
-        //navigationController?.navigationBar.backgroundView?.alpha = 1
         super.viewWillDisappear(animated)
     }
     
@@ -982,27 +696,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        /*if (segmentedControl == nil) || segmentedControl!.selectedSegmentIndex == 0 || segmentedControl!.selectedSegmentIndex == 1 || segmentedControl!.selectedSegmentIndex == 3  {
-            return rantTypeContent.rantFeed.count
-        } else {
-            return commentTypeContent.commentTypeContent.count
-        }*/
-        
-        /*if let segmentedControl = self.segmentedControl {
-            switch currentContentType {
-            case <#pattern#>:
-                <#code#>
-            default:
-                <#code#>
-            }
-        } else {
-            if let profileData = self.profileData {
-                return profileData.content.counts.rants
-            } else {
-                return 0
-            }
-        }*/
-        
         switch currentContentType {
         case .rants:
             return profileData?.content.counts.rants ?? 0
@@ -1026,16 +719,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             print("PREFETCHING!")
             performFetch(contentType: currentContentType, {
                 DispatchQueue.main.async {
-                    //let indexPathsToReload = Array(Set(self.tableView.indexPathsForVisibleRows ?? []).intersection(indexPaths))
-                    
-                    /*if !indexPathsToReload.isEmpty {
-                        self.tableView.reloadRows(at: indexPathsToReload, with: .automatic)
-                    } else {
-                        self.tableView.reloadData()
-                    }*/
-                    
-                    //self.tableView.reloadRows(at: self.tableView.indexPathsForVisibleRows ?? [], with: .automatic)
-                    
                     self.tableView.reloadData()
                 }
             })
@@ -1128,24 +811,11 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 } else {
                     for i in self.commentTypeContent.commentTypeContent[start..<end] {
                         if let attachedImage = i.attached_image {
-                            //let completionSemaphore = DispatchSemaphore(value: 0)
-                        
-                            //var image = UIImage()
-                        
-                            /*URLSession.shared.dataTask(with: URL(string: attachedImage.url!)!) { data, _, _ in
-                                image = UIImage(data: data!)!
-                            
-                                completionSemaphore.signal()
-                            }.resume()
-                        
-                            completionSemaphore.wait()*/
-                        
                             if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent).relativePath) {
                                 self.commentContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent), size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
                             } else {
                                 self.commentContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
                             }
-                            //self.commentContentImages.
                         } else {
                             self.commentContentImages.append(nil)
                         }
@@ -1220,14 +890,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    /*func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        
-        cell.textLabel?.text = "\(indexPath.row)"
-        
-        return cell
-    }*/
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard blurView != nil else { return }
@@ -1250,11 +912,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
         
-        //performSegue(withIdentifier: "rantInFeed", sender: RantViewController())
-        
         if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite || currentContentType == .viewed {
-            //var segue = UIStoryboardSegue(identifier: "rantInFeed", source: self, destination: RantViewController())
-            
             performSegue(withIdentifier: "rantInFeed", sender: tableView.cellForRow(at: indexPath))
         } else {
             performSegue(withIdentifier: "commentInFeed", sender: tableView.cellForRow(at: indexPath))
@@ -1275,8 +933,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             withUnsafeMutablePointer(to: &rantTypeContent.rantFeed[indexPath.row], { pointer in
                 rantViewController.rantInFeed = pointer
             })
-            
-            //rantViewController.rantInFeed = $rantTypeContent.rantFeed[indexPath.row]
             
             rantViewController.supplementalRantImage = rantContentImages[indexPath.row]
             rantViewController.loadCompletionHandler = nil
