@@ -446,6 +446,7 @@
 				59040164257627A3002B062A /* Resources */,
 				2ACCDF485ED975C01E78EEC6 /* [CP] Embed Pods Frameworks */,
 				59039ECA25DE484800584667 /* Embed App Extensions */,
+				59B8CCD4263E8083007213A4 /* Increment Build Number */,
 			);
 			buildRules = (
 			);
@@ -564,6 +565,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AltRant/Pods-AltRant-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		59B8CCD4263E8083007213A4 /* Increment Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Increment Build Number";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
 		EFBFA567C38906DD82D102AE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

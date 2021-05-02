@@ -167,6 +167,18 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         return notifications.count// - indexPathsToInsert.count
     }
     
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { actions -> UIMenu in
+            let action = UIAction(title: "Test Action", image: UIImage(systemName: "scribble")) { action in
+                print("bruh")
+            }
+            
+            return UIMenu(title: "Menu", image: nil, identifier: nil, options: [], children: [action])
+        }
+        
+        return configuration
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if notifications[indexPath.row].type == .rantUpvote {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RantUpvoteCell", for: indexPath) as! RantUpvoteCell
