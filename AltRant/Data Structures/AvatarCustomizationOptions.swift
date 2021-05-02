@@ -33,7 +33,9 @@ struct AvatarCustomizationImage: Decodable {
         
         let completionSemaphore = DispatchSemaphore(value: 0)
         
-        URLSession.shared.dataTask(with: request) { data, _, _ in
+        let session = URLSession(configuration: .default)
+        
+        session.dataTask(with: request) { data, _, _ in
             temporaryImage = UIImage(data: data!)!
             
             completionSemaphore.signal()
@@ -49,7 +51,7 @@ struct AvatarCustomizationImage: Decodable {
         
         request.httpMethod = "GET"
         
-        URLSession.shared.dataTask(with: request) { data, _, _ in
+        session.dataTask(with: request) { data, _, _ in
             temporaryImage = UIImage(data: data!)!
             
             completionSemaphore.signal()

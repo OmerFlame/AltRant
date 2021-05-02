@@ -969,19 +969,17 @@ class APIRequest {
         return success
     }
     
-    func getAvatarCustomizationOptions(option: String, subOption: String?, currentImageURL: String, shouldGetPossibleOptions: Bool) -> AvatarCustomizationResults? {
+    func getAvatarCustomizationOptions(option: String, subOption: String?, currentImageURL: String, shouldGetPossibleOptions: Bool, completionHandler: ((AvatarCustomizationResults?) -> Void)?) {
         if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
             logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
         }
         
-        let resourceURL = URL(string: "https://devrant.com/api/devrant/avatars/build?option=\(option)&image_id=\(currentImageURL)&features=\(shouldGetPossibleOptions ? String(1) : String(0))\(subOption != nil ? "&sub_option=\(subOption!)" : "")&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        let resourceURL = URL(string: "https://devrant.com/api/devrant/avatars/build?app=3&option=\(option)&image_id=\(currentImageURL)&features=\(shouldGetPossibleOptions ? String(1) : String(0))\(subOption != nil ? "&sub_option=\(subOption!)" : "")&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         
         var request = URLRequest(url: resourceURL)
         
         request.httpMethod = "GET"
         request.addValue("x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        
-        let completionSemaphore = DispatchSemaphore(value: 0)
         
         var results: AvatarCustomizationResults? = nil
         
@@ -990,11 +988,8 @@ class APIRequest {
             
             results = try? decoder.decode(AvatarCustomizationResults.self, from: data!)
             
-            completionSemaphore.signal()
+            completionHandler?(results)
         }.resume()
-        
-        completionSemaphore.wait()
-        return results
     }
     
     private func createBody(parameters: [String: String],

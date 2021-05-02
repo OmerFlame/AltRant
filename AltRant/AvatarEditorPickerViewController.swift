@@ -20,6 +20,7 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     @IBOutlet weak var secondPreviewView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pickerContainerView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var pickerView: UIPickerView!
     
@@ -28,6 +29,8 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     
     public var portraitSize: CGSize = .zero
     public var landscapeFrame: CGRect = .zero
+    
+    var selectedIndexPath: IndexPath!
     
     var testImage = UIImage(named: "testheader")!
     
@@ -56,6 +59,18 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
         pickerView.centerYAnchor.constraint(equalTo: pickerContainerView.centerYAnchor).isActive = true
     }
     
+    func updateOptions(options: [AvatarCustomizationOption]) {
+        categories = options
+        
+        pickerView.reloadAllComponents()
+    }
+    
+    func updateImages(images: [AvatarCustomizationResult]) {
+        preferences = images
+        
+        collectionView.reloadData()
+    }
+    
 
     /*
     // MARK: - Navigation
@@ -76,25 +91,27 @@ extension AvatarEditorPickerViewController: UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        //return categories.count
+        return categories.count
         
-        5
+        //5
     }
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        70
+        150
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        return "bruh \(row)"
+        //return "bruh \(row)"
+        
+        return categories[row].label
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: pickerContainerView.frame.width / 2, height: 56))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: pickerContainerView.frame.width / 2, height: 136))
         
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        label.text = "bruh \(row)"
+        label.text = categories[row].label
         label.textAlignment = .center
         
         label.font = UIFont.systemFont(ofSize: 23.50, weight: .regular)
@@ -116,26 +133,30 @@ extension AvatarEditorPickerViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //preferences.count
+        preferences.count
         
-        25
+        //25
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreferenceCell", for: indexPath) as! PreferenceCell
         
-        //cell.configure(image: preferences[indexPath.row].image, isAlreadySelected: preferences[indexPath.row].isSelected ?? false)
+        cell.configure(image: preferences[indexPath.row].image, isAlreadySelected: preferences[indexPath.row].isSelected ?? false)
+        
+        if preferences[indexPath.row].isSelected ?? false {
+            selectedIndexPath = indexPath
+        }
         
         //cell.configure(image: <#T##AvatarCustomizationImage#>, isAlreadySelected: <#T##Bool#>)
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 112, height: 112), false, CGFloat(testImage.size.height / 112))
-        testImage.draw(in: CGRect(origin: .zero, size: CGSize(width: 112, height: 112)))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        //UIGraphicsBeginImageContextWithOptions(CGSize(width: 112, height: 112), false, CGFloat(testImage.size.height / 112))
+        //testImage.draw(in: CGRect(origin: .zero, size: CGSize(width: 112, height: 112)))
+        //let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        //UIGraphicsEndImageContext()
         
-        cell.imageView.image = newImage
+        //cell.imageView.image = newImage
         
-        cell.shouldBeSelected = false
+        //cell.shouldBeSelected = false
         
         return cell
     }
@@ -143,9 +164,15 @@ extension AvatarEditorPickerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //print("THIS RUNS")
         
-        (collectionView.cellForItem(at: indexPath) as! PreferenceCell).shouldBeSelected.toggle()
+        guard indexPath != selectedIndexPath else {
+            return
+        }
         
+        (collectionView.cellForItem(at: selectedIndexPath) as! PreferenceCell).shouldBeSelected = false
         
+        selectedIndexPath = indexPath
+        
+        (collectionView.cellForItem(at: selectedIndexPath) as! PreferenceCell).shouldBeSelected = true
     }
 }
 

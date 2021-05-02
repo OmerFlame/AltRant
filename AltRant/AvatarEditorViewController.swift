@@ -10,36 +10,33 @@ import FloatingPanel
 
 class AvatarEditorViewController: UIViewController, FloatingPanelControllerDelegate {
     //private var originalPullUpControllerViewSize: CGSize = .zero
+    @IBOutlet weak var currentAvatarImageView: UIImageView!
     var fpc: FloatingPanelController!
+    
+    var customizationResults: AvatarCustomizationResults!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         addPullUpController()
+        
+        // TODO: - Ask for the current image while initializing the class, don't get it manually
+        APIRequest().getProfileFromID(UserDefaults.standard.integer(forKey: "DRUserID"), userContentType: .rants, skip: 0, completionHandler: { result in
+            APIRequest().getAvatarCustomizationOptions(option: "g", subOption: nil, currentImageURL: result!.profile.avatar.i!, shouldGetPossibleOptions: true, completionHandler: { customizationResults in
+                self.customizationResults = customizationResults
+                
+                if let options = self.customizationResults.options {
+                    DispatchQueue.main.async {
+                        
+                        self.currentAvatarImageView.image = self.customizationResults.avatars.first(where: { ($0.isSelected ?? false) })?.image.fullImage
+                        (self.fpc.contentViewController as! AvatarEditorPickerViewController).updateOptions(options: options)
+                        (self.fpc.contentViewController as! AvatarEditorPickerViewController).updateImages(images: self.customizationResults.avatars)
+                    }
+                }
+            })
+        })
     }
-    
-    /*private func makePickerControllerIfNeeded() -> AvatarEditorPickerViewController {
-        let currentPullUpController = children.filter({ $0 is AvatarEditorPickerViewController }).first as? AvatarEditorPickerViewController
-        
-        let pullUpController: AvatarEditorPickerViewController = currentPullUpController ?? UIStoryboard(name: "AvatarEditorViewController", bundle: nil).instantiateViewController(identifier: "AvatarPicker") as! AvatarEditorPickerViewController
-        
-        //pullUpController.initialState = .expanded
-        
-        if originalPullUpControllerViewSize == .zero {
-            originalPullUpControllerViewSize = pullUpController.view.bounds.size
-        }
-        
-        return pullUpController
-    }*/
-    
-    /*private func addPullUpController() {
-        let pullUpController = makePickerControllerIfNeeded()
-        
-        _ = pullUpController.view
-        
-        addPullUpController(pullUpController, initialStickyPointOffset: pullUpController.initialPointOffset, animated: false)
-    }*/
     
     func addPullUpController() {
         fpc = FloatingPanelController()
@@ -53,8 +50,6 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
         fpc.delegate = self
         
         fpc.layout = CustomFloatingPanelLayout()
-        
-        //fpc.track(scrollView: contentVC.collectionView)
         
         fpc.addPanel(toParent: self)
     }

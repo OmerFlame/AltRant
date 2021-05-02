@@ -31,7 +31,6 @@
 		590FBD2F2631BBAA001DDA9B /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2A2631BBAA001DDA9B /* Appfile */; };
 		590FBD312631BBAA001DDA9B /* Pluginfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2C2631BBAA001DDA9B /* Pluginfile */; };
 		590FBD322631BBAA001DDA9B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2D2631BBAA001DDA9B /* README.md */; };
-		590FBD332631BBAA001DDA9B /* report.xml in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2E2631BBAA001DDA9B /* report.xml */; };
 		590FBD372631BFF4001DDA9B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD362631BFF3001DDA9B /* .gitignore */; };
 		5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921F2C12598E53900540CF5 /* MoreTableViewController.swift */; };
 		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
@@ -146,7 +145,6 @@
 		590FBD2A2631BBAA001DDA9B /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
 		590FBD2C2631BBAA001DDA9B /* Pluginfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pluginfile; sourceTree = "<group>"; };
 		590FBD2D2631BBAA001DDA9B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		590FBD2E2631BBAA001DDA9B /* report.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = report.xml; sourceTree = "<group>"; };
 		590FBD362631BFF3001DDA9B /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		591A752D257F518F001E1FC2 /* AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltRant.entitlements; sourceTree = "<group>"; };
 		5921F2C12598E53900540CF5 /* MoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewController.swift; sourceTree = "<group>"; };
@@ -345,7 +343,6 @@
 				590FBD2A2631BBAA001DDA9B /* Appfile */,
 				590FBD2C2631BBAA001DDA9B /* Pluginfile */,
 				590FBD2D2631BBAA001DDA9B /* README.md */,
-				590FBD2E2631BBAA001DDA9B /* report.xml */,
 			);
 			path = fastlane;
 			sourceTree = "<group>";
@@ -533,7 +530,6 @@
 				59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */,
 				590FBD2F2631BBAA001DDA9B /* Appfile in Resources */,
 				59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */,
-				590FBD332631BBAA001DDA9B /* report.xml in Resources */,
 				590FBD312631BBAA001DDA9B /* Pluginfile in Resources */,
 				590FBD372631BFF4001DDA9B /* .gitignore in Resources */,
 				59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */,

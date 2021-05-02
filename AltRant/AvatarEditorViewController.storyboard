@@ -32,6 +32,9 @@
                             <constraint firstItem="sCw-wU-Cz1" firstAttribute="top" secondItem="8kh-61-F3F" secondAttribute="top" id="xvY-zx-kGb"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="currentAvatarImageView" destination="sCw-wU-Cz1" id="cZi-lp-qzR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nzq-1k-4Ij" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -172,6 +175,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="414" height="194"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="9K3-Sd-odF" id="0my-bf-vQf"/>
                         <outlet property="categoryContainerView" destination="7ov-VU-fkn" id="Q1O-KW-JsW"/>
                         <outlet property="collectionView" destination="cdm-2d-269" id="Z3p-dA-rlS"/>
                         <outlet property="pickerContainerView" destination="T1d-QX-uLZ" id="2nk-vj-GeU"/>
