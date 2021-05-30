@@ -177,11 +177,13 @@ code_sign_if_enabled() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ADNavigationBarExtension/ADNavigationBarExtension.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ADUtils/ADUtils.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/BadgeControl/BadgeControl.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ContextLabel/ContextLabel.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ADNavigationBarExtension/ADNavigationBarExtension.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ADUtils/ADUtils.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/BadgeControl/BadgeControl.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ContextLabel/ContextLabel.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

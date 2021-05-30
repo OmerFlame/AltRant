@@ -58,6 +58,7 @@
 		5990652A257668E90058C1D7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906529257668E90058C1D7 /* APIRequest.swift */; };
 		5990652D257668FD0058C1D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990652C257668FD0058C1D7 /* User.swift */; };
 		59A1B8CC259DD766007DE862 /* NotificationBannerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 59A1B8CB259DD766007DE862 /* NotificationBannerSwift */; };
+		59A96EB3265AABBF0040B854 /* UIAlertController+CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A96EB2265AABBF0040B854 /* UIAlertController+CustomView.swift */; };
 		59A9E69925CFCA3500DC6065 /* SecondaryRantInFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */; };
 		59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */; };
 		59AD346125ADB1C6004D5DD6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AD346025ADB1C6004D5DD6 /* Cache.swift */; };
@@ -175,6 +176,7 @@
 		59906526257660AF0058C1D7 /* ColorFromHexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFromHexString.swift; sourceTree = "<group>"; };
 		59906529257668E90058C1D7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		5990652C257668FD0058C1D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		59A96EB2265AABBF0040B854 /* UIAlertController+CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+CustomView.swift"; sourceTree = "<group>"; };
 		59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryRantInFeed.swift; sourceTree = "<group>"; };
 		59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondaryRantInFeedCell.xib; sourceTree = "<group>"; };
 		59AD346025ADB1C6004D5DD6 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */,
 				59039EB125DE3EC800584667 /* UserDefaults+group.swift */,
 				59C2EFF225E26D4700BBCDAB /* UIViewController+.swift */,
+				59A96EB2265AABBF0040B854 /* UIAlertController+CustomView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				5990651F25765FE10058C1D7 /* RantInFeed.swift in Sources */,
 				5990652125765FE10058C1D7 /* File.swift in Sources */,
 				59D253562593334400BEA35A /* Double+truncate.swift in Sources */,
+				59A96EB3265AABBF0040B854 /* UIAlertController+CustomView.swift in Sources */,
 				5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */,
 				59E6716A2576BD74007EEB28 /* RoundedImageView.swift in Sources */,
 				5990652425765FE10058C1D7 /* RantFeed.swift in Sources */,

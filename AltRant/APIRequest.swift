@@ -969,12 +969,12 @@ class APIRequest {
         return success
     }
     
-    func getAvatarCustomizationOptions(option: String, subOption: String?, currentImageURL: String, shouldGetPossibleOptions: Bool, completionHandler: ((AvatarCustomizationResults?) -> Void)?) {
+    func getAvatarCustomizationOptions(option: String, subOption: Int?, currentImageURL: String, shouldGetPossibleOptions: Bool, completionHandler: ((AvatarCustomizationResults?) -> Void)?) {
         if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
             logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
         }
         
-        let resourceURL = URL(string: "https://devrant.com/api/devrant/avatars/build?app=3&option=\(option)&image_id=\(currentImageURL)&features=\(shouldGetPossibleOptions ? String(1) : String(0))\(subOption != nil ? "&sub_option=\(subOption!)" : "")&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        let resourceURL = URL(string: "https://devrant.com/api/devrant/avatars/build?app=3&option=\(option)&image_id=\(currentImageURL)&features=\(shouldGetPossibleOptions ? String(1) : String(0))\(subOption != nil ? "&sub_option=\(String(subOption!))" : "")&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
         
         var request = URLRequest(url: resourceURL)
         
@@ -991,6 +991,32 @@ class APIRequest {
             completionHandler?(results)
         }.resume()
     }
+	
+	func confirmAvatarCustomization(fullImageURL: String, completionHandler: ((Bool) -> Void)?) {
+		if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
+			logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
+		}
+		
+		let resourceURL = URL(string: "https://devrant.com/api/users/me/avatar")!
+		var request = URLRequest(url: resourceURL)
+		
+		request.httpMethod = "POST"
+		request.httpBody = "token_id=\(String(UserDefaults.standard.integer(forKey: "DRTokenID")))&app=3&image_id=\(fullImageURL)&user_id=\(String(UserDefaults.standard.integer(forKey: "DRUserID")))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)".data(using: .utf8)
+		
+		request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+		
+		URLSession.shared.dataTask(with: request) { data, response, error in
+			enum CodingKeys: String, CodingKey {
+				case success
+			}
+			
+			let jsonObject = try! JSONSerialization.jsonObject(with: data!, options: [])
+			
+			if let jObject = jsonObject as? [String: Bool] {
+				completionHandler?(jObject["success"] ?? false)
+			}
+		}.resume()
+	}
     
     private func createBody(parameters: [String: String],
                     boundary: String,

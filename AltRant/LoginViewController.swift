@@ -136,6 +136,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     
                     (self.viewControllerThatPresented as! HomeFeedTableViewController).viewDidLoad()
                     (self.viewControllerThatPresented as! HomeFeedTableViewController).tableView.reloadData()
+					
+					
                     
                     self.navigationController!.dismiss(animated: true, completion: nil)
                 }

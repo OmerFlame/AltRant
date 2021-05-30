@@ -7,8 +7,29 @@
 
 import UIKit
 import Haptica
+import BadgeControl
 
-class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelegate {
+protocol AvatarEditorPickerViewControllerDelegate {
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectCategory category: AvatarCustomizationOption)
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResult)
+	func showInsufficientPointsAlert(imageToShow: UIImage, requiredAmount: Int)
+}
+
+extension AvatarEditorPickerViewControllerDelegate {
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectCategory category: AvatarCustomizationOption) {
+        
+    }
+    
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResult) {
+        
+    }
+	
+	func testAlert(imageToShow: UIImage) {
+		
+	}
+}
+
+class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate {
     @IBOutlet weak var visualEffectView: UIVisualEffectView!
     @IBOutlet weak var categoryContainerView: UIView!
     @IBOutlet weak var categorySeparatorView: UIView! {
@@ -20,12 +41,16 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     @IBOutlet weak var secondPreviewView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pickerContainerView: UIView!
+    @IBOutlet weak var disablerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+	@IBOutlet weak var categoryPickerButton: UIButton!
+	
+    //var pickerView: UIPickerView!
+	
+	var popoverPickerController: UITableViewController!
     
-    var pickerView: UIPickerView!
-    
-    private var categories = [AvatarCustomizationOption]()
-    private var preferences = [AvatarCustomizationResult]()
+    var categories = [AvatarCustomizationOption]()
+    var preferences = [AvatarCustomizationResult]()
     
     public var portraitSize: CGSize = .zero
     public var landscapeFrame: CGRect = .zero
@@ -34,14 +59,23 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     
     var testImage = UIImage(named: "testheader")!
     
+    var delegate: AvatarEditorPickerViewControllerDelegate?
+	
+	var currentSelectedCategoryRow: Int!
+	
+	var userPoints: Int!
+    
     private var safeAreaAdditionalOffset: CGFloat {
         hasSafeArea ? 20 : 0
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		collectionView.delegate = self
+		collectionView.dataSource = self
         
-        pickerView = UIPickerView()
+        /*pickerView = UIPickerView()
         
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         pickerView.transform = CGAffineTransform(rotationAngle: -90 * (.pi / 180))
@@ -57,20 +91,66 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
         
         pickerView.centerXAnchor.constraint(equalTo: pickerContainerView.centerXAnchor).isActive = true
         pickerView.centerYAnchor.constraint(equalTo: pickerContainerView.centerYAnchor).isActive = true
+		
+		currentSelectedCategoryRow = pickerView.selectedRow(inComponent: 0)*/
     }
     
     func updateOptions(options: [AvatarCustomizationOption]) {
         categories = options
         
-        pickerView.reloadAllComponents()
+        //pickerView.reloadAllComponents()
     }
     
     func updateImages(images: [AvatarCustomizationResult]) {
+		var indexPathsToUpdate = (0 ..< preferences.count).map { IndexPath(row: $0, section: 0) }
+		
+		preferences = []
+		
+		collectionView.performBatchUpdates({
+			self.collectionView.deleteItems(at: indexPathsToUpdate)
+			
+			self.preferences = images
+			indexPathsToUpdate = (0 ..< images.count).map { IndexPath(row: $0, section: 0) }
+			
+			self.collectionView.insertItems(at: indexPathsToUpdate)
+		}, completion: nil)
+		
         preferences = images
         
         collectionView.reloadData()
     }
     
+	@IBAction func openPopoverPicker() {
+		popoverPickerController = UITableViewController()
+		
+		popoverPickerController.tableView.backgroundColor = .clear
+		let blurEffect = UIBlurEffect(style: .regular)
+		let blurEffectView = UIVisualEffectView(effect: blurEffect)
+		
+		popoverPickerController.tableView.backgroundView = blurEffectView
+		popoverPickerController.tableView.separatorEffect = UIVibrancyEffect(blurEffect: blurEffect)
+		
+		popoverPickerController.modalPresentationStyle = .popover
+		popoverPickerController.tableView.dataSource = self
+		popoverPickerController.tableView.delegate = self
+		
+		popoverPickerController.preferredContentSize = CGSize(width: 300, height: 220)
+		
+		let ppc = popoverPickerController.popoverPresentationController
+		ppc?.backgroundColor = .clear
+		ppc?.permittedArrowDirections = .down
+		ppc?.delegate = self
+		//ppc?.sourceRect = navigationItem.titleView!.bounds
+		ppc?.sourceRect = categoryPickerButton.bounds
+		//ppc?.sourceView = navigationItem.titleView!
+		ppc?.sourceView = categoryPickerButton
+		
+		present(popoverPickerController, animated: true, completion: nil)
+	}
+	
+	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+		return .none
+	}
 
     /*
     // MARK: - Navigation
@@ -83,7 +163,7 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     */
 }
 
-extension AvatarEditorPickerViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+/*extension AvatarEditorPickerViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     // TODO: - Actually implement the picker data source
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -123,6 +203,45 @@ extension AvatarEditorPickerViewController: UIPickerViewDataSource, UIPickerView
         
         return view
     }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+		guard row != currentSelectedCategoryRow else { return }
+		
+		currentSelectedCategoryRow = row
+		
+        delegate?.editorPickerView(self, didSelectCategory: categories[row])
+		
+		activityIndicator.stopAnimating()
+    }
+}*/
+
+extension AvatarEditorPickerViewController: UITableViewDelegate, UITableViewDataSource {
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = UITableViewCell()
+		
+		cell.textLabel?.text = categories[indexPath.row].label
+		
+		return cell
+	}
+	
+	func numberOfSections(in tableView: UITableView) -> Int {
+		1
+	}
+	
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		categories.count
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard indexPath.row != currentSelectedCategoryRow else { popoverPickerController.dismiss(animated: true, completion: nil); return }
+		
+		currentSelectedCategoryRow = indexPath.row
+		
+		categoryPickerButton.setTitle(categories[indexPath.row].label, for: .normal)
+		categoryPickerButton.sizeToFit()
+		
+		popoverPickerController.dismiss(animated: true, completion: { self.delegate?.editorPickerView(self, didSelectCategory: self.categories[indexPath.row]) })
+	}
 }
 
 extension AvatarEditorPickerViewController: UICollectionViewDataSource {
@@ -141,11 +260,20 @@ extension AvatarEditorPickerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreferenceCell", for: indexPath) as! PreferenceCell
         
-        cell.configure(image: preferences[indexPath.row].image, isAlreadySelected: preferences[indexPath.row].isSelected ?? false)
+		print("CONFIGURING ROW \(indexPath.row)")
+		print("SHOULD SHOW LOCK: \(preferences[indexPath.row].requiredPoints ?? 0 <= userPoints ? false : true)")
+		
+		/*cell.dimView.layer.removeAllAnimations()
+		for sublayer in cell.dimView.layer.sublayers ?? [] {
+			sublayer.removeFromSuperlayer()
+		}*/
+		
+		
+		cell.configure(image: preferences[indexPath.row].image, isAlreadySelected: indexPath == selectedIndexPath ? true : false, shouldShowLock: preferences[indexPath.row].requiredPoints ?? 0 <= userPoints ? false : true, badgeValue: preferences[indexPath.row].requiredPoints ?? 0 <= userPoints ? preferences[indexPath.row].requiredPoints : nil)
         
-        if preferences[indexPath.row].isSelected ?? false {
+        /*if preferences[indexPath.row].isSelected ?? false {
             selectedIndexPath = indexPath
-        }
+        }*/
         
         //cell.configure(image: <#T##AvatarCustomizationImage#>, isAlreadySelected: <#T##Bool#>)
         
@@ -167,12 +295,89 @@ extension AvatarEditorPickerViewController: UICollectionViewDataSource {
         guard indexPath != selectedIndexPath else {
             return
         }
+		
+		guard preferences[indexPath.row].requiredPoints ?? 0 <= userPoints else {
+			//delegate?.showInsufficientPointsAlert(imageToShow: (collectionView.cellForItem(at: indexPath) as! PreferenceCell).imageView.image!, requiredAmount: preferences[indexPath.row].requiredPoints ?? 0)
+			let insufficientPointsPopupController = UIViewController()
+			
+			insufficientPointsPopupController.view.backgroundColor = .clear
+			let blurEffect = UIBlurEffect(style: .regular)
+			let blurEffectView = UIVisualEffectView(effect: blurEffect)
+			
+			insufficientPointsPopupController.view.addSubview(blurEffectView)
+			
+			blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+			blurEffectView.leadingAnchor.constraint(equalTo: insufficientPointsPopupController.view.leadingAnchor).isActive = true
+			blurEffectView.trailingAnchor.constraint(equalTo: insufficientPointsPopupController.view.trailingAnchor).isActive = true
+			blurEffectView.topAnchor.constraint(equalTo: insufficientPointsPopupController.view.topAnchor).isActive = true
+			blurEffectView.bottomAnchor.constraint(equalTo: insufficientPointsPopupController.view.bottomAnchor).isActive = true
+			
+			//popoverPickerController.tableView.separatorEffect = UIVibrancyEffect(blurEffect: blurEffect)
+			
+			insufficientPointsPopupController.modalPresentationStyle = .popover
+			//popoverPickerController.tableView.dataSource = self
+			//popoverPickerController.tableView.delegate = self
+			
+			let label = UILabel()
+			label.font = .preferredFont(forTextStyle: .caption1)
+			label.text = "You need \(preferences[indexPath.row].requiredPoints ?? 0)++\'s in order to equip this."
+			label.numberOfLines = 0
+			label.lineBreakMode = .byWordWrapping
+			label.textAlignment = .center
+			
+			let imageView = UIImageView()
+			imageView.image = (collectionView.cellForItem(at: indexPath) as! PreferenceCell).imageView.image!
+			imageView.clipsToBounds = true
+			imageView.layer.cornerRadius = 15
+			
+			label.translatesAutoresizingMaskIntoConstraints = false
+			imageView.translatesAutoresizingMaskIntoConstraints = false
+			
+			blurEffectView.contentView.addSubview(imageView)
+			blurEffectView.contentView.addSubview(label)
+			
+			imageView.topAnchor.constraint(equalTo: blurEffectView.contentView.topAnchor, constant: 10).isActive = true
+			imageView.widthAnchor.constraint(equalToConstant: 128).isActive = true
+			imageView.heightAnchor.constraint(equalToConstant: 128).isActive = true
+			imageView.leadingAnchor.constraint(equalTo: blurEffectView.contentView.leadingAnchor, constant: 10).isActive = true
+			imageView.trailingAnchor.constraint(equalTo: blurEffectView.contentView.trailingAnchor, constant: -10).isActive = true
+			
+			let labelSize = label.text!.boundingRect(with: CGSize(width: 128, height: CGFloat.greatestFiniteMagnitude), options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)], context: nil).size
+			
+			label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
+			
+			#if targetEnvironment(macCatalyst)
+			label.bottomAnchor.constraint(equalTo: blurEffectView.contentView.bottomAnchor, constant: -10).isActive = true
+			insufficientPointsPopupController.preferredContentSize = CGSize(width: 148, height: 158 + labelSize.height)
+			#else
+			label.bottomAnchor.constraint(equalTo: blurEffectView.contentView.bottomAnchor, constant: -20).isActive = true
+			insufficientPointsPopupController.preferredContentSize = CGSize(width: 148, height: 187)
+			#endif
+			label.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
+			label.trailingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
+			label.heightAnchor.constraint(equalToConstant: labelSize.height).isActive = true
+			
+			let ppc = insufficientPointsPopupController.popoverPresentationController
+			ppc?.backgroundColor = .clear
+			ppc?.permittedArrowDirections = .down
+			ppc?.delegate = self
+			//ppc?.sourceRect = navigationItem.titleView!.bounds
+			ppc?.sourceRect = collectionView.cellForItem(at: indexPath)!.bounds
+			//ppc?.sourceView = navigationItem.titleView!
+			ppc?.sourceView = collectionView.cellForItem(at: indexPath)!
+			
+			present(insufficientPointsPopupController, animated: true, completion: nil)
+			
+			return
+		}
         
-        (collectionView.cellForItem(at: selectedIndexPath) as! PreferenceCell).shouldBeSelected = false
+		(collectionView.cellForItem(at: selectedIndexPath) as? PreferenceCell)?.shouldBeSelected = false
         
         selectedIndexPath = indexPath
         
         (collectionView.cellForItem(at: selectedIndexPath) as! PreferenceCell).shouldBeSelected = true
+        
+        delegate?.editorPickerView(self, didSelectOption: preferences[selectedIndexPath.row])
     }
 }
 
@@ -180,6 +385,10 @@ class PreferenceCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var dimView: UIView!
     @IBOutlet weak var doneAnimationView: DoneAnimationView!
+	
+	private var upperRightBadge: BadgeController!
+	
+	var lockLayer: CALayer!
     
     var shouldBeSelected = false {
         didSet {
@@ -191,22 +400,89 @@ class PreferenceCell: UICollectionViewCell {
                 self.dimView.alpha = self.shouldBeSelected ? 0.6 : 0
             }, completion: { _ in
                 if self.shouldBeSelected {
-                    self.doneAnimationView.animate()
+					self.doneAnimationView.isHidden = false
+                    self.doneAnimationView.show()
                     Haptic.notification(.success).generate()
-                }
+				} else {
+					self.doneAnimationView.isHidden = true
+				}
             })
         }
     }
+	
+	override func prepareForReuse() {
+		//print("REUSING")
+		
+		if dimView != nil {
+			super.prepareForReuse()
+			//print("REUSING")
+			
+			if lockLayer != nil {
+				//print("remove the layer now!")
+				lockLayer.removeFromSuperlayer()
+			}
+		}
+	}
     
     var preference: AvatarCustomizationImage!
     
-    func configure(image: AvatarCustomizationImage, isAlreadySelected: Bool) {
+	func configure(image: AvatarCustomizationImage, isAlreadySelected: Bool, shouldShowLock: Bool = false, badgeValue: Int? = nil) {
         preference = image
-        imageView.image = preference.midCompleteImage
-        
+		imageView.backgroundColor = UIColor(hex: preference.backgroundColor)!
+		
+		preference.getMidCompleteImage(completion: { image in
+			DispatchQueue.main.async {
+				self.imageView.image = image
+			}
+		})
+		
+		//imageView.image = preference.midCompleteImage
+		
         if isAlreadySelected {
-            shouldBeSelected = true
-        }
+            dimView.alpha = 0.6
+			doneAnimationView.isHidden = false
+            doneAnimationView.show(animated: false)
+		} else if shouldShowLock {
+			if let badgeValue = badgeValue {
+				let badgeBackgroundColor = UIColor(hex: "37495b")!
+				
+				upperRightBadge = BadgeController(for: self, in: .upperRightCorner, badgeBackgroundColor: badgeBackgroundColor, badgeTextColor: .white, borderWidth: 0, badgeHeight: 20)
+				upperRightBadge.addOrReplaceCurrent(with: "\(badgeValue)", animated: false)
+			}
+			
+			doneAnimationView.isHidden = true
+			dimView.alpha = 0.6
+			
+			let symbolConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 51), scale: .default)
+			
+			lockLayer = CALayer()
+			lockLayer.frame = CGRect(x: 28, y: 28, width: 54.5, height: 56)
+			lockLayer.contentsGravity = .resize
+			lockLayer.magnificationFilter = .linear
+			
+			let maskImage = UIGraphicsImageRenderer(size: CGSize(width: 56, height: 56)).image { (context) in UIImage(systemName: "lock.fill")!.draw(in: CGRect(origin: .zero, size: CGSize(width: 56, height: 56))) }.cgImage
+			let width = maskImage!.width
+			let height = maskImage!.height
+			let bounds = CGRect(x: 0, y: 0, width: width, height: height)
+			
+			let colorSpace = CGColorSpaceCreateDeviceRGB()
+			let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+			let bitmapContext = CGContext(data: nil, width: Int(width), height: Int(height), bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
+			
+			bitmapContext?.clip(to: bounds, mask: maskImage!)
+			bitmapContext?.setFillColor(UIColor.white.cgColor)
+			bitmapContext?.fill(bounds)
+			
+			let finalImage = bitmapContext?.makeImage()
+			
+			lockLayer.contents = finalImage
+			
+			dimView.layer.addSublayer(lockLayer)
+		} else {
+			doneAnimationView.removeAnimatableLayer()
+			doneAnimationView.isHidden = true
+			dimView.alpha = 0
+		}
     }
     
     @objc func didTapPreference() {
@@ -226,7 +502,7 @@ class PreferenceCell: UICollectionViewCell {
 class DoneAnimationView: UIView {
     private var animatableLayer: CAShapeLayer!
     
-    public func animate() {
+    public func show(animated: Bool = true) {
         let length = frame.width
         let animatablePath = UIBezierPath()
         animatablePath.move(to: CGPoint(x: length * 0.196, y: length * 0.527))
@@ -240,22 +516,65 @@ class DoneAnimationView: UIView {
         animatableLayer.lineWidth = 9
         animatableLayer.lineCap = .round
         animatableLayer.lineJoin = .round
-        animatableLayer.strokeEnd = 0
+        animatableLayer.strokeEnd = animated ? 0 : 1
         layer.addSublayer(animatableLayer)
-            
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.duration = 0.3
-        animation.fromValue = 0
-        animation.toValue = 1
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        animatableLayer.strokeEnd = 1
-        animatableLayer.add(animation, forKey: "animation")
+        
+        if animated {
+            let animation = CABasicAnimation(keyPath: "strokeEnd")
+            animation.duration = 0.3
+            animation.fromValue = 0
+            animation.toValue = 1
+            animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            animatableLayer.strokeEnd = 1
+            animatableLayer.add(animation, forKey: "animation")
+        }
     }
+	
+	public func showLock() {
+		/*let imageLayer = CALayer()
+		imageLayer.frame = bounds
+		imageLayer.contents = UIImage(systemName: "lock.circle")!.cgImage
+		
+		//layer.addSublayer(imageLayer)
+		layer.mask = imageLayer*/
+		
+		
+		//maskView.layer.addSublayer(gradientMask)
+		
+		/*
+		let maskView = UIImageView(frame: CGRect(origin: .zero, size: frame.size))
+		maskView.image = UIImage(systemName: "lock.circle")!
+		maskView.tintColor = .white
+		
+		mask = maskView
+		*/
+		
+		let animatablePath = UIBezierPath()
+		
+		let animatableLayer = CAShapeLayer()
+		animatableLayer.path = animatablePath.cgPath
+		animatableLayer.fillColor = UIColor(patternImage: UIImage(systemName: "lock.fill")!.withTintColor(.clear, renderingMode: .alwaysTemplate)).cgColor
+		animatableLayer.strokeColor = UIColor.white.cgColor //tintColor?.cgColor
+		animatableLayer.lineWidth = 9
+		animatableLayer.lineCap = .round
+		animatableLayer.lineJoin = .round
+		animatableLayer.strokeEnd = 1
+		layer.addSublayer(animatableLayer)
+	}
     
     public func removeAnimatableLayer() {
-        animatableLayer?.removeFromSuperlayer()
+		// if animatableLayer != nil { print("REMOVING ANIMATABLE LAYER") }
+		
+		//print("LAYERS: \(layer.sublayers ?? [])")
+		
+        //animatableLayer?.removeFromSuperlayer()
+		
+		layer.removeAllAnimations()
+		layer.sublayers = []
     }
 }
+
+
 
 class CenterViewFlowLayout: UICollectionViewFlowLayout {
     override var collectionViewContentSize: CGSize {
