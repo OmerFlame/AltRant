@@ -2046,8 +2046,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "485"
-            endingLineNumber = "485"
+            startingLineNumber = "486"
+            endingLineNumber = "486"
             landmarkName = "getProfileFromID(_:userContentType:skip:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2733,8 +2733,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "addPullUpController()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2781,8 +2781,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "AvatarEditorViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -2892,8 +2892,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
             landmarkName = "getRantFeed(skip:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3036,8 +3036,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "AvatarEditorViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -3084,8 +3084,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "AvatarEditorViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -3100,8 +3100,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "recursiveViewSearch(parentView:typeName:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3116,8 +3116,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "299"
+            endingLineNumber = "299"
             landmarkName = "recursiveViewSearch(parentView:typeName:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3132,8 +3132,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
             landmarkName = "recursiveViewSearch(parentView:typeName:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3148,8 +3148,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "AvatarEditorViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -3164,8 +3164,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "AvatarEditorViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -3180,8 +3180,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "editorPickerView(_:didSelectCategory:)"
             landmarkType = "7">
             <Locations>
@@ -3243,8 +3243,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "editorPickerView(_:didSelectOption:)"
             landmarkType = "7">
             <Locations>
@@ -3387,8 +3387,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "editorPickerView(_:didSelectCategory:)"
             landmarkType = "7">
             <Locations>
@@ -3444,22 +3444,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "170C3D30-92D5-4E89-B802-213B0438D46E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/APIRequest.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1016"
-            endingLineNumber = "1016"
-            landmarkName = "confirmAvatarCustomization(fullImageURL:completionHandler:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9BAC1447-455A-47ED-9DEC-772261C64760"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -3483,8 +3467,8 @@
             filePath = "AltRant/AvatarEditorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "save()"
             landmarkType = "7">
             <Locations>
@@ -3531,8 +3515,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1000"
-            endingLineNumber = "1000"
+            startingLineNumber = "1001"
+            endingLineNumber = "1001"
             landmarkName = "confirmAvatarCustomization(fullImageURL:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3547,10 +3531,10 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1008"
-            endingLineNumber = "1008"
-            landmarkName = "confirmAvatarCustomization(fullImageURL:completionHandler:)"
-            landmarkType = "7">
+            startingLineNumber = "1009"
+            endingLineNumber = "1009"
+            landmarkName = "CodingKeys"
+            landmarkType = "13">
             <Locations>
                <Location
                   uuid = "BFA5BFB2-52A4-47F2-BA5C-2481763DA43A - 986b73d2162f7015"
@@ -3595,8 +3579,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1013"
-            endingLineNumber = "1013"
+            startingLineNumber = "1014"
+            endingLineNumber = "1014"
             landmarkName = "confirmAvatarCustomization(fullImageURL:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>

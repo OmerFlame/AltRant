@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+import Sentry
 
 enum APIError: Error {
     case responseError
@@ -992,7 +993,7 @@ class APIRequest {
         }.resume()
     }
 	
-	func confirmAvatarCustomization(fullImageURL: String, completionHandler: ((Bool) -> Void)?) {
+	func confirmAvatarCustomization(fullImageURL: String, completionHandler: ((Bool, String?) -> Void)?) {
 		if Double(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")) - Double(Date().timeIntervalSince1970) <= 0 {
 			logIn(username: UserDefaults.standard.string(forKey: "DRUsername")!, password: UserDefaults.standard.string(forKey: "DRPassword")!)
 		}
@@ -1012,8 +1013,17 @@ class APIRequest {
 			
 			let jsonObject = try! JSONSerialization.jsonObject(with: data!, options: [])
 			
-			if let jObject = jsonObject as? [String: Bool] {
-				completionHandler?(jObject["success"] ?? false)
+			if let jObject = jsonObject as? [String: Any] {
+				if let success = jObject["success"] as? Bool {
+					if success {
+						completionHandler?(success, nil)
+					} else {
+						completionHandler?(success, jObject["error"] as! String)
+					}
+				}
+			} else {
+				SentrySDK.capture(message: "Response decode error")
+				completionHandler?(false, "Response decode error.")
 			}
 		}.resume()
 	}

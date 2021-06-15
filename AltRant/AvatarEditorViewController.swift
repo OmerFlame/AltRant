@@ -74,18 +74,36 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
     }
 	
 	@objc func save() {
-		navigationItem.rightBarButtonItems![0].isEnabled = false
-		navigationItem.backBarButtonItem?.isEnabled = false
+		navigationController?.navigationBar.isUserInteractionEnabled = false
+		navigationController?.navigationBar.tintColor = .systemGray
+		
+		navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 		
 		let imageName = (fpc.contentViewController as! AvatarEditorPickerViewController).preferences[(fpc.contentViewController as! AvatarEditorPickerViewController).selectedIndexPath.row].image.fullImageName
 		
-		APIRequest().confirmAvatarCustomization(fullImageURL: "https://avatars.devrant.com/\(imageName)", completionHandler: { success in
+		APIRequest().confirmAvatarCustomization(fullImageURL: "https://avatars.devrant.com/\(imageName)", completionHandler: { success, error in
 			if success {
 				DispatchQueue.main.async {
+					self.navigationController?.navigationBar.isUserInteractionEnabled = true
+					self.navigationController?.navigationBar.tintColor = .systemBlue
+					
 					self.navigationController!.popViewController(animated: true)
 				}
 			} else {
-				print("fuck it doesn't work")
+				let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+				
+				let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { _ in self.save() })
+				let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+				
+				alert.addAction(retryAction)
+				alert.addAction(cancelAction)
+				
+				DispatchQueue.main.async {
+					self.navigationController?.navigationBar.isUserInteractionEnabled = true
+					self.navigationController?.navigationBar.tintColor = .systemBlue
+					
+					self.present(alert, animated: true, completion: nil)
+				}
 			}
 		})
 	}
@@ -308,7 +326,7 @@ class CustomFloatingPanelLayout: FloatingPanelLayout {
     
     var anchors: [FloatingPanelState : FloatingPanelLayoutAnchoring] {
         return [
-            .full: FloatingPanelLayoutAnchor(absoluteInset: 194, edge: .bottom, referenceGuide: .safeArea),
+            .full: FloatingPanelLayoutAnchor(absoluteInset: 171, edge: .bottom, referenceGuide: .safeArea),
             .tip: FloatingPanelLayoutAnchor(absoluteInset: 43, edge: .bottom, referenceGuide: .safeArea)
         ]
     }
