@@ -20,14 +20,14 @@ platform :ios do
     gym(
       workspace: 'AltRant.xcworkspace',
       scheme: 'AltRant',
-      clean: true,
+      clean: false,
       export_method: 'development',
       catalyst_platform: 'macos',
       skip_archive: true,
     )
 
     sentry_upload_dsym(
-      auth_token: 'YOUR_SENTRY_AUTH_TOKEN',
+      auth_token: '914d357930ae44b7a48e68406fe5b3372779ce79273d458aaa2c437bcc61f057',
       org_slug: 'crack-software',
       project_slug: 'crack-software',
       dsym_path: 'AltRant.app.dSYM.zip',

@@ -136,12 +136,18 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         // We repeat the same procedures above on more private Apple views that are inside the blur view for the segmented control.
-        blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
-        blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.alpha = sqrt(offset)
+        
+        //blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
+        //blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.alpha = sqrt(offset)
+        
+        blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.alpha = offset == 1 ? 1 : 0
         
         // We set the opacity of the header view's container view and image container, as well as the header title to the square root of 1 subtracted by the offset we calculated earlier.
-        (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.alpha = sqrt(1 - offset)
-        (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.alpha = sqrt(1 - offset)
+        //(tableView.tableHeaderView as! StretchyTableHeaderView).containerView.alpha = sqrt(1 - offset)
+        //(tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.alpha = sqrt(1 - offset)
+        (tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView.alpha = 1
+        (tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.alpha = sqrt(offset)
+        
         headerTitle.alpha = sqrt(1 - offset)
         
         // Completely hide the header title if the opacity is 0, and don't hide it if not.
@@ -150,6 +156,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             headerTitle.isHidden = false
         }
+        
+        blurView.alpha = 1
         
         // If the effect hasn't started yet, add a gesture recognizer to the profile image. If it's started, remove the gesture recognizer.
         if 1 - offset == 1 {
@@ -217,6 +225,12 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         addTitle()
+        
+        //(tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView = navigationController?.navigationBar.visualEffectView
+        
+        (tableView.tableHeaderView as! StretchyTableHeaderView).setMaskBlurView(newBlurView: navigationController?.navigationBar.visualEffectView?.copyView())
+        
+        scrollViewDidScroll(tableView)
         
         tableView.scrollIndicatorInsets.top = tableView.tableHeaderView!.frame.maxY - (navigationController!.navigationBar.frame.size.height + navigationController!.navigationBar.frame.minY)
         
@@ -454,7 +468,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         headerTitle.updateConstraints()
         
-        scrollViewDidScroll(tableView)
+        //scrollViewDidScroll(tableView)
     }
     
     override func viewDidAppear(_ animated: Bool) {

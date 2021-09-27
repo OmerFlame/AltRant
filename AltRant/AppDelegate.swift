@@ -22,7 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             options.debug = true
         }
         
+        UIApplication.shared.registerForRemoteNotifications()
+        
         return true
+        
+        
     }
 
     // MARK: UISceneSession Lifecycle
@@ -61,6 +65,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             
             completionHandler()
         }
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken: Data) {
+        print(didRegisterForRemoteNotificationsWithDeviceToken.hexDescription)
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
@@ -106,4 +114,10 @@ extension UIView {
             }
             return view
         }
+}
+
+extension Data {
+    var hexDescription: String {
+        return reduce("") {$0 + String(format: "%02x", $1)}
+    }
 }

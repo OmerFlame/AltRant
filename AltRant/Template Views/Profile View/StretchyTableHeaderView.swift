@@ -99,6 +99,8 @@ class StretchyTableHeaderView: UIView {
         
     var largeLabel: UILabel!
     var tinyLabel: UILabel!
+    
+    var maskBlurView: UIVisualEffectView!
         
     var containerViewHeight = NSLayoutConstraint()
         
@@ -137,6 +139,22 @@ class StretchyTableHeaderView: UIView {
             
         return self
     }
+    
+    func setMaskBlurView(newBlurView: UIVisualEffectView!) {
+        if maskBlurView != nil {
+            maskBlurView.removeFromSuperview()
+        }
+        
+        maskBlurView = newBlurView
+        
+        imageContainer.addSubview(maskBlurView)
+        
+        maskBlurView.translatesAutoresizingMaskIntoConstraints = false
+        maskBlurView.leadingAnchor.constraint(equalTo: imageContainer.leadingAnchor).isActive = true
+        maskBlurView.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor).isActive = true
+        maskBlurView.topAnchor.constraint(equalTo: imageContainer.topAnchor).isActive = true
+        maskBlurView.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor).isActive = true
+    }
         
     func createViews() {
             
@@ -157,6 +175,9 @@ class StretchyTableHeaderView: UIView {
         //imageView.backgroundColor = UIColor(hex: "d55161")
         imageView.contentMode = .scaleAspectFill
         imageContainer.addSubview(imageView)
+        
+        //maskBlurView = UINavigationBar().visualEffectView?.copyView()
+        //imageContainer.addSubview(maskBlurView)
     }
         
     func setViewConstraints() {
@@ -194,6 +215,12 @@ class StretchyTableHeaderView: UIView {
         imageViewTop.isActive = true
         
         imageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor).isActive = true
+        
+        //maskBlurView.translatesAutoresizingMaskIntoConstraints = false
+        //maskBlurView.leadingAnchor.constraint(equalTo: imageContainer.leadingAnchor).isActive = true
+        //maskBlurView.trailingAnchor.constraint(equalTo: imageContainer.trailingAnchor).isActive = true
+        //maskBlurView.topAnchor.constraint(equalTo: imageContainer.topAnchor).isActive = true
+        //maskBlurView.bottomAnchor.constraint(equalTo: imageContainer.bottomAnchor).isActive = true
     }
         
     func scrollViewDidScroll(scrollView: UIScrollView) {

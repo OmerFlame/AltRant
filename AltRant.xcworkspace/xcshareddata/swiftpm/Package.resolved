@@ -29,24 +29,6 @@
         }
       },
       {
-        "package": "MarqueeLabel",
-        "repositoryURL": "https://github.com/cbpowell/MarqueeLabel",
-        "state": {
-          "branch": null,
-          "revision": "d92fe1583dbf43fa3b70229a49fa7da6b36750d4",
-          "version": "4.0.5"
-        }
-      },
-      {
-        "package": "NotificationBannerSwift",
-        "repositoryURL": "https://github.com/Daltron/NotificationBanner",
-        "state": {
-          "branch": null,
-          "revision": "2ce5c49d8ee4865f01a3ce3bbe078664c78c7a3c",
-          "version": "3.0.6"
-        }
-      },
-      {
         "package": "PullUpController",
         "repositoryURL": "https://github.com/MarioIannotta/PullUpController",
         "state": {
@@ -60,17 +42,8 @@
         "repositoryURL": "https://github.com/getsentry/sentry-cocoa",
         "state": {
           "branch": null,
-          "revision": "946cbb6daccedf40d652a12138f78e96f660e1ad",
-          "version": "6.2.1"
-        }
-      },
-      {
-        "package": "SnapKit",
-        "repositoryURL": "https://github.com/SnapKit/SnapKit",
-        "state": {
-          "branch": null,
-          "revision": "d458564516e5676af9c70b4f4b2a9178294f1bc6",
-          "version": "5.0.1"
+          "revision": "eb09cfa3ebcb96ca4a7f8f8de6c5d7aff4c48c0e",
+          "version": "7.2.7"
         }
       }
     ]
