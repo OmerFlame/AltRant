@@ -43,6 +43,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         
         print("SCENE ACTIVE")
+        
+        //NotificationCenter.default.post(name: "FixNavigationBar", object: nil)
+        //NotificationCenter.default.post(name: NSNotification.Name("FixNavigationBar"), object: nil)
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -57,6 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         
         print("SCENE IS IN FOREGROUND")
+        NotificationCenter.default.post(name: NSNotification.Name("FixNavigationBar"), object: nil)
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

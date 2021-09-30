@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,14 +13,16 @@
         <!--Rant-->
         <scene sceneID="pCk-fH-rvh">
             <objects>
-                <viewController storyboardIdentifier="RantViewController" title="Rant" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YEq-ap-G6c" customClass="RantViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RantViewController" title="Rant" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YEq-ap-G6c" customClass="RantViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jzS-eJ-qgR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bD6-gy-n6l">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bD6-gy-n6l">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="n9E-p9-sgl"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="lN2-jh-zia"/>
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="M7h-aK-ofA">
                                 <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
@@ -28,10 +31,10 @@
                         <viewLayoutGuide key="safeArea" id="F4g-GR-WyF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="F4g-GR-WyF" firstAttribute="bottom" secondItem="bD6-gy-n6l" secondAttribute="bottom" id="PEp-Wx-QaM"/>
+                            <constraint firstAttribute="bottom" secondItem="bD6-gy-n6l" secondAttribute="bottom" id="PEp-Wx-QaM"/>
                             <constraint firstItem="M7h-aK-ofA" firstAttribute="centerY" secondItem="jzS-eJ-qgR" secondAttribute="centerY" id="QBp-wb-cbd"/>
                             <constraint firstItem="bD6-gy-n6l" firstAttribute="leading" secondItem="jzS-eJ-qgR" secondAttribute="leading" id="RRn-hA-7Pq"/>
-                            <constraint firstItem="bD6-gy-n6l" firstAttribute="top" secondItem="F4g-GR-WyF" secondAttribute="top" id="XpE-tV-AEq"/>
+                            <constraint firstItem="bD6-gy-n6l" firstAttribute="top" secondItem="jzS-eJ-qgR" secondAttribute="top" id="XpE-tV-AEq"/>
                             <constraint firstAttribute="trailing" secondItem="bD6-gy-n6l" secondAttribute="trailing" id="pQa-rC-RoU"/>
                             <constraint firstItem="M7h-aK-ofA" firstAttribute="centerX" secondItem="jzS-eJ-qgR" secondAttribute="centerX" id="uYQ-C7-7YC"/>
                         </constraints>
@@ -45,7 +48,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="loadingIndicator" destination="M7h-aK-ofA" id="oWq-ig-AKL"/>
                         <outlet property="tableView" destination="bD6-gy-n6l" id="G8e-qe-AMJ"/>

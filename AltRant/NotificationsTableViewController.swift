@@ -7,6 +7,7 @@
 
 import UIKit
 import ADNavigationBarExtension
+import SPAlert
 
 class NotificationsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var segmentedControl: UISegmentedControl!
@@ -745,6 +746,14 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 self.tableView.beginUpdates()
                 self.tableView.deleteRows(at: oldIndexPaths, with: .automatic)
                 self.tableView.endUpdates()
+                
+                guard currentNotifications.count > 0 else {
+                    let alertView = SPAlertView(message: "No Notifications.")
+                    alertView.present(duration: 1.0)
+                    
+                    sender.isEnabled = true
+                    return
+                }
                 
                 self.notifications = currentNotifications
                 

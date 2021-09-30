@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -20,7 +21,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" verticalCompressionResistancePriority="1000" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantInFeedCellBRUH" rowHeight="310" id="GAl-E3-BRU" customClass="RantInFeedCell" customModule="AltRant" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24.5" width="414" height="310"/>
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="310"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GAl-E3-BRU" id="7Rk-Gd-Fwr">
                                     <rect key="frame" x="0.0" y="0.0" width="384.5" height="310"/>
@@ -156,7 +157,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInFeedCell" id="Bwn-Hx-Vsk" customClass="SecondaryRantInFeedCell" customModule="AltRant" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="334.5" width="414" height="279.5"/>
+                                <rect key="frame" x="0.0" y="354.5" width="414" height="279.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bwn-Hx-Vsk" id="nut-6w-0r6">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="279.5"/>
@@ -456,8 +457,8 @@
                         <sections>
                             <tableViewSection id="Ox5-j8-lsE">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="SLH-fI-WQk">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="60"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="SLH-fI-WQk">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SLH-fI-WQk" translatesAutoresizingMaskIntoConstraints="NO" id="ZXi-pm-mRC">
                                             <rect key="frame" x="0.0" y="0.0" width="384.5" height="60"/>
@@ -491,7 +492,7 @@
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="y3n-ft-yhx">
-                                        <rect key="frame" x="0.0" y="84.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="104.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="y3n-ft-yhx" id="QuA-dN-V7S">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -499,7 +500,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="09B-NZ-HdW">
-                                        <rect key="frame" x="0.0" y="128" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="148" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="09B-NZ-HdW" id="n7h-Uh-oSU">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -574,7 +575,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantUpvoteCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantUpvoteCell" id="MYW-6G-aVF" customClass="RantUpvoteCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="65.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MYW-6G-aVF" id="ule-Rk-pyy">
                                             <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
@@ -635,7 +636,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantCommentCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantCommentCell" id="oPd-jA-4ew" customClass="RantCommentCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="90" width="414" height="65.5"/>
+                                        <rect key="frame" x="0.0" y="110" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oPd-jA-4ew" id="qOG-Ii-T1H">
                                             <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
@@ -707,7 +708,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantCommentDiscussCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantCommentDiscussCell" id="Nyv-Os-niS" userLabel="RantCommentDiscussCell" customClass="RantCommentCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="155.5" width="414" height="65.5"/>
+                                        <rect key="frame" x="0.0" y="175.5" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nyv-Os-niS" id="OII-TE-6Jq">
                                             <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
@@ -779,7 +780,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantCommentMentionCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantCommentMentionCell" id="OlH-uQ-wFl" userLabel="RantCommentMentionCell" customClass="RantCommentCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="221" width="414" height="65.5"/>
+                                        <rect key="frame" x="0.0" y="241" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OlH-uQ-wFl" id="nWo-M9-TGz">
                                             <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
@@ -851,7 +852,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantCommentUpvoteCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantCommentUpvoteCell" id="Zhg-iz-9d9" userLabel="RantCommentUpvoteCell" customClass="RantUpvoteCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="286.5" width="414" height="65.5"/>
+                                        <rect key="frame" x="0.0" y="306.5" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zhg-iz-9d9" id="Es4-AO-Jdy">
                                             <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
@@ -912,7 +913,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="rantSubCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RantSubCell" id="Xak-F2-NFF" userLabel="RantSubCell" customClass="RantCommentCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="352" width="414" height="65.5"/>
+                                        <rect key="frame" x="0.0" y="372" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xak-F2-NFF" id="iBK-o4-fnC">
                                             <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
@@ -1079,7 +1080,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="4mZ-5q-o8C"/>
+        <segue reference="JqV-Fj-ku6"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="bell.fill" catalog="system" width="128" height="124"/>

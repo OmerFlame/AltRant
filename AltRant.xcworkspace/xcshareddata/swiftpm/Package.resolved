@@ -45,6 +45,15 @@
           "revision": "eb09cfa3ebcb96ca4a7f8f8de6c5d7aff4c48c0e",
           "version": "7.2.7"
         }
+      },
+      {
+        "package": "SPAlert",
+        "repositoryURL": "https://github.com/ivanvorobei/SPAlert",
+        "state": {
+          "branch": null,
+          "revision": "2a2d80bf65945108ace5f639d43473a2d1c059e6",
+          "version": "3.4.0"
+        }
       }
     ]
   },

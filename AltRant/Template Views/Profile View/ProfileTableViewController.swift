@@ -137,7 +137,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         // We repeat the same procedures above on more private Apple views that are inside the blur view for the segmented control.
         
-        //blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
+        blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
         //blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.alpha = sqrt(offset)
         
         blurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.alpha = offset == 1 ? 1 : 0
@@ -147,6 +147,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         //(tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.alpha = sqrt(1 - offset)
         (tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView.alpha = 1
         (tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.alpha = sqrt(offset)
+        (tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
         
         headerTitle.alpha = sqrt(1 - offset)
         
@@ -546,7 +547,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }, completion: { context in
                 if context.isCancelled && self.navigationController?.topViewController != self {
-                    self.navigationController?.navigationBar.tintColor = .systemBlue
+                    self.navigationController?.navigationBar.tintColor = UIButton().tintColor
                 }
             })
         } else {
@@ -610,7 +611,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
                 self.navigationController?.navigationBar.backgroundView?.alpha = 1
                 
-                self.navigationController?.navigationBar.tintColor = .systemBlue
+                self.navigationController?.navigationBar.tintColor = UIButton().tintColor
             }, completion: { context in
                 if context.isCancelled && self.navigationController?.topViewController == self {
                     
@@ -636,11 +637,12 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 
                 self.navigationController?.navigationBar.backgroundView?.alpha = 1
+                self.navigationController?.navigationBar.visualEffectView?.alpha = 1
                 self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
                 
-                self.navigationController?.navigationBar.tintColor = .systemBlue
+                self.navigationController?.navigationBar.tintColor = UIButton().tintColor
             }, completion: { context in
-                if context.isCancelled && self.navigationController?.topViewController == self {
+                if context.isCancelled {
                     
                     print("CANCELLED")
                     
@@ -648,13 +650,22 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     print("TO: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
                     self.navigationItem.titleView!.isHidden = false
                     
-                    print("PREVIOUS BACKGROUND ALPHA: \(previousBackgroundAlpha)")
-                    self.navigationController?.navigationBar.backgroundView?.alpha = previousBackgroundAlpha
+                    if self.navigationController?.topViewController == self {
                     
-                    self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = previousBackgroundAlpha
+                        print("PREVIOUS BACKGROUND ALPHA: \(previousBackgroundAlpha)")
+                        self.navigationController?.navigationBar.backgroundView?.alpha = previousBackgroundAlpha
                     
-                    self.navigationController?.navigationBar.tintColor = previousTintColor
-                    self.scrollViewDidScroll(self.tableView)
+                        self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = previousBackgroundAlpha
+                    
+                        self.navigationController?.navigationBar.tintColor = previousTintColor
+                        self.scrollViewDidScroll(self.tableView)
+                    } else {
+                        self.navigationController?.navigationBar.backgroundView?.alpha = 1
+                        self.navigationController?.navigationBar.visualEffectView?.alpha = 1
+                        self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
+                        
+                        self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+                    }
                 }
             })
         }

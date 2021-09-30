@@ -68,14 +68,39 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(fixNavigationBar), name: NSNotification.Name("FixNavigationBar"), object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        navigationController?.navigationBar.tintColor = .systemBlue
+        /*if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
+            print("RUNNING AS EXTENDED")
+            extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
+            self.navigationController?.navigationBar.backgroundView?.alpha = 1
+        } else {
+            print("RUNNING AS NORMAL")
+            navigationController?.navigationBar.backgroundView?.alpha = 1
+            navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
+        }*/
+        
+        //navigationController?.navigationBar.tintColor = UIButton().tintColor
         
         if didFinishLoading == false {
+            for constraint in self.tableView.constraints {
+                self.tableView.removeConstraint(constraint)
+            }
+            //self.edgesForExtendedLayout = []
+            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            
+            //self.tableView.contentInset = UIEdgeInsets(top: -self.view.safeAreaInsets.top, left: 0, bottom: -self.view.safeAreaInsets.bottom, right: 0)
+            
+            self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            
             self.loadingIndicator.startAnimating()
             
             /*DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -119,6 +144,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         DispatchQueue.main.async {
                             self.didFinishLoading = true
                             self.loadingIndicator.stopAnimating()
+                            //self.loadingIndicator.superview?.removeFromSuperview()
                             self.tableView.isHidden = false
                             
                             self.tableView.dataSource = self
@@ -136,6 +162,29 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
+            print("RUNNING AS EXTENDED")
+            extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
+            self.navigationController?.navigationBar.backgroundView?.alpha = 1
+        } else {
+            print("RUNNING AS NORMAL")
+            self.navigationController?.navigationBar.backgroundView?.alpha = 1
+            self.navigationController?.navigationBar.visualEffectView?.alpha = 1
+            self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
+        }
+        
+        self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("WILL APPEAR")
     }
     
     func reloadData(completion: ((UITableView?) -> Void)?) {
@@ -367,7 +416,20 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    @objc func fixNavigationBar() {
+        if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
+            print("RUNNING AS EXTENDED")
+            extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
+            self.navigationController?.navigationBar.backgroundView?.alpha = 1
+        } else {
+            print("RUNNING AS NORMAL")
+            navigationController?.navigationBar.backgroundView?.alpha = 1
+            navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
+        }
+        
+        self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+    }
 }
 
 extension RantViewController: ExtensibleNavigationBarInformationProvider {
