@@ -476,7 +476,9 @@ class APIRequest {
         request.httpMethod = "GET"
         request.addValue("application/x-www-form/urlencoded", forHTTPHeaderField: "Content-Type")
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let session = URLSession(configuration: .default)
+        
+        let task = session.dataTask(with: request) { data, response, error in
             if response != nil {
                 if let data = data, let body = String(data: data, encoding: .utf8) {
                     let decoder = JSONDecoder()
@@ -1027,6 +1029,33 @@ class APIRequest {
 			}
 		}.resume()
 	}
+    
+    public func getUserID(username: String, completionHandler: @escaping ((Int?) -> Void)) {
+        let resourceURL = URL(string: "https://devrant.com/api/get-user-id?app=3&username=\(username)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        var request = URLRequest(url: resourceURL)
+        
+        request.httpMethod = "GET"
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        let session = URLSession(configuration: .default)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                let jsonObject = try! JSONSerialization.jsonObject(with: data, options: [])
+                
+                if let jObject = jsonObject as? [String:Any] {
+                    if let success = jObject["success"] as? Bool {
+                        if success {
+                            completionHandler(jObject["user_id"] as? Int)
+                            return
+                        }
+                    }
+                }
+            } else {
+                completionHandler(nil)
+            }
+        }.resume()
+    }
     
     private func createBody(parameters: [String: String],
                     boundary: String,

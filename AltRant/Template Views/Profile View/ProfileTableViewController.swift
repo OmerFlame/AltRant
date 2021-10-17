@@ -19,7 +19,9 @@ class commentFeedData {
 class ProfileTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
     //@IBOutlet weak var headerView: StretchyTableHeaderView!
     var profileData: Profile?
-    var userID: Int
+    var shouldLoadFromUsername = false
+    var username: String?
+    var userID: Int?
     
     var originalBlurRect: CGRect!
     var originalTitleRect: CGRect!
@@ -59,7 +61,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     private var cellHeights = [IndexPath:CGFloat]()
     
-    init?(coder: NSCoder, userID: Int) {
+    init?(coder: NSCoder, userID: Int?) {
         self.userID = userID
         super.init(coder: coder)
     }
@@ -478,31 +480,63 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         if !didFinishLoading {
             tableView.isHidden = true
             
-            APIRequest().getProfileFromID(self.userID, userContentType: .rants, skip: 0, completionHandler: { response in
-                self.rantTypeContent.rantFeed = response!.profile.content.content.rants
-                
-                for i in self.rantTypeContent.rantFeed {
-                    if let attachedImage = i.attached_image {
-                        if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent).relativePath) {
-                            self.rantContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent), size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
-                        } else {
-                            self.rantContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
-                        }
-                    } else {
-                        self.rantContentImages.append(nil)
-                    }
-                }
-                
-                DispatchQueue.main.async {
-                    self.loadingIndicator.stopAnimating()
+            if shouldLoadFromUsername {
+                APIRequest().getUserID(username: self.username!, completionHandler: { userID in
+                    self.userID = userID!
                     
-                    self.didFinishLoading = true
-                    self.profileData = response!.profile
-                    self.tableView.isHidden = false
-                    self.viewDidLoad()
-                    self.tableView.reloadData()
-                }
-            })
+                    APIRequest().getProfileFromID(self.userID!, userContentType: .rants, skip: 0, completionHandler: { response in
+                        self.rantTypeContent.rantFeed = response!.profile.content.content.rants
+                        
+                        for i in self.rantTypeContent.rantFeed {
+                            if let attachedImage = i.attached_image {
+                                if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent).relativePath) {
+                                    self.rantContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent), size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
+                                } else {
+                                    self.rantContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
+                                }
+                            } else {
+                                self.rantContentImages.append(nil)
+                            }
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.loadingIndicator.stopAnimating()
+                            
+                            self.didFinishLoading = true
+                            self.profileData = response!.profile
+                            self.tableView.isHidden = false
+                            self.viewDidLoad()
+                            self.tableView.reloadData()
+                        }
+                    })
+                })
+            } else {
+                APIRequest().getProfileFromID(self.userID!, userContentType: .rants, skip: 0, completionHandler: { response in
+                    self.rantTypeContent.rantFeed = response!.profile.content.content.rants
+                    
+                    for i in self.rantTypeContent.rantFeed {
+                        if let attachedImage = i.attached_image {
+                            if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent).relativePath) {
+                                self.rantContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url!)!.lastPathComponent), size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
+                            } else {
+                                self.rantContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width!, height: attachedImage.height!)))
+                            }
+                        } else {
+                            self.rantContentImages.append(nil)
+                        }
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.loadingIndicator.stopAnimating()
+                        
+                        self.didFinishLoading = true
+                        self.profileData = response!.profile
+                        self.tableView.isHidden = false
+                        self.viewDidLoad()
+                        self.tableView.reloadData()
+                    }
+                })
+            }
         } else {
             if let _ = tableView.tableHeaderView {
                 scrollViewDidScroll(tableView)
@@ -512,7 +546,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func getContent(contentType: ProfileContentTypes, completion: @escaping ((ProfileResponse?) -> Void)) {
-        APIRequest().getProfileFromID(self.userID, userContentType: contentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { result in completion(result) })
+        APIRequest().getProfileFromID(self.userID!, userContentType: contentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { result in completion(result) })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -758,7 +792,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         isFetchAlreadyInProgress = true
         
-        APIRequest().getProfileFromID(self.userID, userContentType: currentContentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { response in
+        APIRequest().getProfileFromID(self.userID!, userContentType: currentContentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { response in
                 guard response != nil else {
                     DispatchQueue.main.async {
                         self.showAlertWithError("Failed to fetch user content.", retryHandler: { self.performFetch(contentType: contentType, completionHandler) })

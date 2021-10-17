@@ -10,11 +10,6 @@
 		59007D8F25C1703D0088EC33 /* ActiveLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 59007D8E25C1703D0088EC33 /* ActiveLabel */; };
 		59039EB225DE3EC800584667 /* UserDefaults+group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59039EB125DE3EC800584667 /* UserDefaults+group.swift */; };
 		59039EB525DE47D700584667 /* ios-76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = 59039EB425DE47D700584667 /* ios-76x76.png */; };
-		59039EBE25DE484800584667 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59039EBD25DE484800584667 /* ShareViewController.swift */; };
-		59039EC125DE484800584667 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59039EBF25DE484800584667 /* MainInterface.storyboard */; };
-		59039EC525DE484800584667 /* Open with AltRant.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 59039EBB25DE484800584667 /* Open with AltRant.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		59039ED425DE7F1500584667 /* UserDefaults+group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59039ED325DE7F1500584667 /* UserDefaults+group.swift */; };
-		59039EEA25DE901200584667 /* ExtensionAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59039EE925DE901200584667 /* ExtensionAssets.xcassets */; };
 		5904016A257627A3002B062A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59040169257627A3002B062A /* AppDelegate.swift */; };
 		5904016C257627A3002B062A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904016B257627A3002B062A /* SceneDelegate.swift */; };
 		5904016E257627A3002B062A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5904016D257627A3002B062A /* ViewController.swift */; };
@@ -40,6 +35,16 @@
 		59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59306E952578E68600F6AD08 /* RantViewController.storyboard */; };
 		593395A426E4B9A20022788C /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 593395A326E4B9A20022788C /* Sentry */; };
 		593B17B025D14C41001FAF6F /* StoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B17AF25D14C41001FAF6F /* StoriesViewController.swift */; };
+		594EDDDC2709BC9B0087F50B /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 594EDDDB2709BC9B0087F50B /* SafariWebExtensionHandler.swift */; };
+		594EDDDF2709BC9B0087F50B /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDDE2709BC9B0087F50B /* _locales */; };
+		594EDDE12709BC9C0087F50B /* images in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDE02709BC9C0087F50B /* images */; };
+		594EDDE32709BC9C0087F50B /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDE22709BC9C0087F50B /* manifest.json */; };
+		594EDDE52709BC9C0087F50B /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDE42709BC9C0087F50B /* background.js */; };
+		594EDDE72709BC9C0087F50B /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDE62709BC9C0087F50B /* content.js */; };
+		594EDDE92709BC9C0087F50B /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDE82709BC9C0087F50B /* popup.html */; };
+		594EDDEB2709BC9C0087F50B /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDEA2709BC9C0087F50B /* popup.css */; };
+		594EDDED2709BC9C0087F50B /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDEC2709BC9C0087F50B /* popup.js */; };
+		594EDDF12709BC9C0087F50B /* Open with AltRant.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 594EDDD92709BC9A0087F50B /* Open with AltRant.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5954C26525AD78D1008B70D2 /* ExpandingSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954C26425AD78D1008B70D2 /* ExpandingSegmentedView.swift */; };
 		5954C26825AD8E9B008B70D2 /* RantCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */; };
 		5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */; };
@@ -94,11 +99,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		59039EC325DE484800584667 /* PBXContainerItemProxy */ = {
+		594EDDEF2709BC9C0087F50B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5904015E257627A3002B062A /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 59039EBA25DE484800584667;
+			remoteGlobalIDString = 594EDDD82709BC9A0087F50B;
 			remoteInfo = "Open with AltRant";
 		};
 /* End PBXContainerItemProxy section */
@@ -110,7 +115,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				59039EC525DE484800584667 /* Open with AltRant.appex in Embed App Extensions */,
+				594EDDF12709BC9C0087F50B /* Open with AltRant.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,13 +126,6 @@
 		0041FA4FBD2B07EA6643FBBE /* Pods-AltRant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AltRant.debug.xcconfig"; path = "Target Support Files/Pods-AltRant/Pods-AltRant.debug.xcconfig"; sourceTree = "<group>"; };
 		59039EB125DE3EC800584667 /* UserDefaults+group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+group.swift"; sourceTree = "<group>"; };
 		59039EB425DE47D700584667 /* ios-76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios-76x76.png"; sourceTree = "<group>"; };
-		59039EBB25DE484800584667 /* Open with AltRant.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Open with AltRant.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		59039EBD25DE484800584667 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
-		59039EC025DE484800584667 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		59039EC225DE484800584667 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		59039EC625DE484800584667 /* Open with AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Open with AltRant.entitlements"; sourceTree = "<group>"; };
-		59039ED325DE7F1500584667 /* UserDefaults+group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+group.swift"; sourceTree = "<group>"; };
-		59039EE925DE901200584667 /* ExtensionAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ExtensionAssets.xcassets; sourceTree = "<group>"; };
 		59040166257627A3002B062A /* AltRant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AltRant.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59040169257627A3002B062A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5904016B257627A3002B062A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -157,6 +155,18 @@
 		592F7D2625A4486C005813FA /* RantUpvoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantUpvoteCell.swift; sourceTree = "<group>"; };
 		59306E952578E68600F6AD08 /* RantViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RantViewController.storyboard; sourceTree = "<group>"; };
 		593B17AF25D14C41001FAF6F /* StoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesViewController.swift; sourceTree = "<group>"; };
+		594EDDD92709BC9A0087F50B /* Open with AltRant.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Open with AltRant.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		594EDDDB2709BC9B0087F50B /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		594EDDDE2709BC9B0087F50B /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; path = _locales; sourceTree = "<group>"; };
+		594EDDE02709BC9C0087F50B /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		594EDDE22709BC9C0087F50B /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		594EDDE42709BC9C0087F50B /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = background.js; sourceTree = "<group>"; };
+		594EDDE62709BC9C0087F50B /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
+		594EDDE82709BC9C0087F50B /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = popup.html; sourceTree = "<group>"; };
+		594EDDEA2709BC9C0087F50B /* popup.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = popup.css; sourceTree = "<group>"; };
+		594EDDEC2709BC9C0087F50B /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = popup.js; sourceTree = "<group>"; };
+		594EDDEE2709BC9C0087F50B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		594EDDF22709BC9C0087F50B /* Open with AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Open with AltRant.entitlements"; sourceTree = "<group>"; };
 		594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ADNavigationBarExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5954C26425AD78D1008B70D2 /* ExpandingSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandingSegmentedView.swift; sourceTree = "<group>"; };
 		5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantCommentCell.swift; sourceTree = "<group>"; };
@@ -209,13 +219,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		59039EB825DE484800584667 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		59040163257627A3002B062A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -231,22 +234,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		594EDDD62709BC9A0087F50B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		59039EBC25DE484800584667 /* Open with AltRant */ = {
-			isa = PBXGroup;
-			children = (
-				59039EC625DE484800584667 /* Open with AltRant.entitlements */,
-				59039EBD25DE484800584667 /* ShareViewController.swift */,
-				59039EBF25DE484800584667 /* MainInterface.storyboard */,
-				59039EC225DE484800584667 /* Info.plist */,
-				59039ED325DE7F1500584667 /* UserDefaults+group.swift */,
-				59039EE925DE901200584667 /* ExtensionAssets.xcassets */,
-			);
-			path = "Open with AltRant";
-			sourceTree = "<group>";
-		};
 		5904015D257627A3002B062A = {
 			isa = PBXGroup;
 			children = (
@@ -254,7 +251,7 @@
 				590FBD292631BBA9001DDA9B /* fastlane */,
 				59039EB425DE47D700584667 /* ios-76x76.png */,
 				59040168257627A3002B062A /* AltRant */,
-				59039EBC25DE484800584667 /* Open with AltRant */,
+				594EDDDA2709BC9B0087F50B /* Open with AltRant */,
 				59040167257627A3002B062A /* Products */,
 				8E4192960C2659B5F29215A8 /* Pods */,
 				9BDBB6D9485395515B96ED21 /* Frameworks */,
@@ -265,7 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				59040166257627A3002B062A /* AltRant.app */,
-				59039EBB25DE484800584667 /* Open with AltRant.appex */,
+				594EDDD92709BC9A0087F50B /* Open with AltRant.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -371,6 +368,32 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		594EDDDA2709BC9B0087F50B /* Open with AltRant */ = {
+			isa = PBXGroup;
+			children = (
+				594EDDF22709BC9C0087F50B /* Open with AltRant.entitlements */,
+				594EDDDB2709BC9B0087F50B /* SafariWebExtensionHandler.swift */,
+				594EDDEE2709BC9C0087F50B /* Info.plist */,
+				594EDDDD2709BC9B0087F50B /* Resources */,
+			);
+			path = "Open with AltRant";
+			sourceTree = SOURCE_ROOT;
+		};
+		594EDDDD2709BC9B0087F50B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				594EDDDE2709BC9B0087F50B /* _locales */,
+				594EDDE02709BC9C0087F50B /* images */,
+				594EDDE22709BC9C0087F50B /* manifest.json */,
+				594EDDE42709BC9C0087F50B /* background.js */,
+				594EDDE62709BC9C0087F50B /* content.js */,
+				594EDDE82709BC9C0087F50B /* popup.html */,
+				594EDDEA2709BC9C0087F50B /* popup.css */,
+				594EDDEC2709BC9C0087F50B /* popup.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		59906508257643900058C1D7 /* TagListView */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,23 +442,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		59039EBA25DE484800584667 /* Open with AltRant */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 59039EC725DE484800584667 /* Build configuration list for PBXNativeTarget "Open with AltRant" */;
-			buildPhases = (
-				59039EB725DE484800584667 /* Sources */,
-				59039EB825DE484800584667 /* Frameworks */,
-				59039EB925DE484800584667 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Open with AltRant";
-			productName = "Open with AltRant";
-			productReference = 59039EBB25DE484800584667 /* Open with AltRant.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		59040165257627A3002B062A /* AltRant */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5904017A257627A5002B062A /* Build configuration list for PBXNativeTarget "AltRant" */;
@@ -451,7 +457,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				59039EC425DE484800584667 /* PBXTargetDependency */,
+				594EDDF02709BC9C0087F50B /* PBXTargetDependency */,
 			);
 			name = AltRant;
 			packageProductDependencies = (
@@ -466,6 +472,23 @@
 			productReference = 59040166257627A3002B062A /* AltRant.app */;
 			productType = "com.apple.product-type.application";
 		};
+		594EDDD82709BC9A0087F50B /* Open with AltRant */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 594EDDF32709BC9C0087F50B /* Build configuration list for PBXNativeTarget "Open with AltRant" */;
+			buildPhases = (
+				594EDDD52709BC9A0087F50B /* Sources */,
+				594EDDD62709BC9A0087F50B /* Frameworks */,
+				594EDDD72709BC9A0087F50B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Open with AltRant";
+			productName = "Open with AltRant";
+			productReference = 594EDDD92709BC9A0087F50B /* Open with AltRant.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -475,12 +498,12 @@
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
-					59039EBA25DE484800584667 = {
-						CreatedOnToolsVersion = 12.3;
-					};
 					59040165257627A3002B062A = {
 						CreatedOnToolsVersion = 12.2;
 						LastSwiftMigration = 1220;
+					};
+					594EDDD82709BC9A0087F50B = {
+						CreatedOnToolsVersion = 13.0;
 					};
 				};
 			};
@@ -506,21 +529,12 @@
 			projectRoot = "";
 			targets = (
 				59040165257627A3002B062A /* AltRant */,
-				59039EBA25DE484800584667 /* Open with AltRant */,
+				594EDDD82709BC9A0087F50B /* Open with AltRant */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		59039EB925DE484800584667 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				59039EEA25DE901200584667 /* ExtensionAssets.xcassets in Resources */,
-				59039EC125DE484800584667 /* MainInterface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		59040164257627A3002B062A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -542,6 +556,21 @@
 				59040171257627A3002B062A /* Main.storyboard in Resources */,
 				5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */,
 				5904018325762953002B062A /* RantInFeedCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		594EDDD72709BC9A0087F50B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				594EDDE52709BC9C0087F50B /* background.js in Resources */,
+				594EDDEB2709BC9C0087F50B /* popup.css in Resources */,
+				594EDDE92709BC9C0087F50B /* popup.html in Resources */,
+				594EDDE12709BC9C0087F50B /* images in Resources */,
+				594EDDE32709BC9C0087F50B /* manifest.json in Resources */,
+				594EDDDF2709BC9B0087F50B /* _locales in Resources */,
+				594EDDE72709BC9C0087F50B /* content.js in Resources */,
+				594EDDED2709BC9C0087F50B /* popup.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,15 +637,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		59039EB725DE484800584667 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				59039ED425DE7F1500584667 /* UserDefaults+group.swift in Sources */,
-				59039EBE25DE484800584667 /* ShareViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		59040162257627A3002B062A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -678,25 +698,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		594EDDD52709BC9A0087F50B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				594EDDDC2709BC9B0087F50B /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		59039EC425DE484800584667 /* PBXTargetDependency */ = {
+		594EDDF02709BC9C0087F50B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 59039EBA25DE484800584667 /* Open with AltRant */;
-			targetProxy = 59039EC325DE484800584667 /* PBXContainerItemProxy */;
+			target = 594EDDD82709BC9A0087F50B /* Open with AltRant */;
+			targetProxy = 594EDDEF2709BC9C0087F50B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		59039EBF25DE484800584667 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				59039EC025DE484800584667 /* Base */,
-			);
-			name = MainInterface.storyboard;
-			sourceTree = "<group>";
-		};
 		5904016F257627A3002B062A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -716,58 +736,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		59039EC825DE484800584667 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
-				CODE_SIGN_ENTITLEMENTS = "Open with AltRant/Open with AltRant.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 666F768P5J;
-				INFOPLIST_FILE = "Open with AltRant/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cracksoftware.AltRant.Open-with-AltRant";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		59039EC925DE484800584667 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
-				CODE_SIGN_ENTITLEMENTS = "Open with AltRant/Open with AltRant.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 666F768P5J;
-				INFOPLIST_FILE = "Open with AltRant/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cracksoftware.AltRant.Open-with-AltRant";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		59040178257627A5002B062A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -948,18 +916,80 @@
 			};
 			name = Release;
 		};
+		594EDDF42709BC9C0087F50B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = "Open with AltRant/Open with AltRant.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 666F768P5J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Open with AltRant/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Open with AltRant";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cracksoftware.AltRant.Open-with-AltRant";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		594EDDF52709BC9C0087F50B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = "Open with AltRant/Open with AltRant.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 666F768P5J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Open with AltRant/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Open with AltRant";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cracksoftware.AltRant.Open-with-AltRant";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		59039EC725DE484800584667 /* Build configuration list for PBXNativeTarget "Open with AltRant" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				59039EC825DE484800584667 /* Debug */,
-				59039EC925DE484800584667 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		59040161257627A3002B062A /* Build configuration list for PBXProject "AltRant" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -974,6 +1004,15 @@
 			buildConfigurations = (
 				5904017B257627A5002B062A /* Debug */,
 				5904017C257627A5002B062A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		594EDDF32709BC9C0087F50B /* Build configuration list for PBXNativeTarget "Open with AltRant" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				594EDDF42709BC9C0087F50B /* Debug */,
+				594EDDF52709BC9C0087F50B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -19,16 +19,116 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         if let urlContext = connectionOptions.urlContexts.first {
-            let url = urlContext.url
+            let incomingURL = urlContext.url
             
-            //print("GOT SHARED URL: \(url)")
+            if Int(incomingURL.absoluteString.replacingOccurrences(of: "altrant://", with: "")) == nil {
+                var profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                    var vc = ProfileTableViewController(coder: coder, userID: nil)!
+                    vc.shouldLoadFromUsername = true
+                    vc.username = incomingURL.absoluteString.replacingOccurrences(of: "altrant://", with: "")
+                    return vc
+                }) as! ProfileTableViewController
+                
+                profileVC.shouldLoadFromUsername = true
+                profileVC.username = incomingURL.absoluteString.replacingOccurrences(of: "altrant://", with: "")
+                
+                DispatchQueue.main.async {
+                    if let tabBarController = UIApplication.shared.windows.first!.rootViewController! as? UITabBarController {
+                        if let controller = tabBarController.selectedViewController as? UINavigationController {
+                            controller.pushViewController(profileVC, animated: true)
+                        }
+                    }
+                }
+                
+                return
+            } else {
+                let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(withIdentifier: "RantViewController") as! RantViewController
+                rantVC.rantID = Int(incomingURL.absoluteString.replacingOccurrences(of: "altrant://", with: ""))!
+                rantVC.rantInFeed = nil
+                rantVC.supplementalRantImage = nil
+                
+                DispatchQueue.main.async {
+                    if let tabBarController = UIApplication.shared.windows.first!.rootViewController! as? UITabBarController {
+                        if let controller = tabBarController.selectedViewController as? UINavigationController {
+                            controller.pushViewController(rantVC, animated: true)
+                        }
+                    }
+                }
+            }
             
-            let alertController = UIAlertController(title: "SUCCESS", message: "GOT SHARED URL: \(url.absoluteString)", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "YAS", style: .default, handler: nil))
-            
-            
-            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+            return
         }
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let incomingURL = userActivity.webpageURL else {
+            return
+        }
+        
+        if Int(incomingURL.lastPathComponent) == nil {
+            let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                return ProfileTableViewController(coder: coder, userID: nil)
+            })
+            
+            profileVC.shouldLoadFromUsername = true
+            profileVC.username = incomingURL.lastPathComponent
+            
+            DispatchQueue.main.async {
+                if let tabBarController = UIApplication.shared.windows.first!.rootViewController! as? UITabBarController {
+                    if let controller = tabBarController.selectedViewController as? UINavigationController {
+                        controller.pushViewController(profileVC, animated: true)
+                    }
+                }
+            }
+            
+            return
+        }
+        
+        return
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let incomingURL = URLContexts.first?.url else {
+            return
+        }
+        
+        if Int(incomingURL.absoluteString.replacingOccurrences(of: "altrant://", with: "")) == nil {
+            var profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                var vc = ProfileTableViewController(coder: coder, userID: nil)!
+                vc.shouldLoadFromUsername = true
+                vc.username = incomingURL.absoluteString.replacingOccurrences(of: "altrant://", with: "")
+                return vc
+            }) as! ProfileTableViewController
+            
+            profileVC.shouldLoadFromUsername = true
+            profileVC.username = incomingURL.absoluteString.replacingOccurrences(of: "altrant://", with: "")
+            
+            DispatchQueue.main.async {
+                if let tabBarController = UIApplication.shared.windows.first!.rootViewController! as? UITabBarController {
+                    if let controller = tabBarController.selectedViewController as? UINavigationController {
+                        controller.pushViewController(profileVC, animated: true)
+                    }
+                }
+            }
+            
+            return
+        } else {
+            let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(withIdentifier: "RantViewController") as! RantViewController
+            rantVC.rantID = Int(incomingURL.absoluteString.replacingOccurrences(of: "altrant://", with: ""))!
+            rantVC.rantInFeed = nil
+            rantVC.supplementalRantImage = nil
+            
+            DispatchQueue.main.async {
+                if let tabBarController = UIApplication.shared.windows.first!.rootViewController! as? UITabBarController {
+                    if let controller = tabBarController.selectedViewController as? UINavigationController {
+                        controller.pushViewController(rantVC, animated: true)
+                    }
+                }
+            }
+        }
+        
+        return
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

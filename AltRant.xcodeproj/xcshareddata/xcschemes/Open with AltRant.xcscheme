@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1230"
+   LastUpgradeVersion = "1300"
    wasCreatedForAppExtension = "YES"
    version = "2.0">
    <BuildAction
@@ -15,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "59039EBA25DE484800584667"
+               BlueprintIdentifier = "594EDDD82709BC9A0087F50B"
                BuildableName = "Open with AltRant.appex"
                BlueprintName = "Open with AltRant"
                ReferencedContainer = "container:AltRant.xcodeproj">
@@ -49,7 +49,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
-      launchStyle = "1"
+      launchStyle = "0"
       askForAppToLaunch = "Yes"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -58,9 +58,9 @@
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
       <RemoteRunnable
-         runnableDebuggingMode = "1"
-         BundleIdentifier = "com.apple.mobilesafari"
-         RemotePath = "/Applications/MobileSafari.app">
+         runnableDebuggingMode = "0"
+         BundleIdentifier = "com.apple.Safari"
+         RemotePath = "/Applications/Safari.app">
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference

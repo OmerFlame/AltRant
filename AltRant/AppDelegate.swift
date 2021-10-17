@@ -8,6 +8,7 @@
 import UIKit
 import UserNotifications
 import Sentry
+import Combine
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -27,6 +28,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return true
         
         
+    }
+    
+    /*func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let incomingURL = userActivity.webpageURL else {
+            return false
+        }
+        
+        if Int(incomingURL.lastPathComponent) == nil {
+            let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                return ProfileTableViewController(coder: coder, userID: nil)
+            })
+            
+            profileVC.shouldLoadFromUsername = true
+            profileVC.username = incomingURL.lastPathComponent
+            
+            DispatchQueue.main.async {
+                if let navigationController = UIApplication.shared.windows.first!.rootViewController!.children.first(where: { String(describing: type(of: $0)) == "UINavigationController" }) {
+                    if let controller = navigationController as? UINavigationController {
+                        controller.pushViewController(profileVC, animated: true)
+                    }
+                }
+            }
+            
+            return true
+        }
+        
+        return false
+    }*/
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let incomingURL = userActivity.webpageURL else {
+            return false
+        }
+        
+        if Int(incomingURL.lastPathComponent) == nil {
+            let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                return ProfileTableViewController(coder: coder, userID: nil)
+            })
+            
+            profileVC.shouldLoadFromUsername = true
+            profileVC.username = incomingURL.lastPathComponent
+            
+            DispatchQueue.main.async {
+                if let navigationController = UIApplication.shared.windows.first!.rootViewController!.children.first(where: { String(describing: type(of: $0)) == "UINavigationController" }) {
+                    if let controller = navigationController as? UINavigationController {
+                        controller.pushViewController(profileVC, animated: true)
+                    }
+                }
+            }
+            
+            return true
+        }
+        
+        return false
     }
 
     // MARK: UISceneSession Lifecycle
@@ -56,18 +113,97 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
         let userInfo = response.notification.request.content.userInfo
         
-        if let customData = userInfo["customData"] as? String {
-            debugPrint("Custom data received: \(customData)")
-            
-            (UIApplication.shared.windows.first!.rootViewController as! UITabBarController).selectedIndex = 2
+        if let customData = userInfo["aps"] as? [String:Any] {
+            if let rantID = customData["rantID"] as? Int {
+                debugPrint("Custom data received: \(customData)")
+                
+                let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(withIdentifier: "RantViewController") as! RantViewController
+                rantVC.rantID = rantID
+                rantVC.rantInFeed = nil
+                rantVC.supplementalRantImage = nil
+                
+                if let username = customData["username"] as? String,
+                   let createdTime = customData["createdTime"] as? Int,
+                   let commentID = customData["commentID"] as? Int {
+                    rantVC.loadCompletionHandler = { tableViewController in
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            if let idx = tableViewController!.comments.firstIndex(where: {
+                                $0.created_time == createdTime &&
+                                $0.user_username == username ||
+                                $0.id == commentID
+                            }) {
+                                DispatchQueue.main.async {
+                                    tableViewController!.tableView.scrollToRow(at: IndexPath(row: idx, section: 1), at: .middle, animated: true)
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    rantVC.loadCompletionHandler = nil
+                }
+                
+                //(UIApplication.shared.windows.first!.rootViewController as! UITabBarController).selectedIndex = 2
+                
+                DispatchQueue.main.async {
+                    if let navigationController = UIApplication.shared.windows.first!.rootViewController!.children.first(where: { String(describing: type(of: $0)) == "UINavigationController" }) {
+                        if let controller = navigationController as? UINavigationController {
+                            controller.pushViewController(rantVC, animated: true)
+                        }
+                    }
+                }
+            }
             
             completionHandler()
         }
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken: Data) {
+        /*#if DEBUG
+        //UserDefaults.standard.set(nil, forKey: "DRNotificationDeviceUUID")
+        if UserDefaults.standard.string(forKey: "DRNotificationDeviceUUID") == nil {
+            UserDefaults.standard.set(UUID().uuidString, forKey: "DRNotificationDeviceUUID")
+            
+            if UserDefaults.standard.integer(forKey: "DRUserID") != 0,
+               UserDefaults.standard.integer(forKey: "DRTokenID") != 0,
+               UserDefaults.standard.string(forKey: "DRTokenKey") != nil,
+               UserDefaults.standard.integer(forKey: "DRTokenExpireTime") != 0 {
+                let url = URL(string: "https://192.168.24.111:443/add_token_collection")!
+                
+                var request = URLRequest(url: url)
+                
+                var payload: [String:Any] = [
+                    "device_uuid": UserDefaults.standard.string(forKey: "DRNotificationDeviceUUID")!,
+                    "device_token": didRegisterForRemoteNotificationsWithDeviceToken.hexDescription,
+                    "user_id": UserDefaults.standard.integer(forKey: "DRUserID"),
+                    "token_id": UserDefaults.standard.integer(forKey: "DRTokenID"),
+                    "token_key": UserDefaults.standard.string(forKey: "DRTokenKey")!,
+                    "token_expire_time": UserDefaults.standard.integer(forKey: "DRTokenExpireTime")
+                ]
+                
+                request.httpMethod = "POST"
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = try! JSONSerialization.data(withJSONObject: payload, options: .prettyPrinted)
+                //request.httpBody = "device_uuid=\(UserDefaults.standard.string(forKey: "DRNotificationDeviceUUID")!)&device_token=\(didRegisterForRemoteNotificationsWithDeviceToken.hexDescription)&user_id=\(UserDefaults.standard.integer(forKey: "DRUserID"))&token_id=\(UserDefaults.standard.integer(forKey: "DRTokenID"))&token_key=\(UserDefaults.standard.string(forKey: "DRTokenKey")!)&token_expire_time=\(UserDefaults.standard.integer(forKey: "DRTokenExpireTime"))".data(using: .utf8)
+                
+                let session = URLSession(configuration: .default, delegate: invalidCertificateDelegate(), delegateQueue: OperationQueue.main)
+                
+                session.dataTask(with: request) { data, response, error in
+                    let result = try! JSONSerialization.jsonObject(with: data!, options: [])
+                    
+                    if let jObject = result as? [String:Any] {
+                        if let success = jObject["success"] as? Bool {
+                            if success {
+                                print("UPLOAD SUCCESS!")
+                            }
+                        }
+                    }
+                }.resume()
+            }
+        }
+        #endif*/
         print(didRegisterForRemoteNotificationsWithDeviceToken.hexDescription)
     }
 
@@ -119,5 +255,17 @@ extension UIView {
 extension Data {
     var hexDescription: String {
         return reduce("") {$0 + String(format: "%02x", $1)}
+    }
+}
+
+class invalidCertificateDelegate: NSObject, URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if challenge.protectionSpace.serverTrust == nil {
+            completionHandler(.useCredential, nil)
+        } else {
+            let trust: SecTrust = challenge.protectionSpace.serverTrust!
+            let credential = URLCredential(trust: trust)
+            completionHandler(.useCredential, credential)
+        }
     }
 }

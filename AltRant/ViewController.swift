@@ -109,6 +109,11 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                                         self.supplementalImages = [:]
                                         
                                         self.tableView.reloadData {
+                                            if self.timer != nil {
+                                                self.timer.invalidate()
+                                                self.timer = nil
+                                            }
+                                            
                                             UserDefaults.standard.setValue(0, forKey: "DRUserID")
                                             UserDefaults.standard.setValue(0, forKey: "DRTokenID")
                                             UserDefaults.standard.setValue(nil, forKey: "DRTokenKey")

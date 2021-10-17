@@ -22,7 +22,7 @@
 		<key>Open with AltRant.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>6</integer>
 		</dict>
 		<key>SnapKitPlayground (Playground) 1.xcscheme</key>
 		<dict>
@@ -54,6 +54,26 @@
 			<true/>
 		</dict>
 		<key>59040165257627A3002B062A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>594EDD2027099A3A0087F50B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>594EDD992709AD9E0087F50B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>594EDDB62709B1240087F50B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>594EDDD82709BC9A0087F50B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
