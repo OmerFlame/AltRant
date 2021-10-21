@@ -90,8 +90,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         activityIndicator.startAnimating()
         
+        let username = usernameTextField.text!
+        let password = passwordTextField.text!
+        
         DispatchQueue.global(qos: .userInitiated).async {
-            APIRequest().logIn(username: self.usernameTextField.text!, password: self.passwordTextField.text!)
+            APIRequest().logIn(username: username, password: password)
             
             /*if UserDefaults.standard.integer(forKey: "DRUserID") != 0 {
                 let userInfo = try! APIRequest().getProfileFromID(UserDefaults.standard.integer(forKey: "DRUserID"), userContentType: .rants, skip: 0)!
