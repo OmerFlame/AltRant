@@ -1072,8 +1072,8 @@ class APIRequest {
         
         if data != nil {
             body.appendString(boundaryPrefix)
-            body.appendString("Content-Disposition: form-data; name=\"image\"; filename=\"image.png\"\r\n")
-            body.appendString("Content-Type: image/png\r\n\r\n")
+            body.appendString("Content-Disposition: form-data; name=\"image\"; filename=\"image.jpeg\"\r\n")
+            body.appendString("Content-Type: image/jpeg\r\n\r\n")
             body.append(data!)
             body.appendString("\r\n")
         }
