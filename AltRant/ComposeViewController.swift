@@ -44,7 +44,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        attachmentButton.setTitleColor(UIButton().tintColor, for: .normal)
         // Do any additional setup after loading the view.
         
         contentTextView.backgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white
