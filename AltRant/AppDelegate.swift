@@ -205,6 +205,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         #endif*/
         print(didRegisterForRemoteNotificationsWithDeviceToken.hexDescription)
+        
+        //UserDefaults.standard.set(didRegisterForRemoteNotificationsWithDeviceToken.hexDescription, forKey: "DRDeviceToken")
+        
+        let payload: [String: String] = ["deviceToken": didRegisterForRemoteNotificationsWithDeviceToken.hexDescription]
+        
+        NotificationCenter.default.post(name: NSNotification.Name("NotificationDeviceToken"), object: nil, userInfo: payload)
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
@@ -250,6 +256,47 @@ extension UIView {
             }
             return view
         }
+}
+
+public func encrypt(string: String, publicKey: String) -> String? {
+    let keyString = publicKey.replacingOccurrences(of: "-----BEGIN PUBLIC KEY-----\n", with: "").replacingOccurrences(of: "\n-----END PUBLIC KEY-----", with: "")
+    
+    guard let data = Data(base64Encoded: keyString, options: .ignoreUnknownCharacters) else { return nil }
+    
+    var attributes: CFDictionary {
+        return [
+            kSecAttrKeyType as String         : kSecAttrKeyTypeRSA,
+            kSecAttrKeyClass as String        : kSecAttrKeyClassPublic,
+            kSecAttrKeySizeInBits as String   : data.count * 8,
+            kSecReturnPersistentRef as String : kCFBooleanTrue!
+        ] as CFDictionary
+    }
+    
+    var error: Unmanaged<CFError>? = nil
+    guard let secKey = SecKeyCreateWithData(data as CFData, attributes, &error) else {
+        print(error.debugDescription)
+        return nil
+    }
+    
+    return encrypt(string: string, publicKey: secKey)
+}
+
+public func encrypt(string: String, publicKey: SecKey) -> String? {
+    let buffer = string.data(using: .ascii)!
+    
+    //var keySize = SecKeyGetBlockSize(publicKey)
+    //var keyBuffer = [UInt8](repeating: 0, count: keySize)
+    
+    var error: Unmanaged<CFError>? = nil
+    let encryptedData = SecKeyCreateEncryptedData(publicKey, .rsaEncryptionOAEPSHA512, buffer as CFData, nil)
+    
+    guard encryptedData != nil else {
+        return nil
+    }
+    
+    let encryptedDataAsData = encryptedData! as Data
+    
+    return encryptedDataAsData.base64EncodedString()
 }
 
 extension Data {

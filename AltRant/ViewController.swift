@@ -97,7 +97,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                                     },
                 
                                     UIAction(title: "Settings", image: UIImage(systemName: "gearshape.fill")!) { action in
-                                        print("Tapped on Settings")
+                                        let settingsVC = UIStoryboard(name: "SettingsViewController", bundle: nil).instantiateViewController(withIdentifier: "SettingsViewController") as! UINavigationController
+                                        
+                                        self.present(settingsVC, animated: true, completion: nil)
                                     },
                 
                                     UIAction(title: "Log Out", image: UIImage(systemName: "lock.fill")!) { action in

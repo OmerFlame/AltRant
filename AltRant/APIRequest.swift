@@ -79,7 +79,7 @@ class APIRequest {
                 
                 if let data = data, let body = String(data: data, encoding: .utf8) {
                     receivedRawJSON = body
-                    print(body)
+                    //print(body)
                     completionSemaphore.signal()
                 }
             }
@@ -174,11 +174,11 @@ class APIRequest {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let response = response {
                 DispatchQueue.global(qos: .background).async {
-                    print(response)
+                    //print(response)
                     
                     if let data = data, let body = String(data: data, encoding: .utf8) {
                         receivedRawJSON = body
-                        print(body)
+                        //print(body)
                         
                         let dataFromString = receivedRawJSON.data(using: .utf8)
                         
@@ -240,7 +240,7 @@ class APIRequest {
             UserDefaults.standard.setValue(Int(Date().timeIntervalSince1970), forKey: "DRLastNotifCheckTime")
             
             if let data = data, let body = String(data: data, encoding: .utf8) {
-                debugPrint(body)
+                //debugPrint(body)
                 
                 let decoder = JSONDecoder()
                 let content = try? decoder.decode(NotificationFeed.self, from: body.data(using: .utf8)!)
@@ -266,11 +266,11 @@ class APIRequest {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if response != nil {
                 if let data = data, let body = String(data: data, encoding: .utf8) {
-                    print(response!)
+                    //print(response!)
                     
                     receivedRawJSON = body
                     
-                    debugPrint(body)
+                    //debugPrint(body)
                     
                     completionSemaphore.signal()
                 }
@@ -339,7 +339,7 @@ class APIRequest {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             let body = String(data: data!, encoding: .utf8)!
             
-            print(body)
+            //print(body)
             
             let decoder = JSONDecoder()
             voteResponse = try? decoder.decode(RantVoteResponse.self, from: data!)
@@ -538,8 +538,8 @@ class APIRequest {
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 let body = String(data: data!, encoding: .utf8)!
                 
-                print("RESPONSE BODY: ")
-                print(body)
+                //print("RESPONSE BODY: ")
+                //print(body)
                 
                 //receivedRawJSON = body
                 
@@ -570,8 +570,8 @@ class APIRequest {
             URLSession.shared.dataTask(with: request) { data, response, error in
                 let body = String(data: data!, encoding: .utf8)!
                 
-                print("RESPONSE BODY:")
-                print(body)
+                //print("RESPONSE BODY:")
+                //print(body)
                 
                 let decoder = JSONDecoder()
                 let result = try? decoder.decode(RantPOSTResponse.self, from: data!)

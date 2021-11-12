@@ -50,6 +50,7 @@
 		5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */; };
 		5958FC79257AD8B8003D1EDD /* KeyboardAvoidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC78257AD8B8003D1EDD /* KeyboardAvoidingView.swift */; };
 		596B819F25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */; };
+		59835E872737C0050022D272 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59835E862737C0050022D272 /* SettingsViewController.storyboard */; };
 		5990650A257643B30058C1D7 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906509257643B30058C1D7 /* CloseButton.swift */; };
 		5990650E257643D60058C1D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990650D257643D60058C1D7 /* TagListView.swift */; };
 		59906511257644120058C1D7 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906510257644120058C1D7 /* TagView.swift */; };
@@ -63,6 +64,7 @@
 		59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906526257660AF0058C1D7 /* ColorFromHexString.swift */; };
 		5990652A257668E90058C1D7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906529257668E90058C1D7 /* APIRequest.swift */; };
 		5990652D257668FD0058C1D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990652C257668FD0058C1D7 /* User.swift */; };
+		59A7D9FA2737E62D000576B7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A7D9F92737E62D000576B7 /* SettingsViewController.swift */; };
 		59A96EB3265AABBF0040B854 /* UIAlertController+CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A96EB2265AABBF0040B854 /* UIAlertController+CustomView.swift */; };
 		59A9E69925CFCA3500DC6065 /* SecondaryRantInFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */; };
 		59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */; };
@@ -173,6 +175,7 @@
 		5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoiding.swift; sourceTree = "<group>"; };
 		5958FC78257AD8B8003D1EDD /* KeyboardAvoidingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoidingView.swift; sourceTree = "<group>"; };
 		596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+didTapInsideWrappedText.swift"; sourceTree = "<group>"; };
+		59835E862737C0050022D272 /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
 		59906509257643B30058C1D7 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		5990650D257643D60058C1D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 		59906510257644120058C1D7 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
@@ -186,6 +189,7 @@
 		59906526257660AF0058C1D7 /* ColorFromHexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFromHexString.swift; sourceTree = "<group>"; };
 		59906529257668E90058C1D7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		5990652C257668FD0058C1D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		59A7D9F92737E62D000576B7 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		59A96EB2265AABBF0040B854 /* UIAlertController+CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+CustomView.swift"; sourceTree = "<group>"; };
 		59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryRantInFeed.swift; sourceTree = "<group>"; };
 		59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondaryRantInFeedCell.xib; sourceTree = "<group>"; };
@@ -302,6 +306,8 @@
 				59C2EFE225E25C2D00BBCDAB /* AvatarEditorViewController.swift */,
 				59C2EFEE25E25E5E00BBCDAB /* AvatarEditorPickerViewController.swift */,
 				59C2EFEA25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard */,
+				59835E862737C0050022D272 /* SettingsViewController.storyboard */,
+				59A7D9F92737E62D000576B7 /* SettingsViewController.swift */,
 			);
 			path = AltRant;
 			sourceTree = "<group>";
@@ -555,6 +561,7 @@
 				59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */,
 				59040171257627A3002B062A /* Main.storyboard in Resources */,
 				5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */,
+				59835E872737C0050022D272 /* SettingsViewController.storyboard in Resources */,
 				5904018325762953002B062A /* RantInFeedCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -654,6 +661,7 @@
 				59BB224C25B42B5E00B4B177 /* AvatarCustomizationOptions.swift in Sources */,
 				59C2EFE425E25C2D00BBCDAB /* AvatarEditorViewController.swift in Sources */,
 				59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */,
+				59A7D9FA2737E62D000576B7 /* SettingsViewController.swift in Sources */,
 				59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */,
 				5954C26525AD78D1008B70D2 /* ExpandingSegmentedView.swift in Sources */,
 				59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */,
@@ -871,6 +879,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -901,6 +910,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
