@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import UniformTypeIdentifiers
 
-class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate {
+class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIDocumentPickerDelegate {
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var remainingLettersLabel: UILabel!
@@ -32,12 +33,39 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     var rantType: RantType = .rant
     
+    /*let menu = UIMenu(title: "", children: [
+        UIAction(title: "From File", image: UIImage(systemName: "folder.fill"), handler: { _ in
+            openDocumentPicker()
+        }),
+    ])*/
+    
+    var menu: UIMenu {
+        return UIMenu(title: "", children: [
+            UIAction(title: "Import from File", image: UIImage(systemName: "folder.fill"), handler: { _ in
+                self.openDocumentPicker()
+            }),
+            UIAction(title: "Import from Photo Library", image: UIImage(systemName: "photo.fill"), handler: { _ in
+                self.openImagePicker()
+            })
+        ])
+    }
+    
     var inputImage: UIImage? {
         didSet {
             if inputImage == nil {
                 attachmentButton.setTitle("Attach img/gif", for: .normal)
+                
+                attachmentButton.removeTarget(nil, action: nil, for: .primaryActionTriggered)
+                attachmentButton.menu = menu
+                attachmentButton.showsMenuAsPrimaryAction = true
             } else {
                 attachmentButton.setTitle("Remove image", for: .normal)
+                
+                attachmentButton.menu = nil
+                attachmentButton.showsMenuAsPrimaryAction = false
+                
+                attachmentButton.removeTarget(nil, action: nil, for: .primaryActionTriggered)
+                attachmentButton.addTarget(self, action: #selector(discardImage), for: .primaryActionTriggered)
             }
         }
     }
@@ -63,6 +91,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         
         contentTextView.inputAccessoryView = keyboardToolbar
         tagTextField.inputAccessoryView = keyboardToolbar
+        
+        inputImage = nil
         
         if !isComment && !isEdit {
             navigationItem.title = "New Rant/Story"
@@ -374,7 +404,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         }
     }
     
-    @IBAction func selectImage(_ sender: UIButton) {
+    /*func selectImage() {
         if inputImage == nil {
             let pickerController = UIImagePickerController()
             pickerController.delegate = self
@@ -385,8 +415,30 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         } else {
             inputImage = nil
         }
+    }*/
+    
+    @objc func discardImage() {
+        inputImage = nil
     }
     
+    func openDocumentPicker() {
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.image])
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = false
+        
+        present(documentPicker, animated: true, completion: nil)
+    }
+    
+    func openImagePicker() {
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        
+        pickerController.isModalInPresentation = true
+        
+        present(pickerController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Image Picker Controller Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
@@ -397,6 +449,29 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         }
         
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Document Picker Delegate
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        let image = UIImage(contentsOfFile: urls[0].path)
+        
+        inputImage = image
+        
+        //attachmentButton.menu = nil
+        //attachmentButton.showsMenuAsPrimaryAction = false
+        
+        //attachmentButton.removeTarget(nil, action: nil, for: .primaryActionTriggered)
+        //attachmentButton.addTarget(self, action: #selector(discardImage), for: .primaryActionTriggered)
+        
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        inputImage = nil
+        
+        //attachmentButton.menu = menu
+        //attachmentButton.showsMenuAsPrimaryAction = true
+        controller.dismiss(animated: true, completion: nil)
     }
     
     fileprivate func showAlertWithError(_ error: String, retryHandler: (() -> Void)?) {

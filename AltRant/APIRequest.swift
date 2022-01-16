@@ -775,7 +775,7 @@ class APIRequest {
                 "user_id": String(UserDefaults.standard.integer(forKey: "DRUserID"))
             ]
             
-            let body = createBody(parameters: paramList, boundary: boundary, data: image?.pngData())
+            let body = createBody(parameters: paramList, boundary: boundary, data: image?.jpegData(compressionQuality: 1))
             
             request.httpBody = body
             
@@ -873,7 +873,7 @@ class APIRequest {
                 "user_id": String(UserDefaults.standard.integer(forKey: "DRUserID"))
             ]
             
-            let body = createBody(parameters: paramList, boundary: boundary, data: image?.pngData())
+            let body = createBody(parameters: paramList, boundary: boundary, data: image?.jpegData(compressionQuality: 1))
             
             request.httpBody = body
             
