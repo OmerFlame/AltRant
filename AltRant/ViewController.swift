@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 import ADNavigationBarExtension
 import UserNotifications
-import Sentry
+//import Sentry
 
 class rantFeedData {
     var rantFeed = [RantInFeed]()

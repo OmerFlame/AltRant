@@ -7,7 +7,7 @@
 
 import UIKit
 import UserNotifications
-import Sentry
+//import Sentry
 import Combine
 
 @main
@@ -18,10 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        SentrySDK.start { options in
+        /*SentrySDK.start { options in
             options.dsn = "https://ee4b01a7f1bd403f851eabbdd6ce52f8@o576704.ingest.sentry.io/5730641"
             options.debug = true
-        }
+        }*/
         
         UIApplication.shared.registerForRemoteNotifications()
         

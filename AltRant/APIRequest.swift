@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import Sentry
+//import Sentry
 
 enum APIError: Error {
     case responseError
@@ -1023,7 +1023,7 @@ class APIRequest {
 					}
 				}
 			} else {
-				SentrySDK.capture(message: "Response decode error")
+				//SentrySDK.capture(message: "Response decode error")
 				completionHandler?(false, "Response decode error.")
 			}
 		}.resume()
