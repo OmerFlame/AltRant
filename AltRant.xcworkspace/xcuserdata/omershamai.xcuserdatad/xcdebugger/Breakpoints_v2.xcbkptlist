@@ -608,7 +608,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "39"
                   endingLineNumber = "39"
-                  offsetFromSymbolStart = "896">
+                  offsetFromSymbolStart = "876">
                </Location>
                <Location
                   uuid = "3DF2ECBB-30A4-4FB4-B6B0-8988CC2A7A02 - 2fc60e058c8f7336"
@@ -623,7 +623,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "39"
                   endingLineNumber = "39"
-                  offsetFromSymbolStart = "912">
+                  offsetFromSymbolStart = "892">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -2988,8 +2988,8 @@
             filePath = "AltRant/AvatarEditorPickerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "444"
-            endingLineNumber = "444"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
             landmarkName = "configure(image:isAlreadySelected:shouldShowLock:badgeValue:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3004,8 +3004,8 @@
             filePath = "AltRant/AvatarEditorPickerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "520"
-            endingLineNumber = "520"
+            startingLineNumber = "523"
+            endingLineNumber = "523"
             landmarkName = "show(animated:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3020,8 +3020,8 @@
             filePath = "AltRant/AvatarEditorPickerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
+            startingLineNumber = "424"
+            endingLineNumber = "424"
             landmarkName = "prepareForReuse()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3052,8 +3052,8 @@
             filePath = "AltRant/AvatarEditorPickerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
+            startingLineNumber = "467"
+            endingLineNumber = "467"
             landmarkName = "configure(image:isAlreadySelected:shouldShowLock:badgeValue:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3068,8 +3068,8 @@
             filePath = "AltRant/AvatarEditorPickerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "466"
-            endingLineNumber = "466"
+            startingLineNumber = "469"
+            endingLineNumber = "469"
             landmarkName = "configure(image:isAlreadySelected:shouldShowLock:badgeValue:)"
             landmarkType = "7">
          </BreakpointContent>

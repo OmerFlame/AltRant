@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Haptica
+//import Haptica
 import BadgeControl
 
 protocol AvatarEditorPickerViewControllerDelegate {
@@ -402,7 +402,10 @@ class PreferenceCell: UICollectionViewCell {
                 if self.shouldBeSelected {
 					self.doneAnimationView.isHidden = false
                     self.doneAnimationView.show()
-                    Haptic.notification(.success).generate()
+                    //Haptic.notification(.success).generate()
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.prepare()
+                    generator.notificationOccurred(.success)
 				} else {
 					self.doneAnimationView.isHidden = true
 				}
