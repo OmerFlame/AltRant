@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class AvatarCustomizationImage: Decodable {
     let backgroundColor: String

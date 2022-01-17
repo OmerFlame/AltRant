@@ -27,6 +27,8 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     
     var timer: Timer!
     
+    var isLoading = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,7 +59,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             
             (loginVC.viewControllers.first as! LoginViewController).viewControllerThatPresented = self
         } else {
-            tableView.infiniteScrollIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+            let loadingCellNib = UINib(nibName: "LoadingCell", bundle: nil)
+            tableView.register(loadingCellNib, forCellReuseIdentifier: "LoadingCell")
+            /*tableView.infiniteScrollIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
             tableView.infiniteScrollIndicatorMargin = 40
             tableView.infiniteScrollTriggerOffset = 500
             
@@ -84,10 +88,14 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                         //tableView.contentInset.top = self.navigationController!.navigationBar.frame.size.height
                     }*/
                 }
-            }
+            }*/
             
             //tableView.beginInfiniteScroll(true)
-            self.performFetch(nil)
+            isLoading = true
+            self.performFetch {
+                self.refreshControl!.endRefreshing()
+                self.isLoading = false
+            }
             
             let mainMenu = UIMenu(title: "", children: [
                                     UIAction(title: "Test Controller", image: UIImage(systemName: "scribble")) { _ in
@@ -300,16 +308,22 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let rant = rantFeed.rantFeed[indexPath.row]
+        if indexPath.section == 0 {
+            //let rant = rantFeed.rantFeed[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
         
-        //let image = supplementalImages[indexPath.row]
+            //let image = supplementalImages[indexPath.row]
         
-        //cell = RantInFeedCell.loadFromXIB()
-        cell.configure(with: Optional(&rantFeed.rantFeed[indexPath.row]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
+            //cell = RantInFeedCell.loadFromXIB()
+            cell.configure(with: Optional(&rantFeed.rantFeed[indexPath.row]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
         
-        return cell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
+            cell.activityIndicator.startAnimating()
+            return cell
+        }
         
         /*if indexPath.row % 2 == 0 {
             var cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
@@ -329,11 +343,21 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if UserDefaults.standard.integer(forKey: "DRUserID") == 0 || UserDefaults.standard.integer(forKey: "DRTokenID") == 0 || UserDefaults.standard.string(forKey: "DRTokenKey") == nil {
-            return 0
+        if section == 0 {
+            if UserDefaults.standard.integer(forKey: "DRUserID") == 0 || UserDefaults.standard.integer(forKey: "DRTokenID") == 0 || UserDefaults.standard.string(forKey: "DRTokenKey") == nil {
+                return 0
+            } else {
+                return rantFeed.rantFeed.count
+            }
+        } else if section == 1 {
+            return 1
         } else {
-            return rantFeed.rantFeed.count
+            return 0
         }
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
     @IBAction func handleRefresh() {
@@ -345,6 +369,18 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         //tableView.beginInfiniteScroll(true)
         self.performFetch(nil)
         self.refreshControl!.endRefreshing()
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading {
+            isLoading = true
+            performFetch {
+                self.isLoading = false
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -23,11 +23,11 @@
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="310"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GAl-E3-BRU" id="7Rk-Gd-Fwr">
-                                    <rect key="frame" x="0.0" y="0.0" width="384.5" height="310"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="385.5" height="310"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7MR-e5-T3g" userLabel="Content Stack View">
-                                            <rect key="frame" x="20" y="15" width="352.5" height="280"/>
+                                            <rect key="frame" x="20" y="15" width="353.5" height="280"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="rEn-9r-qWV" userLabel="Voting Stack View">
                                                     <rect key="frame" x="0.0" y="0.0" width="31" height="67"/>
@@ -73,10 +73,10 @@
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="D6R-9h-dK4" userLabel="Text Stack View">
-                                                    <rect key="frame" x="41" y="0.0" width="311.5" height="197"/>
+                                                    <rect key="frame" x="41" y="0.0" width="312.5" height="197"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="al6-fy-gs8" userLabel="Body">
-                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="169"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="312.5" height="169"/>
                                                             <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
@@ -460,7 +460,7 @@
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SLH-fI-WQk" translatesAutoresizingMaskIntoConstraints="NO" id="ZXi-pm-mRC">
-                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="60"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="person.crop.square.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ybp-r7-tIw">
                                                     <rect key="frame" x="20" y="11" width="60" height="37"/>
@@ -577,7 +577,7 @@
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MYW-6G-aVF" id="ule-Rk-pyy">
-                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="65.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="VcW-CU-p2L" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
@@ -596,7 +596,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username ++'d your rant!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ql4-YB-qN5" userLabel="User Upvote Label">
-                                                    <rect key="frame" x="80" y="10" width="304.5" height="45.5"/>
+                                                    <rect key="frame" x="80" y="10" width="305.5" height="45.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -638,7 +638,7 @@
                                         <rect key="frame" x="0.0" y="110" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oPd-jA-4ew" id="qOG-Ii-T1H">
-                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="65.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="oUA-DT-poP" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
@@ -657,7 +657,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eBK-r6-YsQ" userLabel="Icon Image View">
-                                                    <rect key="frame" x="58.5" y="8.5" width="13.5" height="17.5"/>
+                                                    <rect key="frame" x="58.5" y="7.5" width="13.5" height="19.5"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="13.5" id="eZF-yI-RA2"/>
@@ -666,7 +666,7 @@
                                                     <imageReference key="image" image="text.bubble.fill" catalog="system" symbolScale="large" renderingMode="template"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username commented on your rant!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ytk-O3-b4r" userLabel="User Comment Label">
-                                                    <rect key="frame" x="80" y="10" width="304.5" height="45.5"/>
+                                                    <rect key="frame" x="80" y="10" width="305.5" height="45.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -710,7 +710,7 @@
                                         <rect key="frame" x="0.0" y="175.5" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nyv-Os-niS" id="OII-TE-6Jq">
-                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="65.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="gS2-Cn-WCp" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
@@ -729,7 +729,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pkq-Bh-B3w" userLabel="Icon Image View">
-                                                    <rect key="frame" x="58.5" y="8.5" width="13.5" height="17.5"/>
+                                                    <rect key="frame" x="58.5" y="7.5" width="13.5" height="19.5"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="13.5" id="F9F-Yk-Iny"/>
@@ -738,7 +738,7 @@
                                                     <imageReference key="image" image="text.bubble.fill" catalog="system" symbolScale="large" renderingMode="template"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username commented on a rant you commented on!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enV-Pg-dcM" userLabel="User Comment Label">
-                                                    <rect key="frame" x="80" y="10" width="304.5" height="45.5"/>
+                                                    <rect key="frame" x="80" y="10" width="305.5" height="45.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -782,7 +782,7 @@
                                         <rect key="frame" x="0.0" y="241" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OlH-uQ-wFl" id="nWo-M9-TGz">
-                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="65.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="wFH-ky-5Lb" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
@@ -801,7 +801,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ntj-CT-8Xk" userLabel="Icon Image View">
-                                                    <rect key="frame" x="58.5" y="8.5" width="13.5" height="17.5"/>
+                                                    <rect key="frame" x="58.5" y="7.5" width="13.5" height="19.5"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="13.5" id="CTe-tg-kJs"/>
@@ -810,7 +810,7 @@
                                                     <imageReference key="image" image="text.bubble.fill" catalog="system" symbolScale="large" renderingMode="template"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username mentioned you in a comment!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRb-9V-2v9" userLabel="User Comment Label">
-                                                    <rect key="frame" x="80" y="10" width="304.5" height="45.5"/>
+                                                    <rect key="frame" x="80" y="10" width="305.5" height="45.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -854,7 +854,7 @@
                                         <rect key="frame" x="0.0" y="306.5" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zhg-iz-9d9" id="Es4-AO-Jdy">
-                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="65.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="DLD-ic-PP6" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
@@ -873,7 +873,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username ++'d your comment!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQR-rw-7f6" userLabel="User Upvote Label">
-                                                    <rect key="frame" x="80" y="10" width="304.5" height="45.5"/>
+                                                    <rect key="frame" x="80" y="10" width="305.5" height="45.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -915,7 +915,7 @@
                                         <rect key="frame" x="0.0" y="372" width="414" height="65.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xak-F2-NFF" id="iBK-o4-fnC">
-                                            <rect key="frame" x="0.0" y="0.0" width="384.5" height="65.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="65.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="RlT-SO-2eI" userLabel="Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
@@ -934,7 +934,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f54-Ts-UIO" userLabel="Icon Image View">
-                                                    <rect key="frame" x="58.5" y="8.5" width="13.5" height="17.5"/>
+                                                    <rect key="frame" x="58.5" y="7.5" width="13.5" height="19.5"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="13.5" id="0Ak-OX-Fgg"/>
@@ -943,7 +943,7 @@
                                                     <imageReference key="image" image="plus.bubble.fill" catalog="system" symbolScale="large" renderingMode="template"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Username posted a new rant!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sHx-8v-Jh5" userLabel="User Comment Label">
-                                                    <rect key="frame" x="80" y="10" width="304.5" height="45.5"/>
+                                                    <rect key="frame" x="80" y="10" width="305.5" height="45.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>

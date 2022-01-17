@@ -7,6 +7,7 @@
 
 import UIKit
 import UniformTypeIdentifiers
+import SwiftUI
 
 class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIDocumentPickerDelegate {
     @IBOutlet weak var mainStackView: UIStackView!
@@ -77,8 +78,11 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         // Do any additional setup after loading the view.
         
         contentTextView.backgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white
-        contentTextView.placeholder = self.isComment ? "Add your 2 cents..." : "The rant starts here..."
-        contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "464649") : UIColor(hex: "c5c5c7")
+        //contentTextView.placeholder = self.isComment ? "Add your 2 cents..." : "The rant starts here..."
+        contentTextView.text = self.isComment ? "Add your 2 cents..." : "The rant starts here..."
+        contentTextView.textColor = .lightGray
+        contentTextView.selectedTextRange = contentTextView.textRange(from: contentTextView.beginningOfDocument, to: contentTextView.beginningOfDocument)
+        //contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "464649") : UIColor(hex: "c5c5c7")
         contentTextView.delegate = self
         
         let keyboardToolbar = UIToolbar()
@@ -238,10 +242,31 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text ?? ""
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if updatedText.isEmpty {
+            textView.text = isComment ? "Add your 2 cents..." : "The rant starts here..."
+            textView.textColor = .lightGray
+            
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        } else if textView.textColor == .lightGray && !text.isEmpty {
+            textView.textColor = .label
+            textView.text = text
+        }
+        
         if isComment {
             return textView.text.count + (text.count - range.length) <= 1000
         } else {
             return textView.text.count + (text.count - range.length) <= 5000
+        }
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if self.view.window != nil {
+            if textView.textColor == UIColor.lightGray {
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            }
         }
     }
     
@@ -251,7 +276,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         contentTextView.backgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white
-        contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "464649") : UIColor(hex: "c5c5c7")
+        //contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "464649") : UIColor(hex: "c5c5c7")
         contentTextView.layer.borderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "ffffff")!.withAlphaComponent(0.20).cgColor : UIColor(red: 0, green: 0, blue: 0, alpha: 0.20).cgColor
         contentTextView.layer.borderWidth = 0.333
     }

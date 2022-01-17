@@ -239,9 +239,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         currentBlurFrame = blurView.frame
         
-        tableView.infiniteScrollIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        /*tableView.infiniteScrollIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
         tableView.infiniteScrollIndicatorMargin = 40
-        tableView.infiniteScrollTriggerOffset = 500
+        tableView.infiniteScrollTriggerOffset = 500*/
         
         //tableView.contentInset.top = 40
         

@@ -5,7 +5,7 @@
 //  Created by Omer Shamai on 24/12/2020.
 //
 
-import Foundation
+import UIKit
 
 extension UITableView {
     func getAllCells() -> [UITableViewCell] {

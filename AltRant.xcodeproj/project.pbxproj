@@ -21,6 +21,8 @@
 		59046D9F25A31F0D00C9B4D3 /* NotificationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59046D9E25A31F0D00C9B4D3 /* NotificationsTableViewController.swift */; };
 		59046DA225A3257400C9B4D3 /* ScrollUISegmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59046DA125A3257400C9B4D3 /* ScrollUISegmentController.swift */; };
 		59046DA625A33A0D00C9B4D3 /* NotificationFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59046DA525A33A0D00C9B4D3 /* NotificationFeed.swift */; };
+		590788432795755A002151A1 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 590788422795755A002151A1 /* LoadingCell.xib */; };
+		59078845279575F7002151A1 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59078844279575F7002151A1 /* LoadingCell.swift */; };
 		59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59095F5D25961CB40074BABC /* ComposeViewController.storyboard */; };
 		590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590A82852580B6600025F11A /* StretchyTableHeaderView.swift */; };
 		590FBD2F2631BBAA001DDA9B /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2A2631BBAA001DDA9B /* Appfile */; };
@@ -29,7 +31,6 @@
 		590FBD372631BFF4001DDA9B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD362631BFF3001DDA9B /* .gitignore */; };
 		5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921F2C12598E53900540CF5 /* MoreTableViewController.swift */; };
 		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
-		5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */; };
 		592B1B2F2578F31300109377 /* RantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592B1B2E2578F31300109377 /* RantViewController.swift */; };
 		592F7D2725A4486C005813FA /* RantUpvoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592F7D2625A4486C005813FA /* RantUpvoteCell.swift */; };
 		59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59306E952578E68600F6AD08 /* RantViewController.storyboard */; };
@@ -97,7 +98,6 @@
 		59E671752576CE5B007EEB28 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671732576CE5B007EEB28 /* LoginViewController.swift */; };
 		59E70C6925A5B8FA00F45626 /* NotificationsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */; };
 		59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */; };
-		59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +141,8 @@
 		59046D9E25A31F0D00C9B4D3 /* NotificationsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTableViewController.swift; sourceTree = "<group>"; };
 		59046DA125A3257400C9B4D3 /* ScrollUISegmentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollUISegmentController.swift; sourceTree = "<group>"; };
 		59046DA525A33A0D00C9B4D3 /* NotificationFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFeed.swift; sourceTree = "<group>"; };
+		590788422795755A002151A1 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		59078844279575F7002151A1 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		59095F5D25961CB40074BABC /* ComposeViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeViewController.storyboard; sourceTree = "<group>"; };
 		590A82852580B6600025F11A /* StretchyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableHeaderView.swift; sourceTree = "<group>"; };
 		590FBD2A2631BBAA001DDA9B /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
@@ -150,9 +152,6 @@
 		591A752D257F518F001E1FC2 /* AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltRant.entitlements; sourceTree = "<group>"; };
 		5921F2C12598E53900540CF5 /* MoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewController.swift; sourceTree = "<group>"; };
 		5922A55425778C90009F3025 /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
-		5922A55925779E0B009F3025 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
-		5922A55A25779E1E009F3025 /* AltRant-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AltRant-Bridging-Header.h"; sourceTree = "<group>"; };
-		5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
 		592B1B2E2578F31300109377 /* RantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantViewController.swift; sourceTree = "<group>"; };
 		592F7D2625A4486C005813FA /* RantUpvoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantUpvoteCell.swift; sourceTree = "<group>"; };
 		59306E952578E68600F6AD08 /* RantViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RantViewController.storyboard; sourceTree = "<group>"; };
@@ -216,8 +215,6 @@
 		59E671732576CE5B007EEB28 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsNavigationViewController.swift; sourceTree = "<group>"; };
 		59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
-		59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
-		59FFE6F32594C12E00C3AB0B /* UITextView+Placeholder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
 		6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AltRant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E06FD8442697EB807AAE111D /* Pods-AltRant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AltRant.release.xcconfig"; path = "Target Support Files/Pods-AltRant/Pods-AltRant.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -328,6 +325,8 @@
 				592F7D2625A4486C005813FA /* RantUpvoteCell.swift */,
 				5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */,
 				590A82812580ACFF0025F11A /* Profile View */,
+				590788422795755A002151A1 /* LoadingCell.xib */,
+				59078844279575F7002151A1 /* LoadingCell.swift */,
 			);
 			path = "Template Views";
 			sourceTree = "<group>";
@@ -355,16 +354,11 @@
 		5922A55825779DD1009F3025 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				5922A55925779E0B009F3025 /* UIScrollView+InfiniteScroll.h */,
-				5922A55B25779E1E009F3025 /* UIScrollView+InfiniteScroll.m */,
-				5922A55A25779E1E009F3025 /* AltRant-Bridging-Header.h */,
 				5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */,
 				5958FC78257AD8B8003D1EDD /* KeyboardAvoidingView.swift */,
 				59C3A1D8257E0FAB0082E76F /* UIImage+.swift */,
 				59D253552593334400BEA35A /* Double+truncate.swift */,
 				59B842EB25947876007F16FC /* UITableView+getAllCells.swift */,
-				59FFE6F32594C12E00C3AB0B /* UITextView+Placeholder.h */,
-				59FFE6EF2594C11C00C3AB0B /* UITextView+Placeholder.m */,
 				59B85CBD25988DA300E46948 /* UINavigationController+.swift */,
 				596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */,
 				59039EB125DE3EC800584667 /* UserDefaults+group.swift */,
@@ -563,6 +557,7 @@
 				5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */,
 				59835E872737C0050022D272 /* SettingsViewController.storyboard in Resources */,
 				5904018325762953002B062A /* RantInFeedCell.xib in Resources */,
+				590788432795755A002151A1 /* LoadingCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,7 +651,6 @@
 				59046DA625A33A0D00C9B4D3 /* NotificationFeed.swift in Sources */,
 				592F7D2725A4486C005813FA /* RantUpvoteCell.swift in Sources */,
 				5990652025765FE10058C1D7 /* Profile.swift in Sources */,
-				59FFE6F02594C11C00C3AB0B /* UITextView+Placeholder.m in Sources */,
 				5990651E25765FE10058C1D7 /* CommentModel.swift in Sources */,
 				59BB224C25B42B5E00B4B177 /* AvatarCustomizationOptions.swift in Sources */,
 				59C2EFE425E25C2D00BBCDAB /* AvatarEditorViewController.swift in Sources */,
@@ -666,6 +660,7 @@
 				5954C26525AD78D1008B70D2 /* ExpandingSegmentedView.swift in Sources */,
 				59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */,
 				5990650E257643D60058C1D7 /* TagListView.swift in Sources */,
+				59078845279575F7002151A1 /* LoadingCell.swift in Sources */,
 				59E70C6925A5B8FA00F45626 /* NotificationsNavigationViewController.swift in Sources */,
 				59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */,
 				5954C26825AD8E9B008B70D2 /* RantCommentCell.swift in Sources */,
@@ -674,7 +669,6 @@
 				59C3A1D9257E0FAB0082E76F /* UIImage+.swift in Sources */,
 				5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */,
 				5904016E257627A3002B062A /* ViewController.swift in Sources */,
-				5922A55C25779E1E009F3025 /* UIScrollView+InfiniteScroll.m in Sources */,
 				593B17B025D14C41001FAF6F /* StoriesViewController.swift in Sources */,
 				590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */,
 				59C2EFEF25E25E5E00BBCDAB /* AvatarEditorPickerViewController.swift in Sources */,
@@ -889,7 +883,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "AltRant/Extensions/AltRant-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -920,7 +913,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "AltRant/Extensions/AltRant-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
