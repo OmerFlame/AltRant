@@ -7,7 +7,7 @@
 
 import UIKit
 import ADNavigationBarExtension
-import SPAlert
+//import SPAlert
 
 class NotificationsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var segmentedControl: UISegmentedControl!
@@ -748,8 +748,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 self.tableView.endUpdates()
                 
                 guard currentNotifications.count > 0 else {
-                    let alertView = SPAlertView(message: "No Notifications.")
-                    alertView.present(duration: 1.0)
+                    /*let alertView = SPAlertView(message: "No Notifications.")
+                    alertView.present(duration: 1.0)*/
                     
                     sender.isEnabled = true
                     return
