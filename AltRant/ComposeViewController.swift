@@ -7,7 +7,7 @@
 
 import UIKit
 import UniformTypeIdentifiers
-import SwiftUI
+//import SwiftUI
 
 class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIDocumentPickerDelegate {
     @IBOutlet weak var mainStackView: UIStackView!

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SwiftUI
+//import SwiftUI
 import QuickLook
 
 class RantCell: UITableViewCell, UITextViewDelegate {

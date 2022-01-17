@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import SwiftUI
-import Combine
+//import SwiftUI
+//import Combine
 
 struct RantFeed: Codable {
     struct RantFeedSettings: Codable {

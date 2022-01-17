@@ -7,7 +7,7 @@
 
 import UIKit
 import QuickLook
-import SwiftUI
+//import SwiftUI
 
 class RantInFeedCell: UITableViewCell {
     @IBOutlet weak var upvoteButton: UIButton!
@@ -18,7 +18,8 @@ class RantInFeedCell: UITableViewCell {
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
     
-    var rantContents: Binding<RantInFeed>? = nil
+    //var rantContents: Binding<RantInFeed>? = nil
+    var rantContents: UnsafeMutablePointer<RantInFeed>? = nil
     var parentTableViewController: UIViewController? = nil
     var parentTableView: UITableView? = nil
     
@@ -70,18 +71,18 @@ class RantInFeedCell: UITableViewCell {
         super.init(coder: coder)
     }
     
-    func configure(with model: Binding<RantInFeed>?, image: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
+    func configure(with model: UnsafeMutablePointer<RantInFeed>?, image: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
         self.parentTableViewController = parentTableViewController
         self.parentTableView = parentTableView
         self.supplementalImage = image
         self.rantContents = model
         
-        upvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == 1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
-        scoreLabel.text = String(rantContents!.wrappedValue.score)
-        downvoteButton.tintColor = (rantContents!.wrappedValue.vote_state == -1 ? UIColor(hex: rantContents!.wrappedValue.user_avatar.b)! : UIColor.systemGray)
+        upvoteButton.tintColor = (rantContents!.pointee.vote_state == 1 ? UIColor(hex: rantContents!.pointee.user_avatar.b)! : UIColor.systemGray)
+        scoreLabel.text = String(rantContents!.pointee.score)
+        downvoteButton.tintColor = (rantContents!.pointee.vote_state == -1 ? UIColor(hex: rantContents!.pointee.user_avatar.b)! : UIColor.systemGray)
         
-        upvoteButton.isEnabled = rantContents!.wrappedValue.vote_state != -2
-        downvoteButton.isEnabled = rantContents!.wrappedValue.vote_state != -2
+        upvoteButton.isEnabled = rantContents!.pointee.vote_state != -2
+        downvoteButton.isEnabled = rantContents!.pointee.vote_state != -2
         
         //let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         
@@ -155,21 +156,21 @@ class RantInFeedCell: UITableViewCell {
             }*/
         }
         
-        upvoteButton.isUserInteractionEnabled = rantContents!.wrappedValue.vote_state != -2
-        downvoteButton.isUserInteractionEnabled = rantContents!.wrappedValue.vote_state != -2
+        upvoteButton.isUserInteractionEnabled = rantContents!.pointee.vote_state != -2
+        downvoteButton.isUserInteractionEnabled = rantContents!.pointee.vote_state != -2
         
         //bodyLabel.text = model.wrappedValue.text
         
-        if rantContents!.wrappedValue.text.count > 240 {
-            bodyLabel.text = rantContents!.wrappedValue.text.prefix(240) + "... [read more]"
+        if rantContents!.pointee.text.count > 240 {
+            bodyLabel.text = rantContents!.pointee.text.prefix(240) + "... [read more]"
         } else {
-            bodyLabel.text = rantContents!.wrappedValue.text
+            bodyLabel.text = rantContents!.pointee.text
         }
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
         
         tagList.removeAllTags()
-        tagList.addTags(rantContents!.wrappedValue.tags)
+        tagList.addTags(rantContents!.pointee.tags)
     }
     
     func testConfigure() {
@@ -186,7 +187,7 @@ class RantInFeedCell: UITableViewCell {
     
     @IBAction func handleUpvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.rantContents!.wrappedValue.vote_state {
+            switch self.rantContents!.pointee.vote_state {
             case 0:
                 return 1
                 
@@ -198,13 +199,13 @@ class RantInFeedCell: UITableViewCell {
             }
         }
         
-        let success = APIRequest().voteOnRant(rantID: self.rantContents!.wrappedValue.id, vote: vote)
+        let success = APIRequest().voteOnRant(rantID: self.rantContents!.pointee.id, vote: vote)
         
         if success == nil {
             print("ERROR WHILE UPVOTING")
         } else {
-            self.rantContents!.wrappedValue.vote_state = success!.rant.vote_state
-            self.rantContents!.wrappedValue.score = success!.rant.score
+            self.rantContents!.pointee.vote_state = success!.rant.vote_state
+            self.rantContents!.pointee.score = success!.rant.score
             
             if let parentTableView = self.parentTableView {
                 parentTableView.reloadData()
@@ -214,7 +215,7 @@ class RantInFeedCell: UITableViewCell {
     
     @IBAction func handleDownvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.rantContents!.wrappedValue.vote_state {
+            switch self.rantContents!.pointee.vote_state {
             case 0:
                 return -1
                 
@@ -226,13 +227,13 @@ class RantInFeedCell: UITableViewCell {
             }
         }
         
-        let success = APIRequest().voteOnRant(rantID: self.rantContents!.wrappedValue.id, vote: vote)
+        let success = APIRequest().voteOnRant(rantID: self.rantContents!.pointee.id, vote: vote)
         
         if success == nil {
             print("ERROR WHILE DOWNVOTING")
         } else {
-            self.rantContents!.wrappedValue.vote_state = success!.rant.vote_state
-            self.rantContents!.wrappedValue.score = success!.rant.score
+            self.rantContents!.pointee.vote_state = success!.rant.vote_state
+            self.rantContents!.pointee.score = success!.rant.score
             
             if let parentTableView = self.parentTableView {
                 parentTableView.reloadData()
