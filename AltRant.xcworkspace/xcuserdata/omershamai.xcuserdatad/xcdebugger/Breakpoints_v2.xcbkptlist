@@ -94,8 +94,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -594,6 +594,38 @@
             endingLineNumber = "39"
             landmarkName = "createURLElements(from:range:maximumLength:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3DF2ECBB-30A4-4FB4-B6B0-8988CC2A7A02 - 2fc60e058c8f7336"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static ActiveLabel.ActiveBuilder.createURLElements(from: Swift.String, range: __C._NSRange, maximumLength: Swift.Optional&lt;Swift.Int&gt;) -&gt; (Swift.Array&lt;(range: __C._NSRange, element: ActiveLabel.ActiveElement, type: ActiveLabel.ActiveType)&gt;, Swift.String)"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/ActiveLabel.swift/ActiveLabel/ActiveBuilder.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "896">
+               </Location>
+               <Location
+                  uuid = "3DF2ECBB-30A4-4FB4-B6B0-8988CC2A7A02 - 2fc60e058c8f7336"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static ActiveLabel.ActiveBuilder.createURLElements(from: Swift.String, range: __C._NSRange, maximumLength: Swift.Optional&lt;Swift.Int&gt;) -&gt; (Swift.Array&lt;(range: __C._NSRange, element: ActiveLabel.ActiveElement, type: ActiveLabel.ActiveType)&gt;, Swift.String)"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/ActiveLabel.swift/ActiveLabel/ActiveBuilder.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "912">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -670,8 +702,8 @@
             filePath = "AltRant/Template Views/SecondaryRantInFeed.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "configure(with:image:parentTableViewController:parentTableView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -686,8 +718,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -734,8 +766,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
             landmarkName = "performFetch(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -750,8 +782,8 @@
             filePath = "AltRant/Template Views/SecondaryRantInFeed.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "configure(with:image:parentTableViewController:parentTableView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -766,8 +798,8 @@
             filePath = "AltRant/Template Views/SecondaryRantInFeed.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "configure(with:image:parentTableViewController:parentTableView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -782,8 +814,8 @@
             filePath = "AltRant/Template Views/SecondaryRantInFeed.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "configure(with:image:parentTableViewController:parentTableView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -958,8 +990,8 @@
             filePath = "AltRant/SceneDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
             landmarkName = "scene(_:willConnectTo:options:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1054,9 +1086,9 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
-            landmarkName = "viewDidAppear(_:)"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
+            landmarkName = "checkForSharedURL()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1070,8 +1102,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
             landmarkName = "checkForSharedURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1822,8 +1854,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2030,8 +2062,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "488"
-            endingLineNumber = "488"
+            startingLineNumber = "487"
+            endingLineNumber = "487"
             landmarkName = "getProfileFromID(_:userContentType:skip:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2860,8 +2892,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "getRantFeed(skip:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2876,8 +2908,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2924,8 +2956,8 @@
             filePath = "AltRant/Data Structures/AvatarCustomizationOptions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2940,8 +2972,8 @@
             filePath = "AltRant/Data Structures/AvatarCustomizationOptions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3451,8 +3483,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1003"
-            endingLineNumber = "1003"
+            startingLineNumber = "1002"
+            endingLineNumber = "1002"
             landmarkName = "confirmAvatarCustomization(fullImageURL:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3467,8 +3499,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1011"
-            endingLineNumber = "1011"
+            startingLineNumber = "1010"
+            endingLineNumber = "1010"
             landmarkName = "CodingKeys"
             landmarkType = "13">
          </BreakpointContent>
@@ -3483,8 +3515,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1016"
-            endingLineNumber = "1016"
+            startingLineNumber = "1015"
+            endingLineNumber = "1015"
             landmarkName = "confirmAvatarCustomization(fullImageURL:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3660,8 +3692,8 @@
             filePath = "AltRant/SceneDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "SceneDelegate"
             landmarkType = "3">
          </BreakpointContent>
@@ -4060,8 +4092,8 @@
             filePath = "AltRant/SceneDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
             landmarkName = "scene(_:willConnectTo:options:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4124,8 +4156,8 @@
             filePath = "AltRant/SceneDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "scene(_:continue:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4140,8 +4172,8 @@
             filePath = "AltRant/SceneDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "scene(_:openURLContexts:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4188,8 +4220,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1043"
-            endingLineNumber = "1043"
+            startingLineNumber = "1042"
+            endingLineNumber = "1042"
             landmarkName = "getUserID(username:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4204,8 +4236,8 @@
             filePath = "AltRant/APIRequest.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1035"
-            endingLineNumber = "1035"
+            startingLineNumber = "1034"
+            endingLineNumber = "1034"
             landmarkName = "getUserID(username:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4220,8 +4252,8 @@
             filePath = "AltRant/SceneDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "scene(_:openURLContexts:)"
             landmarkType = "7">
          </BreakpointContent>
