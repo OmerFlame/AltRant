@@ -8,7 +8,7 @@
 import UIKit
 //import SwiftUI
 import QuickLook
-import ActiveLabel
+//import ActiveLabel
 
 
 class CommentCell: UITableViewCell, UITextViewDelegate {
