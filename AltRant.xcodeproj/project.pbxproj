@@ -251,7 +251,6 @@
 				59040168257627A3002B062A /* AltRant */,
 				594EDDDA2709BC9B0087F50B /* Open with AltRant */,
 				59040167257627A3002B062A /* Products */,
-				8E4192960C2659B5F29215A8 /* Pods */,
 				9BDBB6D9485395515B96ED21 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -418,13 +417,6 @@
 			path = "Data Structures";
 			sourceTree = "<group>";
 		};
-		8E4192960C2659B5F29215A8 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		9BDBB6D9485395515B96ED21 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -511,7 +503,7 @@
 			);
 			mainGroup = 5904015D257627A3002B062A;
 			packageReferences = (
-				59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel.swift" */,
+				59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */,
 				59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */,
 				59B67FC5262C3D6C00311F65 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				59DB9CC7262C76C4009A4704 /* XCRemoteSwiftPackageReference "Haptica" */,
@@ -977,7 +969,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel.swift" */ = {
+		59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/optonaut/ActiveLabel.swift";
 			requirement = {
@@ -1046,7 +1038,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		59007D8E25C1703D0088EC33 /* ActiveLabel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel.swift" */;
+			package = 59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */;
 			productName = ActiveLabel;
 		};
 		590788472796ACB6002151A1 /* BadgeControl */ = {
