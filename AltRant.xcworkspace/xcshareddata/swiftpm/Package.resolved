@@ -11,12 +11,39 @@
         }
       },
       {
+        "package": "ADNavigationBarExtension",
+        "repositoryURL": "https://github.com/OmerFlame/ADNavigationBarExtension",
+        "state": {
+          "branch": "master",
+          "revision": "4587d29004bc79c37ab0b397851a381ecc0ba8f1",
+          "version": null
+        }
+      },
+      {
+        "package": "ADUtils",
+        "repositoryURL": "https://github.com/faberNovel/ADUtils.git",
+        "state": {
+          "branch": null,
+          "revision": "b4e22024b226621ed8c4429eef73f490d41cc50f",
+          "version": "11.2.0"
+        }
+      },
+      {
+        "package": "BadgeControl",
+        "repositoryURL": "https://github.com/OmerFlame/BadgeControl",
+        "state": {
+          "branch": "master",
+          "revision": "917b914ea376456252232c75ae906bf0a5c4dde3",
+          "version": null
+        }
+      },
+      {
         "package": "FloatingPanel",
         "repositoryURL": "https://github.com/scenee/FloatingPanel",
         "state": {
           "branch": null,
-          "revision": "16fea625be25d9a713630a4a43cbc0778740ebf4",
-          "version": "2.3.0"
+          "revision": "0fbbbc8d99b4dfe58bb1dd704d14b45f35b46584",
+          "version": "2.5.1"
         }
       },
       {
@@ -24,8 +51,8 @@
         "repositoryURL": "https://github.com/efremidze/Haptica",
         "state": {
           "branch": null,
-          "revision": "4084702c85102c2d17d58e42ec5a750094944864",
-          "version": "3.0.2"
+          "revision": "e03932406d2f36f10beefd31717730b2c2fa9014",
+          "version": "3.0.3"
         }
       },
       {
@@ -42,8 +69,8 @@
         "repositoryURL": "https://github.com/getsentry/sentry-cocoa",
         "state": {
           "branch": null,
-          "revision": "eb09cfa3ebcb96ca4a7f8f8de6c5d7aff4c48c0e",
-          "version": "7.2.7"
+          "revision": "967f04b3cd6989df3f9ced3060481a21646c146d",
+          "version": "7.9.0"
         }
       },
       {
@@ -51,8 +78,8 @@
         "repositoryURL": "https://github.com/ivanvorobei/SPAlert",
         "state": {
           "branch": null,
-          "revision": "2a2d80bf65945108ace5f639d43473a2d1c059e6",
-          "version": "3.4.0"
+          "revision": "52c6fbfd025c8aeb2236c4f629dcca59e0060de6",
+          "version": "3.5.1"
         }
       }
     ]

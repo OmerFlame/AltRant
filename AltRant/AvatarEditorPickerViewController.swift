@@ -449,7 +449,7 @@ class PreferenceCell: UICollectionViewCell {
 			if let badgeValue = badgeValue {
 				let badgeBackgroundColor = UIColor(hex: "37495b")!
 				
-				upperRightBadge = BadgeController(for: self, in: .upperRightCorner, badgeBackgroundColor: badgeBackgroundColor, badgeTextColor: .white, borderWidth: 0, badgeHeight: 20)
+				upperRightBadge = BadgeController(for: self, in: BadgeCenterPosition.upperRightCorner, badgeBackgroundColor: badgeBackgroundColor, badgeTextColor: UIColor.white, borderWidth: 0, badgeHeight: 20)
 				upperRightBadge.addOrReplaceCurrent(with: "\(badgeValue)", animated: false)
 			}
 			

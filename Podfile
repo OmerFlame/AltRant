@@ -6,7 +6,5 @@ target 'AltRant' do
   use_frameworks!
 
   # Pods for AltRant
-  pod 'ADNavigationBarExtension'
   pod 'ContextLabel', '~> 1.5.0'
-  pod 'BadgeControl'
 end
