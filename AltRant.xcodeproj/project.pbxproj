@@ -73,7 +73,6 @@
 		59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */; };
 		59AD346125ADB1C6004D5DD6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AD346025ADB1C6004D5DD6 /* Cache.swift */; };
 		59B67FC7262C3D6C00311F65 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 59B67FC6262C3D6C00311F65 /* FloatingPanel */; };
-		59B6F34E25D43E0200F0887E /* Pods_AltRant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */; };
 		59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B842EB25947876007F16FC /* UITableView+getAllCells.swift */; };
 		59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CBD25988DA300E46948 /* UINavigationController+.swift */; };
 		59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CC02598DAD900E46948 /* MoreCell.swift */; };
@@ -126,7 +125,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0041FA4FBD2B07EA6643FBBE /* Pods-AltRant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AltRant.debug.xcconfig"; path = "Target Support Files/Pods-AltRant/Pods-AltRant.debug.xcconfig"; sourceTree = "<group>"; };
 		59039EB125DE3EC800584667 /* UserDefaults+group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+group.swift"; sourceTree = "<group>"; };
 		59039EB425DE47D700584667 /* ios-76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios-76x76.png"; sourceTree = "<group>"; };
 		59040166257627A3002B062A /* AltRant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AltRant.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,8 +214,6 @@
 		59E671732576CE5B007EEB28 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsNavigationViewController.swift; sourceTree = "<group>"; };
 		59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
-		6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AltRant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E06FD8442697EB807AAE111D /* Pods-AltRant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AltRant.release.xcconfig"; path = "Target Support Files/Pods-AltRant/Pods-AltRant.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +221,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59B6F34E25D43E0200F0887E /* Pods_AltRant.framework in Frameworks */,
 				59D2B95427059AAB00C695E3 /* SPAlert in Frameworks */,
 				5907884B2796B3A8002151A1 /* ADNavigationBarExtension in Frameworks */,
 				59CA4FB125CA8BB6005FB279 /* PullUpController in Frameworks */,
@@ -426,8 +421,6 @@
 		8E4192960C2659B5F29215A8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0041FA4FBD2B07EA6643FBBE /* Pods-AltRant.debug.xcconfig */,
-				E06FD8442697EB807AAE111D /* Pods-AltRant.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -436,7 +429,6 @@
 			isa = PBXGroup;
 			children = (
 				594F4AAC25A88A6100923B0E /* ADNavigationBarExtension.framework */,
-				6AA83E484F285185DA29DAF0 /* Pods_AltRant.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -448,11 +440,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5904017A257627A5002B062A /* Build configuration list for PBXNativeTarget "AltRant" */;
 			buildPhases = (
-				EFBFA567C38906DD82D102AE /* [CP] Check Pods Manifest.lock */,
 				59040162257627A3002B062A /* Sources */,
 				59040163257627A3002B062A /* Frameworks */,
 				59040164257627A3002B062A /* Resources */,
-				2ACCDF485ED975C01E78EEC6 /* [CP] Embed Pods Frameworks */,
 				59039ECA25DE484800584667 /* Embed App Extensions */,
 				59B8CCD4263E8083007213A4 /* Increment Build Number */,
 			);
@@ -521,7 +511,7 @@
 			);
 			mainGroup = 5904015D257627A3002B062A;
 			packageReferences = (
-				59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */,
+				59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel.swift" */,
 				59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */,
 				59B67FC5262C3D6C00311F65 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				59DB9CC7262C76C4009A4704 /* XCRemoteSwiftPackageReference "Haptica" */,
@@ -585,23 +575,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2ACCDF485ED975C01E78EEC6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AltRant/Pods-AltRant-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AltRant/Pods-AltRant-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AltRant/Pods-AltRant-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		59B8CCD4263E8083007213A4 /* Increment Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -619,28 +592,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
-		};
-		EFBFA567C38906DD82D102AE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AltRant-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -866,7 +817,6 @@
 		};
 		5904017B257627A5002B062A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0041FA4FBD2B07EA6643FBBE /* Pods-AltRant.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -897,7 +847,6 @@
 		};
 		5904017C257627A5002B062A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E06FD8442697EB807AAE111D /* Pods-AltRant.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1028,7 +977,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */ = {
+		59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/optonaut/ActiveLabel.swift";
 			requirement = {
@@ -1097,7 +1046,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		59007D8E25C1703D0088EC33 /* ActiveLabel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */;
+			package = 59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel.swift" */;
 			productName = ActiveLabel;
 		};
 		590788472796ACB6002151A1 /* BadgeControl */ = {
