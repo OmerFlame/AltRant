@@ -224,11 +224,12 @@
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                         </textView>
-                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="L6a-Oe-RVg">
-                                                            <rect key="frame" x="0.0" y="187" width="50" height="50"/>
+                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="L6a-Oe-RVg">
+                                                            <rect key="frame" x="0.0" y="187" width="334" height="50"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" id="1tL-Vn-YY1"/>
-                                                                <constraint firstAttribute="height" id="wRh-BZ-CDl"/>
+                                                                <constraint firstAttribute="height" constant="50" id="PqZ-4w-4pf"/>
+                                                                <constraint firstAttribute="height" priority="999" constant="50" id="wRh-BZ-CDl"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -237,7 +238,8 @@
                                                             </userDefinedRuntimeAttributes>
                                                             <variation key="default">
                                                                 <mask key="constraints">
-                                                                    <exclude reference="wRh-BZ-CDl"/>
+                                                                    <exclude reference="1tL-Vn-YY1"/>
+                                                                    <exclude reference="PqZ-4w-4pf"/>
                                                                 </mask>
                                                             </variation>
                                                         </imageView>
@@ -272,14 +274,17 @@
                                                     <constraints>
                                                         <constraint firstItem="L6a-Oe-RVg" firstAttribute="leading" secondItem="hcR-Zu-vOh" secondAttribute="leading" id="0cd-T7-2w8"/>
                                                         <constraint firstItem="L6a-Oe-RVg" firstAttribute="top" secondItem="hcR-Zu-vOh" secondAttribute="bottom" constant="8" id="7MM-Rh-93I"/>
-                                                        <constraint firstItem="L6a-Oe-RVg" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="xbz-om-ezW" secondAttribute="trailing" id="Ccc-IF-rMD"/>
+                                                        <constraint firstItem="L6a-Oe-RVg" firstAttribute="trailing" secondItem="xbz-om-ezW" secondAttribute="trailing" id="Ccc-IF-rMD"/>
                                                         <constraint firstItem="hcR-Zu-vOh" firstAttribute="leading" secondItem="xbz-om-ezW" secondAttribute="leading" id="NgR-N3-UE6"/>
+                                                        <constraint firstItem="L6a-Oe-RVg" firstAttribute="width" secondItem="hcR-Zu-vOh" secondAttribute="width" id="Zti-tL-lUi"/>
                                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="hcR-Zu-vOh" secondAttribute="trailing" id="mIv-r1-iJc"/>
                                                         <constraint firstAttribute="bottom" secondItem="1vm-oH-mVd" secondAttribute="bottom" id="pFy-tm-M7z"/>
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
+                                                            <exclude reference="0cd-T7-2w8"/>
                                                             <exclude reference="7MM-Rh-93I"/>
+                                                            <exclude reference="Ccc-IF-rMD"/>
                                                         </mask>
                                                     </variation>
                                                 </stackView>

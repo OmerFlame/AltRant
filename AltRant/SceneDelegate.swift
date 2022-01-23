@@ -7,6 +7,8 @@
 
 import UIKit
 
+let windowResizeNotification = NSNotification.Name("WindowDidResize")
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -172,7 +174,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func windowScene(_ windowScene: UIWindowScene, didUpdate previousCoordinateSpace: UICoordinateSpace, interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation, traitCollection previousTraitCollection: UITraitCollection) {
-        NotificationCenter.default.post(name: NSNotification.Name("WindowDidResize"), object: nil)
+        NotificationCenter.default.post(name: windowResizeNotification, object: nil)
     }
 }
 

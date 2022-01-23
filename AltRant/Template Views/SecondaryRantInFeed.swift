@@ -122,10 +122,10 @@ class SecondaryRantInFeedCell: UITableViewCell {
                 supplementalImageView.image = UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!
             }*/
             
-            let resizeMultiplier = supplementalImage!.size!.width / textStackView.frame.size.width
+            //let resizeMultiplier = supplementalImage!.size!.width / textStackView.frame.size.width
             
-            let finalWidth = supplementalImage!.size!.width / resizeMultiplier
-            let finalHeight = supplementalImage!.size!.height / resizeMultiplier
+            //let finalWidth = supplementalImage!.size!.width / resizeMultiplier
+            //let finalHeight = supplementalImage!.size!.height / resizeMultiplier
             
             supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
             
@@ -135,9 +135,17 @@ class SecondaryRantInFeedCell: UITableViewCell {
             
             //supplementalImageView.frame.size = CGSize(width: finalWidth, height: finalHeight)
             
+            //imageViewHeightConstraint.constant = finalHeight
+            
+            let resizeMultiplier = supplementalImageView.frame.size.width / supplementalImageView.image!.size.width
+            
+            let finalHeight = supplementalImageView.image!.size.height * resizeMultiplier
+            
             imageViewHeightConstraint.constant = finalHeight
             
             print("IMAGE FRAME: \(supplementalImageView.frame.size)")
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(windowResizeHandler), name: windowResizeNotification, object: nil)
             
             /*if UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.size.width > textStackView.frame.size.width {
                 UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, resizeMultiplier)
@@ -224,5 +232,19 @@ class SecondaryRantInFeedCell: UITableViewCell {
                 parentTableView.reloadData()
             }
         }
+    }
+    
+    @objc func windowResizeHandler() {
+        guard supplementalImageView.image != nil else {
+            return
+        }
+        
+        let resizeMultiplier = supplementalImageView.frame.size.width / supplementalImageView.image!.size.width
+        
+        let finalHeight = supplementalImageView.image!.size.height * resizeMultiplier
+        
+        imageViewHeightConstraint.constant = finalHeight
+        
+        layoutIfNeeded()
     }
 }

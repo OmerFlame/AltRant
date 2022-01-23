@@ -39,6 +39,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         
         NotificationCenter.default.addObserver(self, selector: #selector(checkForSharedURL), name: UIWindowScene.didActivateNotification, object: nil)
         
+        tableView.estimatedRowHeight = 500
+        tableView.rowHeight = UITableView.automaticDimension
+        
         //edgesForExtendedLayout = []
         
         //self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -175,9 +178,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         }
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    /*override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cellHeights[indexPath] = cell.frame.size.height
-    }
+    }*/
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return cellHeights[indexPath] ?? UITableView.automaticDimension
@@ -242,9 +245,22 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 
                 self.currentPage += 1
                 
+                
+                CATransaction.begin()
+                
+                CATransaction.setCompletionBlock {
+                    NotificationCenter.default.post(name: windowResizeNotification, object: nil)
+                }
+                
                 self.tableView.beginUpdates()
                 self.tableView.insertRows(at: indexPaths, with: .automatic)
                 self.tableView.endUpdates()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.tableView.reloadData()
+                }
+                
+                CATransaction.commit()
                 
                 break
                 
@@ -317,7 +333,8 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         
             //cell = RantInFeedCell.loadFromXIB()
             cell.configure(with: Optional(&rantFeed.rantFeed[indexPath.row]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
-        
+            
+            cell.layoutIfNeeded()
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
@@ -340,6 +357,12 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             
             return cell
         }*/
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        NotificationCenter.default.post(name: windowResizeNotification, object: nil)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
