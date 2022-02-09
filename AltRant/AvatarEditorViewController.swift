@@ -7,6 +7,7 @@
 
 import UIKit
 import FloatingPanel
+import SwiftRant
 
 class AvatarEditorViewController: UIViewController, FloatingPanelControllerDelegate, AvatarEditorPickerViewControllerDelegate {
     //private var originalPullUpControllerViewSize: CGSize = .zero
@@ -35,7 +36,46 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
         })
         
         // TODO: - Ask for the current image while initializing the class, don't get it manually
-        APIRequest().getProfileFromID(UserDefaults.standard.integer(forKey: "DRUserID"), userContentType: .rants, skip: 0, completionHandler: { result in
+        SwiftRant.shared.getProfileFromID(SwiftRant.shared.tokenFromKeychain!.authToken.userID, token: nil, userContentType: .rants, skip: 0, completionHandler: { [weak self] error, result in
+            if result != nil {
+                SwiftRant.shared.getAvatarCustomizationOptions(nil, type: "g", subType: nil, currentImageID: result!.avatar.avatarImage!, shouldGetPossibleOptions: true) { [weak self] customizationError, customizationResults in
+                    self?.customizationResults = customizationResults
+                    
+                    if let options = self?.customizationResults.avatars {
+                        self?.currentAvatarImageView.backgroundColor = UIColor(hex: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")
+                        
+                        //self?.currentAvatarImageView.image = self?.customizationResults.avatars.first(where: { ($0.isSelected ?? false) })?.image
+                        
+                        /*Task {
+                            self?.currentAvatarImageView.image = await UIImage().loadFromWeb(url: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })?.image.)
+                        }*/
+                        
+                        self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })?.image.getFullImage(shouldUseCache: true) { [weak self] image in
+                            DispatchQueue.main.async {
+                                self?.currentAvatarImageView.image = image
+                            }
+                        }
+                        
+                        (self?.fpc.contentViewController as! AvatarEditorPickerViewController).userPoints = result?.score
+                        (self?.fpc.contentViewController as! AvatarEditorPickerViewController).selectedIndexPath = IndexPath(row: self?.customizationResults.avatars.firstIndex(where: { $0.isSelected ?? false })! ?? 0, section: 0)
+                        (self?.fpc.contentViewController as! AvatarEditorPickerViewController).updateTypes(types: self?.customizationResults.types ?? [])
+                        (self?.fpc.contentViewController as! AvatarEditorPickerViewController).updateOptions(options: options)
+                        
+                        DispatchQueue.main.async {
+                            (self?.fpc.contentViewController as! AvatarEditorPickerViewController).categoryPickerButton.setTitle(self?.customizationResults.types?[0].label, for: .normal)
+                            (self?.fpc.contentViewController as! AvatarEditorPickerViewController).categoryPickerButton.sizeToFit()
+                            (self?.fpc.contentViewController as! AvatarEditorPickerViewController).activityIndicator.stopAnimating()
+                            
+                            UIView.animate(withDuration: 0.3, animations: {
+                                (self?.fpc.contentViewController as! AvatarEditorPickerViewController).disablerView.alpha = 0
+                                (self?.fpc.contentViewController as! AvatarEditorPickerViewController).disablerView.isHidden = true
+                            })
+                        }
+                    }
+                }
+            }
+        })
+        /*APIRequest().getProfileFromID(UserDefaults.standard.integer(forKey: "DRUserID"), userContentType: .rants, skip: 0, completionHandler: { result in
             
             APIRequest().getAvatarCustomizationOptions(option: "g", subOption: nil, currentImageURL: result!.profile.avatar.i!, shouldGetPossibleOptions: true, completionHandler: { customizationResults in
                 self.customizationResults = customizationResults
@@ -70,7 +110,7 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
                     }
                 }
             })
-        })
+        })*/
     }
 	
 	@objc func save() {
@@ -81,28 +121,30 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
 		
 		let imageName = (fpc.contentViewController as! AvatarEditorPickerViewController).preferences[(fpc.contentViewController as! AvatarEditorPickerViewController).selectedIndexPath.row].image.fullImageName
 		
-		APIRequest().confirmAvatarCustomization(fullImageURL: "https://avatars.devrant.com/\(imageName)", completionHandler: { success, error in
+        
+        
+        SwiftRant.shared.confirmAvatarCustomization(nil, fullImageID: "https://avatars.devrant.com/\(imageName)", completionHandler: { [weak self] error, success in
 			if success {
 				DispatchQueue.main.async {
-					self.navigationController?.navigationBar.isUserInteractionEnabled = true
-					self.navigationController?.navigationBar.tintColor = .systemBlue
+					self?.navigationController?.navigationBar.isUserInteractionEnabled = true
+					self?.navigationController?.navigationBar.tintColor = .systemBlue
 					
-					self.navigationController!.popViewController(animated: true)
+					self?.navigationController!.popViewController(animated: true)
 				}
 			} else {
 				let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
 				
-				let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { _ in self.save() })
+				let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { _ in self?.save() })
 				let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 				
 				alert.addAction(retryAction)
 				alert.addAction(cancelAction)
 				
 				DispatchQueue.main.async {
-					self.navigationController?.navigationBar.isUserInteractionEnabled = true
-					self.navigationController?.navigationBar.tintColor = .systemBlue
+					self?.navigationController?.navigationBar.isUserInteractionEnabled = true
+					self?.navigationController?.navigationBar.tintColor = .systemBlue
 					
-					self.present(alert, animated: true, completion: nil)
+					self?.present(alert, animated: true, completion: nil)
 				}
 			}
 		})
@@ -214,24 +256,24 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
         }
     }
     
-    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResult) {
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResults.AvatarCustomizationOption) {
         //currentAvatarImageView.image = option.image.fullImage
 		
 		currentAvatarImageView.backgroundColor = UIColor(hex: option.image.backgroundColor)!
 		
 		currentAvatarImageView.image = nil
 		
-		option.image.getFullImage(completion: { image in
+        option.image.getFullImage(shouldUseCache: true, completion: { image in
 			DispatchQueue.main.async {
 				self.currentAvatarImageView.image = image
 			}
 		})
     }
     
-    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectCategory category: AvatarCustomizationOption) {
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectCategory category: AvatarCustomizationResults.AvatarCustomizationType) {
 		let currentImageURL = editorPickerView.preferences[editorPickerView.selectedIndexPath.row].image.fullImageName
 		
-		editorPickerView.updateImages(images: [])
+		editorPickerView.updateOptions(options: [])
 		//editorPickerView.collectionView.deleteItems(at: (0..<editorPickerView.collectionView.numberOfItems(inSection: 0)).map { IndexPath(row: $0, section: 0) })
 		
         UIView.animate(withDuration: 0.3, animations: {
@@ -242,15 +284,15 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
             editorPickerView.activityIndicator.startAnimating()
         })
         
-        APIRequest().getAvatarCustomizationOptions(option: category.id, subOption: category.subType, currentImageURL: currentImageURL, shouldGetPossibleOptions: false, completionHandler: { results in
-            self.customizationResults = results
+        SwiftRant.shared.getAvatarCustomizationOptions(nil, type: category.id, subType: category.subType, currentImageID: currentImageURL, shouldGetPossibleOptions: false, completionHandler: { [weak self] error, results in
+            self?.customizationResults = results
             
             DispatchQueue.main.async {
-				self.currentAvatarImageView.backgroundColor = UIColor(hex: self.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor)
+				self?.currentAvatarImageView.backgroundColor = UIColor(hex: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")
 				
-				self.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.getFullImage(completion: { image in
+                self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.getFullImage(shouldUseCache: true, completion: { image in
 					DispatchQueue.main.async {
-						self.currentAvatarImageView.image = image
+						self?.currentAvatarImageView.image = image
 					}
 				})
 				
@@ -261,15 +303,15 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
 				}
 				
                 //self.currentAvatarImageView.image = self.customizationResults.avatars.first(where: { ($0.isSelected ?? false) })?.image.fullImage
-				editorPickerView.selectedIndexPath = IndexPath(row: self.customizationResults.avatars.firstIndex(where: { ($0.isSelected ?? false) })!, section: 0)
-                editorPickerView.updateImages(images: self.customizationResults.avatars)
+				editorPickerView.selectedIndexPath = IndexPath(row: self?.customizationResults.avatars.firstIndex(where: { ($0.isSelected ?? false) })! ?? 0, section: 0)
+                editorPickerView.updateOptions(options: self?.customizationResults.avatars ?? [])
 				//editorPickerView.activityIndicator.isHidden = true
 				
 				UIView.animate(withDuration: 0.3, animations: {
 					editorPickerView.disablerView.alpha = 0
 					editorPickerView.disablerView.isHidden = true
 				}, completion: { _ in
-					(self.fpc.contentViewController as! AvatarEditorPickerViewController).activityIndicator.stopAnimating()
+					(self?.fpc.contentViewController as! AvatarEditorPickerViewController).activityIndicator.stopAnimating()
 				})
             }
         })

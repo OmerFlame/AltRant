@@ -19,4 +19,14 @@ public extension UIImage {
         guard let cgImage = image?.cgImage else { return nil }
         self.init(cgImage: cgImage)
     }
+    
+    func loadFromWeb(url: URL) -> UIImage? {
+        if let data = try? Data(contentsOf: url) {
+            if let image = UIImage(data: data) {
+                return image
+            }
+        }
+        
+        return nil
+    }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import QuickLook
+import SwiftRant
 
 /// - Tag: File
 struct File {
@@ -109,7 +110,7 @@ extension File {
 
 // MARK: - Helper extension
 extension File {
-    static func loadFiles(images: [AttachedImage]) -> [File] {
+    static func loadFiles(images: [Rant.AttachedImage]) -> [File] {
         let completionSemaphore = DispatchSemaphore(value: 0)
         
         //let requestGroup = DispatchGroup()
@@ -123,20 +124,20 @@ extension File {
             
             let session = URLSession(configuration: .default)
             
-            session.dataTask(with: URL(string: image.url!)!) { data, _, _ in
+            session.dataTask(with: URL(string: image.url)!) { data, _, _ in
                 receivedData = data
                 
                 innerCompletionSemaphore.signal()
             }.resume()
             
             innerCompletionSemaphore.wait()
-            let filename = URL(string: image.url!)!.lastPathComponent
+            let filename = URL(string: image.url)!.lastPathComponent
             
             let previewURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(filename)
             try! receivedData?.write(to: previewURL, options: .atomic)
             //previewURL.hasHiddenExtension = true
             
-            let finalFile = File(url: previewURL, size: CGSize(width: image.width!, height: image.height!))
+            let finalFile = File(url: previewURL, size: CGSize(width: image.width, height: image.height))
             
             finalArray.append(finalFile)
             
@@ -149,20 +150,20 @@ extension File {
         return finalArray
     }
     
-    static func loadFile(image: AttachedImage, size: CGSize) -> File {
+    static func loadFile(image: Rant.AttachedImage, size: CGSize) -> File {
         let completionSemaphore = DispatchSemaphore(value: 0)
         var receivedData: Data? = nil
         
         let session = URLSession(configuration: .default)
         
-        session.dataTask(with: (URL(string: image.url!)!)) { data, _, _ in
+        session.dataTask(with: (URL(string: image.url)!)) { data, _, _ in
             receivedData = data
             
             completionSemaphore.signal()
         }.resume()
         
         completionSemaphore.wait()
-        let filename = URL(string: image.url!)!.lastPathComponent// + ".jpg"
+        let filename = URL(string: image.url)!.lastPathComponent// + ".jpg"
         
         let previewURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(filename)
         try! receivedData?.write(to: previewURL, options: .atomic)

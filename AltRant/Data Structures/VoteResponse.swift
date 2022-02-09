@@ -4,7 +4,7 @@
 //
 //  Created by Omer Shamai on 12/7/20.
 //
-
+/*
 import Foundation
 
 struct RantVoteResponse: Codable {
@@ -16,3 +16,4 @@ struct CommentVoteResponse: Codable {
     let success: Bool
     let comment: CommentModel
 }
+*/

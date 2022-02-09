@@ -5,7 +5,7 @@
 //  Created by Omer Shamai on 9/25/20.
 //
 
-import Foundation
+/*import Foundation
 
 struct Profile: Codable {
     let username: String
@@ -112,3 +112,4 @@ struct ProfileResponse: Codable {
         profile = try values.decode(Profile.self, forKey: .profile)
     }
 }
+*/

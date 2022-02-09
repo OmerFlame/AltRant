@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RantInFeed: Codable, Identifiable {
+/*public struct RantInFeed: Codable, Identifiable {
     let uuid = UUID()
     
     public let id: Int
@@ -87,3 +87,4 @@ public struct RantInFeed: Codable, Identifiable {
         user_dpp = try? values.decode(Int.self, forKey: .user_dpp)
     }
 }
+*/

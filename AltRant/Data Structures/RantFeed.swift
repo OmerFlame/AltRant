@@ -5,7 +5,7 @@
 //  Created by Omer Shamai on 10/1/20.
 //
 
-import Foundation
+/*import Foundation
 //import SwiftUI
 //import Combine
 
@@ -187,4 +187,4 @@ class RantFeedModel {
 enum Result<T, U: Error> {
     case success(T)
     case failure(U)
-}
+}*/

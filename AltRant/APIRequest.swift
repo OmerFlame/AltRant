@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import UIKit
+/*import UIKit
 //import Sentry
 
 enum APIError: Error {
@@ -1081,7 +1081,7 @@ class APIRequest {
         
         return body
     }
-}
+}*/
 
 extension Data {
     mutating func appendString(_ string: String) {

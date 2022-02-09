@@ -7,6 +7,7 @@
 
 import UIKit
 import QuickLook
+import SwiftRant
 
 class SecondaryRantInFeedCell: UITableViewCell {
     @IBOutlet weak var upvoteButton: UIButton!
@@ -81,12 +82,12 @@ class SecondaryRantInFeedCell: UITableViewCell {
         supplementalImageView.isHidden = false
         tagList.isHidden = false
         
-        upvoteButton.tintColor = (rantContents!.pointee.vote_state == 1 ? UIColor(hex: rantContents!.pointee.user_avatar.b)! : UIColor.systemGray)
+        upvoteButton.tintColor = (rantContents!.pointee.voteState == 1 ? UIColor(hex: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
         scoreLabel.text = String(rantContents!.pointee.score)
-        downvoteButton.tintColor = (rantContents!.pointee.vote_state == -1 ? UIColor(hex: rantContents!.pointee.user_avatar.b)! : UIColor.systemGray)
+        downvoteButton.tintColor = (rantContents!.pointee.voteState == -1 ? UIColor(hex: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
         
-        upvoteButton.isEnabled = rantContents!.pointee.vote_state != -2
-        downvoteButton.isEnabled = rantContents!.pointee.vote_state != -2
+        upvoteButton.isEnabled = rantContents!.pointee.voteState != -2
+        downvoteButton.isEnabled = rantContents!.pointee.voteState != -2
         
         if image == nil {
             supplementalImageView.image = nil
@@ -161,8 +162,8 @@ class SecondaryRantInFeedCell: UITableViewCell {
             //supplementalImageView.image = UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!
         }
         
-        upvoteButton.isUserInteractionEnabled = rantContents!.pointee.vote_state != -2
-        downvoteButton.isUserInteractionEnabled = rantContents!.pointee.vote_state != -2
+        upvoteButton.isUserInteractionEnabled = rantContents!.pointee.voteState != -2
+        downvoteButton.isUserInteractionEnabled = rantContents!.pointee.voteState != -2
         
         if rantContents!.pointee.text.count > 240 {
             bodyLabel.text = rantContents!.pointee.text.prefix(240) + "... [read more]"
@@ -180,7 +181,7 @@ class SecondaryRantInFeedCell: UITableViewCell {
     
     @IBAction func handleUpvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.rantContents!.pointee.vote_state {
+            switch self.rantContents!.pointee.voteState {
             case 0:
                 return 1
                 
@@ -192,7 +193,7 @@ class SecondaryRantInFeedCell: UITableViewCell {
             }
         }
         
-        let success = APIRequest().voteOnRant(rantID: self.rantContents!.pointee.id, vote: vote)
+        /*let success = APIRequest().voteOnRant(rantID: self.rantContents!.pointee.id, vote: vote)
         
         if success == nil {
             print("ERROR WHILE UPVOTING")
@@ -203,12 +204,29 @@ class SecondaryRantInFeedCell: UITableViewCell {
             if let parentTableView = self.parentTableView {
                 parentTableView.reloadData()
             }
+        }*/
+        
+        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
+            if updatedRant != nil {
+                self?.rantContents!.pointee.voteState = updatedRant!.voteState
+                self?.rantContents!.pointee.score = updatedRant!.score
+                
+                if let parentTableView = self?.parentTableView {
+                    parentTableView.reloadData()
+                }
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
+            }
         }
     }
     
     @IBAction func handleDownvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.rantContents!.pointee.vote_state {
+            switch self.rantContents!.pointee.voteState {
             case 0:
                 return -1
                 
@@ -220,7 +238,7 @@ class SecondaryRantInFeedCell: UITableViewCell {
             }
         }
         
-        let success = APIRequest().voteOnRant(rantID: self.rantContents!.pointee.id, vote: vote)
+        /*let success = APIRequest().voteOnRant(rantID: self.rantContents!.pointee.id, vote: vote)
         
         if success == nil {
             print("ERROR WHILE DOWNVOTING")
@@ -230,6 +248,23 @@ class SecondaryRantInFeedCell: UITableViewCell {
             
             if let parentTableView = self.parentTableView {
                 parentTableView.reloadData()
+            }
+        }*/
+        
+        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
+            if updatedRant != nil {
+                self?.rantContents!.pointee.voteState = updatedRant!.voteState
+                self?.rantContents!.pointee.score = updatedRant!.score
+                
+                if let parentTableView = self?.parentTableView {
+                    parentTableView.reloadData()
+                }
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
             }
         }
     }

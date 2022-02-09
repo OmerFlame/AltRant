@@ -34,7 +34,9 @@ extension UITableView {
         return cells
     }
     
-    func reloadData(completion: @escaping () -> ()) {
-        UIView.animate(withDuration: 0, animations: { self.reloadData() }) { _ in completion() }
+    func reloadData(completion: @MainActor @escaping () -> ()) {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0, animations: { self.reloadData() }) { _ in completion() }
+        }
     }
 }

@@ -10,10 +10,12 @@ import UIKit
 //import SwiftUI
 import ADNavigationBarExtension
 import UserNotifications
+import SwiftRant
+import SwiftKeychainWrapper
 //import Sentry
 
 class rantFeedData {
-    var rantFeed = [RantInFeed]()
+    var rantFeed = [RantFeed]()
 }
 
 class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate {
@@ -42,19 +44,20 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         tableView.estimatedRowHeight = 500
         tableView.rowHeight = UITableView.automaticDimension
         
+        let loadingCellNib = UINib(nibName: "LoadingCell", bundle: nil)
+        tableView.register(loadingCellNib, forCellReuseIdentifier: "LoadingCell")
+        
         //edgesForExtendedLayout = []
         
         //self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         //self.navigationController?.navigationBar.shadowImage = UIImage()
         //self.navigationController?.navigationBar.isTranslucent = true
         
-        if UserDefaults.standard.integer(forKey: "DRUserID") == 0 || UserDefaults.standard.integer(forKey: "DRTokenID") == 0 || UserDefaults.standard.string(forKey: "DRTokenKey") == nil {
+        if SwiftRant.shared.tokenFromKeychain == nil {
             
             //let loginVC = UINib(nibName: "LoginViewController", bundle: nil).instantiate(withOwner: self, options: nil)[0] as? LoginViewController
             
             let loginVC = UIStoryboard(name: "LoginViewController", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! UINavigationController
-            
-            
             
             loginVC.isModalInPresentation = true
             
@@ -62,8 +65,6 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             
             (loginVC.viewControllers.first as! LoginViewController).viewControllerThatPresented = self
         } else {
-            let loadingCellNib = UINib(nibName: "LoadingCell", bundle: nil)
-            tableView.register(loadingCellNib, forCellReuseIdentifier: "LoadingCell")
             /*tableView.infiniteScrollIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
             tableView.infiniteScrollIndicatorMargin = 40
             tableView.infiniteScrollTriggerOffset = 500
@@ -127,9 +128,22 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                                                 self.timer = nil
                                             }
                                             
-                                            UserDefaults.standard.setValue(0, forKey: "DRUserID")
-                                            UserDefaults.standard.setValue(0, forKey: "DRTokenID")
-                                            UserDefaults.standard.setValue(nil, forKey: "DRTokenKey")
+                                            //UserDefaults.standard.setValue(0, forKey: "DRUserID")
+                                            //UserDefaults.standard.setValue(0, forKey: "DRTokenID")
+                                            //UserDefaults.standard.setValue(nil, forKey: "DRTokenKey")
+                                            
+                                            let keychainWrapper = KeychainWrapper(serviceName: "SwiftRant", accessGroup: "SwiftRantAccessGroup")
+                                            
+                                            let query: [String:Any] = [kSecClass as String: kSecClassGenericPassword,
+                                                                       kSecMatchLimit as String: kSecMatchLimitOne,
+                                                                       kSecReturnAttributes as String: true,
+                                                                       kSecReturnData as String: true,
+                                                                       kSecAttrLabel as String: "SwiftRant-Attached Account" as CFString
+                                            ]
+                                            
+                                            keychainWrapper.removeAllKeys()
+                                            UserDefaults.resetStandardUserDefaults()
+                                            SecItemDelete(query as CFDictionary)
                                             
                                             let loginVC = UIStoryboard(name: "LoginViewController", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! UINavigationController
                                             loginVC.isModalInPresentation = true
@@ -146,8 +160,34 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             timer = Timer.scheduledTimer(withTimeInterval: 21, repeats: true) { _ in
                 debugPrint("Running extended notification timer!")
                 
-                DispatchQueue.global(qos: .background).async {
-                    let response = APIRequest().getRantFeed(skip: 0)
+                SwiftRant.shared.getRantFeed(token: nil, skip: 0, prevSet: nil) { [weak self] error, feed in
+                    DispatchQueue.main.async {
+                        
+                        if let numNotifs = feed?.notifCount {
+                            let currentNotificationCount = Int(self?.navigationController!.tabBarController!.viewControllers![2].tabBarItem.badgeValue ?? "0")!
+                            
+                            if currentNotificationCount < numNotifs {
+                                let content = UNMutableNotificationContent()
+                                
+                                content.title = "New devRant Notifications!"
+                                content.body = "Tap to see notifications"
+                                content.categoryIdentifier = "notification"
+                                content.userInfo = ["customData": "bruh"]
+                                content.sound = .default
+                                
+                                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+                                
+                                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                                UNUserNotificationCenter.current().add(request)
+                            }
+                            
+                            self?.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = numNotifs != 0 ? String(numNotifs) : nil
+                        }
+                    }
+                }
+                
+                /*DispatchQueue.global(qos: .background).async {
+                    //let response = SwiftRant.shared.getRantFeed(token: nil, skip: 0, prevSet: nil, completionHandler: <#T##((String?, RantFeed?) -> Void)##((String?, RantFeed?) -> Void)##(String?, RantFeed?) -> Void#>)
                     
                     DispatchQueue.main.async {
                         if let numNotifs = response.num_notifs {
@@ -171,7 +211,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                             self.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = numNotifs != 0 ? String(response.num_notifs!) : nil
                         }
                     }
-                }
+                }*/
             }
             
             //edgesForExtendedLayout = 
@@ -187,7 +227,60 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     }
     
     fileprivate func performFetch(_ completionHandler: (() -> Void)?) {
-        fetchData { result in
+        var combinedRantInFeedCount = 0
+        
+        for feed in rantFeed.rantFeed {
+            combinedRantInFeedCount += feed.rants.count
+        }
+        
+        SwiftRant.shared.getRantFeed(token: nil, skip: combinedRantInFeedCount, prevSet: rantFeed.rantFeed.last?.set ?? nil) { [weak self] error, feed in
+            defer { completionHandler?() }
+            
+            if feed != nil {
+                let (start, end) = (combinedRantInFeedCount, feed!.rants.count + combinedRantInFeedCount)
+                let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
+                
+                self?.rantFeed.rantFeed.append(feed!)
+                
+                for (idx, rant) in feed!.rants.enumerated() {
+                    if rant.attachedImage != nil {
+                        if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
+                            self?.supplementalImages[indexPaths[idx]] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
+                        } else {
+                            self?.supplementalImages[indexPaths[idx]] = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
+                        }
+                    }
+                }
+                
+                self?.currentPage += 1
+                
+                DispatchQueue.main.async {
+                    self?.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = feed!.notifCount != 0 ? String(feed!.notifCount) : nil
+                    
+                    CATransaction.begin()
+                    
+                    CATransaction.setCompletionBlock {
+                        NotificationCenter.default.post(name: windowResizeNotification, object: nil)
+                    }
+                    
+                    self?.tableView.beginUpdates()
+                    self?.tableView.insertRows(at: indexPaths, with: .automatic)
+                    self?.tableView.endUpdates()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        self?.tableView.reloadData()
+                    }
+                    
+                    CATransaction.commit()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.showAlertWithError(error ?? "An unknown error has occurred.")
+                }
+            }
+        }
+        
+        /*fetchData { result in
             defer { completionHandler?() }
             
             switch result.success {
@@ -267,7 +360,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             case false:
                 self.showAlertWithError("Failed to fetch rants")
             }
-        }
+        }*/
     }
     
     fileprivate func showAlertWithError(_ error: String) {
@@ -305,7 +398,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         }
     }
     
-    fileprivate func fetchData(handler: @escaping ((RantFeed) -> Void)) {
+    /*fileprivate func fetchData(handler: @escaping ((RantFeed) -> Void)) {
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + .seconds((rantFeed.rantFeed.count == 0 ? 0 : 1))) {
             let data = APIRequest().getRantFeed(skip: self.rantFeed.rantFeed.count)
             
@@ -313,7 +406,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 handler(data)
             }
         }
-    }
+    }*/
     
     private func getImageResizeMultiplier(imageWidth: CGFloat, imageHeight: CGFloat, multiplier: Int) -> CGFloat {
         if imageWidth / CGFloat(multiplier) < 315 && imageHeight / CGFloat(multiplier) < 420 {
@@ -332,7 +425,24 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             //let image = supplementalImages[indexPath.row]
         
             //cell = RantInFeedCell.loadFromXIB()
-            cell.configure(with: Optional(&rantFeed.rantFeed[indexPath.row]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
+            
+            // Calculate the index of the feed in the feed array and the index of the rant in the rant array
+            var rantPointer: UnsafeMutablePointer<RantInFeed>? = nil
+            var counter = 0
+            var feedOffset = 0
+            var rantOffset = 0
+            
+            for (idx, feed) in rantFeed.rantFeed.enumerated() {
+                if counter + (feed.rants.count - 1) < indexPath.row {
+                    counter += (feed.rants.count - 1)
+                    feedOffset = idx
+                    continue
+                } else {
+                    rantOffset = indexPath.row - counter
+                }
+            }
+            
+            cell.configure(with: Optional(&rantFeed.rantFeed[feedOffset].rants[rantOffset]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
             
             cell.layoutIfNeeded()
             return cell
@@ -367,10 +477,16 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if UserDefaults.standard.integer(forKey: "DRUserID") == 0 || UserDefaults.standard.integer(forKey: "DRTokenID") == 0 || UserDefaults.standard.string(forKey: "DRTokenKey") == nil {
+            if SwiftRant.shared.tokenFromKeychain == nil {
                 return 0
             } else {
-                return rantFeed.rantFeed.count
+                var count = 0
+                
+                for feed in rantFeed.rantFeed {
+                    count += feed.rants.count
+                }
+                
+                return count
             }
         } else if section == 1 {
             return 1
@@ -398,7 +514,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
-        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading {
+        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading && SwiftRant.shared.tokenFromKeychain != nil {
             isLoading = true
             performFetch {
                 self.isLoading = false
@@ -408,11 +524,15 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "RantInFeedCell", let rantViewController = segue.destination as? RantViewController {
-            rantViewController.rantID = rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row].id
+            //rantViewController.rantID = rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row].id
             
-            withUnsafeMutablePointer(to: &rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row], { pointer in
+            rantViewController.rantID = (sender as! SecondaryRantInFeedCell).rantContents!.pointee.id
+            
+            /*withUnsafeMutablePointer(to: &(sender as! RantInFeedCell).rant, { pointer in
                 rantViewController.rantInFeed = pointer
-            })
+            })*/
+            
+            rantViewController.rantInFeed = (sender as! SecondaryRantInFeedCell).rantContents
             
             rantViewController.supplementalRantImage = supplementalImages[tableView.indexPath(for: sender as! UITableViewCell)!]
             rantViewController.loadCompletionHandler = nil

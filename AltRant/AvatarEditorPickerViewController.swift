@@ -8,19 +8,20 @@
 import UIKit
 //import Haptica
 import BadgeControl
+import SwiftRant
 
 protocol AvatarEditorPickerViewControllerDelegate {
-    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectCategory category: AvatarCustomizationOption)
-    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResult)
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectCategory category: AvatarCustomizationResults.AvatarCustomizationType)
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResults.AvatarCustomizationOption)
 	func showInsufficientPointsAlert(imageToShow: UIImage, requiredAmount: Int)
 }
 
 extension AvatarEditorPickerViewControllerDelegate {
-    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectCategory category: AvatarCustomizationOption) {
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectCategory category: AvatarCustomizationResults.AvatarCustomizationType) {
         
     }
     
-    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResult) {
+    func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResults.AvatarCustomizationOption) {
         
     }
 	
@@ -49,8 +50,8 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
 	
 	var popoverPickerController: UITableViewController!
     
-    var categories = [AvatarCustomizationOption]()
-    var preferences = [AvatarCustomizationResult]()
+    var types = [AvatarCustomizationResults.AvatarCustomizationType]()
+    var preferences = [AvatarCustomizationResults.AvatarCustomizationOption]()
     
     public var portraitSize: CGSize = .zero
     public var landscapeFrame: CGRect = .zero
@@ -75,6 +76,8 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
 		collectionView.delegate = self
 		collectionView.dataSource = self
         
+        categoryPickerButton.tintColor = .label
+        
         /*pickerView = UIPickerView()
         
         pickerView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,29 +98,31 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
 		currentSelectedCategoryRow = pickerView.selectedRow(inComponent: 0)*/
     }
     
-    func updateOptions(options: [AvatarCustomizationOption]) {
-        categories = options
+    func updateTypes(types: [AvatarCustomizationResults.AvatarCustomizationType]) {
+        self.types = types
         
         //pickerView.reloadAllComponents()
     }
     
-    func updateImages(images: [AvatarCustomizationResult]) {
+    func updateOptions(options: [AvatarCustomizationResults.AvatarCustomizationOption]) {
 		var indexPathsToUpdate = (0 ..< preferences.count).map { IndexPath(row: $0, section: 0) }
 		
 		preferences = []
 		
-		collectionView.performBatchUpdates({
-			self.collectionView.deleteItems(at: indexPathsToUpdate)
-			
-			self.preferences = images
-			indexPathsToUpdate = (0 ..< images.count).map { IndexPath(row: $0, section: 0) }
-			
-			self.collectionView.insertItems(at: indexPathsToUpdate)
-		}, completion: nil)
-		
-        preferences = images
-        
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.performBatchUpdates({
+                self.collectionView.deleteItems(at: indexPathsToUpdate)
+                
+                self.preferences = options
+                indexPathsToUpdate = (0 ..< options.count).map { IndexPath(row: $0, section: 0) }
+                
+                self.collectionView.insertItems(at: indexPathsToUpdate)
+            }, completion: nil)
+            
+            self.preferences = options
+            
+            self.collectionView.reloadData()
+        }
     }
     
 	@IBAction func openPopoverPicker() {
@@ -171,7 +176,7 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return categories.count
+        return types.count
         
         //5
     }
@@ -184,14 +189,14 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
         
         //return "bruh \(row)"
         
-        return categories[row].label
+        return types[row].label
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: pickerContainerView.frame.width / 2, height: 136))
         
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        label.text = categories[row].label
+        label.text = types[row].label
         label.textAlignment = .center
         
         label.font = UIFont.systemFont(ofSize: 23.50, weight: .regular)
@@ -209,7 +214,7 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
 		
 		currentSelectedCategoryRow = row
 		
-        delegate?.editorPickerView(self, didSelectCategory: categories[row])
+        delegate?.editorPickerView(self, didSelectCategory: types[row])
 		
 		activityIndicator.stopAnimating()
     }
@@ -219,7 +224,7 @@ extension AvatarEditorPickerViewController: UITableViewDelegate, UITableViewData
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = UITableViewCell()
 		
-		cell.textLabel?.text = categories[indexPath.row].label
+		cell.textLabel?.text = types[indexPath.row].label
 		
 		return cell
 	}
@@ -229,7 +234,7 @@ extension AvatarEditorPickerViewController: UITableViewDelegate, UITableViewData
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		categories.count
+		types.count
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -237,10 +242,10 @@ extension AvatarEditorPickerViewController: UITableViewDelegate, UITableViewData
 		
 		currentSelectedCategoryRow = indexPath.row
 		
-		categoryPickerButton.setTitle(categories[indexPath.row].label, for: .normal)
+		categoryPickerButton.setTitle(types[indexPath.row].label, for: .normal)
 		categoryPickerButton.sizeToFit()
 		
-		popoverPickerController.dismiss(animated: true, completion: { self.delegate?.editorPickerView(self, didSelectCategory: self.categories[indexPath.row]) })
+		popoverPickerController.dismiss(animated: true, completion: { self.delegate?.editorPickerView(self, didSelectCategory: self.types[indexPath.row]) })
 	}
 }
 
@@ -418,6 +423,7 @@ class PreferenceCell: UICollectionViewCell {
 		
 		if dimView != nil {
 			super.prepareForReuse()
+            self.imageView.image = nil
 			//print("REUSING")
 			
 			if lockLayer != nil {
@@ -427,13 +433,13 @@ class PreferenceCell: UICollectionViewCell {
 		}
 	}
     
-    var preference: AvatarCustomizationImage!
+    var preference: AvatarCustomizationResults.AvatarCustomizationImage!
     
-	func configure(image: AvatarCustomizationImage, isAlreadySelected: Bool, shouldShowLock: Bool = false, badgeValue: Int? = nil) {
+    func configure(image: AvatarCustomizationResults.AvatarCustomizationImage, isAlreadySelected: Bool, shouldShowLock: Bool = false, badgeValue: Int? = nil) {
         preference = image
 		imageView.backgroundColor = UIColor(hex: preference.backgroundColor)!
 		
-		preference.getMidCompleteImage(completion: { image in
+        preference.getMidCompleteImage(shouldUseCache: true, completion: { image in
 			DispatchQueue.main.async {
 				self.imageView.image = image
 			}

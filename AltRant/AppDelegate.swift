@@ -131,8 +131,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     rantVC.loadCompletionHandler = { tableViewController in
                         DispatchQueue.global(qos: .userInitiated).async {
                             if let idx = tableViewController!.comments.firstIndex(where: {
-                                $0.created_time == createdTime &&
-                                $0.user_username == username ||
+                                $0.createdTime == createdTime &&
+                                $0.username == username ||
                                 $0.id == commentID
                             }) {
                                 DispatchQueue.main.async {

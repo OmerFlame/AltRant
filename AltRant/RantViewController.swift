@@ -9,6 +9,100 @@ import UIKit
 //import SwiftUI
 import QuickLook
 import ADNavigationBarExtension
+import SwiftRant
+import Foundation
+
+extension String: LocalizedError {
+    public var errorDescription: String? { return self }
+}
+
+actor UserImageStore {
+    private var images = [Int: UIImage]()
+    
+    func store(userID: Int, image: UIImage) {
+        images[userID] = image
+    }
+    
+    func image(forUserID id: Int) -> UIImage? {
+        return images[id]
+    }
+}
+
+actor UserImageLoader {
+    private var store: UserImageStore
+    private let urlSession: URLSession
+    private var activeTasks = [Int: Task<UIImage, Error>]()
+    
+    init(store: UserImageStore) {
+        self.store = store
+        urlSession = URLSession(configuration: .default)
+    }
+    
+    func loadImage(withUserID id: Int) async throws -> UIImage {
+        if let existingTask = activeTasks[id] {
+            return try await existingTask.value
+        }
+        
+        let task = Task<UIImage, Error> {
+            if let storedImage = await store.image(forUserID: id) {
+                activeTasks[id] = nil
+                return storedImage
+            }
+            
+            let (profileRetrieveError,profile) = await SwiftRant.shared.getProfileFromID(id, token: nil, userContentType: .rants, skip: 0)
+            
+            if let profile = profile, profileRetrieveError == nil {
+                if let avatarImage = profile.avatarSmall.avatarImage {
+                    let url = URL(string: "https://avatars.devrant.com/\(avatarImage)")!
+                    let (data, _) = try await urlSession.data(from: url)
+                    let image = UIImage(data: data)
+                    await store.store(userID: id, image: image!)
+                    
+                    activeTasks[id] = nil
+                    return image!
+                } else {
+                    let image = UIImage(color: UIColor(hex: profile.avatarSmall.backgroundColor)!, size: CGSize(width: 45, height: 45))!
+                    await store.store(userID: id, image: image)
+                    return image
+                }
+            } else {
+                throw profileRetrieveError ?? String("An unknown error has occurred while attempting to retrieve the user's profile.")
+            }
+        }
+        
+        activeTasks[id] = task
+        return try await task.value
+    }
+    
+    func loadImage(from url: URL, forUserID id: Int) async throws -> UIImage {
+        if let existingTask = activeTasks[id] {
+            return try await existingTask.value
+        }
+        
+        let task = Task<UIImage, Error> {
+            if let storedImage = await store.image(forUserID: id) {
+                activeTasks[id] = nil
+                return storedImage
+            }
+            
+            let (data, _) = try await urlSession.data(from: url)
+            let image = UIImage(data: data)!
+            await store.store(userID: id, image: image)
+            
+            activeTasks[id] = nil
+            return image
+        }
+        
+        activeTasks[id] = task
+        return try await task.value
+    }
+    
+    func waitUntilAllTasksAreFinished() async {
+        while !activeTasks.isEmpty {
+            
+        }
+    }
+}
 
 protocol RantViewControllerDelegate {
     func vote(_ rantViewController: RantViewController, vote: Int)
@@ -29,17 +123,22 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var commentImages = [Int:File?]()
     
-    var rant: RantModel?
-    var comments = [CommentModel]()
+    var rant: Rant?
+    var comments = [Comment]()
     var profile: Profile? = nil
     var ranterProfileImage: UIImage?
     var rantInFeed: UnsafeMutablePointer<RantInFeed>?
-    var commentInFeed: UnsafeMutablePointer<CommentModel>?
+    var commentInFeed: UnsafeMutablePointer<Comment>?
     //var doesSupplementalImageExist = false
     
-    var loadCompletionHandler: ((RantViewController?) -> Void)?
+    @MainActor var loadCompletionHandler: ((RantViewController?) -> Void)?
     
     var rowHeights = [IndexPath:CGFloat]()
+    
+    var textsWithLinks = [Int:NSAttributedString]()
+    
+    let userImageStore = UserImageStore()
+    var userImageLoader: UserImageLoader!
     
     /*init(rantID: Int?) {
         self.rantID = rantID
@@ -70,6 +169,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Do any additional setup after loading the view.
         
         NotificationCenter.default.addObserver(self, selector: #selector(fixNavigationBar), name: NSNotification.Name("FixNavigationBar"), object: nil)
+        
+        userImageLoader = UserImageLoader(store: userImageStore)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -117,7 +218,237 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.tableView.reloadData()
             }*/
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            Task {
+                let (error, rant, comments) = await SwiftRant.shared.getRantFromID(token: nil, id: rantID!, lastCommentID: nil)
+                
+                if let rant = rant, let comments = comments {
+                    self.rant = rant
+                    
+                    self.comments = (!comments.isEmpty ? comments : [])
+                    
+                    if rant.links != nil {
+                        let links = rant.links!
+                        let attributedString = NSMutableAttributedString(string: rant.text)
+                        
+                        attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: (rant.text as NSString).range(of: rant.text))
+                        
+                        attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: (rant.text as NSString).range(of: rant.text))
+                        
+                        for link in links {
+                            attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .semibold), range: link.calculatedRange)
+                            
+                            if link.type == "mention" {
+                                attributedString.addAttribute(.link, value: "mention://\(link.url)", range: link.calculatedRange)
+                            } else {
+                                attributedString.addAttribute(.link, value: link.url, range: link.calculatedRange)
+                            }
+                        }
+                        
+                        self.textsWithLinks[rant.id] = attributedString
+                    }
+                    
+                    for comment in comments {
+                        if let avatarImage = comment.userAvatar.avatarImage {
+                            Task {
+                                try? await self.userImageLoader.loadImage(from: URL(string: "https://avatars.devrant.com/\(avatarImage)")!, forUserID: comment.userID)
+                            }
+                        } else {
+                            await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hex: comment.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))!)
+                        }
+                        
+                        if comment.attachedImage == nil {
+                            //commentImages.append(nil)
+                            self.commentImages[comment.id] = nil
+                        } else {
+                            self.commentImages[comment.id] = File.loadFile(image: comment.attachedImage!, size: CGSize(width: comment.attachedImage!.width, height: comment.attachedImage!.height))
+                        }
+                        
+                        if comment.links != nil {
+                            let links = comment.links!
+                            
+                            let attributedString = NSMutableAttributedString(string: comment.body)
+                            
+                            attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: (comment.body as NSString).range(of: comment.body))
+                            
+                            attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: (comment.body as NSString).range(of: comment.body))
+                            
+                            for link in links {
+                                attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .semibold), range: link.calculatedRange)
+                                
+                                if link.type == "mention" {
+                                    attributedString.addAttribute(.link, value: "mention://\(link.url)", range: link.calculatedRange)
+                                } else {
+                                    attributedString.addAttribute(.link, value: link.url, range: link.calculatedRange)
+                                }
+                            }
+                            
+                            self.textsWithLinks[comment.id] = attributedString
+                        }
+                    }
+                    
+                    let (profileFetchError, profile) = await SwiftRant.shared.getProfileFromID(rant.userID, token: nil, userContentType: .rants, skip: 0)
+                    
+                    if let profile = profile {
+                        self.profile = profile
+                        
+                        if self.rant?.attachedImage != nil && self.supplementalRantImage == nil {
+                            self.supplementalRantImage = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
+                        }
+                        
+                        if self.rant?.userAvatarLarge.avatarImage != nil {
+                            self.ranterProfileImage = UIImage().loadFromWeb(url: URL(string: "https://avatars.devrant.com/\(rant.userAvatarLarge.avatarImage!)")!)
+                        }
+                        
+                        await userImageLoader.waitUntilAllTasksAreFinished()
+                        
+                        self.didFinishLoading = true
+                        self.loadingIndicator.stopAnimating()
+                        self.tableView.isHidden = false
+                        
+                        self.tableView.dataSource = self
+                        self.tableView.delegate = self
+                        self.tableView.register(UINib(nibName: "RantCell", bundle: nil), forCellReuseIdentifier: "RantCell")
+                        self.tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+                        
+                        self.tableView.reloadData {
+                            self.loadCompletionHandler?(self)
+                        }
+                        
+                        /*DispatchQueue.main.async {
+                            self.didFinishLoading = true
+                            self.loadingIndicator.stopAnimating()
+                            self.tableView.isHidden = false
+                            
+                            self.tableView.dataSource = self
+                            self.tableView.delegate = self
+                            self.tableView.register(UINib(nibName: "RantCell", bundle: nil), forCellReuseIdentifier: "RantCell")
+                            self.tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+                            
+                            self.tableView.reloadData {
+                                self.loadCompletionHandler?(self)
+                            }
+                        }*/
+                        
+                        /*DispatchQueue.main.async {
+                            self.didFinishLoading = true
+                            self.loadingIndicator.stopAnimating()
+                            self.tableView.isHidden = false
+                            
+                            self.tableView.dataSource = self
+                            self.tableView.delegate = self
+                            self.tableView.register(UINib(nibName: "RantCell", bundle: nil), forCellReuseIdentifier: "RantCell")
+                            self.tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+                            
+                            self.tableView.reloadData {
+                                self.loadCompletionHandler?(self)
+                            }
+                        }*/
+                    } else {
+                        self.showAlertWithError(profileFetchError ?? "An unknown error occurred while fetching the user's profile.", retryHandler: nil)
+                    }
+                } else {
+                    self.showAlertWithError(error ?? "An unknown error occurred while fetching the rant.", retryHandler: nil)
+                }
+            }
+            
+            /*SwiftRant.shared.getRantFromID(token: nil, id: rantID!, lastCommentID: nil) { [weak self] error, rant, comments in
+                if let rant = rant, let comments = comments {
+                    self?.rant = rant
+                    
+                    self?.comments = (!comments.isEmpty ? comments : [])
+                    
+                    if rant.links != nil {
+                        let links = rant.links!
+                        let attributedString = NSMutableAttributedString(string: rant.text)
+                        
+                        attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: (rant.text as NSString).range(of: rant.text))
+                        
+                        attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: (rant.text as NSString).range(of: rant.text))
+                        
+                        for link in links {
+                            attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .semibold), range: link.calculatedRange)
+                            
+                            if link.type == "mention" {
+                                attributedString.addAttribute(.link, value: "mention://\(link.url)", range: link.calculatedRange)
+                            } else {
+                                attributedString.addAttribute(.link, value: link.url, range: link.calculatedRange)
+                            }
+                        }
+                        
+                        self?.textsWithLinks[rant.id] = attributedString
+                    }
+                    
+                    for comment in comments {
+                        if comment.attachedImage == nil {
+                            //commentImages.append(nil)
+                            self?.commentImages[comment.id] = nil
+                        } else {
+                            self?.commentImages[comment.id] = File.loadFile(image: comment.attachedImage!, size: CGSize(width: comment.attachedImage!.width, height: comment.attachedImage!.height))
+                        }
+                        
+                        if comment.links != nil {
+                            let links = comment.links!
+                            
+                            let attributedString = NSMutableAttributedString(string: comment.body)
+                            
+                            attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: (comment.body as NSString).range(of: comment.body))
+                            
+                            attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: (comment.body as NSString).range(of: comment.body))
+                            
+                            for link in links {
+                                attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .semibold), range: link.calculatedRange)
+                                
+                                if link.type == "mention" {
+                                    attributedString.addAttribute(.link, value: "mention://\(link.url)", range: link.calculatedRange)
+                                } else {
+                                    attributedString.addAttribute(.link, value: link.url, range: link.calculatedRange)
+                                }
+                            }
+                            
+                            self?.textsWithLinks[comment.id] = attributedString
+                        }
+                    }
+                    
+                    SwiftRant.shared.getProfileFromID(rant.userID, token: nil, userContentType: .rants, skip: 0) { profileFetchError, profile in
+                        if let profile = profile {
+                            self?.profile = profile
+                            
+                            if self?.rant?.attachedImage != nil && self?.supplementalRantImage == nil {
+                                self?.supplementalRantImage = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
+                            }
+                            
+                            if self?.rant?.userAvatarLarge.avatarImage != nil {
+                                self?.ranterProfileImage = UIImage().loadFromWeb(url: URL(string: "https://avatars.devrant.com/\(rant.userAvatarLarge.avatarImage!)")!)
+                            }
+                            
+                            DispatchQueue.main.async {
+                                self?.didFinishLoading = true
+                                self?.loadingIndicator.stopAnimating()
+                                self?.tableView.isHidden = false
+                                
+                                self?.tableView.dataSource = self
+                                self?.tableView.delegate = self
+                                self?.tableView.register(UINib(nibName: "RantCell", bundle: nil), forCellReuseIdentifier: "RantCell")
+                                self?.tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+                                
+                                self?.tableView.reloadData {
+                                    self?.loadCompletionHandler?(self)
+                                }
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self?.showAlertWithError(profileFetchError ?? "An unknown error occurred while fetching the user's profile.", retryHandler: nil)
+                            }
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self?.showAlertWithError(error ?? "An unknown error occurred while fetching the rant.", retryHandler: nil)
+                    }
+                }
+            }*/
+            
+            /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 DispatchQueue.global(qos: .userInitiated).sync {
                     self.getRant()
                     
@@ -129,15 +460,15 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         })
                         
                         completionSemaphore.wait()
-                        if self.rant!.attached_image != nil && self.supplementalRantImage == nil {
-                            self.supplementalRantImage = File.loadFile(image: self.rant!.attached_image!, size: CGSize(width: self.rant!.attached_image!.width!, height: self.rant!.attached_image!.height!))
+                        if self.rant!.attachedImage != nil && self.supplementalRantImage == nil {
+                            self.supplementalRantImage = File.loadFile(image: self.rant!.attachedImage!, size: CGSize(width: self.rant!.attachedImage!.width, height: self.rant!.attachedImage!.height))
                         }
                         
                         /*if self.supplementalRantImage == nil && self.doesSupplementalImageExist == true {
                             self.supplementalRantImage = File.loadFile(image: self.rant!.attached_image!, size: CGSize(width: self.rant!.attached_image!.width!, height: self.rant!.attached_image!.height!))
                         }*/
                         
-                        if self.rant!.user_avatar_lg.i != nil {
+                        if self.rant!.userAvatarLarge.avatarImage != nil {
                             self.getRanterImage()
                         }
                         
@@ -160,7 +491,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         }
                     }
                 }
-            }
+            }*/
         }
     }
     
@@ -196,7 +527,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private func getRanterImage() {
         let completionSemaphore = DispatchSemaphore(value: 0)
         
-        URLSession.shared.dataTask(with: URL(string: "https://avatars.devrant.com/\(self.rant!.user_avatar_lg.i!)")!) { data, _, _ in
+        URLSession.shared.dataTask(with: URL(string: "https://avatars.devrant.com/\(self.rant!.userAvatarLarge.avatarImage!)")!) { data, _, _ in
             self.ranterProfileImage = UIImage(data: data!)
             
             completionSemaphore.signal()
@@ -206,7 +537,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return
     }
     
-    func getRant() {
+    /*func getRant() {
         do {
             let response = try APIRequest().getRantFromID(id: self.rantID!, lastCommentID: nil)
             self.rant = response!.rant
@@ -245,9 +576,9 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.showAlertWithError("Could not fetch rant with ID \(self.rantID!)", retryHandler: self.getRant)
             }
         }
-    }
+    }*/
     
-    private func getProfile(successHandler: (() -> Void)?) {
+    /*private func getProfile(successHandler: (() -> Void)?) {
         /*do {
             self.profile = try APIRequest().getProfileFromID(rant!.user_id, userContentType: .rants, skip: 0)?.profile
         } catch {
@@ -267,7 +598,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         })
-    }
+    }*/
     
     fileprivate func showAlertWithError(_ error: String, retryHandler: (() -> Void)?) {
         let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
@@ -317,15 +648,15 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
         /*if index == 0 {
-            return PreviewItem(url: tappedRant?.file?.previewItemURL, title: "Picture from \(tappedRant!.rantContents!.user_username)")
+            return PreviewItem(url: tappedRant?.file?.previewItemURL, title: "Picture from \(tappedRant!.rantContents!.username)")
         } else {
-            return PreviewItem(url: tappedComment?.file?.previewItemURL, title: "Picture from \(tappedComment!.commentContents!.user_username)")
+            return PreviewItem(url: tappedComment?.file?.previewItemURL, title: "Picture from \(tappedComment!.commentContents!.username)")
         }*/
         
         if tappedComment == nil {
-            return PreviewItem(url: tappedRant?.file?.previewItemURL, title: "Picture from \(tappedRant!.rantContents!.user_username)")
+            return PreviewItem(url: tappedRant?.file?.previewItemURL, title: "Picture from \(tappedRant!.rantContents!.username)")
         } else {
-            return PreviewItem(url: tappedComment?.file?.previewItemURL, title: "Picture from \(tappedComment!.commentContents!.user_username)")
+            return PreviewItem(url: tappedComment?.file?.previewItemURL, title: "Picture from \(tappedComment!.commentContents!.username)")
         }
     }
     

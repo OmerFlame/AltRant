@@ -4,7 +4,7 @@
 //
 //  Created by Omer Shamai on 1/17/21.
 //
-
+/*
 import Foundation
 import UIKit
 
@@ -195,3 +195,4 @@ struct AvatarCustomizationResults: Decodable {
         success = try values.decode(Bool.self, forKey: .success)
     }
 }
+*/

@@ -13,6 +13,7 @@
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.com.cracksoftware.AltGroup</string>
+		<string>group.com.cracksoftware.AltRant</string>
 	</array>
 	<key>com.apple.security.assets.pictures.read-write</key>
 	<true/>
@@ -20,5 +21,10 @@
 	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)SwiftRantAccessGroup</string>
+		<string>$(AppIdentifierPrefix)com.cracksoftware.AltRant</string>
+	</array>
 </dict>
 </plist>

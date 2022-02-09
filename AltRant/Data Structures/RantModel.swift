@@ -5,7 +5,7 @@
 //  Created by Omer Shamai on 9/13/20.
 //
 
-import Foundation
+/*import Foundation
 
 public struct RantModel: Codable, Identifiable {
     public let uuid = UUID()
@@ -294,3 +294,4 @@ public struct RantPOSTResponse: Codable {
         }
     }
 }
+*/

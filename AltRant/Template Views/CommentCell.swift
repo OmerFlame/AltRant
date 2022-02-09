@@ -8,6 +8,7 @@
 import UIKit
 //import SwiftUI
 import QuickLook
+import SwiftRant
 //import ActiveLabel
 
 
@@ -41,7 +42,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
      # See Also
      [CommentModel](x-source-tag://CommentModel)
      */
-    var commentContents: CommentModel!
+    var commentContents: Comment!
     
     /**
      The parent view controller.
@@ -63,7 +64,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
      # See Also
      [CommentModel](x-source-tag://CommentModel)
      */
-    var commentInFeed: UnsafeMutablePointer<CommentModel>?
+    var commentInFeed: UnsafeMutablePointer<Comment>?
     
     private var loadingIndicator = UIActivityIndicatorView(style: .medium)
     
@@ -118,7 +119,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
      
      - returns: Nothing.
      */
-    func configure(with model: CommentModel, supplementalImage: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?, commentInFeed: UnsafeMutablePointer<CommentModel>?, allowedToPreview: Bool) {
+    func configure(with model: Comment, supplementalImage: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?, commentInFeed: UnsafeMutablePointer<Comment>?, allowedToPreview: Bool) {
         self.commentContents = model
         self.file = supplementalImage
         self.parentTableViewController = parentTableViewController
@@ -136,10 +137,10 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         bodyLabel.isHidden = false
         supplementalImageView.isHidden = false
         
-        upvoteButton.tintColor = (model.vote_state == 1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
+        upvoteButton.tintColor = (model.voteState == 1 ? UIColor(hex: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         //scoreLabel.text = String(commentContents!.score)
         scoreLabel.text = formatNumber(commentContents!.score)
-        downvoteButton.tintColor = (model.vote_state == -1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
+        downvoteButton.tintColor = (model.voteState == -1 ? UIColor(hex: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         
         if supplementalImage == nil {
             supplementalImageView.isHidden = true
@@ -158,15 +159,15 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             supplementalImageView.image = newImage
         }
         
-        upvoteButton.isEnabled = commentContents!.vote_state != -2
-        downvoteButton.isEnabled = commentContents!.vote_state != -2
+        upvoteButton.isEnabled = commentContents!.voteState != -2
+        downvoteButton.isEnabled = commentContents!.voteState != -2
         
         bodyLabel.text = commentContents!.body
         
-        if commentContents!.user_avatar.i == nil {
-            userProfileImageView.image = UIImage(color: UIColor(hex: commentContents!.user_avatar.b)!, size: CGSize(width: 45, height: 45))
+        /*if commentContents!.userAvatar.avatarImage == nil {
+            userProfileImageView.image =  UIImage(color: UIColor(hex: commentContents!.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))
         } else {
-            let resourceURL = URL(string: "https://avatars.devrant.com/" + commentContents!.user_avatar.i!)!
+            let resourceURL = URL(string: "https://avatars.devrant.com/" + commentContents!.userAvatar.avatarImage!)!
             
             let completionSemaphore = DispatchSemaphore(value: 0)
             var imageData: Data? = nil
@@ -179,17 +180,27 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             
             completionSemaphore.wait()
             userProfileImageView.image = UIImage(data: imageData ?? Data()) ?? nil
+        }*/
+        
+        if let parentTableViewController = parentTableViewController as? RantViewController {
+            Task {
+                self.userProfileImageView.image = try? await parentTableViewController.userImageLoader.loadImage(withUserID: self.commentContents.userID)
+            }
+        } else if let parentTableViewController = parentTableViewController as? ProfileTableViewController {
+            Task {
+                self.userProfileImageView.image = try? await parentTableViewController.userImageLoader.loadImage(withUserID: self.commentContents.userID)
+            }
         }
         
-        usernameLabel.text = commentContents!.user_username
+        usernameLabel.text = commentContents!.username
         
-        if commentContents!.user_score < 0 {
-            userScoreLabel.text = String(commentContents!.user_score)
+        if commentContents!.score < 0 {
+            userScoreLabel.text = String(commentContents!.userScore)
         } else {
-            userScoreLabel.text = "+\(commentContents!.user_score)"
+            userScoreLabel.text = "+\(commentContents!.userScore)"
         }
         
-        userScoreLabel.backgroundColor = UIColor(hex: commentContents!.user_avatar.b)
+        userScoreLabel.backgroundColor = UIColor(hex: commentContents!.userAvatar.backgroundColor)
         
         scoreLabel.text = String(commentContents!.score)
         
@@ -200,12 +211,12 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             let usernameGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleUsernameTap(_:)))
             userStackView.addGestureRecognizer(usernameGestureRecognizer)
             
-            if commentContents.user_id == UserDefaults.standard.integer(forKey: "DRUserID") && commentContents.user_username == UserDefaults.standard.string(forKey: "DRUsername")! {
+            if commentContents.userID == UserDefaults.standard.integer(forKey: "DRUserID") && commentContents.username == UserDefaults.standard.string(forKey: "DRUsername")! {
                 reportModifyButton.setTitle("Modify", for: .normal)
                 
                 let actionsMenu = UIMenu(title: "", children: [
                     UIAction(title: "Edit", image: UIImage(systemName: "square.and.pencil")!, handler: { _ in
-                        if Double(Date().timeIntervalSince1970) - Double(self.commentContents.created_time) >= 300 {
+                        if Double(Date().timeIntervalSince1970) - Double(self.commentContents.createdTime) >= 300 {
                             let alert = UIAlertController(title: "Editing Disabled", message: "Rants and comments can only be edited for 5 mins (30 mins for devRant++ subscribers) after they are posted.", preferredStyle: .alert)
                             
                             alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: nil))
@@ -245,7 +256,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             if let links = commentContents.links {
                 // We create the variables that we will use in the loop in order to avoid excessive RAM usage.
                 
-                let semiboldAttrString = NSMutableAttributedString(string: commentContents.body)
+                /*let semiboldAttrString = NSMutableAttributedString(string: commentContents.body)
                 let stringAsData = commentContents.body.data(using: .utf8)!
                 
                 var temporaryStringBytes = Data()
@@ -291,7 +302,11 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
                     }
                 }
                 
-                bodyLabel.attributedText = semiboldAttrString
+                bodyLabel.attributedText = semiboldAttrString*/
+                
+                if let parentTableViewController = parentTableViewController, let controller = parentTableViewController as? RantViewController {
+                    bodyLabel.attributedText = controller.textsWithLinks[commentContents.id]
+                }
                 bodyLabel.isUserInteractionEnabled = true
                 
                 bodyLabel.delegate = self
@@ -313,7 +328,40 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         
         self.parentTableViewController?.title = "Deleting your comment..."
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        SwiftRant.shared.deleteComment(nil, commentID: commentContents.id) { error, success in
+            if success {
+                let typeCastedController = self.parentTableViewController as! RantViewController
+                let commentIdx = typeCastedController.comments.firstIndex(where: {
+                    $0.id == self.commentContents.id
+                })!
+                
+                typeCastedController.comments.remove(at: commentIdx)
+                typeCastedController.commentImages[self.commentContents.id] = nil
+                
+                DispatchQueue.main.async {
+                    self.parentTableViewController?.title = originalTitle
+                    self.parentTableViewController?.navigationController?.navigationBar.isUserInteractionEnabled = true
+                    self.parentTableViewController?.navigationController?.navigationBar.tintColor = originalColor
+                    
+                    typeCastedController.tableView.deleteRows(at: [IndexPath(row: commentIdx, section: 1)], with: .fade)
+                }
+            } else {
+                let failureAlertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while deleting the comment.", preferredStyle: .alert)
+                
+                failureAlertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                failureAlertController.addAction(UIAlertAction(title: "Retry", style: .destructive, handler: { _ in self.delete() }))
+                
+                DispatchQueue.main.async {
+                    self.parentTableViewController?.title = originalTitle
+                    self.parentTableViewController?.navigationController?.navigationBar.isUserInteractionEnabled = true
+                    self.parentTableViewController?.navigationController?.navigationBar.tintColor = originalColor
+                    
+                    self.parentTableViewController?.present(failureAlertController, animated: true, completion: nil)
+                }
+            }
+        }
+        
+        /*DispatchQueue.global(qos: .userInitiated).async {
             let success = APIRequest().deleteComment(commentID: self.commentContents.id)
             
             if success {
@@ -348,12 +396,12 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
                     self.parentTableViewController?.present(failureAlertController, animated: true, completion: nil)
                 }
             }
-        }
+        }*/
     }
     
     @IBAction func handleUpvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.commentContents!.vote_state {
+            switch self.commentContents!.voteState {
             case 0:
                 return 1
                 
@@ -365,35 +413,71 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             }
         }
         
-        let success = APIRequest().voteOnComment(commentID: commentContents!.id, vote: vote)
+        SwiftRant.shared.voteOnComment(nil, commentID: commentContents!.id, vote: vote) { error, updatedComment in
+            if let updatedComment = updatedComment {
+                if let commentInFeed = self.commentInFeed {
+                    commentInFeed.pointee.voteState = vote
+                    commentInFeed.pointee.score = updatedComment.score
+                }
+                
+                if let idx = (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent.firstIndex(where: {
+                    $0.id == self.commentContents!.id
+                }) {
+                    (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].voteState = updatedComment.voteState
+                    (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].score = updatedComment.score
+                } else if let idx = (self.parentTableViewController as? RantViewController)?.comments.firstIndex(where: {
+                    $0.id == self.commentContents!.id
+                }) {
+                    (self.parentTableViewController as? RantViewController)?.comments[idx].voteState = updatedComment.voteState
+                    (self.parentTableViewController as? RantViewController)?.comments[idx].score = updatedComment.score
+                }
+                
+                DispatchQueue.main.async {
+                    self.parentTableView?.reloadData()
+                }
+            } else {
+                if let parentTableViewController = self.parentTableViewController {
+                    let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while voting on the comment.", preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.handleUpvote(sender) }))
+                    
+                    DispatchQueue.main.async {
+                        parentTableViewController.present(alertController, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+        
+        /*let success = APIRequest().voteOnComment(commentID: commentContents!.id, vote: vote)
         
         if success == nil {
             print("ERROR WHILE UPVOTING")
         } else {
             if let commentInFeed = self.commentInFeed {
-                commentInFeed.pointee.vote_state = vote
+                commentInFeed.pointee.voteState = vote
                 commentInFeed.pointee.score = success!.comment.score
             }
             
             if let idx = (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent.firstIndex(where: {
                 $0.uuid == self.commentContents!.uuid
             }) {
-                (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].vote_state = success!.comment.vote_state
+                (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].voteState = success!.comment.voteState
                 (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].score = success!.comment.score
             } else if let idx = (parentTableViewController as? RantViewController)?.comments.firstIndex(where: {
                 $0.uuid == self.commentContents!.uuid
             }) {
-                (parentTableViewController as? RantViewController)?.comments[idx].vote_state = success!.comment.vote_state
+                (parentTableViewController as? RantViewController)?.comments[idx].voteState = success!.comment.voteState
                 (parentTableViewController as? RantViewController)?.comments[idx].score = success!.comment.score
             }
             
             parentTableView?.reloadData()
-        }
+        }*/
     }
     
     @IBAction func handleDownvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.commentContents!.vote_state {
+            switch self.commentContents!.voteState {
             case 0:
                 return -1
                 
@@ -405,32 +489,68 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             }
         }
         
-        let success = APIRequest().voteOnComment(commentID: self.commentContents!.id, vote: vote)
+        SwiftRant.shared.voteOnComment(nil, commentID: commentContents!.id, vote: vote) { error, updatedComment in
+            if let updatedComment = updatedComment {
+                if let commentInFeed = self.commentInFeed {
+                    commentInFeed.pointee.voteState = vote
+                    commentInFeed.pointee.score = updatedComment.score
+                }
+                
+                if let idx = (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent.firstIndex(where: {
+                    $0.id == self.commentContents!.id
+                }) {
+                    (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].voteState = updatedComment.voteState
+                    (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].score = updatedComment.score
+                } else if let idx = (self.parentTableViewController as? RantViewController)?.comments.firstIndex(where: {
+                    $0.id == self.commentContents!.id
+                }) {
+                    (self.parentTableViewController as? RantViewController)?.comments[idx].voteState = updatedComment.voteState
+                    (self.parentTableViewController as? RantViewController)?.comments[idx].score = updatedComment.score
+                }
+                
+                DispatchQueue.main.async {
+                    self.parentTableView?.reloadData()
+                }
+            } else {
+                if let parentTableViewController = self.parentTableViewController {
+                    let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while voting on the comment.", preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.handleDownvote(sender) }))
+                    
+                    DispatchQueue.main.async {
+                        parentTableViewController.present(alertController, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+        
+        /*let success = APIRequest().voteOnComment(commentID: self.commentContents!.id, vote: vote)
         
         if success == nil {
             print("ERROR WHILE DOWNVOTING")
         } else {
             if let commentInFeed = self.commentInFeed {
-                commentInFeed.pointee.vote_state = vote
+                commentInFeed.pointee.voteState = vote
                 commentInFeed.pointee.score = success!.comment.score
             }
             
             if let idx = (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent.firstIndex(where: {
                 $0.uuid == self.commentContents!.uuid
             }) {
-                (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].vote_state = success!.comment.vote_state
+                (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].voteState = success!.comment.voteState
                 (parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].score = success!.comment.score
                 
                 parentTableView?.reloadRows(at: [IndexPath(row: idx, section: 0)], with: .none)
             } else if let idx = (parentTableViewController as? RantViewController)?.comments.firstIndex(where: {
                 $0.uuid == self.commentContents!.uuid
             }) {
-                (parentTableViewController as? RantViewController)?.comments[idx].vote_state = success!.comment.vote_state
+                (parentTableViewController as? RantViewController)?.comments[idx].voteState = success!.comment.voteState
                 (parentTableViewController as? RantViewController)?.comments[idx].score = success!.comment.score
                 
                 parentTableView?.reloadRows(at: [IndexPath(row: idx, section: 1)], with: .none)
             }
-        }
+        }*/
     }
     
     @objc func handleImageTap(_ sender: UITapGestureRecognizer) {
@@ -447,7 +567,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
     @objc func handleUsernameTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
             let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
-                return ProfileTableViewController(coder: coder, userID: self.commentContents.user_id)
+                return ProfileTableViewController(coder: coder, userID: self.commentContents.userID)
             })
             
             print(String(describing: type(of: parentTableViewController)))
@@ -460,8 +580,8 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
     @IBAction func reply(_ sender: Any) {
         let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
         
-        (composeVC.viewControllers.first! as! ComposeViewController).content = "@\(commentContents.user_username) "
-        (composeVC.viewControllers.first! as! ComposeViewController).rantID = commentContents.rant_id
+        (composeVC.viewControllers.first! as! ComposeViewController).content = "@\(commentContents.username) "
+        (composeVC.viewControllers.first! as! ComposeViewController).rantID = commentContents.rantID
         (composeVC.viewControllers.first! as! ComposeViewController).isComment = true
         (composeVC.viewControllers.first! as! ComposeViewController).isEdit = false
         (composeVC.viewControllers.first! as! ComposeViewController).viewControllerThatPresented = parentTableViewController
@@ -496,4 +616,26 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             return getImageResizeMultiplier(imageWidth: imageWidth, imageHeight: imageHeight, multiplier: multiplier + 2)
         }
     }
+    
+    /*func getUserImageFromImageStore() -> UIImage {
+        let semaphore = DispatchSemaphore(value: 0)
+        var image = UIImage()
+        
+        Task {
+            image = try! await (parentTableViewController as! RantViewController).userImageLoader.loadImage(withUserID: self.commentContents.userID)
+        }
+        
+        semaphore.wait()
+        return image
+    }*/
+}
+
+func unsafeWaitFor(_ f: @escaping () async -> ()) {
+    let sema = DispatchSemaphore(value: 0)
+    Task {
+        await f()
+        sema.signal()
+    }
+    
+    sema.wait()
 }

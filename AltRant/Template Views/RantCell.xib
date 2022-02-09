@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,10 +21,10 @@
                         <rect key="frame" x="20" y="15" width="352" height="562"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="6pV-B8-456" userLabel="Voting Stack View">
-                                <rect key="frame" x="0.0" y="0.0" width="32" height="70"/>
+                                <rect key="frame" x="0.0" y="0.0" width="31" height="67"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="744" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n40-pC-Wdm" userLabel="Upvote Button">
-                                        <rect key="frame" x="3" y="0.0" width="26" height="26.5"/>
+                                        <rect key="frame" x="2.5" y="0.0" width="26" height="26.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="26" id="n4O-bi-WCq"/>
                                         </constraints>
@@ -36,7 +36,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="266" horizontalCompressionResistancePriority="1000" text="9999" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQJ-bL-bjy" userLabel="Score Label">
-                                        <rect key="frame" x="0.0" y="27.5" width="32" height="15.5"/>
+                                        <rect key="frame" x="0.0" y="27.5" width="31" height="12.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="26" id="Q7z-mW-eh1"/>
                                         </constraints>
@@ -45,7 +45,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lTr-7i-UlX" userLabel="Downvote Button">
-                                        <rect key="frame" x="3" y="44" width="26" height="26"/>
+                                        <rect key="frame" x="2.5" y="41" width="26" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="26" id="DRZ-ok-Lsm"/>
                                             <constraint firstAttribute="width" constant="26" id="igW-ZC-585"/>
@@ -64,7 +64,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yuX-uq-o07" userLabel="Text Stack View">
-                                <rect key="frame" x="42" y="0.0" width="310" height="553"/>
+                                <rect key="frame" x="41" y="0.0" width="311" height="553"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Oor-eU-QMg" userLabel="User Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="126.5" height="45"/>
@@ -86,7 +86,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jaB-qT-1n0" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="23" width="41" height="22"/>
+                                                        <rect key="frame" x="0.0" y="23" width="28.5" height="22"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -120,7 +120,7 @@
                                         <viewLayoutGuide key="safeArea" id="hj6-FP-oDW"/>
                                     </stackView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zU9-ah-sF5" userLabel="Body">
-                                        <rect key="frame" x="0.0" y="53" width="310" height="240"/>
+                                        <rect key="frame" x="0.0" y="53" width="311" height="240"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -139,10 +139,10 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="J1t-xi-NTS">
-                                        <rect key="frame" x="0.0" y="541" width="310" height="12"/>
+                                        <rect key="frame" x="0.0" y="541" width="311" height="12"/>
                                         <subviews>
                                             <view contentMode="scaleAspectFit" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Hk3-1C-ciB" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="265" height="12"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="266" height="12"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -169,7 +169,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fvu-NK-Gkz" userLabel="Favorite / Modify Button">
-                                                <rect key="frame" x="265" y="0.0" width="45" height="12"/>
+                                                <rect key="frame" x="266" y="0.0" width="45" height="12"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="12" id="giD-RO-TeU"/>
                                                 </constraints>
@@ -225,7 +225,7 @@
             <size key="intrinsicContentSize" width="265" height="12"/>
         </designable>
         <designable name="jaB-qT-1n0">
-            <size key="intrinsicContentSize" width="41" height="19.5"/>
+            <size key="intrinsicContentSize" width="28.5" height="13.5"/>
         </designable>
     </designables>
     <resources>

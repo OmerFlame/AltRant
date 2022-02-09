@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserCredentials: Codable {
+/*struct UserCredentials: Codable {
     let success: Bool?
     
     struct auth_token: Codable {
@@ -19,4 +19,4 @@ struct UserCredentials: Codable {
     
     let error: String?
     let auth_token: auth_token?
-}
+}*/

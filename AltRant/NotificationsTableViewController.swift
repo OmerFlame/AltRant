@@ -7,6 +7,8 @@
 
 import UIKit
 import ADNavigationBarExtension
+import SwiftRant
+import struct SwiftRant.Notification
 //import SPAlert
 
 class NotificationsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -15,12 +17,12 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     var barExtension: UIView!
     
-    var currentNotificationType: NotificationContentCategory = .all
+    var currentNotificationType: Notifications.Categories = .all
     
     var notifications = [Notification]()
     var notificationIndexPaths = [IndexPath]()
-    var unreadNotificationCounters: NotificationsUnread?
-    var usernameMap: UsernameMapArray?
+    var unreadNotificationCounters: Notifications.UnreadNotifications?
+    var usernameMap: Notifications.UsernameMapArray?
     var userImages = [Int:UIImage]()
     var didSuccessfullyFetchNotifications = false
     
@@ -195,7 +197,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameUpvoteLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.upvoteBadge.tintColor = UIColor(hex: userMapping.avatar.b)!
+            cell.upvoteBadge.tintColor = UIColor(hex: userMapping.avatar.backgroundColor)!
             
             return cell
         } else if notifications[indexPath.row].type == .commentContent {
@@ -212,7 +214,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameCommentLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.b)!
+            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.backgroundColor)!
             
             return cell
         } else if notifications[indexPath.row].type == .commentDiscuss {
@@ -229,7 +231,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameCommentLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.b)!
+            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.backgroundColor)!
             
             return cell
         } else if notifications[indexPath.row].type == .commentMention {
@@ -247,7 +249,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameCommentLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.b)!
+            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.backgroundColor)!
             
             return cell
         } else if notifications[indexPath.row].type == .commentUpvote {
@@ -264,7 +266,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameUpvoteLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.upvoteBadge.tintColor = UIColor(hex: userMapping.avatar.b)!
+            cell.upvoteBadge.tintColor = UIColor(hex: userMapping.avatar.backgroundColor)!
             
             return cell
         } else {
@@ -281,7 +283,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameCommentLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.b)!
+            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.backgroundColor)!
             
             return cell
         }
@@ -300,22 +302,24 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         present(alert, animated: true, completion: nil)
     }
     
-    func getAllData(notificationType: NotificationContentCategory, shouldGetNewData: Bool, completion: (() -> ())?) {
+    func getAllData(notificationType: Notifications.Categories, shouldGetNewData: Bool, completion: (() -> ())?) {
         debugPrint("TASK ENTERING!")
         dispatchGroup.enter()
         
-        APIRequest().getNotificationFeed(shouldGetNewNotifs: shouldGetNewData, category: notificationType) { result in
-            if let notificationsResult = result, let notificationsData = notificationsResult.data {
+        
+        
+        SwiftRant.shared.getNotificationFeed(token: nil, lastCheckTime: nil, shouldGetNewNotifs: shouldGetNewData, category: notificationType) { error, result in
+            if let notificationsResult = result {
                 let completionSemaphore = DispatchSemaphore(value: 0)
                 let downloadGroup = DispatchGroup()
                 
-                for item in notificationsData.items {
+                for item in notificationsResult.items {
                     //debugPrint("DOWNLOAD TASK ENTERING!")
                     downloadGroup.enter()
                     
-                    if let avatarLink = notificationsData.usernameMap!.array.first(where: {
+                    if let avatarLink = notificationsResult.usernameMap!.array.first(where: {
                         $0.uidForUsername == String(item.uid)
-                    })?.avatar.i {
+                    })?.avatar.avatarImage {
                         if let cachedFile = FileManager.default.contents(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(avatarLink).relativePath) {
                             self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: cachedFile)!)
                             
@@ -339,9 +343,9 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                             continue
                         }
                     } else {
-                        let avatarColor = notificationsData.usernameMap!.array.first(where: {
+                        let avatarColor = notificationsResult.usernameMap!.array.first(where: {
                             $0.uidForUsername == String(item.uid)
-                        })!.avatar.b
+                        })!.avatar.backgroundColor
                         
                         self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(color: UIColor(hex: avatarColor)!, size: CGSize(width: 45, height: 45))!)
                         
@@ -357,23 +361,23 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 
                 //let indexPaths = !shouldGetNewData ? (0..<100).map { IndexPath(row: $0, section: 0) } : (0..<notificationsData.items.count).map { IndexPath(row: $0, section: 0) }
                 
-                let indexPaths = (0..<notificationsData.items.count).map { IndexPath(row: $0, section: 0) }
+                let indexPaths = (0..<notificationsResult.items.count).map { IndexPath(row: $0, section: 0) }
                 
                 if !shouldGetNewData { self.accessQueue.async(flags: .barrier) { self.notifications = [] } }
                 
                 self.accessQueue.async(flags: .barrier) {
-                    self.notifications.insert(contentsOf: notificationsData.items[0..<notificationsData.items.count], at: 0)
+                    self.notifications.insert(contentsOf: notificationsResult.items[0..<notificationsResult.items.count], at: 0)
                 }
                 
-                self.unreadNotificationCounters = notificationsData.unread
+                self.unreadNotificationCounters = notificationsResult.unread
                 
                 if self.usernameMap != nil {
-                    if notificationsData.usernameMap != nil {
-                        self.asynchronousAppendToArray(arr: &self.usernameMap!.array, arrayToAppend: notificationsData.usernameMap!.array)
+                    if notificationsResult.usernameMap != nil {
+                        self.asynchronousAppendToArray(arr: &self.usernameMap!.array, arrayToAppend: notificationsResult.usernameMap!.array)
                     }
                 } else {
                     self.accessQueue.async(flags: .barrier) {
-                        self.usernameMap = notificationsData.usernameMap
+                        self.usernameMap = notificationsResult.usernameMap
                     }
                 }
                 
@@ -396,6 +400,10 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     
                     debugPrint("TASK LEAVING!")
                     self.dispatchGroup.leave()
+                }
+            } else if let error = error {
+                DispatchQueue.main.async {
+                    self.showAlertWithError(error ?? "An unknown error occurred while fetching the user's notifications.", retryHandler: nil)
                 }
             } else {
                 DispatchQueue.main.async {
@@ -638,7 +646,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             rantViewController.loadCompletionHandler = { tableViewController in
                 DispatchQueue.global(qos: .userInitiated).async {
                     if let idx = tableViewController!.comments.firstIndex(where: {
-                        $0.created_time == self.notifications[indexPath.row].createdTime && $0.user_username == self.usernameMap!.array.first(where: {
+                        $0.createdTime == self.notifications[indexPath.row].createdTime && $0.username == self.usernameMap!.array.first(where: {
                             $0.uidForUsername == String(self.notifications[indexPath.row].uid)
                         })!.name || $0.id == self.notifications[indexPath.row].commentID
                     }) {
@@ -656,7 +664,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             rantViewController.loadCompletionHandler = { tableViewController in
                 DispatchQueue.global(qos: .userInitiated).async {
                     if let idx = tableViewController!.comments.firstIndex(where: {
-                        $0.created_time == self.notifications[indexPath.row].createdTime && $0.user_username == self.usernameMap!.array.first(where: {
+                        $0.createdTime == self.notifications[indexPath.row].createdTime && $0.username == self.usernameMap!.array.first(where: {
                             $0.uidForUsername == String(self.notifications[indexPath.row].uid)
                         })!.name || $0.id == self.notifications[indexPath.row].commentID
                     }) {

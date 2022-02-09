@@ -37,7 +37,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Bhb-2M-adc" userLabel="Main Stack View">
                                 <rect key="frame" x="16" y="96" width="382" height="275.5"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ztY-Yh-X3U" userLabel="Content Text View">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ztY-Yh-X3U" userLabel="Content Text View" customClass="OSPlaceholderTextView" customModule="OSPlaceholderTextView">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="220"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -112,7 +112,7 @@
                     <connections>
                         <outlet property="attachmentButton" destination="Gau-o8-NFT" id="s4b-t5-9Va"/>
                         <outlet property="cancelButton" destination="UgN-uD-sWU" id="8fm-bx-AYG"/>
-                        <outlet property="contentTextView" destination="ztY-Yh-X3U" id="hOm-UM-jBI"/>
+                        <outlet property="contentTextView" destination="ztY-Yh-X3U" id="TyD-H6-l2j"/>
                         <outlet property="mainStackView" destination="Bhb-2M-adc" id="uXH-E3-8lb"/>
                         <outlet property="remainingLettersLabel" destination="3je-MC-ohL" id="6pa-VI-KbP"/>
                         <outlet property="submitButton" destination="CP1-9I-U2b" id="pZa-Av-1FX"/>

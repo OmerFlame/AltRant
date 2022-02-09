@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CommentModel: Codable, Identifiable {
+/*struct CommentModel: Codable, Identifiable {
     var uuid = UUID()
     
     let id: Int
@@ -85,4 +85,4 @@ struct CommentModel: Codable, Identifiable {
         user_dpp = try? values.decode(Int.self, forKey: .user_dpp)
         attached_image = try? values.decode(AttachedImage.self, forKey: .attached_image)
     }
-}
+}*/

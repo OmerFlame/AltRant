@@ -5,7 +5,7 @@
 //  Created by Omer Shamai on 1/4/21.
 //
 
-import Foundation
+/*import Foundation
 
 struct NotificationFeed: Codable {
     let data: Notifications?
@@ -166,3 +166,4 @@ enum NotificationType: String, Codable {
     
     case rantSub = "rant_sub"
 }
+*/

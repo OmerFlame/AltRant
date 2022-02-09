@@ -8,6 +8,7 @@
 import UIKit
 //import SwiftUI
 import QuickLook
+import SwiftRant
 
 class RantCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var upvoteButton: UIButton!
@@ -29,7 +30,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
     var savedPreviewImage: UIImage?
     var profile: Profile!
     var userImage: UIImage?
-    var rantContents: RantModel!
+    var rantContents: Rant!
     var rantInFeed: UnsafeMutablePointer<RantInFeed>!
     var parentTableViewController: RantViewController? = nil
     
@@ -72,7 +73,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         tagList.addTags(["This", "Is", "A", "Test"])
     }
     
-    func configure(with model: RantModel, rantInFeed: UnsafeMutablePointer<RantInFeed>?, userImage: UIImage?, supplementalImage: File?, profile: Profile, parentTableViewController: RantViewController?) {
+    func configure(with model: Rant, rantInFeed: UnsafeMutablePointer<RantInFeed>?, userImage: UIImage?, supplementalImage: File?, profile: Profile, parentTableViewController: RantViewController?) {
         self.rantContents = model
         self.rantInFeed = rantInFeed
         self.userImage = userImage
@@ -91,10 +92,10 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         
         bodyLabel.text = rantContents!.text
         
-        upvoteButton.tintColor = (model.vote_state == 1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
+        upvoteButton.tintColor = (model.voteState == 1 ? UIColor(hex: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         //scoreLabel.text = String(rantContents!.score)
         scoreLabel.text = formatNumber(rantContents!.score)
-        downvoteButton.tintColor = (model.vote_state == -1 ? UIColor(hex: model.user_avatar.b)! : UIColor.systemGray)
+        downvoteButton.tintColor = (model.voteState == -1 ? UIColor(hex: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         
         if supplementalImage == nil {
             supplementalImageView.isHidden = true
@@ -154,18 +155,18 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             //supplementalImageView.frame.size = supplementalImage!.size
         }
         
-        upvoteButton.isEnabled = rantContents!.vote_state != -2
-        downvoteButton.isEnabled = rantContents!.vote_state != -2
+        upvoteButton.isEnabled = rantContents!.voteState != -2
+        downvoteButton.isEnabled = rantContents!.voteState != -2
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
         
         tagList.removeAllTags()
         tagList.addTags(rantContents!.tags)
         
-        if rantContents!.user_avatar.i == nil {
-            userProfileImageView.image = UIImage(color: UIColor(hex: rantContents!.user_avatar.b)!, size: CGSize(width: 45, height: 45))
+        if rantContents!.userAvatar.avatarImage == nil {
+            userProfileImageView.image = UIImage(color: UIColor(hex: rantContents!.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))
         } else {
-            let resourceURL = URL(string: "https://avatars.devrant.com/" + rantContents!.user_avatar.i!)!
+            let resourceURL = URL(string: "https://avatars.devrant.com/" + rantContents!.userAvatar.avatarImage!)!
             
             let completionSemaphore = DispatchSemaphore(value: 0)
             var imageData: Data? = nil
@@ -180,27 +181,27 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             userProfileImageView.image = UIImage(data: imageData ?? Data()) ?? nil
         }
         
-        usernameLabel.text = rantContents!.user_username
+        usernameLabel.text = rantContents!.username
         
-        if rantContents!.user_score < 0 {
-            userScoreLabel.text = String(rantContents!.user_score)
+        if rantContents!.score < 0 {
+            userScoreLabel.text = String(rantContents!.userScore)
         } else {
-            userScoreLabel.text = "+\(rantContents!.user_score)"
+            userScoreLabel.text = "+\(rantContents!.userScore)"
         }
         
-        userScoreLabel.backgroundColor = UIColor(hex: rantContents!.user_avatar.b)
+        userScoreLabel.backgroundColor = UIColor(hex: rantContents!.userAvatar.backgroundColor)
         
         scoreLabel.text = String(rantContents!.score)
         
         let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleImageTap(_:)))
         let userGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleUserTap(_:)))
         
-        if rantContents.user_id == UserDefaults.standard.integer(forKey: "DRUserID") {
+        if rantContents.userID == SwiftRant.shared.tokenFromKeychain!.authToken.userID {
             favoriteModifyButton.setTitle("Modify", for: .normal)
             
             let actionsMenu = UIMenu(title: "", children: [
                                         UIAction(title: "Edit", image: UIImage(systemName: "square.and.pencil")!) { action in
-                                            if Double(Date().timeIntervalSince1970) - Double(self.rantContents.created_time) >= 300 {
+                                            if Double(Date().timeIntervalSince1970) - Double(self.rantContents.createdTime) >= 300 {
                                                 let alert = UIAlertController(title: "Editing Disabled", message: "Rants and comments can only be edited for 5 mins (30 mins for devRant++ subscribers) after they are posted.", preferredStyle: .alert)
                                                 
                                                 alert.addAction(UIAlertAction(title: "Got it", style: .default, handler: nil))
@@ -255,7 +256,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             favoriteModifyButton.menu = actionsMenu
         } else {
             //favoriteModifyButton.setTitle("Favorite", for: .normal)
-            if rantContents.favorited == nil {
+            if rantContents.isFavorite == nil {
                 favoriteModifyButton.setTitle("Favorite", for: .normal)
                 favoriteModifyButton.addTarget(self, action: #selector(handleFavorite), for: .touchUpInside)
             } else {
@@ -265,7 +266,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         }
         
         if let links = rantContents.links {
-            let semiboldAttrString = NSMutableAttributedString(string: rantContents.text)
+            /*let semiboldAttrString = NSMutableAttributedString(string: rantContents.text)
             
             let stringAsData = rantContents.text.data(using: .utf8)!
             
@@ -280,14 +281,14 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             for i in links {
                 
                 if i.start == nil && i.end == nil {
-                    temporaryRange = (rantContents.text as NSString).range(of: i.title)
+                    //temporaryRange = (rantContents.text as NSString).range(of: i.title)
                     
-                    semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: temporaryRange)
+                    semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: i.calculatedRange)
                     
                     if i.type == "mention" {
-                        semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: temporaryRange)
+                        semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: i.calculatedRange)
                     } else {
-                        semiboldAttrString.addAttribute(.link, value: i.url, range: temporaryRange)
+                        semiboldAttrString.addAttribute(.link, value: i.url, range: i.calculatedRange)
                     }
                 } else {
                     // The devRant API returns offsets for links in byte offsets, not in normalized character offsets, so we need to get the raw bytes between the start offset (i.start) and end offset (i.end) and turn the entire thing to a String again, encoded in UTF-8.
@@ -295,7 +296,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
                     // Get the raw bytes in the given range from the devRant API
                     //(stringAsData as NSMutableData).getBytes(&temporaryStringBytes, range: NSRange(location: i.start!, length: i.end! - i.start!))
                     
-                    let debugRange = stringAsData.index(stringAsData.startIndex, offsetBy: i.start!)..<stringAsData.index(stringAsData.startIndex, offsetBy: i.end!)
+                    /*let debugRange = stringAsData.index(stringAsData.startIndex, offsetBy: i.start!)..<stringAsData.index(stringAsData.startIndex, offsetBy: i.end!)
                     
                     temporaryStringBytes = stringAsData[stringAsData.index(stringAsData.startIndex, offsetBy: i.start!)..<stringAsData.index(stringAsData.startIndex, offsetBy: i.end!)]
                     
@@ -303,20 +304,20 @@ class RantCell: UITableViewCell, UITextViewDelegate {
                     temporaryGenericUseString = String(data: temporaryStringBytes, encoding: .utf8)!
                     
                     // Get the range using the sanitized String that we just got from the raw data
-                    temporaryRange = (rantContents.text as NSString).range(of: temporaryGenericUseString)
+                    temporaryRange = (rantContents.text as NSString).range(of: temporaryGenericUseString)*/
                     
                     // And use it to add our desired attributes
-                    semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: temporaryRange)
+                    semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: i.calculatedRange)
                     
                     if i.type == "mention" {
-                        semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: temporaryRange)
+                        semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: i.calculatedRange)
                     } else {
-                        semiboldAttrString.addAttribute(.link, value: i.url, range: temporaryRange)
+                        semiboldAttrString.addAttribute(.link, value: i.url, range: i.calculatedRange)
                     }
                 }
             }
             
-            bodyLabel.attributedText = semiboldAttrString
+            bodyLabel.attributedText = semiboldAttrString*/
             
             /*semiboldAttrString.addAttribute(.font, value: bodyLabel.font!, range: (rantContents.text as NSString).range(of: rantContents.text))
             semiboldAttrString.addAttribute(.foregroundColor, value: UIColor.label, range: (rantContents.text as NSString).range(of: rantContents.text))
@@ -338,6 +339,10 @@ class RantCell: UITableViewCell, UITextViewDelegate {
                 }
             }*/
             
+            if let parentTableViewController = parentTableViewController {
+                bodyLabel.attributedText = parentTableViewController.textsWithLinks[rantContents.id]
+            }
+            
             bodyLabel.isUserInteractionEnabled = true
             bodyLabel.delegate = self
         }
@@ -349,21 +354,25 @@ class RantCell: UITableViewCell, UITextViewDelegate {
     }
     
     @objc func handleFavorite() {
-        if rantContents.favorited == nil {
-            let success = APIRequest().favoriteRant(rantID: rantContents.id)
+        if rantContents.isFavorite == nil {
+            //let success = APIRequest().favoriteRant(rantID: rantContents.id)
             
-            if success {
-                parentTableViewController?.rant?.favorited = 1
-                
-                parentTableViewController?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+            SwiftRant.shared.favoriteRant(nil, rantID: rantContents.id) { [weak self] _, success in
+                if success {
+                    self?.parentTableViewController?.rant?.isFavorite = 1
+                    
+                    self?.parentTableViewController?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                }
             }
         } else {
-            let success = APIRequest().unfavoriteRant(rantID: rantContents.id)
+            //let success = APIRequest().unfavoriteRant(rantID: rantContents.id)
             
-            if success {
-                parentTableViewController?.rant?.favorited = nil
-                
-                parentTableViewController?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+            SwiftRant.shared.unfavoriteRant(nil, rantID: rantContents.id) { [weak self] _, success in
+                if success {
+                    self?.parentTableViewController?.rant?.isFavorite = nil
+                    
+                    self?.parentTableViewController?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                }
             }
         }
     }
@@ -376,9 +385,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         
         self.parentTableViewController?.title = "Deleting..."
         
-        DispatchQueue.global(qos: .userInitiated).async {
-            let success = APIRequest().deleteRant(rantID: self.rantContents.id)
-            
+        SwiftRant.shared.deleteRant(nil, rantID: rantContents.id) { error, success in
             if success {
                 let successAlertController = UIAlertController(title: "Success", message: "Rant successfully deleted!", preferredStyle: .alert)
                 
@@ -393,7 +400,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
                     }
                 }
             } else {
-                let failureAlertController = UIAlertController(title: "Error", message: "Failed to delete rant. Please try again later.", preferredStyle: .alert)
+                let failureAlertController = UIAlertController(title: "Error", message: error ?? "An unknown error occurred while deleting the rant.", preferredStyle: .alert)
                 
                 failureAlertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 failureAlertController.addAction(UIAlertAction(title: "Retry", style: .destructive, handler: { _ in self.delete() }))
@@ -418,7 +425,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
     
     @IBAction func upvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.rantContents!.vote_state {
+            switch self.rantContents!.voteState {
             case 0:
                 return 1
                 
@@ -430,31 +437,57 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             }
         }
         
-        let success = APIRequest().voteOnRant(rantID: self.rantContents!.id, vote: vote)
+        //let success = APIRequest().voteOnRant(rantID: self.rantContents!.id, vote: vote)
         
-        if success == nil {
+        SwiftRant.shared.voteOnRant(nil, rantID: rantContents.id, vote: vote) { [weak self] error, updatedRant in
+            if let updatedRant = updatedRant {
+                if let rantInFeed = self?.rantInFeed {
+                    rantInFeed.pointee.voteState = vote
+                    rantInFeed.pointee.score = updatedRant.score
+                }
+                
+                if let parentTableViewController = self?.parentTableViewController {
+                    parentTableViewController.rant?.voteState = updatedRant.voteState
+                    parentTableViewController.rant?.score = updatedRant.score
+                    
+                    DispatchQueue.main.async {
+                        parentTableViewController.tableView.reloadData()
+                    }
+                }
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error occurred while voting on the rant.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                DispatchQueue.main.async {
+                    self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+        
+        /*if success == nil {
             print("ERROR WHILE UPVOTING")
         } else {
             if rantInFeed != nil {
-                rantInFeed!.pointee.vote_state = vote
+                rantInFeed!.pointee.voteState = vote
                 rantInFeed!.pointee.score = success!.rant.score
             }
-            //parentTableViewController?.rant!.vote_state = vote
+            //parentTableViewController?.rant!.voteState = vote
             
             if parentTableViewController != nil {
-                parentTableViewController?.rant!.vote_state = success!.rant.vote_state
+                parentTableViewController?.rant!.voteState = success!.rant.voteState
                 parentTableViewController?.rant!.score = success!.rant.score
             }
             
             if let parentTableViewController = self.parentTableViewController {
                 parentTableViewController.tableView.reloadData()
             }
-        }
+        }*/
     }
     
     @IBAction func downvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.rantContents!.vote_state {
+            switch self.rantContents!.voteState {
             case 0:
                 return -1
                 
@@ -466,18 +499,29 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             }
         }
         
-        let success = APIRequest().voteOnRant(rantID: self.rantContents!.id, vote: vote)
-        
-        if success == nil {
-            print("ERROR WHILE UPVOTING")
-        } else {
-            rantInFeed!.pointee.vote_state = vote
-            rantInFeed!.pointee.score = success!.rant.score
-            parentTableViewController?.rant!.vote_state = success!.rant.vote_state
-            parentTableViewController?.rant!.score = success!.rant.score
-            
-            if let parentTableViewController = self.parentTableViewController {
-                parentTableViewController.tableView.reloadData()
+        SwiftRant.shared.voteOnRant(nil, rantID: rantContents.id, vote: vote) { [weak self] error, updatedRant in
+            if let updatedRant = updatedRant {
+                if let rantInFeed = self?.rantInFeed {
+                    rantInFeed.pointee.voteState = vote
+                    rantInFeed.pointee.score = updatedRant.score
+                }
+                
+                if let parentTableViewController = self?.parentTableViewController {
+                    parentTableViewController.rant?.voteState = updatedRant.voteState
+                    parentTableViewController.rant?.score = updatedRant.score
+                    
+                    DispatchQueue.main.async {
+                        parentTableViewController.tableView.reloadData()
+                    }
+                }
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error occurred while voting on the rant.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                DispatchQueue.main.async {
+                    self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
+                }
             }
         }
     }
@@ -511,7 +555,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
     @objc func handleUserTap(_ sender: UITapGestureRecognizer) {
         if let parentTableViewController = self.parentTableViewController {
             let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
-                return ProfileTableViewController(coder: coder, userID: self.rantContents.user_id)
+                return ProfileTableViewController(coder: coder, userID: self.rantContents.userID)
             })
             
             parentTableViewController.navigationController?.pushViewController(profileVC, animated: true)

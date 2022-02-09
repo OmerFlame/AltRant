@@ -5,7 +5,7 @@
 //  Created by Omer Shamai on 10/12/20.
 //
 
-import Foundation
+/*import Foundation
 
 struct RantResponse: Codable {
     var rant: RantModel
@@ -19,3 +19,4 @@ struct CommentResponse: Codable {
     let success: Bool
     let comment: CommentModel?
 }
+*/
