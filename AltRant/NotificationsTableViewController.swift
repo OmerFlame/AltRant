@@ -30,6 +30,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     
     var didFinishLoading = false
     
+    var isLoading = false
+    
     var originalNavbarMaxY: CGFloat!
     
     var notifRefreshTimer: Timer!
@@ -95,16 +97,23 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         self.notifRefreshTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
             debugPrint("Notification Refresh Timer Fired!")
             
-            self.tableView.refreshControl!.isEnabled = false
-            
-            self.getAllData(notificationType: self.currentNotificationType, shouldGetNewData: true, completion: nil)
-            
-            self.dispatchGroup.notify(queue: .main) {
-                self.tableView.beginUpdates()
-                self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
-                self.tableView.endUpdates()
+            if self.isLoading == false {
+                self.isLoading = true
+                let refreshControlBackup = self.tableView.refreshControl
+                self.tableView.refreshControl = nil
+                //self.tableView.refreshControl!.isEnabled = false
                 
-                self.tableView.refreshControl!.isEnabled = true
+                self.getAllData(notificationType: self.currentNotificationType, shouldGetNewData: true, completion: nil)
+                
+                self.dispatchGroup.notify(queue: .main) { [weak self] in
+                    self?.tableView.beginUpdates()
+                    self?.tableView.insertRows(at: self?.indexPathsToInsert ?? [], with: .automatic)
+                    self?.tableView.endUpdates()
+                    
+                    self?.isLoading = false
+                    //self?.tableView.refreshControl!.isEnabled = true
+                    self?.tableView.refreshControl = refreshControlBackup
+                }
             }
         }
         
@@ -115,6 +124,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         
         if !didFinishLoading {
             loadingIndicator.startAnimating()
+            
+            isLoading = true
             
             getAllData(notificationType: currentNotificationType, shouldGetNewData: false, completion: nil)
             
@@ -132,6 +143,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     
                     self.navigationController!.tabBarItem.badgeValue = self.badgeValue
                     
+                    self.isLoading = false
+                    
                     self.scheduleNotificationFetches()
                 }
             }
@@ -147,6 +160,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         
         notifRefreshTimer.invalidate()
         
+        isLoading = true
         getAllData(notificationType: currentNotificationType, shouldGetNewData: true, completion: nil)
         
         dispatchGroup.notify(queue: .main) {
@@ -155,6 +169,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
             self.tableView.endUpdates()
+            
+            self.isLoading = false
         }
         
         scheduleNotificationFetches()
