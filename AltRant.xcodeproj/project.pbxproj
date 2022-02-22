@@ -88,7 +88,6 @@
 		59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671662576BAF4007EEB28 /* PaddingLabel.swift */; };
 		59E6716A2576BD74007EEB28 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671692576BD74007EEB28 /* RoundedImageView.swift */; };
 		59E671752576CE5B007EEB28 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671732576CE5B007EEB28 /* LoginViewController.swift */; };
-		59E70C6925A5B8FA00F45626 /* NotificationsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */; };
 		59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -194,7 +193,6 @@
 		59E671662576BAF4007EEB28 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		59E671692576BD74007EEB28 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		59E671732576CE5B007EEB28 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsNavigationViewController.swift; sourceTree = "<group>"; };
 		59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -269,7 +267,6 @@
 				5904016F257627A3002B062A /* Main.storyboard */,
 				59046D9E25A31F0D00C9B4D3 /* NotificationsTableViewController.swift */,
 				593B17AF25D14C41001FAF6F /* StoriesViewController.swift */,
-				59E70C6825A5B8FA00F45626 /* NotificationsNavigationViewController.swift */,
 				5921F2C12598E53900540CF5 /* MoreTableViewController.swift */,
 				59040172257627A5002B062A /* Assets.xcassets */,
 				59040174257627A5002B062A /* LaunchScreen.storyboard */,
@@ -583,7 +580,6 @@
 				59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */,
 				5990650E257643D60058C1D7 /* TagListView.swift in Sources */,
 				59078845279575F7002151A1 /* LoadingCell.swift in Sources */,
-				59E70C6925A5B8FA00F45626 /* NotificationsNavigationViewController.swift in Sources */,
 				59906527257660AF0058C1D7 /* ColorFromHexString.swift in Sources */,
 				5954C26825AD8E9B008B70D2 /* RantCommentCell.swift in Sources */,
 				59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */,

@@ -1006,7 +1006,13 @@
                             <constraint firstItem="kTz-cX-3qO" firstAttribute="top" secondItem="pSn-y3-f4C" secondAttribute="top" id="zNi-DM-C2Q"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Notifications" largeTitleDisplayMode="always" id="Jza-f9-jIc"/>
+                    <navigationItem key="navigationItem" title="Notifications" largeTitleDisplayMode="always" id="Jza-f9-jIc">
+                        <barButtonItem key="rightBarButtonItem" title="Clear" id="gdr-30-qHW">
+                            <connections>
+                                <action selector="clearNotifications:" destination="5Kg-FT-4Ff" id="fP8-wJ-Jk5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="loadingIndicator" destination="P7c-5c-Gpn" id="JlG-mA-aPp"/>
                         <outlet property="tableView" destination="kTz-cX-3qO" id="XS5-A4-JN1"/>
@@ -1085,7 +1091,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="Er3-sQ-bs7"/>
+        <segue reference="zrC-vz-wVK"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="bell.fill" catalog="system" width="128" height="124"/>

@@ -106,9 +106,11 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 self.getAllData(notificationType: self.currentNotificationType, shouldGetNewData: true, completion: nil)
                 
                 self.dispatchGroup.notify(queue: .main) { [weak self] in
-                    self?.tableView.beginUpdates()
-                    self?.tableView.insertRows(at: self?.indexPathsToInsert ?? [], with: .automatic)
-                    self?.tableView.endUpdates()
+                    //self?.tableView.beginUpdates()
+                    //self?.tableView.insertRows(at: self?.indexPathsToInsert ?? [], with: .automatic)
+                    //self?.tableView.endUpdates()
+                    
+                    self?.tableView.reloadData()
                     
                     self?.isLoading = false
                     //self?.tableView.refreshControl!.isEnabled = true
@@ -166,9 +168,11 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         dispatchGroup.notify(queue: .main) {
             sender.endRefreshing()
             
-            self.tableView.beginUpdates()
-            self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
-            self.tableView.endUpdates()
+            //self.tableView.beginUpdates()
+            //self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
+            //self.tableView.endUpdates()
+            
+            self.tableView.reloadData()
             
             self.isLoading = false
         }
@@ -688,6 +692,37 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                             tableViewController!.tableView.scrollToRow(at: IndexPath(row: idx, section: 1), at: .middle, animated: true)
                         }
                     }
+                }
+            }
+        }
+    }
+    
+    @IBAction func clearNotifications(_ sender: Any) {
+        segmentedControl.isEnabled = false
+        let refreshControlBackup = tableView.refreshControl
+        tableView.refreshControl = nil
+        (sender as! UIBarButtonItem).isEnabled = false
+        
+        SwiftRant.shared.clearNotifications(nil) { error, success in
+            if success {
+                let unreadNotifications = self.notifications.filter({ $0.read == 0 })
+                
+                for notification in unreadNotifications {
+                    let index = self.notifications.firstIndex(where: { $0.uid == notification.uid })!
+                    
+                    self.notifications[index].read = 1
+                }
+                
+                DispatchQueue.main.async {
+                    self.segmentedControl.isEnabled = true
+                    self.tableView.refreshControl = refreshControlBackup
+                    self.navigationController!.tabBarItem.badgeValue = nil
+                    (sender as! UIBarButtonItem).isEnabled = true
+                    self.tableView.reloadData()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.showAlertWithError(error ?? "An unknown error has occurred while clearing notifications.", retryHandler: { self.clearNotifications(sender) })
                 }
             }
         }
