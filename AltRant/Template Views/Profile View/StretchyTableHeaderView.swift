@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftHEXColors
 
 /*class StretchyTableHeaderView: UIView {
     @IBOutlet weak var imageContainerHeight: NSLayoutConstraint!
@@ -160,11 +161,11 @@ class StretchyTableHeaderView: UIView {
             
         // Container View
         containerView = UIView()
-        //containerView.backgroundColor = UIColor(hex: "d55161")
+        //containerView.backgroundColor = UIColor(hexString: "d55161")
         self.addSubview(containerView)
             
         imageContainer = UIView()
-        //imageContainer.backgroundColor = UIColor(hex: "d55161")
+        //imageContainer.backgroundColor = UIColor(hexString: "d55161")
         //imageContainer.contentMode = .scaleAspectFill
         imageContainer.clipsToBounds = true
         containerView.addSubview(imageContainer)
@@ -172,7 +173,7 @@ class StretchyTableHeaderView: UIView {
         // ImageView for background
         imageView = UIImageView()
         //imageView.clipsToBounds = true
-        //imageView.backgroundColor = UIColor(hex: "d55161")
+        //imageView.backgroundColor = UIColor(hexString: "d55161")
         imageView.contentMode = .scaleAspectFill
         imageContainer.addSubview(imageView)
         

@@ -8,6 +8,7 @@
 import UIKit
 import QuickLook
 import SwiftRant
+import SwiftHEXColors
 //import SwiftUI
 
 class RantInFeedCell: UITableViewCell {
@@ -32,9 +33,9 @@ class RantInFeedCell: UITableViewCell {
         
         super.init(coder: coder)
         
-        upvoteButton.tintColor = (rantContents.wrappedValue.vote_state == 1 ? UIColor(hex: rantContents.wrappedValue.user_avatar.b)! : UIColor.systemGray)
+        upvoteButton.tintColor = (rantContents.wrappedValue.vote_state == 1 ? UIColor(hexString: rantContents.wrappedValue.user_avatar.b)! : UIColor.systemGray)
         scoreLabel.text = String(rantContents.wrappedValue.score + rantContents.wrappedValue.vote_state)
-        downvoteButton.tintColor = (rantContents.wrappedValue.vote_state == -1 ? UIColor(hex: rantContents.wrappedValue.user_avatar.b)! : UIColor.systemGray)
+        downvoteButton.tintColor = (rantContents.wrappedValue.vote_state == -1 ? UIColor(hexString: rantContents.wrappedValue.user_avatar.b)! : UIColor.systemGray)
         
         if image == nil {
             supplementalImageView.isHidden = true
@@ -78,9 +79,9 @@ class RantInFeedCell: UITableViewCell {
         self.supplementalImage = image
         self.rantContents = model
         
-        upvoteButton.tintColor = (rantContents!.pointee.voteState == 1 ? UIColor(hex: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
+        upvoteButton.tintColor = (rantContents!.pointee.voteState == 1 ? UIColor(hexString: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
         scoreLabel.text = String(rantContents!.pointee.score)
-        downvoteButton.tintColor = (rantContents!.pointee.voteState == -1 ? UIColor(hex: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
+        downvoteButton.tintColor = (rantContents!.pointee.voteState == -1 ? UIColor(hexString: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
         
         upvoteButton.isEnabled = rantContents!.pointee.voteState != -2
         downvoteButton.isEnabled = rantContents!.pointee.voteState != -2

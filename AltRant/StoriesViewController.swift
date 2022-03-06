@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftHEXColors
 
 class StoriesViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
@@ -17,7 +18,7 @@ class StoriesViewController: UIViewController, UITableViewDataSource {
         
         // d55161
         //navigationController!.navigationBar.setBackgroundImage(UIImage(named: "IMG_4370"), for: .top, barMetrics: .default)
-        //navigationController!.navigationBar.barTintColor = UIColor(hex: "d55161")!
+        //navigationController!.navigationBar.barTintColor = UIColor(hexString: "d55161")!
         
         let image = UIImage(named: "IMG_4370")!
         let imageView = UIImageView(image: image)

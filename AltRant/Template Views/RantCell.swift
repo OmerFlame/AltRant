@@ -9,6 +9,7 @@ import UIKit
 //import SwiftUI
 import QuickLook
 import SwiftRant
+import SwiftHEXColors
 
 class RantCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var upvoteButton: UIButton!
@@ -92,10 +93,10 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         
         bodyLabel.text = rantContents!.text
         
-        upvoteButton.tintColor = (model.voteState == 1 ? UIColor(hex: model.userAvatar.backgroundColor)! : UIColor.systemGray)
+        upvoteButton.tintColor = (model.voteState == 1 ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         //scoreLabel.text = String(rantContents!.score)
         scoreLabel.text = formatNumber(rantContents!.score)
-        downvoteButton.tintColor = (model.voteState == -1 ? UIColor(hex: model.userAvatar.backgroundColor)! : UIColor.systemGray)
+        downvoteButton.tintColor = (model.voteState == -1 ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         
         if supplementalImage == nil {
             supplementalImageView.isHidden = true
@@ -164,7 +165,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         tagList.addTags(rantContents!.tags)
         
         if rantContents!.userAvatar.avatarImage == nil {
-            userProfileImageView.image = UIImage(color: UIColor(hex: rantContents!.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))
+            userProfileImageView.image = UIImage(color: UIColor(hexString: rantContents!.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))
         } else {
             let resourceURL = URL(string: "https://avatars.devrant.com/" + rantContents!.userAvatar.avatarImage!)!
             
@@ -189,7 +190,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             userScoreLabel.text = "+\(rantContents!.userScore)"
         }
         
-        userScoreLabel.backgroundColor = UIColor(hex: rantContents!.userAvatar.backgroundColor)
+        userScoreLabel.backgroundColor = UIColor(hexString: rantContents!.userAvatar.backgroundColor)
         
         scoreLabel.text = String(rantContents!.score)
         

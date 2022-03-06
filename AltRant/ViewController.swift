@@ -568,10 +568,10 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         } else {
             debugPrint("Destroying notification refresh timer!")
             
-            if ((tabBarController.viewControllers![2] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer != nil {
-                ((tabBarController.viewControllers![2] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer.invalidate()
+            if ((tabBarController.viewControllers![3] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer != nil {
+                ((tabBarController.viewControllers![3] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer.invalidate()
                 
-                ((tabBarController.viewControllers![2] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = nil
+                ((tabBarController.viewControllers![3] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = nil
             }
         }
     }

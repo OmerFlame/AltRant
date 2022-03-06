@@ -11,6 +11,7 @@ import QuickLook
 import ADNavigationBarExtension
 import SwiftRant
 import Foundation
+import SwiftHEXColors
 
 extension String: LocalizedError {
     public var errorDescription: String? { return self }
@@ -61,7 +62,7 @@ actor UserImageLoader {
                     activeTasks[id] = nil
                     return image!
                 } else {
-                    let image = UIImage(color: UIColor(hex: profile.avatarSmall.backgroundColor)!, size: CGSize(width: 45, height: 45))!
+                    let image = UIImage(color: UIColor(hexString: profile.avatarSmall.backgroundColor)!, size: CGSize(width: 45, height: 45))!
                     await store.store(userID: id, image: image)
                     return image
                 }
@@ -253,7 +254,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                                 try? await self.userImageLoader.loadImage(from: URL(string: "https://avatars.devrant.com/\(avatarImage)")!, forUserID: comment.userID)
                             }
                         } else {
-                            await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hex: comment.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))!)
+                            await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hexString: comment.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))!)
                         }
                         
                         if comment.attachedImage == nil {

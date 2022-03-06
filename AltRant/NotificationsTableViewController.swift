@@ -9,6 +9,7 @@ import UIKit
 import ADNavigationBarExtension
 import SwiftRant
 import struct SwiftRant.Notification
+import SwiftHEXColors
 //import SPAlert
 
 class NotificationsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -217,7 +218,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameUpvoteLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.upvoteBadge.tintColor = UIColor(hex: userMapping.avatar.backgroundColor)!
+            cell.upvoteBadge.tintColor = UIColor(hexString: userMapping.avatar.backgroundColor)!
             
             return cell
         } else if notifications[indexPath.row].type == .commentContent {
@@ -234,7 +235,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameCommentLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.backgroundColor)!
+            cell.badgeBackgroundColor = UIColor(hexString: userMapping.avatar.backgroundColor)!
             
             return cell
         } else if notifications[indexPath.row].type == .commentDiscuss {
@@ -251,7 +252,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameCommentLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.backgroundColor)!
+            cell.badgeBackgroundColor = UIColor(hexString: userMapping.avatar.backgroundColor)!
             
             return cell
         } else if notifications[indexPath.row].type == .commentMention {
@@ -269,7 +270,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameCommentLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.backgroundColor)!
+            cell.badgeBackgroundColor = UIColor(hexString: userMapping.avatar.backgroundColor)!
             
             return cell
         } else if notifications[indexPath.row].type == .commentUpvote {
@@ -286,7 +287,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameUpvoteLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.upvoteBadge.tintColor = UIColor(hex: userMapping.avatar.backgroundColor)!
+            cell.upvoteBadge.tintColor = UIColor(hexString: userMapping.avatar.backgroundColor)!
             
             return cell
         } else {
@@ -303,7 +304,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             cell.usernameCommentLabel.isEnabled = notifications[indexPath.row].read == 0 ? true : false
             
-            cell.badgeBackgroundColor = UIColor(hex: userMapping.avatar.backgroundColor)!
+            cell.badgeBackgroundColor = UIColor(hexString: userMapping.avatar.backgroundColor)!
             
             return cell
         }
@@ -367,7 +368,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                             $0.uidForUsername == String(item.uid)
                         })!.avatar.backgroundColor
                         
-                        self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(color: UIColor(hex: avatarColor)!, size: CGSize(width: 45, height: 45))!)
+                        self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(color: UIColor(hexString: avatarColor)!, size: CGSize(width: 45, height: 45))!)
                         
                         //debugPrint("DOWNLOAD TASK LEAVING!")
                         downloadGroup.leave()
@@ -471,9 +472,9 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                             $0.uidForUsername == String(item.uid)
                         })!.avatar.b
                         
-                        //self.userImages[item.uid] = UIImage(color: UIColor(hex: avatarColor)!, size: CGSize(width: 45, height: 45))
+                        //self.userImages[item.uid] = UIImage(color: UIColor(hexString: avatarColor)!, size: CGSize(width: 45, height: 45))
                         
-                        self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(color: UIColor(hex: avatarColor)!, size: CGSize(width: 45, height: 45))!)
+                        self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(color: UIColor(hexString: avatarColor)!, size: CGSize(width: 45, height: 45))!)
                         
                         continue
                     }

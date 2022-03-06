@@ -8,6 +8,7 @@
 import UIKit
 import FloatingPanel
 import SwiftRant
+import SwiftHEXColors
 
 class AvatarEditorViewController: UIViewController, FloatingPanelControllerDelegate, AvatarEditorPickerViewControllerDelegate {
     //private var originalPullUpControllerViewSize: CGSize = .zero
@@ -42,7 +43,7 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
                     self?.customizationResults = customizationResults
                     
                     if let options = self?.customizationResults.avatars {
-                        self?.currentAvatarImageView.backgroundColor = UIColor(hex: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")
+                        self?.currentAvatarImageView.backgroundColor = UIColor(hexString: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")
                         
                         //self?.currentAvatarImageView.image = self?.customizationResults.avatars.first(where: { ($0.isSelected ?? false) })?.image
                         
@@ -83,7 +84,7 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
                 if let options = self.customizationResults.options {
                     DispatchQueue.main.async {
                         
-						self.currentAvatarImageView.backgroundColor = UIColor(hex: self.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor)
+						self.currentAvatarImageView.backgroundColor = UIColor(hexString: self.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor)
 						
                         //self.currentAvatarImageView.image = self.customizationResults.avatars.first(where: { ($0.isSelected ?? false) })?.image.fullImage
 						
@@ -259,7 +260,7 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
     func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResults.AvatarCustomizationOption) {
         //currentAvatarImageView.image = option.image.fullImage
 		
-		currentAvatarImageView.backgroundColor = UIColor(hex: option.image.backgroundColor)!
+		currentAvatarImageView.backgroundColor = UIColor(hexString: option.image.backgroundColor)!
 		
 		currentAvatarImageView.image = nil
 		
@@ -288,7 +289,7 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
             self?.customizationResults = results
             
             DispatchQueue.main.async {
-				self?.currentAvatarImageView.backgroundColor = UIColor(hex: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")
+				self?.currentAvatarImageView.backgroundColor = UIColor(hexString: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")
 				
                 self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.getFullImage(shouldUseCache: true, completion: { image in
 					DispatchQueue.main.async {

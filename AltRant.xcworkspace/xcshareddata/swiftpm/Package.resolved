@@ -92,6 +92,15 @@
         }
       },
       {
+        "package": "SwiftHEXColors",
+        "repositoryURL": "https://github.com/thii/SwiftHEXColors.git",
+        "state": {
+          "branch": null,
+          "revision": "1f886cb20fedda14a5ac75efd09bc99c95b43a18",
+          "version": "1.4.1"
+        }
+      },
+      {
         "package": "SwiftKeychainWrapper",
         "repositoryURL": "https://github.com/jrendel/SwiftKeychainWrapper",
         "state": {
@@ -105,7 +114,7 @@
         "repositoryURL": "https://github.com/OmerFlame/SwiftRant.git",
         "state": {
           "branch": "main",
-          "revision": "e5bea0b7c5c9eb900128198f1cb7cf785e2612ef",
+          "revision": "c080f9f42bc4bd183e6369b5cf6f49c22392fec7",
           "version": null
         }
       }

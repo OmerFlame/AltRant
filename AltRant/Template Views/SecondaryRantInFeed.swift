@@ -8,6 +8,7 @@
 import UIKit
 import QuickLook
 import SwiftRant
+import SwiftHEXColors
 
 class SecondaryRantInFeedCell: UITableViewCell {
     @IBOutlet weak var upvoteButton: UIButton!
@@ -82,9 +83,9 @@ class SecondaryRantInFeedCell: UITableViewCell {
         supplementalImageView.isHidden = false
         tagList.isHidden = false
         
-        upvoteButton.tintColor = (rantContents!.pointee.voteState == 1 ? UIColor(hex: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
+        upvoteButton.tintColor = (rantContents!.pointee.voteState == 1 ? UIColor(hexString: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
         scoreLabel.text = String(rantContents!.pointee.score)
-        downvoteButton.tintColor = (rantContents!.pointee.voteState == -1 ? UIColor(hex: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
+        downvoteButton.tintColor = (rantContents!.pointee.voteState == -1 ? UIColor(hexString: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
         
         upvoteButton.isEnabled = rantContents!.pointee.voteState != -2
         downvoteButton.isEnabled = rantContents!.pointee.voteState != -2
@@ -237,19 +238,6 @@ class SecondaryRantInFeedCell: UITableViewCell {
                 return -1
             }
         }
-        
-        /*let success = APIRequest().voteOnRant(rantID: self.rantContents!.pointee.id, vote: vote)
-        
-        if success == nil {
-            print("ERROR WHILE DOWNVOTING")
-        } else {
-            self.rantContents!.pointee.vote_state = success!.rant.vote_state
-            self.rantContents!.pointee.score = success!.rant.score
-            
-            if let parentTableView = self.parentTableView {
-                parentTableView.reloadData()
-            }
-        }*/
         
         SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
             if updatedRant != nil {

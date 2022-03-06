@@ -9,6 +9,7 @@ import UIKit
 //import Haptica
 import BadgeControl
 import SwiftRant
+import SwiftHEXColors
 
 protocol AvatarEditorPickerViewControllerDelegate {
     func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectCategory category: AvatarCustomizationResults.AvatarCustomizationType)
@@ -437,7 +438,7 @@ class PreferenceCell: UICollectionViewCell {
     
     func configure(image: AvatarCustomizationResults.AvatarCustomizationImage, isAlreadySelected: Bool, shouldShowLock: Bool = false, badgeValue: Int? = nil) {
         preference = image
-		imageView.backgroundColor = UIColor(hex: preference.backgroundColor)!
+		imageView.backgroundColor = UIColor(hexString: preference.backgroundColor)!
 		
         preference.getMidCompleteImage(shouldUseCache: true, completion: { image in
 			DispatchQueue.main.async {
@@ -453,7 +454,7 @@ class PreferenceCell: UICollectionViewCell {
             doneAnimationView.show(animated: false)
 		} else if shouldShowLock {
 			if let badgeValue = badgeValue {
-				let badgeBackgroundColor = UIColor(hex: "37495b")!
+				let badgeBackgroundColor = UIColor(hexString: "37495b")!
 				
 				upperRightBadge = BadgeController(for: self, in: BadgeCenterPosition.upperRightCorner, badgeBackgroundColor: badgeBackgroundColor, badgeTextColor: UIColor.white, borderWidth: 0, badgeHeight: 20)
 				upperRightBadge.addOrReplaceCurrent(with: "\(badgeValue)", animated: false)

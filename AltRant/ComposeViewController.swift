@@ -9,6 +9,7 @@ import UIKit
 import UniformTypeIdentifiers
 import SwiftRant
 import OSPlaceholderTextView
+import SwiftHEXColors
 //import SwiftUI
 
 class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIDocumentPickerDelegate {
@@ -81,9 +82,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         
         contentTextView.backgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white
         contentTextView.placeholder = self.isComment ? "Add your 2 cents..." : "The rant starts here..."
-        contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "464649")! : UIColor(hex: "c5c5c7")!
+        contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hexString: "464649")! : UIColor(hexString: "c5c5c7")!
         //contentTextView.selectedTextRange = contentTextView.textRange(from: contentTextView.beginningOfDocument, to: contentTextView.beginningOfDocument)
-        //contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "464649") : UIColor(hex: "c5c5c7")
+        //contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hexString: "464649") : UIColor(hexString: "c5c5c7")
         contentTextView.delegate = self
         
         let keyboardToolbar = UIToolbar()
@@ -264,8 +265,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         contentTextView.backgroundColor = UITraitCollection.current.userInterfaceStyle == .dark ? .black : .white
-        //contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "464649") : UIColor(hex: "c5c5c7")
-        contentTextView.layer.borderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hex: "ffffff")!.withAlphaComponent(0.20).cgColor : UIColor(red: 0, green: 0, blue: 0, alpha: 0.20).cgColor
+        //contentTextView.placeholderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hexString: "464649") : UIColor(hexString: "c5c5c7")
+        contentTextView.layer.borderColor = UITraitCollection.current.userInterfaceStyle == .dark ? UIColor(hexString: "ffffff")!.withAlphaComponent(0.20).cgColor : UIColor(red: 0, green: 0, blue: 0, alpha: 0.20).cgColor
         contentTextView.layer.borderWidth = 0.333
     }
     

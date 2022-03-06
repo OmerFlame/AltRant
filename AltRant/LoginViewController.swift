@@ -8,6 +8,7 @@
 import UIKit
 import SwiftRant
 import SwiftKeychainWrapper
+import SwiftHEXColors
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     var activityIndicator: UIActivityIndicatorView!
@@ -166,7 +167,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             /*if UserDefaults.standard.integer(forKey: "DRUserID") != 0 {
                 let userInfo = try! APIRequest().getProfileFromID(UserDefaults.standard.integer(forKey: "DRUserID"), userContentType: .rants, skip: 0)!
-                let userColor = UIColor(hex: userInfo.profile.avatar.b)!
+                let userColor = UIColor(hexString: userInfo.profile.avatar.b)!
                 //let userProfileImage = userInfo.profile.avatar.i
                 
                 UserDefaults.standard.set(userColor, forKey: "DRUserColor")
@@ -175,7 +176,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             if UserDefaults.standard.integer(forKey: "DRUserID") != 0 {
                 APIRequest().getProfileFromID(UserDefaults.standard.integer(forKey: "DRUserID"), userContentType: .rants, skip: 0, completionHandler: { result in
-                    UserDefaults.standard.set(UIColor(hex: result!.profile.avatar.b)!, forKey: "DRUserColor")
+                    UserDefaults.standard.set(UIColor(hexString: result!.profile.avatar.b)!, forKey: "DRUserColor")
                 })
             }
             

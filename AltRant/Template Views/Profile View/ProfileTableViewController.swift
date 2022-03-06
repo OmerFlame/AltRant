@@ -11,6 +11,7 @@ import UIKit
 import ADNavigationBarExtension
 import SwiftRant
 import CoreGraphics
+import SwiftHEXColors
 
 public let secondaryProfilePages: [String] = ["Rants", "++'s", "Comments", "Favorites"]
 
@@ -123,7 +124,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         if offset < 0 { offset = 0 }
         
         // Change the tint color of the navigation bar to a color between white and the profile's background color, depending on how much we scroll.
-        navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hex: profileData!.avatar.backgroundColor)!, percent: Double(sqrt(offset)))
+        navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hexString: profileData!.avatar.backgroundColor)!, percent: Double(sqrt(offset)))
         
         // Set the opacity of the custom title view of the navigation bar to the square root of the offset.
         navigationItem.titleView?.alpha = sqrt(offset)
@@ -204,9 +205,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         tableView.tableHeaderView = StretchyTableHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 502))
         
-        (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.backgroundColor = UIColor(hex: profileData!.avatar.backgroundColor)!
-        (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.backgroundColor = UIColor(hex: profileData!.avatar.backgroundColor)!
-        (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.backgroundColor = UIColor(hex: profileData!.avatar.backgroundColor)!
+        (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.backgroundColor = UIColor(hexString: profileData!.avatar.backgroundColor)!
+        (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.backgroundColor = UIColor(hexString: profileData!.avatar.backgroundColor)!
+        (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.backgroundColor = UIColor(hexString: profileData!.avatar.backgroundColor)!
         
         if profileData!.avatar.avatarImage != nil {
             let completionSemaphore = DispatchSemaphore(value: 0)
@@ -227,10 +228,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 
                 (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = newImage
             } else {
-                (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = UIImage(color: UIColor(hex: profileData!.avatar.backgroundColor)!, size: CGSize(width: 382, height: 382))
+                (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = UIImage(color: UIColor(hexString: profileData!.avatar.backgroundColor)!, size: CGSize(width: 382, height: 382))
             }
         } else {
-            (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = UIImage(color: UIColor(hex: profileData!.avatar.backgroundColor)!, size: CGSize(width: 382, height: 382))
+            (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = UIImage(color: UIColor(hexString: profileData!.avatar.backgroundColor)!, size: CGSize(width: 382, height: 382))
         }
         
         addTitle()
@@ -335,7 +336,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         segmentedControl.backgroundColor = .systemBackground
         segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-        segmentedControl.selectedSegmentTintColor = UIColor(hex: profileData!.avatar.backgroundColor)!
+        segmentedControl.selectedSegmentTintColor = UIColor(hexString: profileData!.avatar.backgroundColor)!
         
         scoreLabel = PaddingLabel()
         scoreLabel.topInset = 2.5
@@ -596,7 +597,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
                 
                 if let profileData = self.profileData {
-                    self.navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hex: profileData.avatar.backgroundColor)!, percent: Double(sqrt(offset)))
+                    self.navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hexString: profileData.avatar.backgroundColor)!, percent: Double(sqrt(offset)))
                 } else {
                     self.navigationController?.navigationBar.tintColor = .white
                 }
@@ -616,7 +617,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
                 
                 if let profileData = self.profileData {
-                    self.navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hex: profileData.avatar.backgroundColor)!, percent: Double(sqrt(offset)))
+                    self.navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hexString: profileData.avatar.backgroundColor)!, percent: Double(sqrt(offset)))
                 } else {
                     self.navigationController?.navigationBar.tintColor = .white
                 }
@@ -864,7 +865,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                             try? await self.userImageLoader.loadImage(from: URL(string: "https://avatars.devrant.com/\(avatarImage)")!, forUserID: comment.userID)
                         }
                     } else {
-                        await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hex: comment.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))!)
+                        await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hexString: comment.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))!)
                     }
                 }
             
@@ -974,7 +975,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                                 try? await self.userImageLoader.loadImage(from: URL(string: "https://avatars.devrant.com/\(avatarImage)")!, forUserID: comment.userID)
                             }
                         } else {
-                            await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hex: comment.userAvatar.backgroundColor), size: CGSize(width: 45, height: 45))!)
+                            await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hexString: comment.userAvatar.backgroundColor), size: CGSize(width: 45, height: 45))!)
                         }
                     }
                 

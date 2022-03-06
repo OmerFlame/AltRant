@@ -86,7 +86,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jaB-qT-1n0" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="23" width="28.5" height="22"/>
+                                                        <rect key="frame" x="0.0" y="23" width="38.5" height="22"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -222,10 +222,10 @@
             <size key="intrinsicContentSize" width="18" height="20"/>
         </designable>
         <designable name="Hk3-1C-ciB">
-            <size key="intrinsicContentSize" width="265" height="12"/>
+            <size key="intrinsicContentSize" width="266" height="12"/>
         </designable>
         <designable name="jaB-qT-1n0">
-            <size key="intrinsicContentSize" width="28.5" height="13.5"/>
+            <size key="intrinsicContentSize" width="38.5" height="18.5"/>
         </designable>
     </designables>
     <resources>

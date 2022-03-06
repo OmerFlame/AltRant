@@ -9,6 +9,7 @@ import UIKit
 //import SwiftUI
 import QuickLook
 import SwiftRant
+import SwiftHEXColors
 //import ActiveLabel
 
 
@@ -137,10 +138,10 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         bodyLabel.isHidden = false
         supplementalImageView.isHidden = false
         
-        upvoteButton.tintColor = (model.voteState == 1 ? UIColor(hex: model.userAvatar.backgroundColor)! : UIColor.systemGray)
+        upvoteButton.tintColor = (model.voteState == 1 ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         //scoreLabel.text = String(commentContents!.score)
         scoreLabel.text = formatNumber(commentContents!.score)
-        downvoteButton.tintColor = (model.voteState == -1 ? UIColor(hex: model.userAvatar.backgroundColor)! : UIColor.systemGray)
+        downvoteButton.tintColor = (model.voteState == -1 ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         
         if supplementalImage == nil {
             supplementalImageView.isHidden = true
@@ -165,7 +166,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         bodyLabel.text = commentContents!.body
         
         /*if commentContents!.userAvatar.avatarImage == nil {
-            userProfileImageView.image =  UIImage(color: UIColor(hex: commentContents!.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))
+            userProfileImageView.image =  UIImage(color: UIColor(hexString: commentContents!.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))
         } else {
             let resourceURL = URL(string: "https://avatars.devrant.com/" + commentContents!.userAvatar.avatarImage!)!
             
@@ -200,7 +201,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             userScoreLabel.text = "+\(commentContents!.userScore)"
         }
         
-        userScoreLabel.backgroundColor = UIColor(hex: commentContents!.userAvatar.backgroundColor)
+        userScoreLabel.backgroundColor = UIColor(hexString: commentContents!.userAvatar.backgroundColor)
         
         scoreLabel.text = String(commentContents!.score)
         
