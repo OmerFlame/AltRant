@@ -30,6 +30,8 @@ class RantInSubscribedFeedCell: UITableViewCell {
     var leadingUserActionImage: UIImage?
     var trailingUserActionImage: UIImage?
     
+    var delegate: FeedDelegate?
+    
     var supplementalImage: File?
     
     var loadingIndicator = UIActivityIndicatorView(style: .medium)
@@ -38,6 +40,19 @@ class RantInSubscribedFeedCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        leadingUserActionImage = nil
+        trailingUserActionImage = nil
+        leadingUserActionImageView.image = nil
+        trailingUserActionImageView.image = nil
+        userActionDescriptionLabel.text = nil
+        supplementalImageView.image = nil
+        supplementalImage = nil
+        bodyLabel.text = nil
     }
     
     func configure(feedOffset: Int, rantOffset: Int, image: File?, leadingUserActionImage: UIImage?, trailingUserActionImage: UIImage?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
@@ -80,7 +95,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
         downvoteButton.tintColor = (rantContents!.voteState == -1 ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
         
         upvoteButton.isEnabled = rantContents!.voteState != -2
-        upvoteButton.isEnabled = rantContents!.voteState != -2
+        downvoteButton.isEnabled = rantContents!.voteState != -2
         
         upvoteButton.isUserInteractionEnabled = rantContents!.voteState != -2
         downvoteButton.isUserInteractionEnabled = rantContents!.voteState != -2
@@ -117,12 +132,22 @@ class RantInSubscribedFeedCell: UITableViewCell {
         
         leadingUserActionImageView.image = self.leadingUserActionImage
         
-        if rantContents!.relatedUserActions.count == 2 {
+        //var leadingActionUserID = rantContents!.relatedUserActions[0].userID
+        
+        /*if rantContents!.relatedUserActions.count == 2 {
             trailingUserActionImageLeadingConstraint.constant = -6.5
             trailingUserActionImageView.image = self.trailingUserActionImage
         } else {
             trailingUserActionImageLeadingConstraint.constant = -26
             trailingUserActionImageView.image = nil
+        }*/
+        
+        if self.trailingUserActionImage == nil {
+            trailingUserActionImageLeadingConstraint.constant = -26
+            trailingUserActionImageView.image = nil
+        } else {
+            trailingUserActionImageLeadingConstraint.constant = -6.5
+            trailingUserActionImageView.image = self.trailingUserActionImage
         }
         
         let caption2FontSize = UIFont.preferredFont(forTextStyle: .caption2).pointSize
@@ -214,7 +239,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
             }
         }
         
-        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.id, vote: vote) { [weak self] error, updatedRant in
+        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.id, vote: vote) { [weak self] error, updatedRant in
             if updatedRant != nil {
                 self?.rantContents!.voteState = updatedRant!.voteState
                 self?.rantContents!.score = updatedRant!.score
@@ -233,7 +258,9 @@ class RantInSubscribedFeedCell: UITableViewCell {
                     self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
                 }
             }
-        }
+        }*/
+        
+        delegate?.didVoteOnRant(withID: rantContents!.id, vote: vote, cell: self)
     }
     
     @IBAction func handleDownvote(_ sender: Any) {
@@ -250,7 +277,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
             }
         }
         
-        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.id, vote: vote) { [weak self] error, updatedRant in
+        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.id, vote: vote) { [weak self] error, updatedRant in
             if updatedRant != nil {
                 self?.rantContents!.voteState = updatedRant!.voteState
                 self?.rantContents!.score = updatedRant!.score
@@ -269,7 +296,9 @@ class RantInSubscribedFeedCell: UITableViewCell {
                     self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
                 }
             }
-        }
+        }*/
+        
+        delegate?.didVoteOnRant(withID: rantContents!.id, vote: vote, cell: self)
     }
     
     @objc func windowResizeHandler() {

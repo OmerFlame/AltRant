@@ -65,7 +65,9 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
      # See Also
      [CommentModel](x-source-tag://CommentModel)
      */
-    var commentInFeed: UnsafeMutablePointer<Comment>?
+    //var commentInFeed: UnsafeMutablePointer<Comment>?
+    
+    var delegate: FeedDelegate?
     
     private var loadingIndicator = UIActivityIndicatorView(style: .medium)
     
@@ -120,12 +122,11 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
      
      - returns: Nothing.
      */
-    func configure(with model: Comment, supplementalImage: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?, commentInFeed: UnsafeMutablePointer<Comment>?, allowedToPreview: Bool) {
+    func configure(with model: Comment, supplementalImage: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?, allowedToPreview: Bool) {
         self.commentContents = model
         self.file = supplementalImage
         self.parentTableViewController = parentTableViewController
         self.parentTableView = parentTableView
-        self.commentInFeed = commentInFeed
         
         if loadingIndicator.isDescendant(of: contentView) {
             loadingIndicator.removeFromSuperview()
@@ -329,7 +330,9 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         
         self.parentTableViewController?.title = "Deleting your comment..."
         
-        SwiftRant.shared.deleteComment(nil, commentID: commentContents.id) { error, success in
+        delegate?.didDeleteComment(withID: commentContents.id, cell: self)
+        
+        /*SwiftRant.shared.deleteComment(nil, commentID: commentContents.id) { error, success in
             if success {
                 let typeCastedController = self.parentTableViewController as! RantViewController
                 let commentIdx = typeCastedController.comments.firstIndex(where: {
@@ -360,7 +363,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
                     self.parentTableViewController?.present(failureAlertController, animated: true, completion: nil)
                 }
             }
-        }
+        }*/
         
         /*DispatchQueue.global(qos: .userInitiated).async {
             let success = APIRequest().deleteComment(commentID: self.commentContents.id)
@@ -414,7 +417,9 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             }
         }
         
-        SwiftRant.shared.voteOnComment(nil, commentID: commentContents!.id, vote: vote) { error, updatedComment in
+        delegate?.didVoteOnComment(withID: commentContents.id, vote: vote, cell: self)
+        
+        /*SwiftRant.shared.voteOnComment(nil, commentID: commentContents!.id, vote: vote) { error, updatedComment in
             if let updatedComment = updatedComment {
                 if let commentInFeed = self.commentInFeed {
                     commentInFeed.pointee.voteState = vote
@@ -448,7 +453,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
                     }
                 }
             }
-        }
+        }*/
         
         /*let success = APIRequest().voteOnComment(commentID: commentContents!.id, vote: vote)
         
@@ -490,7 +495,9 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             }
         }
         
-        SwiftRant.shared.voteOnComment(nil, commentID: commentContents!.id, vote: vote) { error, updatedComment in
+        delegate?.didVoteOnComment(withID: commentContents.id, vote: vote, cell: self)
+        
+        /*SwiftRant.shared.voteOnComment(nil, commentID: commentContents!.id, vote: vote) { error, updatedComment in
             if let updatedComment = updatedComment {
                 if let commentInFeed = self.commentInFeed {
                     commentInFeed.pointee.voteState = vote
@@ -524,7 +531,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
                     }
                 }
             }
-        }
+        }*/
         
         /*let success = APIRequest().voteOnComment(commentID: self.commentContents!.id, vote: vote)
         

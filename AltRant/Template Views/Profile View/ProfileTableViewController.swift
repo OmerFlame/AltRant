@@ -19,7 +19,17 @@ class commentFeedData {
     var commentTypeContent = [Comment]()
 }
 
-class ProfileTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
+protocol ProfileTableViewControllerDelegate: AnyObject {
+    func setVoteStateForRant(withID id: Int, voteState: Int)
+    func setScoreForRant(withID id: Int, score: Int)
+    
+    func setVoteStateForComment(withID id: Int, voteState: Int)
+    func setScoreForComment(withID id: Int, score: Int)
+    
+    func reloadData()
+}
+
+class ProfileTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching, FeedDelegate, ProfileTableViewControllerDelegate {
     //@IBOutlet weak var headerView: StretchyTableHeaderView!
     var profileData: Profile?
     var shouldLoadFromUsername = false
@@ -1046,7 +1056,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
-                cell.configure(with: &rantTypeContent[indexPath.row], image: rantContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
+                cell.configure(with: rantTypeContent[indexPath.row], image: rantContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
                 
                 cell.layoutIfNeeded()
                 
@@ -1062,7 +1072,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, commentInFeed: &commentTypeContent.commentTypeContent[indexPath.row], allowedToPreview: false)
+                cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, allowedToPreview: false)
                 
                 return cell
             }
@@ -1151,9 +1161,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             let indexPath = tableView.indexPath(for: sender as! UITableViewCell)!
             
             rantViewController.rantID = rantTypeContent[indexPath.row].id
-            withUnsafeMutablePointer(to: &rantTypeContent[indexPath.row], { pointer in
+            rantViewController.profileFeedDelegate = self
+            /*withUnsafeMutablePointer(to: &rantTypeContent[indexPath.row], { pointer in
                 rantViewController.rantInFeed = pointer
-            })
+            })*/
             
             rantViewController.supplementalRantImage = rantContentImages[indexPath.row]
             rantViewController.loadCompletionHandler = nil
@@ -1161,11 +1172,13 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             let indexPath = tableView.indexPath(for: sender as! UITableViewCell)!
             
             rantViewController.rantID = commentTypeContent.commentTypeContent[indexPath.row].rantID
-            rantViewController.rantInFeed = nil
+            //rantViewController.rantInFeed = nil
             
-            withUnsafeMutablePointer(to: &commentTypeContent.commentTypeContent[indexPath.row], { pointer in
+            rantViewController.profileFeedDelegate = self
+            
+            /*withUnsafeMutablePointer(to: &commentTypeContent.commentTypeContent[indexPath.row], { pointer in
                 rantViewController.commentInFeed = pointer
-            })
+            })*/
             
             rantViewController.supplementalRantImage = nil
             rantViewController.loadCompletionHandler = { tableViewController in
@@ -1198,6 +1211,184 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     @objc func windowDidResize() {
         scrollViewDidScroll(tableView)
         tableView.reloadData()
+    }
+    
+    fileprivate func indexForRant(withID id: Int) -> Int? {
+        if let rantIdx = rantTypeContent.firstIndex(where: { $0.id == id }) {
+            return rantIdx
+        }
+        
+        return nil
+    }
+    
+    fileprivate func indexForComment(withID id: Int) -> Int? {
+        if let commentIdx = commentTypeContent.commentTypeContent.firstIndex(where: { $0.id == id }) {
+            return commentIdx
+        }
+        
+        return nil
+    }
+    
+    // MARK: - Profile Table View Controller Delegate
+    func setVoteStateForRant(withID id: Int, voteState: Int) {
+        guard (0...1).contains(voteState) && [Profile.ProfileContentTypes.rants, Profile.ProfileContentTypes.favorite, Profile.ProfileContentTypes.upvoted].contains(currentContentType) else {
+            return
+        }
+        
+        if let rantIndex = indexForRant(withID: id) {
+            rantTypeContent[rantIndex].voteState = voteState
+        }
+    }
+    
+    func setScoreForRant(withID id: Int, score: Int) {
+        guard [Profile.ProfileContentTypes.rants, Profile.ProfileContentTypes.favorite, Profile.ProfileContentTypes.upvoted].contains(currentContentType) else {
+            return
+        }
+        
+        if let rantIndex = indexForRant(withID: id) {
+            rantTypeContent[rantIndex].score = score
+        }
+    }
+    
+    func setVoteStateForComment(withID id: Int, voteState: Int) {
+        guard (0...1).contains(voteState) && currentContentType == .comments else {
+            return
+        }
+        
+        if let commentIndex = indexForComment(withID: id) {
+            commentTypeContent.commentTypeContent[commentIndex].voteState = voteState
+        }
+    }
+    
+    func setScoreForComment(withID id: Int, score: Int) {
+        guard currentContentType == .comments else {
+            return
+        }
+        
+        if let commentIndex = indexForComment(withID: id) {
+            commentTypeContent.commentTypeContent[commentIndex].score = score
+        }
+    }
+    
+    func reloadData() {
+        tableView.reloadData()
+    }
+    
+    // MARK: - Feed Delegate
+    func didVoteOnRant(withID id: Int, vote: Int, cell: SecondaryRantInFeedCell) {
+        guard (0...1).contains(vote) && [Profile.ProfileContentTypes.rants, Profile.ProfileContentTypes.favorite, Profile.ProfileContentTypes.upvoted].contains(currentContentType) else {
+            return
+        }
+        
+        let rantIndex = indexForRant(withID: id)
+        
+        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] error, updatedRant in
+            if let updatedRant = updatedRant {
+                /*if let rantInFeed = self?.rantInFeed {
+                    rantInFeed.pointee.voteState = vote
+                    rantInFeed.pointee.score = updatedRant.score
+                }*/
+                
+                //self?.rant?.voteState = updatedRant.voteState
+                //self?.rant?.score = updatedRant.score
+                
+                if let rantIndex = rantIndex {
+                    self?.rantTypeContent[rantIndex].voteState = updatedRant.voteState
+                    self?.rantTypeContent[rantIndex].score = updatedRant.score
+                }
+                
+                /*if let parentTableViewController = self?.parentTableViewController {
+                    parentTableViewController.rant?.voteState = updatedRant.voteState
+                    parentTableViewController.rant?.score = updatedRant.score
+                    
+                    DispatchQueue.main.async {
+                        parentTableViewController.tableView.reloadData()
+                    }
+                }*/
+                
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                    
+                    //self?.homeFeedDelegate?.changeRantVoteState(rantID: id, voteState: vote)
+                    
+                    //#error("Implement a Profile Table View Delegate!")
+                }
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error occurred while voting on the rant.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                DispatchQueue.main.async {
+                    //self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
+                    self?.present(alertController, animated: true)
+                }
+            }
+        }
+    }
+    
+    func didVoteOnComment(withID id: Int, vote: Int, cell: CommentCell) {
+        guard (0...1).contains(vote) && currentContentType == .comments else {
+            return
+        }
+        
+        let commentIndex = indexForComment(withID: id)
+        
+        guard let commentIndex = commentIndex else {
+            let alertController = UIAlertController(title: "Error", message: "Could not find comment in comment list. This looks like a bug, please file a bug report!", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+            
+            present(alertController, animated: true)
+            
+            return
+        }
+
+        
+        SwiftRant.shared.voteOnComment(nil, commentID: id, vote: vote) { error, updatedComment in
+            if let updatedComment = updatedComment {
+                /*if let commentInFeed = self.commentInFeed {
+                    commentInFeed.pointee.voteState = vote
+                    commentInFeed.pointee.score = updatedComment.score
+                }*/
+                
+                self.commentTypeContent.commentTypeContent[commentIndex].voteState = updatedComment.voteState
+                self.commentTypeContent.commentTypeContent[commentIndex].score = updatedComment.score
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    
+                    //#error("Implement a Profile Table View Delegate!")
+                }
+                
+                /*if let idx = (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent.firstIndex(where: {
+                    $0.id == self.commentContents!.id
+                }) {
+                    (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].voteState = updatedComment.voteState
+                    (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].score = updatedComment.score
+                } else if let idx = (self.parentTableViewController as? RantViewController)?.comments.firstIndex(where: {
+                    $0.id == self.commentContents!.id
+                }) {
+                    (self.parentTableViewController as? RantViewController)?.comments[idx].voteState = updatedComment.voteState
+                    (self.parentTableViewController as? RantViewController)?.comments[idx].score = updatedComment.score
+                }
+                
+                DispatchQueue.main.async {
+                    self.parentTableView?.reloadData()
+                }*/
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while voting on the comment.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                //alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.handleDownvote(sender) }))
+                
+                alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.didVoteOnComment(withID: id, vote: vote, cell: cell) }))
+                
+                DispatchQueue.main.async {
+                    //parentTableViewController.present(alertController, animated: true, completion: nil)
+                    
+                    self.present(alertController, animated: true)
+                }
+            }
+        }
     }
 }
 

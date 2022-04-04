@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" reuseIdentifier="" id="PVt-Px-Bo0" customClass="InternalRecommendedUserCell" customModule="AltRant" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" id="9o6-49-tXD">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="5Ce-n6-XWO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v7l-Km-HSY" userLabel="User Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
+                                <rect key="frame" x="8" y="8" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="bwc-es-cSR"/>
+                                    <constraint firstAttribute="height" constant="45" id="fHy-Ji-nqg"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="lZ3-l1-Ln5" userLabel="Username Stack View">
+                                <rect key="frame" x="56" y="9.5" width="78.5" height="42"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5L4-Az-bzy" userLabel="Username">
+                                        <rect key="frame" x="0.0" y="0.0" width="78.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7C-o1-4uI" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="21.5" width="28.5" height="20.5"/>
+                                        <color key="backgroundColor" systemColor="secondaryLabelColor"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="topInset">
+                                                <real key="value" value="2.5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="bottomInset">
+                                                <real key="value" value="2.5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftInset">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="rightInset">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="5L4-Az-bzy" firstAttribute="leading" secondItem="lZ3-l1-Ln5" secondAttribute="leading" id="DSz-vE-uhR"/>
+                                    <constraint firstItem="X7C-o1-4uI" firstAttribute="leading" secondItem="5L4-Az-bzy" secondAttribute="leading" id="eGl-Q7-nSE"/>
+                                    <constraint firstAttribute="trailing" secondItem="5L4-Az-bzy" secondAttribute="trailing" id="oJd-ZL-cgs"/>
+                                </constraints>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOp-fG-l7L" userLabel="Separator">
+                                <rect key="frame" x="394" y="8" width="1" height="45"/>
+                                <color key="backgroundColor" systemColor="separatorColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="M5X-4x-gNu"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zv8-4X-FrB" userLabel="Subscribe Button">
+                                <rect key="frame" x="337" y="17.5" width="53" height="26"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <inset key="titleEdgeInsets" minX="-65" minY="0.0" maxX="-65" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Subscribe"/>
+                                <connections>
+                                    <action selector="subscribeHandler:" destination="PVt-Px-Bo0" eventType="touchUpInside" id="u4D-dX-PQo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W0w-pm-PQP">
+                                <rect key="frame" x="399" y="25" width="11" height="11"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="11" id="wJf-Y9-qGo"/>
+                                    <constraint firstAttribute="height" constant="11" id="yHb-97-TTG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <inset key="titleEdgeInsets" minX="-65" minY="0.0" maxX="-65" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="xmark" catalog="system" symbolScale="small"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeHandler" destination="PVt-Px-Bo0" eventType="touchUpInside" id="kZV-Ug-KN7"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="W0w-pm-PQP" firstAttribute="leading" secondItem="hOp-fG-l7L" secondAttribute="trailing" constant="4" id="7pE-9e-Zs5"/>
+                            <constraint firstItem="Zv8-4X-FrB" firstAttribute="centerY" secondItem="5Ce-n6-XWO" secondAttribute="centerY" id="AGd-aY-qoa"/>
+                            <constraint firstItem="v7l-Km-HSY" firstAttribute="leading" secondItem="5Ce-n6-XWO" secondAttribute="leading" constant="8" id="HI2-SL-efK"/>
+                            <constraint firstItem="lZ3-l1-Ln5" firstAttribute="centerY" secondItem="v7l-Km-HSY" secondAttribute="centerY" id="Hjt-3Z-ILI"/>
+                            <constraint firstAttribute="bottom" secondItem="v7l-Km-HSY" secondAttribute="bottom" constant="8" id="Mvd-9O-C9c"/>
+                            <constraint firstItem="W0w-pm-PQP" firstAttribute="centerY" secondItem="v7l-Km-HSY" secondAttribute="centerY" id="Rbj-oh-NmN"/>
+                            <constraint firstItem="hOp-fG-l7L" firstAttribute="top" secondItem="5Ce-n6-XWO" secondAttribute="top" constant="8" id="Srg-mX-PAd"/>
+                            <constraint firstAttribute="trailing" secondItem="W0w-pm-PQP" secondAttribute="trailing" constant="4" id="aDm-1l-Z9r"/>
+                            <constraint firstItem="v7l-Km-HSY" firstAttribute="top" secondItem="5Ce-n6-XWO" secondAttribute="top" constant="8" id="cp0-xc-Fji"/>
+                            <constraint firstItem="lZ3-l1-Ln5" firstAttribute="leading" secondItem="v7l-Km-HSY" secondAttribute="trailing" constant="3" id="pg6-xV-Fzc"/>
+                            <constraint firstItem="hOp-fG-l7L" firstAttribute="leading" secondItem="Zv8-4X-FrB" secondAttribute="trailing" constant="4" id="zFj-e3-e2D"/>
+                            <constraint firstItem="v7l-Km-HSY" firstAttribute="centerY" secondItem="5Ce-n6-XWO" secondAttribute="centerY" id="zW1-3s-Mm7"/>
+                            <constraint firstAttribute="bottom" secondItem="hOp-fG-l7L" secondAttribute="bottom" constant="8" id="zhI-QY-DKL"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="5Ce-n6-XWO" secondAttribute="bottom" id="GeG-I3-9To"/>
+                    <constraint firstItem="5Ce-n6-XWO" firstAttribute="top" secondItem="9o6-49-tXD" secondAttribute="top" id="Gu1-rW-j8G"/>
+                    <constraint firstAttribute="trailing" secondItem="5Ce-n6-XWO" secondAttribute="trailing" id="QnS-lB-dri"/>
+                    <constraint firstItem="5Ce-n6-XWO" firstAttribute="leading" secondItem="9o6-49-tXD" secondAttribute="leading" id="lcb-Vu-RQy"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="259" height="50"/>
+            <connections>
+                <outlet property="closeButton" destination="W0w-pm-PQP" id="OQ7-QV-6wS"/>
+                <outlet property="imageViewHeight" destination="fHy-Ji-nqg" id="gYi-Da-UDa"/>
+                <outlet property="scoreLabel" destination="X7C-o1-4uI" id="Cel-Um-G4c"/>
+                <outlet property="subscribeButton" destination="Zv8-4X-FrB" id="TzP-do-WQT"/>
+                <outlet property="userImageView" destination="v7l-Km-HSY" id="0oK-6B-abT"/>
+                <outlet property="usernameLabel" destination="5L4-Az-bzy" id="agL-6l-GJb"/>
+            </connections>
+            <point key="canvasLocation" x="21.739130434782609" y="127.56696428571428"/>
+        </collectionViewCell>
+    </objects>
+    <designables>
+        <designable name="X7C-o1-4uI">
+            <size key="intrinsicContentSize" width="28.5" height="13.5"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

@@ -18,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        UserDefaults.standard.setValue(nil, forKey: "DRLastSet")
+        UserDefaults.standard.setValue(nil, forKey: "DRLastEndCursor")
+        
         /*SentrySDK.start { options in
             options.dsn = "https://ee4b01a7f1bd403f851eabbdd6ce52f8@o576704.ingest.sentry.io/5730641"
             options.debug = true
@@ -236,7 +239,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        UserDefaults.standard.setValue(nil, forKey: "DRLastSet")
         let tmpDirectory = try! FileManager.default.contentsOfDirectory(atPath: NSTemporaryDirectory())
         tmpDirectory.forEach { file in
             let path = String.init(format: "%@%@", NSTemporaryDirectory(), file)

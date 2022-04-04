@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecommendedUsersCell" rowHeight="69" id="jWf-4E-JNm" customClass="RecommendedUserCell" customModule="AltRant" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="299"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jWf-4E-JNm" id="FtK-pW-uOR">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="299"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ranters You May Appreciate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mwv-Ry-K1M">
+                        <rect key="frame" x="20" y="4" width="394" height="17"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="none" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jHw-GA-gul">
+                        <rect key="frame" x="0.0" y="25" width="414" height="0.0"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="999" id="Na4-7a-4n7"/>
+                        </constraints>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="GV0-tT-OXp">
+                            <size key="itemSize" width="128" height="69"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                    </collectionView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wbf-3U-SB8">
+                        <rect key="frame" x="20" y="29" width="179" height="266"/>
+                        <color key="tintColor" systemColor="labelColor"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="View more suggested users" buttonSize="mini" titleAlignment="automatic">
+                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleBody"/>
+                            <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="showMoreUsers" destination="jWf-4E-JNm" eventType="touchUpInside" id="w5r-sB-byq"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Wbf-3U-SB8" firstAttribute="top" secondItem="jHw-GA-gul" secondAttribute="bottom" constant="4" id="1XA-PK-Oxz"/>
+                    <constraint firstItem="Mwv-Ry-K1M" firstAttribute="leading" secondItem="FtK-pW-uOR" secondAttribute="leading" constant="20" id="NZi-Vh-JSm"/>
+                    <constraint firstItem="Mwv-Ry-K1M" firstAttribute="top" secondItem="FtK-pW-uOR" secondAttribute="top" constant="4" id="TIo-9g-LZe"/>
+                    <constraint firstItem="Wbf-3U-SB8" firstAttribute="leading" secondItem="Mwv-Ry-K1M" secondAttribute="leading" id="XKU-ZL-7GS"/>
+                    <constraint firstAttribute="trailing" secondItem="jHw-GA-gul" secondAttribute="trailing" id="aQX-sB-Tdu"/>
+                    <constraint firstItem="jHw-GA-gul" firstAttribute="leading" secondItem="FtK-pW-uOR" secondAttribute="leading" id="dvV-ov-tCy"/>
+                    <constraint firstItem="jHw-GA-gul" firstAttribute="top" secondItem="Mwv-Ry-K1M" secondAttribute="bottom" constant="4" id="kNy-em-0aR"/>
+                    <constraint firstAttribute="trailing" secondItem="Mwv-Ry-K1M" secondAttribute="trailing" id="m8I-0S-UMz"/>
+                    <constraint firstAttribute="bottom" secondItem="Wbf-3U-SB8" secondAttribute="bottom" constant="4" id="v4u-Rx-hqc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="collectionViewHeight" destination="Na4-7a-4n7" id="hy9-aa-0IT"/>
+                <outlet property="internalRecommendedUserCollectionView" destination="jHw-GA-gul" id="ZK5-se-Yyp"/>
+                <outlet property="showMoreUsersButton" destination="Wbf-3U-SB8" id="3Pe-JJ-UPS"/>
+                <outlet property="topLabel" destination="Mwv-Ry-K1M" id="jCr-Lh-xWg"/>
+            </connections>
+            <point key="canvasLocation" x="159" y="143"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

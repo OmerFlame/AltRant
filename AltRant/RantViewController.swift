@@ -109,7 +109,7 @@ protocol RantViewControllerDelegate {
     func vote(_ rantViewController: RantViewController, vote: Int)
 }
 
-class RantViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource {
+class RantViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, FeedDelegate {
     var delegate: RantViewControllerDelegate?
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
@@ -128,9 +128,16 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var comments = [Comment]()
     var profile: Profile? = nil
     var ranterProfileImage: UIImage?
-    var rantInFeed: UnsafeMutablePointer<RantInFeed>?
-    var commentInFeed: UnsafeMutablePointer<Comment>?
+    //var rantInFeed: UnsafeMutablePointer<RantInFeed>?
+    //var commentInFeed: UnsafeMutablePointer<Comment>?
     //var doesSupplementalImageExist = false
+    
+    var rantInFeed: RantInFeed?
+    var commentInFeed: Comment?
+    
+    var homeFeedDelegate: HomeFeedTableViewControllerDelegate?
+    var profileFeedDelegate: ProfileTableViewControllerDelegate?
+    var subscribedFeedDelegate: SubscribedFeedViewControllerDelegate?
     
     @MainActor var loadCompletionHandler: ((RantViewController?) -> Void)?
     
@@ -634,14 +641,18 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let cell = tableView.dequeueReusableCell(withIdentifier: "RantCell") as! RantCell
             
             //cell = RantCell.loadFromXIB() as! RantCell
-            cell.configure(with: rant!, rantInFeed: rantInFeed, userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self)
+            cell.configure(with: rant!, userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self)
+            
+            cell.delegate = self
             
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
             
             //cell = CommentCell.loadFromXIB() as! CommentCell
-            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[comments[indexPath.row].id] ?? nil, parentTableViewController: self, parentTableView: tableView, commentInFeed: (commentInFeed != nil && commentInFeed!.pointee.id == comments[indexPath.row].id ? commentInFeed : nil), allowedToPreview: true)
+            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[comments[indexPath.row].id] ?? nil, parentTableViewController: self, parentTableView: tableView, allowedToPreview: true)
+            
+            cell.delegate = self
             
             return cell
         }
@@ -761,6 +772,162 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+    }
+    
+    // MARK: - Feed Delegate
+    
+    func didVoteOnRant(withID id: Int, vote: Int, cell: RantCell) {
+        guard (0...1).contains(vote) else {
+            return
+        }
+        
+        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] error, updatedRant in
+            if let updatedRant = updatedRant {
+                /*if let rantInFeed = self?.rantInFeed {
+                    rantInFeed.pointee.voteState = vote
+                    rantInFeed.pointee.score = updatedRant.score
+                }*/
+                
+                self?.rant?.voteState = updatedRant.voteState
+                self?.rant?.score = updatedRant.score
+                
+                /*if let parentTableViewController = self?.parentTableViewController {
+                    parentTableViewController.rant?.voteState = updatedRant.voteState
+                    parentTableViewController.rant?.score = updatedRant.score
+                    
+                    DispatchQueue.main.async {
+                        parentTableViewController.tableView.reloadData()
+                    }
+                }*/
+                
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                    
+                    self?.homeFeedDelegate?.changeRantVoteState(rantID: id, voteState: updatedRant.voteState)
+                    self?.homeFeedDelegate?.changeRantScore(rantID: id, score: updatedRant.score)
+                    
+                    self?.homeFeedDelegate?.reloadData()
+                    
+                    self?.profileFeedDelegate?.setVoteStateForRant(withID: id, voteState: updatedRant.voteState)
+                    self?.profileFeedDelegate?.setScoreForRant(withID: id, score: updatedRant.score)
+                    
+                    self?.profileFeedDelegate?.reloadData()
+                    
+                    self?.subscribedFeedDelegate?.setVoteStateForRant(withID: id, voteState: updatedRant.voteState)
+                    self?.subscribedFeedDelegate?.setScoreForRant(withID: id, score: updatedRant.score)
+                    
+                    self?.subscribedFeedDelegate?.reloadData()
+                    
+                    //#error("Implement a Profile Table View Delegate!")
+                }
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error occurred while voting on the rant.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                DispatchQueue.main.async {
+                    //self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
+                    self?.present(alertController, animated: true)
+                }
+            }
+        }
+        
+        /*if success == nil {
+            print("ERROR WHILE UPVOTING")
+        } else {
+            if rantInFeed != nil {
+                rantInFeed!.pointee.voteState = vote
+                rantInFeed!.pointee.score = success!.rant.score
+            }
+            //parentTableViewController?.rant!.voteState = vote
+            
+            if parentTableViewController != nil {
+                parentTableViewController?.rant!.voteState = success!.rant.voteState
+                parentTableViewController?.rant!.score = success!.rant.score
+            }
+            
+            if let parentTableViewController = self.parentTableViewController {
+                parentTableViewController.tableView.reloadData()
+            }
+        }*/
+    }
+    
+    func indexOfComment(withID id: Int) -> Int? {
+        if let commentIdx = comments.firstIndex(where: { $0.id == id }) {
+            return commentIdx
+        }
+        
+        return nil
+    }
+    
+    func didVoteOnComment(withID id: Int, vote: Int, cell: CommentCell) {
+        guard (0...1).contains(vote) else {
+            return
+        }
+        
+        let commentIndex = indexOfComment(withID: id)
+        
+        guard let commentIndex = commentIndex else {
+            let alertController = UIAlertController(title: "Error", message: "Could not find comment in comment list. This looks like a bug, please file a bug report!", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+            
+            present(alertController, animated: true)
+            
+            return
+        }
+
+        
+        SwiftRant.shared.voteOnComment(nil, commentID: id, vote: vote) { error, updatedComment in
+            if let updatedComment = updatedComment {
+                /*if let commentInFeed = self.commentInFeed {
+                    commentInFeed.pointee.voteState = vote
+                    commentInFeed.pointee.score = updatedComment.score
+                }*/
+                
+                self.comments[commentIndex].voteState = updatedComment.voteState
+                self.comments[commentIndex].score = updatedComment.score
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    
+                    self.profileFeedDelegate?.setVoteStateForComment(withID: id, voteState: updatedComment.voteState)
+                    self.profileFeedDelegate?.setScoreForComment(withID: id, score: updatedComment.score)
+                    
+                    self.profileFeedDelegate?.reloadData()
+                    
+                    //#error("Implement a Profile Table View Delegate!")
+                }
+                
+                /*if let idx = (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent.firstIndex(where: {
+                    $0.id == self.commentContents!.id
+                }) {
+                    (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].voteState = updatedComment.voteState
+                    (self.parentTableViewController as? ProfileTableViewController)?.commentTypeContent.commentTypeContent[idx].score = updatedComment.score
+                } else if let idx = (self.parentTableViewController as? RantViewController)?.comments.firstIndex(where: {
+                    $0.id == self.commentContents!.id
+                }) {
+                    (self.parentTableViewController as? RantViewController)?.comments[idx].voteState = updatedComment.voteState
+                    (self.parentTableViewController as? RantViewController)?.comments[idx].score = updatedComment.score
+                }
+                
+                DispatchQueue.main.async {
+                    self.parentTableView?.reloadData()
+                }*/
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while voting on the comment.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                //alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.handleDownvote(sender) }))
+                
+                alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.didVoteOnComment(withID: id, vote: vote, cell: cell) }))
+                
+                DispatchQueue.main.async {
+                    //parentTableViewController.present(alertController, animated: true, completion: nil)
+                    
+                    self.present(alertController, animated: true)
+                }
+            }
+        }
     }
 }
 

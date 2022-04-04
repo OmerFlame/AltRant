@@ -32,8 +32,12 @@ class RantCell: UITableViewCell, UITextViewDelegate {
     var profile: Profile!
     var userImage: UIImage?
     var rantContents: Rant!
-    var rantInFeed: UnsafeMutablePointer<RantInFeed>!
+    //var rantInFeed: UnsafeMutablePointer<RantInFeed>!
     var parentTableViewController: RantViewController? = nil
+    
+    //var rantInFeed: RantInFeed?
+    
+    var delegate: FeedDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -74,9 +78,8 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         tagList.addTags(["This", "Is", "A", "Test"])
     }
     
-    func configure(with model: Rant, rantInFeed: UnsafeMutablePointer<RantInFeed>?, userImage: UIImage?, supplementalImage: File?, profile: Profile, parentTableViewController: RantViewController?) {
+    func configure(with model: Rant, userImage: UIImage?, supplementalImage: File?, profile: Profile, parentTableViewController: RantViewController?) {
         self.rantContents = model
-        self.rantInFeed = rantInFeed
         self.userImage = userImage
         self.profile = profile
         self.file = supplementalImage
@@ -358,23 +361,27 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         if rantContents.isFavorite == nil {
             //let success = APIRequest().favoriteRant(rantID: rantContents.id)
             
-            SwiftRant.shared.favoriteRant(nil, rantID: rantContents.id) { [weak self] _, success in
+            /*SwiftRant.shared.favoriteRant(nil, rantID: rantContents.id) { [weak self] _, success in
                 if success {
                     self?.parentTableViewController?.rant?.isFavorite = 1
                     
                     self?.parentTableViewController?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
                 }
-            }
+            }*/
+            
+            delegate?.didFavoriteRant(withID: rantContents.id, cell: self)
         } else {
             //let success = APIRequest().unfavoriteRant(rantID: rantContents.id)
             
-            SwiftRant.shared.unfavoriteRant(nil, rantID: rantContents.id) { [weak self] _, success in
+            /*SwiftRant.shared.unfavoriteRant(nil, rantID: rantContents.id) { [weak self] _, success in
                 if success {
                     self?.parentTableViewController?.rant?.isFavorite = nil
                     
                     self?.parentTableViewController?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
                 }
-            }
+            }*/
+            
+            delegate?.didUnfavoriteRant(withID: rantContents.id, cell: self)
         }
     }
     
@@ -386,7 +393,9 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         
         self.parentTableViewController?.title = "Deleting..."
         
-        SwiftRant.shared.deleteRant(nil, rantID: rantContents.id) { error, success in
+        delegate?.didDeleteRant(withID: rantContents.id)
+        
+        /*SwiftRant.shared.deleteRant(nil, rantID: rantContents.id) { error, success in
             if success {
                 let successAlertController = UIAlertController(title: "Success", message: "Rant successfully deleted!", preferredStyle: .alert)
                 
@@ -414,7 +423,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
                     self.parentTableViewController?.present(failureAlertController, animated: true, completion: nil)
                 }
             }
-        }
+        }*/
     }
     
     /*override func layoutSubviews() {
@@ -440,7 +449,9 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         
         //let success = APIRequest().voteOnRant(rantID: self.rantContents!.id, vote: vote)
         
-        SwiftRant.shared.voteOnRant(nil, rantID: rantContents.id, vote: vote) { [weak self] error, updatedRant in
+        delegate?.didVoteOnRant(withID: rantContents.id, vote: vote, cell: self)
+        
+        /*SwiftRant.shared.voteOnRant(nil, rantID: rantContents.id, vote: vote) { [weak self] error, updatedRant in
             if let updatedRant = updatedRant {
                 if let rantInFeed = self?.rantInFeed {
                     rantInFeed.pointee.voteState = vote
@@ -464,7 +475,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
                     self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
                 }
             }
-        }
+        }*/
         
         /*if success == nil {
             print("ERROR WHILE UPVOTING")
@@ -500,7 +511,9 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             }
         }
         
-        SwiftRant.shared.voteOnRant(nil, rantID: rantContents.id, vote: vote) { [weak self] error, updatedRant in
+        delegate?.didVoteOnRant(withID: rantContents.id, vote: vote, cell: self)
+        
+        /*SwiftRant.shared.voteOnRant(nil, rantID: rantContents.id, vote: vote) { [weak self] error, updatedRant in
             if let updatedRant = updatedRant {
                 if let rantInFeed = self?.rantInFeed {
                     rantInFeed.pointee.voteState = vote
@@ -524,7 +537,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
                     self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
                 }
             }
-        }
+        }*/
     }
     
     private func getImageResizeMultiplier(imageWidth: CGFloat, imageHeight: CGFloat, multiplier: Int) -> CGFloat {

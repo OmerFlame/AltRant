@@ -18,7 +18,14 @@ class rantFeedData {
     var rantFeed = [RantFeed]()
 }
 
-class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate {
+protocol HomeFeedTableViewControllerDelegate: AnyObject {
+    func changeRantVoteState(rantID id: Int, voteState: Int)
+    func changeRantScore(rantID id: Int, score: Int)
+    
+    func reloadData()
+}
+
+class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate, HomeFeedTableViewControllerDelegate, FeedDelegate {
     fileprivate var currentPage = 0
     var rantFeed = rantFeedData()
     var supplementalImages = [IndexPath:File]()
@@ -97,8 +104,10 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             //tableView.beginInfiniteScroll(true)
             isLoading = true
             self.performFetch {
-                self.refreshControl!.endRefreshing()
-                self.isLoading = false
+                DispatchQueue.main.async {
+                    self.refreshControl!.endRefreshing()
+                    self.isLoading = false
+                }
             }
             
             let mainMenu = UIMenu(title: "", children: [
@@ -164,7 +173,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                     DispatchQueue.main.async {
                         
                         if let numNotifs = feed?.notifCount {
-                            let currentNotificationCount = Int(self?.navigationController!.tabBarController!.viewControllers![2].tabBarItem.badgeValue ?? "0")!
+                            let currentNotificationCount = Int(self?.navigationController!.tabBarController!.viewControllers![3].tabBarItem.badgeValue ?? "0")!
                             
                             if currentNotificationCount < numNotifs {
                                 let content = UNMutableNotificationContent()
@@ -181,7 +190,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                                 UNUserNotificationCenter.current().add(request)
                             }
                             
-                            self?.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = numNotifs != 0 ? String(numNotifs) : nil
+                            self?.navigationController?.tabBarController?.viewControllers![3].tabBarItem.badgeValue = numNotifs != 0 ? String(numNotifs) : nil
                         }
                     }
                 }
@@ -208,7 +217,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                                 UNUserNotificationCenter.current().add(request)
                             }
                             
-                            self.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = numNotifs != 0 ? String(response.num_notifs!) : nil
+                            self.navigationController?.tabBarController?.viewControllers![3].tabBarItem.badgeValue = numNotifs != 0 ? String(response.num_notifs!) : nil
                         }
                     }
                 }*/
@@ -255,7 +264,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 self?.currentPage += 1
                 
                 DispatchQueue.main.async {
-                    self?.navigationController?.tabBarController?.viewControllers![2].tabBarItem.badgeValue = feed!.notifCount != 0 ? String(feed!.notifCount) : nil
+                    self?.navigationController?.tabBarController?.viewControllers![3].tabBarItem.badgeValue = feed!.notifCount != 0 ? String(feed!.notifCount) : nil
                     
                     CATransaction.begin()
                     
@@ -442,7 +451,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 }
             }
             
-            cell.configure(with: Optional(&rantFeed.rantFeed[feedOffset].rants[rantOffset]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
+            cell.configure(with: Optional(rantFeed.rantFeed[feedOffset].rants[rantOffset]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
+            
+            cell.delegate = self
             
             cell.layoutIfNeeded()
             return cell
@@ -526,13 +537,14 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         if segue.identifier == "RantInFeedCell", let rantViewController = segue.destination as? RantViewController {
             //rantViewController.rantID = rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row].id
             
-            rantViewController.rantID = (sender as! SecondaryRantInFeedCell).rantContents!.pointee.id
+            rantViewController.rantID = (sender as! SecondaryRantInFeedCell).rantContents!.id
             
             /*withUnsafeMutablePointer(to: &(sender as! RantInFeedCell).rant, { pointer in
                 rantViewController.rantInFeed = pointer
             })*/
             
-            rantViewController.rantInFeed = (sender as! SecondaryRantInFeedCell).rantContents
+            //rantViewController.rantInFeed = (sender as! SecondaryRantInFeedCell).rantContents
+            rantViewController.homeFeedDelegate = self
             
             rantViewController.supplementalRantImage = supplementalImages[tableView.indexPath(for: sender as! UITableViewCell)!]
             rantViewController.loadCompletionHandler = nil
@@ -572,6 +584,75 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 ((tabBarController.viewControllers![3] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer.invalidate()
                 
                 ((tabBarController.viewControllers![3] as! ExtensibleNavigationBarNavigationController).viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = nil
+            }
+        }
+    }
+    
+    private func indexOfRant(withID id: Int) -> IndexPath? {
+        for (feedIdx, feed) in rantFeed.rantFeed.enumerated() {
+            if let rantIdx = feed.rants.firstIndex(where: { $0.id == id }) {
+                return IndexPath(row: rantIdx, section: feedIdx)
+            }
+        }
+        
+        return nil
+    }
+    
+    // MARK: - Home Feed Table View Controller Delegate
+    func changeRantVoteState(rantID id: Int, voteState: Int) {
+        guard (0...1).contains(voteState) else {
+            return
+        }
+        
+        let rantIndex = indexOfRant(withID: id)
+        
+        if let rantIndex = rantIndex {
+            rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = voteState
+            
+            //tableView.reloadData()
+        }
+    }
+    
+    func changeRantScore(rantID id: Int, score: Int) {
+        let rantIndex = indexOfRant(withID: id)
+        
+        if let rantIndex = rantIndex {
+            rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].score = score
+            
+            //tableView.reloadData()
+        }
+    }
+    
+    func reloadData() {
+        tableView.reloadData()
+    }
+    
+    // MARK: - Feed Delegate
+    func didVoteOnRant(withID id: Int, vote: Int, cell: SecondaryRantInFeedCell) {
+        let rantIndex = indexOfRant(withID: id)
+        
+        guard let rantIndex = rantIndex else {
+            let alertController = UIAlertController(title: "Error", message: "Could not find rant in the feed. Please file in a bug report!", preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+            return
+        }
+
+        
+        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] error, updatedRant in
+            if updatedRant != nil {
+                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = updatedRant!.voteState
+                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].score = updatedRant!.score
+                
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                self?.present(alertController, animated: true, completion: nil)
             }
         }
     }

@@ -20,13 +20,15 @@ class SecondaryRantInFeedCell: UITableViewCell {
     @IBOutlet weak var tagList: TagListView!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     
-    var rantContents: UnsafeMutablePointer<RantInFeed>? = nil
+    var rantContents: RantInFeed? = nil
     var parentTableViewController: UIViewController? = nil
     var parentTableView: UITableView? = nil
     
     var supplementalImage: File?
     
     var loadingIndicator = UIActivityIndicatorView(style: .medium)
+    
+    var delegate: FeedDelegate?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -65,7 +67,7 @@ class SecondaryRantInFeedCell: UITableViewCell {
         //loadingIndicator.hidesWhenStopped = true
     }
     
-    func configure(with model: UnsafeMutablePointer<RantInFeed>?, image: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
+    func configure(with model: RantInFeed?, image: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
         self.parentTableViewController = parentTableViewController
         self.parentTableView = parentTableView
         self.supplementalImage = image
@@ -83,12 +85,12 @@ class SecondaryRantInFeedCell: UITableViewCell {
         supplementalImageView.isHidden = false
         tagList.isHidden = false
         
-        upvoteButton.tintColor = (rantContents!.pointee.voteState == 1 ? UIColor(hexString: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
-        scoreLabel.text = String(rantContents!.pointee.score)
-        downvoteButton.tintColor = (rantContents!.pointee.voteState == -1 ? UIColor(hexString: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
+        upvoteButton.tintColor = (rantContents!.voteState == 1 ? UIColor(hexString: rantContents!.userAvatar.backgroundColor)! : UIColor.systemGray)
+        scoreLabel.text = String(rantContents!.score)
+        downvoteButton.tintColor = (rantContents!.voteState == -1 ? UIColor(hexString: rantContents!.userAvatar.backgroundColor)! : UIColor.systemGray)
         
-        upvoteButton.isEnabled = rantContents!.pointee.voteState != -2
-        downvoteButton.isEnabled = rantContents!.pointee.voteState != -2
+        upvoteButton.isEnabled = rantContents!.voteState != -2
+        downvoteButton.isEnabled = rantContents!.voteState != -2
         
         if image == nil {
             supplementalImageView.image = nil
@@ -163,26 +165,26 @@ class SecondaryRantInFeedCell: UITableViewCell {
             //supplementalImageView.image = UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!
         }
         
-        upvoteButton.isUserInteractionEnabled = rantContents!.pointee.voteState != -2
-        downvoteButton.isUserInteractionEnabled = rantContents!.pointee.voteState != -2
+        upvoteButton.isUserInteractionEnabled = rantContents!.voteState != -2
+        downvoteButton.isUserInteractionEnabled = rantContents!.voteState != -2
         
-        if rantContents!.pointee.text.count > 240 {
-            bodyLabel.text = rantContents!.pointee.text.prefix(240) + "... [read more]"
+        if rantContents!.text.count > 240 {
+            bodyLabel.text = rantContents!.text.prefix(240) + "... [read more]"
         } else {
-            bodyLabel.text = rantContents!.pointee.text
+            bodyLabel.text = rantContents!.text
         }
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
         
         tagList.removeAllTags()
-        tagList.addTags(rantContents!.pointee.tags)
+        tagList.addTags(rantContents!.tags)
         
         layoutIfNeeded()
     }
     
     @IBAction func handleUpvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.rantContents!.pointee.voteState {
+            switch self.rantContents!.voteState {
             case 0:
                 return 1
                 
@@ -207,7 +209,9 @@ class SecondaryRantInFeedCell: UITableViewCell {
             }
         }*/
         
-        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
+        delegate?.didVoteOnRant(withID: rantContents!.id, vote: vote, cell: self)
+        
+        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
             if updatedRant != nil {
                 self?.rantContents!.pointee.voteState = updatedRant!.voteState
                 self?.rantContents!.pointee.score = updatedRant!.score
@@ -222,12 +226,12 @@ class SecondaryRantInFeedCell: UITableViewCell {
                 
                 self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
             }
-        }
+        }*/
     }
     
     @IBAction func handleDownvote(_ sender: UIButton) {
         var vote: Int {
-            switch self.rantContents!.pointee.voteState {
+            switch self.rantContents!.voteState {
             case 0:
                 return -1
                 
@@ -239,7 +243,9 @@ class SecondaryRantInFeedCell: UITableViewCell {
             }
         }
         
-        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
+        delegate?.didVoteOnRant(withID: rantContents!.id, vote: vote, cell: self)
+        
+        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
             if updatedRant != nil {
                 self?.rantContents!.pointee.voteState = updatedRant!.voteState
                 self?.rantContents!.pointee.score = updatedRant!.score
@@ -254,7 +260,7 @@ class SecondaryRantInFeedCell: UITableViewCell {
                 
                 self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
             }
-        }
+        }*/
     }
     
     @objc func windowResizeHandler() {
