@@ -26,5 +26,17 @@ extension UIView {
         let data = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
         return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data ?? Data()) as? T
     }
+    
+    var parentViewController: UIViewController? {
+        // Starts from next (As we know self is not a UIViewController).
+        var parentResponder: UIResponder? = self.next
+        while parentResponder != nil {
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+            parentResponder = parentResponder?.next
+        }
+        return nil
+    }
 }
 

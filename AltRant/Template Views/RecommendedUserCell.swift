@@ -37,6 +37,8 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
     
     var imageDownloadSemaphore = DispatchSemaphore(value: 1)
     
+    var concurrentQueue = DispatchQueue(label: "thread-safe-subscribed-users-array-access-queue", attributes: .concurrent)
+    
     enum Section: Int, CaseIterable, Hashable {
         case recommendedUsers
     }
@@ -45,6 +47,9 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
     
     //lazy var dataSource = makeDataSource()
     //var collectionView: UICollectionView! = nil
+    
+    
+    
     var dataSource: UICollectionViewDiffableDataSource<Section, SubscribedFeed.UsernameMap.User>! = nil
     
     func configure(subscribedFeed: UnsafeMutablePointer<SubscribedFeed>, parentTableView: UITableView) {
@@ -145,6 +150,10 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
                 cell.subscribeButton.setTitle("Subscribed", for: .normal)
                 cell.subscribeButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
                 cell.subscribeButton.tintColor = .label
+            } else {
+                cell.subscribeButton.setTitle("Subscribe", for: .normal)
+                cell.subscribeButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
+                cell.subscribeButton.tintColor = .systemGray
             }
         }
         
@@ -222,14 +231,109 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
     }
     
     func didSubscribe(to user: SubscribedFeed.UsernameMap.User) {
-        subscribedUsers.append(user.userID)
+        // I tried making this thread-safe to the best of my ability. Only time will tell if this is going to be another source of crashes in the app.
         
-        //let indexPath = dataSource.indexPath(for: user)
+        var isUserInSubscribedList: Bool!
         
-        var snapshot = dataSource.snapshot()
+        concurrentQueue.sync {
+            isUserInSubscribedList = self.subscribedUsers.contains(user.userID)
+        }
         
-        snapshot.reconfigureItems([user])
-        dataSource.apply(snapshot, animatingDifferences: false)
+        if !isUserInSubscribedList {
+            concurrentQueue.async(flags: .barrier) {
+                self.subscribedUsers.append(user.userID)
+                
+                //let indexPath = dataSource.indexPath(for: user)
+                
+                var snapshot = self.dataSource.snapshot()
+                
+                snapshot.reconfigureItems([user])
+                
+                //snapshot.reloadItems([user])
+                
+                DispatchQueue.main.async {
+                    self.dataSource.apply(snapshot, animatingDifferences: false)
+                }
+            }
+            
+            SwiftRant.shared.subscribeToUser(nil, userID: user.userID) { error, success in
+                if success {
+                    /*self.subscribedUsers.append(user.userID)
+                    
+                    //let indexPath = dataSource.indexPath(for: user)
+                    
+                    var snapshot = self.dataSource.snapshot()
+                    
+                    snapshot.reconfigureItems([user])
+                    self.dataSource.apply(snapshot, animatingDifferences: false)*/
+                } else {
+                    self.concurrentQueue.async(flags: .barrier) {
+                        self.subscribedUsers.removeAll(where: { $0 == user.userID })
+                        
+                        var snapshot = self.dataSource.snapshot()
+                        
+                        snapshot.reconfigureItems([user])
+                        
+                        //snapshot.reloadItems([user])
+                        
+                        DispatchQueue.main.async {
+                            self.dataSource.apply(snapshot, animatingDifferences: false)
+                            
+                            let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while subscribing to the user.", preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.didSubscribe(to: user) }))
+                            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                            
+                            self.parentViewController?.present(alertController, animated: true)
+                        }
+                    }
+                }
+            }
+        } else {
+            self.concurrentQueue.async(flags: .barrier) {
+                self.subscribedUsers.removeAll(where: { $0 == user.userID })
+                
+                var snapshot = self.dataSource.snapshot()
+                
+                snapshot.reconfigureItems([user])
+                
+                //snapshot.reloadItems([user])
+                
+                DispatchQueue.main.async {
+                    self.dataSource.apply(snapshot, animatingDifferences: false)
+                }
+            }
+            
+            SwiftRant.shared.unsubscribeFromUser(nil, userID: user.userID) { error, success in
+                if success {
+                    /*self.subscribedUsers.removeAll(where: { $0 == user.userID })
+                    
+                    var snapshot = self.dataSource.snapshot()
+                    
+                    snapshot.reconfigureItems([user])
+                    self.dataSource.apply(snapshot, animatingDifferences: false)*/
+                } else {
+                    self.concurrentQueue.async(flags: .barrier) {
+                        self.subscribedUsers.append(user.userID)
+                        
+                        var snapshot = self.dataSource.snapshot()
+                        
+                        snapshot.reconfigureItems([user])
+                        
+                        //snapshot.reloadItems([user])
+                        
+                        DispatchQueue.main.async {
+                            self.dataSource.apply(snapshot, animatingDifferences: false)
+                            
+                            let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while unsubscribing from the user.", preferredStyle: .alert)
+                            alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.didSubscribe(to: user) }))
+                            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                            
+                            self.parentViewController?.present(alertController, animated: true)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func didCloseRecommendation(of user: SubscribedFeed.UsernameMap.User) {
@@ -369,6 +473,7 @@ class InternalRecommendedUserCell: UICollectionViewCell {
     }
     
     @IBAction func subscribeHandler(_ sender: Any) {
+        
         delegate?.didSubscribe(to: userData)
     }
     

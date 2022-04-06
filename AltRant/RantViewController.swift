@@ -777,7 +777,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - Feed Delegate
     
     func didVoteOnRant(withID id: Int, vote: Int, cell: RantCell) {
-        guard (0...1).contains(vote) else {
+        guard (-1...1).contains(vote) else {
             return
         }
         
@@ -861,7 +861,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func didVoteOnComment(withID id: Int, vote: Int, cell: CommentCell) {
-        guard (0...1).contains(vote) else {
+        guard (-1...1).contains(vote) else {
             return
         }
         

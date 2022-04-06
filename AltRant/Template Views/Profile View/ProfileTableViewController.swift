@@ -1231,7 +1231,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - Profile Table View Controller Delegate
     func setVoteStateForRant(withID id: Int, voteState: Int) {
-        guard (0...1).contains(voteState) && [Profile.ProfileContentTypes.rants, Profile.ProfileContentTypes.favorite, Profile.ProfileContentTypes.upvoted].contains(currentContentType) else {
+        guard (-1...1).contains(voteState) && [Profile.ProfileContentTypes.rants, Profile.ProfileContentTypes.favorite, Profile.ProfileContentTypes.upvoted].contains(currentContentType) else {
             return
         }
         
@@ -1251,7 +1251,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func setVoteStateForComment(withID id: Int, voteState: Int) {
-        guard (0...1).contains(voteState) && currentContentType == .comments else {
+        guard (-1...1).contains(voteState) && currentContentType == .comments else {
             return
         }
         
@@ -1276,7 +1276,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: - Feed Delegate
     func didVoteOnRant(withID id: Int, vote: Int, cell: SecondaryRantInFeedCell) {
-        guard (0...1).contains(vote) && [Profile.ProfileContentTypes.rants, Profile.ProfileContentTypes.favorite, Profile.ProfileContentTypes.upvoted].contains(currentContentType) else {
+        guard (-1...1).contains(vote) && [Profile.ProfileContentTypes.rants, Profile.ProfileContentTypes.favorite, Profile.ProfileContentTypes.upvoted].contains(currentContentType) else {
             return
         }
         
@@ -1327,7 +1327,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func didVoteOnComment(withID id: Int, vote: Int, cell: CommentCell) {
-        guard (0...1).contains(vote) && currentContentType == .comments else {
+        guard (-1...1).contains(vote) && currentContentType == .comments else {
             return
         }
         
