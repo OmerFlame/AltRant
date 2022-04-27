@@ -407,6 +407,8 @@ extension AvatarEditorPickerViewController: UICollectionViewDataSource {
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
         for (idx, type) in types.enumerated() {
             if type.label == title {
+                sender.tagViews.first(where: { $0.isSelected == true })?.isSelected = false
+                tagView.isSelected = true
                 self.delegate?.editorPickerView(self, didSelectCategory: self.types[idx])
             }
         }

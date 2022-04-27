@@ -73,6 +73,8 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
                         DispatchQueue.main.async {
                             //self?.pickerViewController.categoryPickerButton.setTitle(self?.customizationResults.types?[0].label, for: .normal)
                             //self?.pickerViewController.categoryPickerButton.sizeToFit()
+                            self?.pickerViewController.categoryPickerTagListView.tagViews[0].isSelected = true
+                            
                             self?.pickerViewController.activityIndicator.stopAnimating()
                             
                             UIView.animate(withDuration: 0.3, animations: {
