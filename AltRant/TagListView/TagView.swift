@@ -1,10 +1,10 @@
 //
 //  TagView.swift
-//  AltRant
+//  TagListViewDemo
 //
-//  Created by Omer Shamai on 12/1/20.
+//  Created by Dongyuan Liu on 2015-05-09.
+//  Copyright (c) 2015 Ela. All rights reserved.
 //
-
 import UIKit
 
 @IBDesignable
@@ -80,7 +80,7 @@ open class TagView: UIButton {
         }
     }
     
-    @IBInspectable open var textFont: UIFont = .systemFont(ofSize: 12) {
+    var textFont: UIFont = UIFont.systemFont(ofSize: 12) {
         didSet {
             titleLabel?.font = textFont
         }
@@ -161,11 +161,7 @@ open class TagView: UIButton {
     
     public init(title: String) {
         super.init(frame: CGRect.zero)
-        //setTitle(title, for: UIControl.State())
-        
-        let buttonStr = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.underlineStyle: 1])
-        
-        setAttributedTitle(buttonStr, for: UIControl.State())
+        setTitle(title, for: UIControl.State())
         
         setupView()
     }
@@ -218,13 +214,3 @@ open class TagView: UIButton {
         }
     }
 }
-
-/// Swift < 4.2 support
-#if !(swift(>=4.2))
-private extension NSAttributedString {
-    typealias Key = NSAttributedStringKey
-}
-private extension UIControl {
-    typealias State = UIControlState
-}
-#endif

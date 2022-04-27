@@ -123,7 +123,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                                         self.present(settingsVC, animated: true, completion: nil)
                                     },
                 
-                                    UIAction(title: "Log Out", image: UIImage(systemName: "lock.fill")!) { action in
+                                    UIAction(title: "Log Out", image: UIImage(systemName: "power")!) { action in
                                         print("Tapped on Log Out")
                                         
                                         self.timer.invalidate()
@@ -269,16 +269,18 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                     CATransaction.begin()
                     
                     CATransaction.setCompletionBlock {
-                        NotificationCenter.default.post(name: windowResizeNotification, object: nil)
+                        //NotificationCenter.default.post(name: windowResizeNotification, object: nil)
+                        
+                        self?.tableView.reloadData()
                     }
                     
                     self?.tableView.beginUpdates()
                     self?.tableView.insertRows(at: indexPaths, with: .automatic)
                     self?.tableView.endUpdates()
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         self?.tableView.reloadData()
-                    }
+                    }*/
                     
                     CATransaction.commit()
                 }

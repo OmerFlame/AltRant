@@ -12,8 +12,11 @@ import SwiftHEXColors
 
 class AvatarEditorViewController: UIViewController, FloatingPanelControllerDelegate, AvatarEditorPickerViewControllerDelegate {
     //private var originalPullUpControllerViewSize: CGSize = .zero
+    @IBOutlet weak var currentAvatarImageContainer: UIView!
     @IBOutlet weak var currentAvatarImageView: UIImageView!
-    var fpc: FloatingPanelController!
+    //var fpc: FloatingPanelController!
+    
+    var pickerViewController: AvatarEditorPickerViewController!
     
     var customizationResults: AvatarCustomizationResults!
     
@@ -25,15 +28,17 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
 		
 		navigationItem.rightBarButtonItems = [buttonItem]
 		
-        addPullUpController()
+        //addPullUpController()
         
-        (fpc.contentViewController as! AvatarEditorPickerViewController).delegate = self
+        //addPickerController()
+        
+        //(fpc.contentViewController as! AvatarEditorPickerViewController).delegate = self
         
         UIView.animate(withDuration: 0.3, animations: {
-            (self.fpc.contentViewController as! AvatarEditorPickerViewController).disablerView.isHidden = false
-            (self.fpc.contentViewController as! AvatarEditorPickerViewController).disablerView.alpha = 0.7
+            self.pickerViewController.disablerView.isHidden = false
+            self.pickerViewController.disablerView.alpha = 0.7
         }, completion: { _ in
-            (self.fpc.contentViewController as! AvatarEditorPickerViewController).activityIndicator.startAnimating()
+            self.pickerViewController.activityIndicator.startAnimating()
         })
         
         // TODO: - Ask for the current image while initializing the class, don't get it manually
@@ -43,7 +48,10 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
                     self?.customizationResults = customizationResults
                     
                     if let options = self?.customizationResults.avatars {
-                        self?.currentAvatarImageView.backgroundColor = UIColor(hexString: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")
+                        DispatchQueue.main.async {
+                            self?.currentAvatarImageView.backgroundColor = UIColor(hexString: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")
+                            self?.currentAvatarImageContainer.backgroundColor = UIColor(hexString: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")
+                        }
                         
                         //self?.currentAvatarImageView.image = self?.customizationResults.avatars.first(where: { ($0.isSelected ?? false) })?.image
                         
@@ -57,19 +65,19 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
                             }
                         }
                         
-                        (self?.fpc.contentViewController as! AvatarEditorPickerViewController).userPoints = result?.score
-                        (self?.fpc.contentViewController as! AvatarEditorPickerViewController).selectedIndexPath = IndexPath(row: self?.customizationResults.avatars.firstIndex(where: { $0.isSelected ?? false })! ?? 0, section: 0)
-                        (self?.fpc.contentViewController as! AvatarEditorPickerViewController).updateTypes(types: self?.customizationResults.types ?? [])
-                        (self?.fpc.contentViewController as! AvatarEditorPickerViewController).updateOptions(options: options)
+                        self?.pickerViewController.userPoints = result?.score
+                        self?.pickerViewController.selectedIndexPath = IndexPath(row: self?.customizationResults.avatars.firstIndex(where: { $0.isSelected ?? false })! ?? 0, section: 0)
+                        self?.pickerViewController.updateTypes(types: self?.customizationResults.types ?? [])
+                        self?.pickerViewController.updateOptions(options: options)
                         
                         DispatchQueue.main.async {
-                            (self?.fpc.contentViewController as! AvatarEditorPickerViewController).categoryPickerButton.setTitle(self?.customizationResults.types?[0].label, for: .normal)
-                            (self?.fpc.contentViewController as! AvatarEditorPickerViewController).categoryPickerButton.sizeToFit()
-                            (self?.fpc.contentViewController as! AvatarEditorPickerViewController).activityIndicator.stopAnimating()
+                            //self?.pickerViewController.categoryPickerButton.setTitle(self?.customizationResults.types?[0].label, for: .normal)
+                            //self?.pickerViewController.categoryPickerButton.sizeToFit()
+                            self?.pickerViewController.activityIndicator.stopAnimating()
                             
                             UIView.animate(withDuration: 0.3, animations: {
-                                (self?.fpc.contentViewController as! AvatarEditorPickerViewController).disablerView.alpha = 0
-                                (self?.fpc.contentViewController as! AvatarEditorPickerViewController).disablerView.isHidden = true
+                                self?.pickerViewController.disablerView.alpha = 0
+                                self?.pickerViewController.disablerView.isHidden = true
                             })
                         }
                     }
@@ -120,7 +128,7 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
 		
 		navigationController?.interactivePopGestureRecognizer?.isEnabled = false
 		
-		let imageName = (fpc.contentViewController as! AvatarEditorPickerViewController).preferences[(fpc.contentViewController as! AvatarEditorPickerViewController).selectedIndexPath.row].image.fullImageName
+		let imageName = pickerViewController.preferences[pickerViewController.selectedIndexPath.row].image.fullImageName
 		
         
         
@@ -232,7 +240,35 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
 		alertMessage.view.addSubview(imageView)
 	}
     
-    func addPullUpController() {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "embedSegue" {
+            if let childVC = segue.destination as? AvatarEditorPickerViewController {
+                pickerViewController = childVC
+                pickerViewController.delegate = self
+            }
+        }
+    }
+    
+    /*func addPickerController() {
+        let pickerController = UIStoryboard(name: "AvatarEditorViewController", bundle: nil).instantiateViewController(identifier: "AvatarPicker") as! AvatarEditorPickerViewController
+        
+        pickerController.delegate = self
+        
+        addChild(pickerController)
+        
+        view.addSubview(pickerController.view)
+        
+        pickerController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        pickerController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        pickerController.view.topAnchor.constraint(equalTo: currentAvatarImageView.bottomAnchor).isActive = true
+        pickerController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        pickerController.didMove(toParent: self)
+        
+        pickerViewController = pickerController
+    }*/
+    
+    /*func addPullUpController() {
         fpc = FloatingPanelController()
         
         let contentVC = UIStoryboard(name: "AvatarEditorViewController", bundle: nil).instantiateViewController(identifier: "AvatarPicker") as! AvatarEditorPickerViewController
@@ -246,21 +282,22 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
         fpc.layout = CustomFloatingPanelLayout()
         
         fpc.addPanel(toParent: self)
-    }
+    }*/
     
-    func floatingPanelDidMove(_ fpc: FloatingPanelController) {
+    /*func floatingPanelDidMove(_ fpc: FloatingPanelController) {
         if fpc.isAttracting == false {
             let loc = fpc.surfaceLocation
             let minY = fpc.surfaceLocation(for: .full).y
             let maxY = fpc.surfaceLocation(for: .tip).y
             fpc.surfaceLocation = CGPoint(x: loc.x, y: min(max(loc.y, minY), maxY))
         }
-    }
+    }*/
     
     func editorPickerView(_ editorPickerView: AvatarEditorPickerViewController, didSelectOption option: AvatarCustomizationResults.AvatarCustomizationOption) {
         //currentAvatarImageView.image = option.image.fullImage
 		
 		currentAvatarImageView.backgroundColor = UIColor(hexString: option.image.backgroundColor)!
+        currentAvatarImageContainer.backgroundColor = UIColor(hexString: option.image.backgroundColor)!
 		
 		currentAvatarImageView.image = nil
 		
@@ -312,7 +349,7 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
 					editorPickerView.disablerView.alpha = 0
 					editorPickerView.disablerView.isHidden = true
 				}, completion: { _ in
-					(self?.fpc.contentViewController as! AvatarEditorPickerViewController).activityIndicator.stopAnimating()
+                    self?.pickerViewController.activityIndicator.stopAnimating()
 				})
             }
         })

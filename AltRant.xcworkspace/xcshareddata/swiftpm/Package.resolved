@@ -1,122 +1,124 @@
 {
-  "pins" : [
-    {
-      "identity" : "activelabel.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/optonaut/ActiveLabel.swift",
-      "state" : {
-        "revision" : "36949c1a69ef8b40574da20c9e24b115f387b1cf",
-        "version" : "1.1.5"
+  "object": {
+    "pins": [
+      {
+        "package": "ActiveLabel",
+        "repositoryURL": "https://github.com/optonaut/ActiveLabel.swift",
+        "state": {
+          "branch": null,
+          "revision": "36949c1a69ef8b40574da20c9e24b115f387b1cf",
+          "version": "1.1.5"
+        }
+      },
+      {
+        "package": "ADNavigationBarExtension",
+        "repositoryURL": "https://github.com/OmerFlame/ADNavigationBarExtension",
+        "state": {
+          "branch": "master",
+          "revision": "4587d29004bc79c37ab0b397851a381ecc0ba8f1",
+          "version": null
+        }
+      },
+      {
+        "package": "ADUtils",
+        "repositoryURL": "https://github.com/faberNovel/ADUtils.git",
+        "state": {
+          "branch": null,
+          "revision": "b4e22024b226621ed8c4429eef73f490d41cc50f",
+          "version": "11.2.0"
+        }
+      },
+      {
+        "package": "BadgeControl",
+        "repositoryURL": "https://github.com/OmerFlame/BadgeControl",
+        "state": {
+          "branch": "master",
+          "revision": "917b914ea376456252232c75ae906bf0a5c4dde3",
+          "version": null
+        }
+      },
+      {
+        "package": "FloatingPanel",
+        "repositoryURL": "https://github.com/scenee/FloatingPanel",
+        "state": {
+          "branch": null,
+          "revision": "fe30e60235c5cc753e2ee2a3eebc8e654971634d",
+          "version": "2.5.2"
+        }
+      },
+      {
+        "package": "Haptica",
+        "repositoryURL": "https://github.com/efremidze/Haptica",
+        "state": {
+          "branch": null,
+          "revision": "e03932406d2f36f10beefd31717730b2c2fa9014",
+          "version": "3.0.3"
+        }
+      },
+      {
+        "package": "OSPlaceholderTextView",
+        "repositoryURL": "https://github.com/OmerFlame/OSPlaceholderTextView",
+        "state": {
+          "branch": null,
+          "revision": "f498a1a2a475a796ccd7ce322e6970ee652c7481",
+          "version": "1.0.3"
+        }
+      },
+      {
+        "package": "PullUpController",
+        "repositoryURL": "https://github.com/MarioIannotta/PullUpController",
+        "state": {
+          "branch": null,
+          "revision": "6192b4745a4423e8fd2dc0a4eb8d34ca247a5163",
+          "version": "0.8.0"
+        }
+      },
+      {
+        "package": "Sentry",
+        "repositoryURL": "https://github.com/getsentry/sentry-cocoa",
+        "state": {
+          "branch": null,
+          "revision": "c348f6e884873143282e7c6cd2c856fac971ea8c",
+          "version": "7.12.0"
+        }
+      },
+      {
+        "package": "SPAlert",
+        "repositoryURL": "https://github.com/ivanvorobei/SPAlert",
+        "state": {
+          "branch": null,
+          "revision": "17939549b8a7c7574c8de5b4f0c017cbbc5c79d2",
+          "version": "3.5.1"
+        }
+      },
+      {
+        "package": "SwiftHEXColors",
+        "repositoryURL": "https://github.com/thii/SwiftHEXColors.git",
+        "state": {
+          "branch": null,
+          "revision": "1f886cb20fedda14a5ac75efd09bc99c95b43a18",
+          "version": "1.4.1"
+        }
+      },
+      {
+        "package": "SwiftKeychainWrapper",
+        "repositoryURL": "https://github.com/jrendel/SwiftKeychainWrapper",
+        "state": {
+          "branch": null,
+          "revision": "185a3165346a03767101c4f62e9a545a0fe0530f",
+          "version": "4.0.1"
+        }
+      },
+      {
+        "package": "SwiftRant",
+        "repositoryURL": "https://github.com/OmerFlame/SwiftRant.git",
+        "state": {
+          "branch": "main",
+          "revision": "e31622662715b9ed4fca254c87558f67d0504f4f",
+          "version": null
+        }
       }
-    },
-    {
-      "identity" : "adnavigationbarextension",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/OmerFlame/ADNavigationBarExtension",
-      "state" : {
-        "branch" : "master",
-        "revision" : "4587d29004bc79c37ab0b397851a381ecc0ba8f1"
-      }
-    },
-    {
-      "identity" : "adutils",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/faberNovel/ADUtils.git",
-      "state" : {
-        "revision" : "b4e22024b226621ed8c4429eef73f490d41cc50f",
-        "version" : "11.2.0"
-      }
-    },
-    {
-      "identity" : "badgecontrol",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/OmerFlame/BadgeControl",
-      "state" : {
-        "branch" : "master",
-        "revision" : "917b914ea376456252232c75ae906bf0a5c4dde3"
-      }
-    },
-    {
-      "identity" : "floatingpanel",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/scenee/FloatingPanel",
-      "state" : {
-        "revision" : "0fbbbc8d99b4dfe58bb1dd704d14b45f35b46584",
-        "version" : "2.5.1"
-      }
-    },
-    {
-      "identity" : "haptica",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/efremidze/Haptica",
-      "state" : {
-        "revision" : "e03932406d2f36f10beefd31717730b2c2fa9014",
-        "version" : "3.0.3"
-      }
-    },
-    {
-      "identity" : "osplaceholdertextview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/OmerFlame/OSPlaceholderTextView",
-      "state" : {
-        "revision" : "f498a1a2a475a796ccd7ce322e6970ee652c7481",
-        "version" : "1.0.3"
-      }
-    },
-    {
-      "identity" : "pullupcontroller",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/MarioIannotta/PullUpController",
-      "state" : {
-        "revision" : "6192b4745a4423e8fd2dc0a4eb8d34ca247a5163",
-        "version" : "0.8.0"
-      }
-    },
-    {
-      "identity" : "sentry-cocoa",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/getsentry/sentry-cocoa",
-      "state" : {
-        "revision" : "967f04b3cd6989df3f9ced3060481a21646c146d",
-        "version" : "7.9.0"
-      }
-    },
-    {
-      "identity" : "spalert",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ivanvorobei/SPAlert",
-      "state" : {
-        "revision" : "52c6fbfd025c8aeb2236c4f629dcca59e0060de6",
-        "version" : "3.5.1"
-      }
-    },
-    {
-      "identity" : "swifthexcolors",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/thii/SwiftHEXColors.git",
-      "state" : {
-        "revision" : "1f886cb20fedda14a5ac75efd09bc99c95b43a18",
-        "version" : "1.4.1"
-      }
-    },
-    {
-      "identity" : "swiftkeychainwrapper",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/jrendel/SwiftKeychainWrapper",
-      "state" : {
-        "revision" : "185a3165346a03767101c4f62e9a545a0fe0530f",
-        "version" : "4.0.1"
-      }
-    },
-    {
-      "identity" : "swiftrant",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/OmerFlame/SwiftRant.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "e31622662715b9ed4fca254c87558f67d0504f4f"
-      }
-    }
-  ],
-  "version" : 2
+    ]
+  },
+  "version": 1
 }

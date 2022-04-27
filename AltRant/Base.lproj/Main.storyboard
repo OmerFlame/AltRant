@@ -73,7 +73,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="D6R-9h-dK4" userLabel="Text Stack View">
-                                                    <rect key="frame" x="41" y="0.0" width="312.5" height="197"/>
+                                                    <rect key="frame" x="41" y="0.0" width="312.5" height="235"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="al6-fy-gs8" userLabel="Body">
                                                             <rect key="frame" x="0.0" y="0.0" width="312.5" height="169"/>
@@ -95,7 +95,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="TcB-Zi-tfY" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="185" width="240" height="12"/>
+                                                            <rect key="frame" x="0.0" y="185" width="240" height="50"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -156,14 +156,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInFeedCell" id="Bwn-Hx-Vsk" customClass="SecondaryRantInFeedCell" customModule="AltRant" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="354.5" width="414" height="279.5"/>
+                                <rect key="frame" x="0.0" y="354.5" width="414" height="317.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bwn-Hx-Vsk" id="nut-6w-0r6">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="279.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="317.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Lkk-j3-W3i" userLabel="Content Stack View">
-                                            <rect key="frame" x="20" y="15" width="370" height="249.5"/>
+                                            <rect key="frame" x="20" y="15" width="370" height="287.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="VQq-2b-abE" userLabel="Voting Stack View">
                                                     <rect key="frame" x="0.0" y="0.0" width="26" height="76.5"/>
@@ -214,7 +214,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="xbz-om-ezW" userLabel="Text Stack View">
-                                                    <rect key="frame" x="36" y="0.0" width="334" height="249"/>
+                                                    <rect key="frame" x="36" y="0.0" width="334" height="287"/>
                                                     <subviews>
                                                         <textView multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcR-Zu-vOh" userLabel="Body">
                                                             <rect key="frame" x="0.0" y="0.0" width="334" height="187"/>
@@ -244,7 +244,7 @@
                                                             </variation>
                                                         </imageView>
                                                         <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1vm-oH-mVd" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="237" width="240" height="12"/>
+                                                            <rect key="frame" x="0.0" y="237" width="240" height="50"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -418,10 +418,10 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInSubscribedFeedCell" id="tRg-h6-stG" customClass="RantInSubscribedFeedCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="298.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="336.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tRg-h6-stG" id="BPP-Uy-B3I">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="298.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="336.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Kbr-C2-dCk" userLabel="User Actions View">
@@ -486,7 +486,7 @@
                                                     </constraints>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZIe-Hb-TL3" userLabel="Content Stack View">
-                                                    <rect key="frame" x="20" y="34" width="370" height="249.5"/>
+                                                    <rect key="frame" x="20" y="34" width="370" height="287.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="vPG-L3-PpH" userLabel="Voting Stack View">
                                                             <rect key="frame" x="0.0" y="0.0" width="26" height="76.5"/>
@@ -537,7 +537,7 @@
                                                             </constraints>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="d9T-VC-1pJ" userLabel="Text Stack View">
-                                                            <rect key="frame" x="36" y="0.0" width="334" height="249"/>
+                                                            <rect key="frame" x="36" y="0.0" width="334" height="287"/>
                                                             <subviews>
                                                                 <textView multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gec-nJ-eJJ" userLabel="Body">
                                                                     <rect key="frame" x="0.0" y="0.0" width="334" height="187"/>
@@ -567,7 +567,7 @@
                                                                     </variation>
                                                                 </imageView>
                                                                 <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="fDm-wM-9w1" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="237" width="240" height="12"/>
+                                                                    <rect key="frame" x="0.0" y="237" width="240" height="50"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -656,7 +656,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecommendedUserCellBRUH" rowHeight="171" id="CUS-9J-tVb" customClass="RecommendedUserCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="343" width="414" height="171"/>
+                                        <rect key="frame" x="0.0" y="381" width="414" height="171"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CUS-9J-tVb" id="p8E-vm-ApI">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="171"/>
@@ -699,7 +699,7 @@
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sat-Rn-lnM" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                                                                        <rect key="frame" x="0.0" y="21.5" width="38.5" height="20.5"/>
+                                                                                        <rect key="frame" x="0.0" y="21.5" width="28.5" height="20.5"/>
                                                                                         <color key="backgroundColor" systemColor="secondaryLabelColor"/>
                                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1524,27 +1524,18 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="1vm-oH-mVd">
-            <size key="intrinsicContentSize" width="240" height="12"/>
-        </designable>
         <designable name="69L-0b-9f7">
             <size key="intrinsicContentSize" width="26" height="26"/>
         </designable>
         <designable name="Sat-Rn-lnM">
-            <size key="intrinsicContentSize" width="38.5" height="18.5"/>
-        </designable>
-        <designable name="TcB-Zi-tfY">
-            <size key="intrinsicContentSize" width="240" height="12"/>
-        </designable>
-        <designable name="fDm-wM-9w1">
-            <size key="intrinsicContentSize" width="240" height="12"/>
+            <size key="intrinsicContentSize" width="28.5" height="13.5"/>
         </designable>
         <designable name="lN7-Eb-p47">
             <size key="intrinsicContentSize" width="26" height="26"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="LLK-Cr-Cwh"/>
+        <segue reference="4mZ-5q-o8C"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="bell.fill" catalog="system" width="128" height="124"/>

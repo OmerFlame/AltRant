@@ -31,8 +31,7 @@ extension AvatarEditorPickerViewControllerDelegate {
 	}
 }
 
-class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate {
-    @IBOutlet weak var visualEffectView: UIVisualEffectView!
+class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelegate, UIPopoverPresentationControllerDelegate, TagListViewDelegate {
     @IBOutlet weak var categoryContainerView: UIView!
     @IBOutlet weak var categorySeparatorView: UIView! {
         didSet {
@@ -45,7 +44,9 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     @IBOutlet weak var pickerContainerView: UIView!
     @IBOutlet weak var disablerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-	@IBOutlet weak var categoryPickerButton: UIButton!
+    @IBOutlet weak var categoryPickerContentView: UIView!
+    @IBOutlet weak var categoryPickerTagListView: TagListView!
+    
 	
     //var pickerView: UIPickerView!
 	
@@ -77,7 +78,9 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
 		collectionView.delegate = self
 		collectionView.dataSource = self
         
-        categoryPickerButton.tintColor = .label
+        categoryPickerTagListView.delegate = self
+        
+        //categoryPickerButton.tintColor = .label
         
         /*pickerView = UIPickerView()
         
@@ -101,6 +104,21 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     
     func updateTypes(types: [AvatarCustomizationResults.AvatarCustomizationType]) {
         self.types = types
+        
+        var tags = [String]()
+        
+        for type in self.types {
+            tags.append(type.label)
+        }
+        
+        DispatchQueue.main.async {
+            self.categoryPickerTagListView.removeAllTags()
+            
+            self.categoryPickerTagListView.addTags(tags)
+            
+            self.categoryPickerContentView.frame.size.width = self.categoryPickerTagListView.totalTagViewsWidth
+            self.categoryPickerTagListView.frame.size.width = self.categoryPickerTagListView.totalTagViewsWidth
+        }
         
         //pickerView.reloadAllComponents()
     }
@@ -126,7 +144,7 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
         }
     }
     
-	@IBAction func openPopoverPicker() {
+	/*@IBAction func openPopoverPicker() {
 		popoverPickerController = UITableViewController()
 		
 		popoverPickerController.tableView.backgroundColor = .clear
@@ -152,7 +170,7 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
 		ppc?.sourceView = categoryPickerButton
 		
 		present(popoverPickerController, animated: true, completion: nil)
-	}
+	}*/
 	
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
 		return .none
@@ -221,7 +239,7 @@ class AvatarEditorPickerViewController: UIViewController, UICollectionViewDelega
     }
 }*/
 
-extension AvatarEditorPickerViewController: UITableViewDelegate, UITableViewDataSource {
+/*extension AvatarEditorPickerViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = UITableViewCell()
 		
@@ -248,7 +266,7 @@ extension AvatarEditorPickerViewController: UITableViewDelegate, UITableViewData
 		
 		popoverPickerController.dismiss(animated: true, completion: { self.delegate?.editorPickerView(self, didSelectCategory: self.types[indexPath.row]) })
 	}
-}
+}*/
 
 extension AvatarEditorPickerViewController: UICollectionViewDataSource {
     // TODO: - Actaully implement the collection view's data source
@@ -384,6 +402,14 @@ extension AvatarEditorPickerViewController: UICollectionViewDataSource {
         (collectionView.cellForItem(at: selectedIndexPath) as! PreferenceCell).shouldBeSelected = true
         
         delegate?.editorPickerView(self, didSelectOption: preferences[selectedIndexPath.row])
+    }
+    
+    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
+        for (idx, type) in types.enumerated() {
+            if type.label == title {
+                self.delegate?.editorPickerView(self, didSelectCategory: self.types[idx])
+            }
+        }
     }
 }
 
