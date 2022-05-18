@@ -18,14 +18,14 @@ class rantFeedData {
     var rantFeed = [RantFeed]()
 }
 
-protocol HomeFeedTableViewControllerDelegate: AnyObject {
+protocol HomeFeedTableViewControllerDelegate: FeedDelegate {
     func changeRantVoteState(rantID id: Int, voteState: Int)
     func changeRantScore(rantID id: Int, score: Int)
     
     func reloadData()
 }
 
-class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate, HomeFeedTableViewControllerDelegate, FeedDelegate {
+class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate, HomeFeedTableViewControllerDelegate {
     fileprivate var currentPage = 0
     var rantFeed = rantFeedData()
     var supplementalImages = [IndexPath:File]()
@@ -524,10 +524,8 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        
-        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading && SwiftRant.shared.tokenFromKeychain != nil {
+        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows,
+           indexPathsForVisibleRows.contains(IndexPath(row: 0, section: 1)) && !isLoading && SwiftRant.shared.tokenFromKeychain != nil {
             isLoading = true
             performFetch {
                 self.isLoading = false
@@ -602,7 +600,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     
     // MARK: - Home Feed Table View Controller Delegate
     func changeRantVoteState(rantID id: Int, voteState: Int) {
-        guard (0...1).contains(voteState) else {
+        guard (-1...1).contains(voteState) else {
             return
         }
         

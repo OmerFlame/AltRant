@@ -18,6 +18,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LrC-ls-IAI" userLabel="Current Avatar Image Container">
+                                <rect key="frame" x="0.0" y="44" width="414" height="509"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="sCw-wU-Cz1">
+                                        <rect key="frame" x="0.0" y="33" width="414" height="443"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="sCw-wU-Cz1" firstAttribute="centerX" secondItem="LrC-ls-IAI" secondAttribute="centerX" id="C8x-du-b1v"/>
+                                    <constraint firstItem="sCw-wU-Cz1" firstAttribute="centerY" secondItem="LrC-ls-IAI" secondAttribute="centerY" id="RM7-pQ-KCe"/>
+                                </constraints>
+                            </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g2D-Sk-nYe">
                                 <rect key="frame" x="0.0" y="553" width="414" height="309"/>
                                 <constraints>
@@ -27,29 +41,15 @@
                                     <segue destination="7QT-hj-k2w" kind="embed" identifier="embedSegue" id="ifZ-02-4BE"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LrC-ls-IAI" userLabel="Current Avatar Image Container">
-                                <rect key="frame" x="0.0" y="44" width="414" height="509"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="sCw-wU-Cz1">
-                                        <rect key="frame" x="0.0" y="33" width="414" height="443"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="sCw-wU-Cz1" firstAttribute="centerX" secondItem="LrC-ls-IAI" secondAttribute="centerX" id="C8x-du-b1v"/>
-                                    <constraint firstItem="sCw-wU-Cz1" firstAttribute="centerY" secondItem="LrC-ls-IAI" secondAttribute="centerY" id="RM7-pQ-KCe"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8kh-61-F3F"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="8kh-61-F3F" firstAttribute="bottom" secondItem="g2D-Sk-nYe" secondAttribute="bottom" id="3J5-Ne-XjO"/>
                             <constraint firstItem="LrC-ls-IAI" firstAttribute="top" secondItem="8kh-61-F3F" secondAttribute="top" id="Ast-hd-6BX"/>
+                            <constraint firstItem="8kh-61-F3F" firstAttribute="trailing" secondItem="LrC-ls-IAI" secondAttribute="trailing" id="CGp-ds-70Y"/>
                             <constraint firstItem="g2D-Sk-nYe" firstAttribute="leading" secondItem="8kh-61-F3F" secondAttribute="leading" id="Q01-2U-Vdz"/>
                             <constraint firstItem="8kh-61-F3F" firstAttribute="trailing" secondItem="g2D-Sk-nYe" secondAttribute="trailing" id="RDm-Qb-rTd"/>
-                            <constraint firstItem="LrC-ls-IAI" firstAttribute="trailing" secondItem="g2D-Sk-nYe" secondAttribute="trailing" id="TdN-zo-1TS"/>
                             <constraint firstItem="g2D-Sk-nYe" firstAttribute="top" secondItem="LrC-ls-IAI" secondAttribute="bottom" id="ZAe-lX-06s"/>
                             <constraint firstItem="LrC-ls-IAI" firstAttribute="leading" secondItem="8kh-61-F3F" secondAttribute="leading" id="bBe-pk-eJN"/>
                         </constraints>
@@ -69,11 +69,11 @@
                 <viewController storyboardIdentifier="AvatarPicker" id="7QT-hj-k2w" customClass="AvatarEditorPickerViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qaj-2y-PNy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="snv-Eh-3a0">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="309"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q8z-ya-Hka" userLabel="Category Container View">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>

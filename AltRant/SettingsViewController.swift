@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftRant
 
 class SettingsTableViewController: UITableViewController {
     @IBOutlet weak var toggleNotificationServer: UISwitch!
@@ -406,10 +407,10 @@ class SettingsTableViewController: UITableViewController {
         print("Success! Encrypting token collection...")
         
         let encryptedDeviceToken = encrypt(string: deviceToken, publicKey: pubkey)
-        let encryptedUserID = encrypt(string: String(UserDefaults.standard.integer(forKey: "DRUserID")), publicKey: pubkey)
-        let encryptedTokenID = encrypt(string: String(UserDefaults.standard.integer(forKey: "DRTokenID")), publicKey: pubkey)
-        let encryptedTokenKey = encrypt(string: UserDefaults.standard.string(forKey: "DRTokenKey")!, publicKey: pubkey)
-        let encryptedExpireTime = encrypt(string: String(UserDefaults.standard.integer(forKey: "DRTokenExpireTime")), publicKey: pubkey)
+        let encryptedUserID = encrypt(string: String(SwiftRant.shared.tokenFromKeychain!.authToken.userID), publicKey: pubkey)
+        let encryptedTokenID = encrypt(string: String(SwiftRant.shared.tokenFromKeychain!.authToken.tokenID), publicKey: pubkey)
+        let encryptedTokenKey = encrypt(string: SwiftRant.shared.tokenFromKeychain!.authToken.tokenKey, publicKey: pubkey)
+        let encryptedExpireTime = encrypt(string: String(SwiftRant.shared.tokenFromKeychain!.authToken.expireTime), publicKey: pubkey)
         
         print("Success! Sending encrypted token collection to server...")
         

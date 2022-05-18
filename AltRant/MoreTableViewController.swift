@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftRant
 
 class MoreTableViewController: UITableViewController {
     @IBOutlet weak var profileCell: UITableViewCell!
@@ -33,7 +34,7 @@ class MoreTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
-            return ProfileTableViewController(coder: coder, userID: UserDefaults.standard.integer(forKey: "DRUserID"))
+            return ProfileTableViewController(coder: coder, userID: SwiftRant.shared.tokenFromKeychain?.authToken.userID)
         })
         
         navigationController?.pushViewController(profileVC, animated: true)

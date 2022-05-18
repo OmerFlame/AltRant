@@ -37,7 +37,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
     
     //var rantInFeed: RantInFeed?
     
-    var delegate: FeedDelegate?
+    var delegate: RantViewControllerDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -449,6 +449,13 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         
         //let success = APIRequest().voteOnRant(rantID: self.rantContents!.id, vote: vote)
         
+        delegate?.changeRantVoteState(voteState: vote)
+        delegate?.changeRantScore(score: rantContents!.voteState == 1 ? rantContents!.score - 1 : rantContents!.score + vote)
+        
+        DispatchQueue.main.async {
+            self.delegate?.reloadData()
+        }
+        
         delegate?.didVoteOnRant(withID: rantContents.id, vote: vote, cell: self)
         
         /*SwiftRant.shared.voteOnRant(nil, rantID: rantContents.id, vote: vote) { [weak self] error, updatedRant in
@@ -509,6 +516,13 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             default:
                 return -1
             }
+        }
+        
+        delegate?.changeRantVoteState(voteState: vote)
+        delegate?.changeRantScore(score: rantContents!.voteState == 1 ? rantContents!.score - 1 : rantContents!.score + vote)
+        
+        DispatchQueue.main.async {
+            self.delegate?.reloadData()
         }
         
         delegate?.didVoteOnRant(withID: rantContents.id, vote: vote, cell: self)

@@ -19,7 +19,7 @@ class commentFeedData {
     var commentTypeContent = [Comment]()
 }
 
-protocol ProfileTableViewControllerDelegate: AnyObject {
+protocol ProfileTableViewControllerDelegate: FeedDelegate {
     func setVoteStateForRant(withID id: Int, voteState: Int)
     func setScoreForRant(withID id: Int, score: Int)
     
@@ -29,7 +29,7 @@ protocol ProfileTableViewControllerDelegate: AnyObject {
     func reloadData()
 }
 
-class ProfileTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching, FeedDelegate, ProfileTableViewControllerDelegate {
+class ProfileTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching, ProfileTableViewControllerDelegate {
     //@IBOutlet weak var headerView: StretchyTableHeaderView!
     var profileData: Profile?
     var shouldLoadFromUsername = false

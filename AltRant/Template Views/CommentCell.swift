@@ -213,7 +213,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             let usernameGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleUsernameTap(_:)))
             userStackView.addGestureRecognizer(usernameGestureRecognizer)
             
-            if commentContents.userID == UserDefaults.standard.integer(forKey: "DRUserID") && commentContents.username == UserDefaults.standard.string(forKey: "DRUsername")! {
+            if commentContents.userID == SwiftRant.shared.tokenFromKeychain!.authToken.userID && commentContents.username == SwiftRant.shared.usernameFromKeychain {
                 reportModifyButton.setTitle("Modify", for: .normal)
                 
                 let actionsMenu = UIMenu(title: "", children: [
@@ -417,6 +417,17 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             }
         }
         
+        (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForComment(withID: commentContents!.id, voteState: vote)
+        (delegate as? RantViewControllerDelegate)?.changeCommentVoteState(commentID: commentContents!.id, voteState: vote)
+        
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForComment(withID: commentContents!.id, score: commentContents!.voteState == 1 ? commentContents!.score - 1 : commentContents!.score + vote)
+        (delegate as? RantViewControllerDelegate)?.changeCommentScore(commentID: commentContents!.id, score: commentContents!.voteState == 1 ? commentContents!.score - 1 : commentContents!.score + vote)
+        
+        DispatchQueue.main.async {
+            (self.delegate as? ProfileTableViewControllerDelegate)?.reloadData()
+            (self.delegate as? RantViewControllerDelegate)?.reloadData()
+        }
+        
         delegate?.didVoteOnComment(withID: commentContents.id, vote: vote, cell: self)
         
         /*SwiftRant.shared.voteOnComment(nil, commentID: commentContents!.id, vote: vote) { error, updatedComment in
@@ -493,6 +504,17 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             default:
                 return -1
             }
+        }
+        
+        (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForComment(withID: commentContents!.id, voteState: vote)
+        (delegate as? RantViewControllerDelegate)?.changeCommentVoteState(commentID: commentContents!.id, voteState: vote)
+        
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForComment(withID: commentContents!.id, score: commentContents!.voteState == -1 ? commentContents!.score + 1 : commentContents!.score + vote)
+        (delegate as? RantViewControllerDelegate)?.changeCommentScore(commentID: commentContents!.id, score: commentContents!.voteState == -1 ? commentContents!.score + 1 : commentContents!.score + vote)
+        
+        DispatchQueue.main.async {
+            (self.delegate as? ProfileTableViewControllerDelegate)?.reloadData()
+            (self.delegate as? RantViewControllerDelegate)?.reloadData()
         }
         
         delegate?.didVoteOnComment(withID: commentContents.id, vote: vote, cell: self)

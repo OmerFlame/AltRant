@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -87,13 +87,20 @@
                                     <constraint firstItem="qiU-06-ej1" firstAttribute="width" secondItem="GPw-Jd-hhZ" secondAttribute="width" id="XbB-ue-AXS"/>
                                 </constraints>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ep0-oq-56Q" userLabel="Preview Image View">
+                                <rect key="frame" x="16" y="375.5" width="382" height="482.5"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="msl-x3-NT0"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="ep0-oq-56Q" firstAttribute="top" secondItem="Bhb-2M-adc" secondAttribute="bottom" constant="4" id="0X4-dd-J9l"/>
                             <constraint firstItem="Bhb-2M-adc" firstAttribute="top" secondItem="msl-x3-NT0" secondAttribute="top" constant="8" id="0w1-Bo-RjI"/>
                             <constraint firstItem="msl-x3-NT0" firstAttribute="trailing" secondItem="Bhb-2M-adc" secondAttribute="trailing" constant="16" id="HRr-bg-uV6"/>
                             <constraint firstItem="Bhb-2M-adc" firstAttribute="centerX" secondItem="msl-x3-NT0" secondAttribute="centerX" id="MlQ-aK-OKp"/>
+                            <constraint firstItem="msl-x3-NT0" firstAttribute="bottom" secondItem="ep0-oq-56Q" secondAttribute="bottom" constant="4" id="Nid-Oh-tMu"/>
+                            <constraint firstItem="ep0-oq-56Q" firstAttribute="leading" secondItem="msl-x3-NT0" secondAttribute="leading" constant="16" id="Omw-a2-vGD"/>
+                            <constraint firstItem="msl-x3-NT0" firstAttribute="trailing" secondItem="ep0-oq-56Q" secondAttribute="trailing" constant="16" id="Ta9-Ed-0p7"/>
                             <constraint firstItem="Bhb-2M-adc" firstAttribute="leading" secondItem="msl-x3-NT0" secondAttribute="leading" constant="16" id="j0l-0L-j87"/>
                         </constraints>
                     </view>
@@ -114,6 +121,7 @@
                         <outlet property="cancelButton" destination="UgN-uD-sWU" id="8fm-bx-AYG"/>
                         <outlet property="contentTextView" destination="ztY-Yh-X3U" id="TyD-H6-l2j"/>
                         <outlet property="mainStackView" destination="Bhb-2M-adc" id="uXH-E3-8lb"/>
+                        <outlet property="previewImageView" destination="ep0-oq-56Q" id="pAo-oi-ynH"/>
                         <outlet property="remainingLettersLabel" destination="3je-MC-ohL" id="6pa-VI-KbP"/>
                         <outlet property="submitButton" destination="CP1-9I-U2b" id="pZa-Av-1FX"/>
                         <outlet property="tagTextField" destination="qiU-06-ej1" id="EjE-fA-zI8"/>
@@ -125,8 +133,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="paperplane" catalog="system" width="128" height="118"/>
-        <image name="photo" catalog="system" width="128" height="93"/>
+        <image name="paperplane" catalog="system" width="32" height="32"/>
+        <image name="photo" catalog="system" width="32" height="32"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

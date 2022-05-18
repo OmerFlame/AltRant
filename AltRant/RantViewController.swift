@@ -105,12 +105,18 @@ actor UserImageLoader {
     }
 }
 
-protocol RantViewControllerDelegate {
-    func vote(_ rantViewController: RantViewController, vote: Int)
+protocol RantViewControllerDelegate: FeedDelegate {
+    func changeRantVoteState(voteState: Int)
+    func changeRantScore(score: Int)
+    
+    func changeCommentVoteState(commentID id: Int, voteState: Int)
+    func changeCommentScore(commentID id: Int, score: Int)
+    
+    func reloadData()
 }
 
-class RantViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, FeedDelegate {
-    var delegate: RantViewControllerDelegate?
+class RantViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource, RantViewControllerDelegate {
+    //var delegate: RantViewControllerDelegate?
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
@@ -928,6 +934,36 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
+    }
+    
+    func changeRantVoteState(voteState: Int) {
+        guard (-1...1).contains(voteState) else {
+            return
+        }
+        
+        rant?.voteState = voteState
+    }
+    
+    func changeRantScore(score: Int) {
+        rant?.score = score
+    }
+    
+    func changeCommentVoteState(commentID id: Int, voteState: Int) {
+        guard (-1...1).contains(voteState) else {
+            return
+        }
+        
+        comments[comments.firstIndex(where: { $0.id == id })!].voteState = voteState
+        //comments.first(where: { $0.id == id })?.voteState = voteState
+    }
+    
+    func changeCommentScore(commentID id: Int, score: Int) {
+        comments[comments.firstIndex(where: { $0.id == id })!].score = score
+        //comments.first(where: { $0.id == id })
+    }
+    
+    func reloadData() {
+        tableView.reloadData()
     }
 }
 

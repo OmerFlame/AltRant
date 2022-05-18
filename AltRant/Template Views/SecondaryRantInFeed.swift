@@ -209,6 +209,18 @@ class SecondaryRantInFeedCell: UITableViewCell {
             }
         }*/
         
+        // This cell is being used in 2 unique feeds, so we need to call the according functions for both types. Whichever runs depends on the type of delegate. If the type doesn't match, it will stop calling.
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantVoteState(rantID: rantContents!.id, voteState: vote)
+        (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForRant(withID: rantContents!.id, voteState: vote)
+        
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantScore(rantID: rantContents!.id, score: rantContents!.voteState == 1 ? rantContents!.score - 1 : rantContents!.score + vote)
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForRant(withID: rantContents!.id, score: rantContents!.voteState == 1 ? rantContents!.score - 1 : rantContents!.score + vote)
+        
+        DispatchQueue.main.async {
+            (self.delegate as? HomeFeedTableViewControllerDelegate)?.reloadData()
+            (self.delegate as? ProfileTableViewControllerDelegate)?.reloadData()
+        }
+        
         delegate?.didVoteOnRant(withID: rantContents!.id, vote: vote, cell: self)
         
         /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
@@ -241,6 +253,18 @@ class SecondaryRantInFeedCell: UITableViewCell {
             default:
                 return -1
             }
+        }
+        
+        // This cell is being used in 2 unique feeds, so we need to call the according functions for both types. Whichever runs depends on the type of delegate. If the type doesn't match, it will stop calling.
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantVoteState(rantID: rantContents!.id, voteState: vote)
+        (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForRant(withID: rantContents!.id, voteState: vote)
+        
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantScore(rantID: rantContents!.id, score: rantContents!.voteState == -1 ? rantContents!.score + 1 : rantContents!.score + vote)
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForRant(withID: rantContents!.id, score: rantContents!.voteState == -1 ? rantContents!.score + 1 : rantContents!.score + vote)
+        
+        DispatchQueue.main.async {
+            (self.delegate as? HomeFeedTableViewControllerDelegate)?.reloadData()
+            (self.delegate as? ProfileTableViewControllerDelegate)?.reloadData()
         }
         
         delegate?.didVoteOnRant(withID: rantContents!.id, vote: vote, cell: self)

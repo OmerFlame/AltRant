@@ -18,6 +18,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     @IBOutlet weak var remainingLettersLabel: UILabel!
     @IBOutlet weak var attachmentButton: UIButton!
     @IBOutlet weak var tagTextField: UITextField!
+    @IBOutlet weak var previewImageView: UIImageView!
     
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet var submitButton: UIBarButtonItem!
@@ -62,6 +63,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                 attachmentButton.removeTarget(nil, action: nil, for: .primaryActionTriggered)
                 attachmentButton.menu = menu
                 attachmentButton.showsMenuAsPrimaryAction = true
+                previewImageView.image = nil
             } else {
                 attachmentButton.setTitle("Remove image", for: .normal)
                 
@@ -70,6 +72,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                 
                 attachmentButton.removeTarget(nil, action: nil, for: .primaryActionTriggered)
                 attachmentButton.addTarget(self, action: #selector(discardImage), for: .primaryActionTriggered)
+                previewImageView.image = inputImage
             }
         }
     }
