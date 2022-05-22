@@ -300,7 +300,60 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                                 
                                 let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 1) }
                                 
-                                for i in (self?.viewControllerThatPresented as! RantViewController).comments[start..<end] {
+                                Task {
+                                    for comment in addedContent {
+                                        if let avatarImage = comment.userAvatar.avatarImage {
+                                            Task {
+                                                try? await (self?.viewControllerThatPresented as! RantViewController).userImageLoader.loadImage(from: URL(string: "https://avatars.devrant.com/\(avatarImage)")!, forUserID: comment.userID)
+                                            }
+                                        } else {
+                                            await (self?.viewControllerThatPresented as! RantViewController).userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hexString: comment.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))!)
+                                        }
+                                        
+                                        if comment.attachedImage == nil {
+                                            //commentImages.append(nil)
+                                            (self?.viewControllerThatPresented as! RantViewController).commentImages[comment.id] = nil
+                                        } else {
+                                            (self?.viewControllerThatPresented as! RantViewController).commentImages[comment.id] = File.loadFile(image: comment.attachedImage!, size: CGSize(width: comment.attachedImage!.width, height: comment.attachedImage!.height))
+                                        }
+                                        
+                                        if comment.links != nil {
+                                            let links = comment.links!
+                                            
+                                            let attributedString = NSMutableAttributedString(string: comment.body)
+                                            
+                                            attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: (comment.body as NSString).range(of: comment.body))
+                                            
+                                            attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: (comment.body as NSString).range(of: comment.body))
+                                            
+                                            for link in links {
+                                                attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .semibold), range: link.calculatedRange)
+                                                
+                                                if link.type == "mention" {
+                                                    attributedString.addAttribute(.link, value: "mention://\(link.url)", range: link.calculatedRange)
+                                                } else {
+                                                    attributedString.addAttribute(.link, value: link.url, range: link.calculatedRange)
+                                                }
+                                            }
+                                            
+                                            (self?.viewControllerThatPresented as! RantViewController).textsWithLinks[comment.id] = attributedString
+                                        }
+                                    }
+                                    
+                                    DispatchQueue.main.async {
+                                        let viewControllerThatPresented = self?.viewControllerThatPresented
+                                        
+                                        self?.navigationController?.dismiss(animated: true, completion: {
+                                            (viewControllerThatPresented as! RantViewController).tableView.beginUpdates()
+                                            (viewControllerThatPresented as! RantViewController).tableView.insertRows(at: indexPaths, with: .automatic)
+                                            (viewControllerThatPresented as! RantViewController).tableView.endUpdates()
+                                            
+                                            (viewControllerThatPresented as! RantViewController).tableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: true)
+                                        })
+                                    }
+                                }
+                                
+                                /*for i in (self?.viewControllerThatPresented as! RantViewController).comments[start..<end] {
                                     if let attachedImage = i.attachedImage {
                                         (self?.viewControllerThatPresented as! RantViewController).commentImages[i.id] = File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width, height: attachedImage.height))
                                     } else {
@@ -318,7 +371,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                                         
                                         (viewControllerThatPresented as! RantViewController).tableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: true)
                                     })
-                                }
+                                }*/
                             } else {
                                 DispatchQueue.main.async {
                                     self?.navigationItem.rightBarButtonItem?.isEnabled = true
@@ -362,6 +415,28 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                                     } else {
                                         (self?.viewControllerThatPresented as! RantViewController).commentImages[self?.commentID ?? 0] = nil
                                     }
+                                }
+                                
+                                if newComment.links != nil {
+                                    let links = newComment.links!
+                                    
+                                    let attributedString = NSMutableAttributedString(string: newComment.body)
+                                    
+                                    attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: (newComment.body as NSString).range(of: newComment.body))
+                                    
+                                    attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: (newComment.body as NSString).range(of: newComment.body))
+                                    
+                                    for link in links {
+                                        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .semibold), range: link.calculatedRange)
+                                        
+                                        if link.type == "mention" {
+                                            attributedString.addAttribute(.link, value: "mention://\(link.url)", range: link.calculatedRange)
+                                        } else {
+                                            attributedString.addAttribute(.link, value: link.url, range: link.calculatedRange)
+                                        }
+                                    }
+                                    
+                                    (self?.viewControllerThatPresented as! RantViewController).textsWithLinks[newComment.id] = attributedString
                                 }
                                 
                                 DispatchQueue.main.async {

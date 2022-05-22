@@ -34,6 +34,17 @@ class SecondaryRantInFeedCell: UITableViewCell {
         super.init(coder: coder)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        supplementalImageView.image = nil
+        supplementalImageView.isHidden = true
+        
+        supplementalImage = nil
+        
+        rantContents = nil
+    }
+    
     /*override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
