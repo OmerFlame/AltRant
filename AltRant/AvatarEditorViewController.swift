@@ -6,11 +6,10 @@
 //
 
 import UIKit
-import FloatingPanel
 import SwiftRant
 import SwiftHEXColors
 
-class AvatarEditorViewController: UIViewController, FloatingPanelControllerDelegate, AvatarEditorPickerViewControllerDelegate {
+class AvatarEditorViewController: UIViewController, AvatarEditorPickerViewControllerDelegate {
     //private var originalPullUpControllerViewSize: CGSize = .zero
     @IBOutlet weak var currentAvatarImageContainer: UIView!
     @IBOutlet weak var currentAvatarImageView: UIImageView!
@@ -392,7 +391,7 @@ class AvatarEditorViewController: UIViewController, FloatingPanelControllerDeleg
 	}
 }
 
-class CustomFloatingPanelLayout: FloatingPanelLayout {
+/*class CustomFloatingPanelLayout: FloatingPanelLayout {
     var position: FloatingPanelPosition = .bottom
     var initialState: FloatingPanelState = .tip
     
@@ -402,4 +401,4 @@ class CustomFloatingPanelLayout: FloatingPanelLayout {
             .tip: FloatingPanelLayoutAnchor(absoluteInset: 43, edge: .bottom, referenceGuide: .safeArea)
         ]
     }
-}
+}*/

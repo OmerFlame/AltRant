@@ -48,7 +48,7 @@
 		594EDDE92709BC9C0087F50B /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDE82709BC9C0087F50B /* popup.html */; };
 		594EDDEB2709BC9C0087F50B /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDEA2709BC9C0087F50B /* popup.css */; };
 		594EDDED2709BC9C0087F50B /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 594EDDEC2709BC9C0087F50B /* popup.js */; };
-		594EDDF12709BC9C0087F50B /* Open with AltRant.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 594EDDD92709BC9A0087F50B /* Open with AltRant.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		594EDDF12709BC9C0087F50B /* Open with AltRant.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 594EDDD92709BC9A0087F50B /* Open with AltRant.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5954C26525AD78D1008B70D2 /* ExpandingSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954C26425AD78D1008B70D2 /* ExpandingSegmentedView.swift */; };
 		5954C26825AD8E9B008B70D2 /* RantCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5954C26725AD8E9A008B70D2 /* RantCommentCell.swift */; };
 		5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5958FC75257AD89A003D1EDD /* KeyboardAvoiding.swift */; };
@@ -72,7 +72,6 @@
 		59A9E69925CFCA3500DC6065 /* SecondaryRantInFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */; };
 		59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A9E69825CFCA3500DC6065 /* SecondaryRantInFeedCell.xib */; };
 		59AD346125ADB1C6004D5DD6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AD346025ADB1C6004D5DD6 /* Cache.swift */; };
-		59B67FC7262C3D6C00311F65 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 59B67FC6262C3D6C00311F65 /* FloatingPanel */; };
 		59B842EC25947876007F16FC /* UITableView+getAllCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B842EB25947876007F16FC /* UITableView+getAllCells.swift */; };
 		59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CBD25988DA300E46948 /* UINavigationController+.swift */; };
 		59B85CC12598DAD900E46948 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B85CC02598DAD900E46948 /* MoreCell.swift */; };
@@ -108,15 +107,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		59039ECA25DE484800584667 /* Embed App Extensions */ = {
+		59039ECA25DE484800584667 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				594EDDF12709BC9C0087F50B /* Open with AltRant.appex in Embed App Extensions */,
+				594EDDF12709BC9C0087F50B /* Open with AltRant.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -217,7 +216,6 @@
 				594A21EA27B3B48D00AD6D75 /* OSPlaceholderTextView in Frameworks */,
 				59CA4FB125CA8BB6005FB279 /* PullUpController in Frameworks */,
 				59625C4727D48D63005D58E1 /* SwiftHEXColors in Frameworks */,
-				59B67FC7262C3D6C00311F65 /* FloatingPanel in Frameworks */,
 				590788482796ACB6002151A1 /* BadgeControl in Frameworks */,
 				59DB9CC9262C76C4009A4704 /* Haptica in Frameworks */,
 				593395A426E4B9A20022788C /* Sentry in Frameworks */,
@@ -431,7 +429,7 @@
 				59040162257627A3002B062A /* Sources */,
 				59040163257627A3002B062A /* Frameworks */,
 				59040164257627A3002B062A /* Resources */,
-				59039ECA25DE484800584667 /* Embed App Extensions */,
+				59039ECA25DE484800584667 /* Embed Foundation Extensions */,
 				59B8CCD4263E8083007213A4 /* Increment Build Number */,
 			);
 			buildRules = (
@@ -443,7 +441,6 @@
 			packageProductDependencies = (
 				59007D8E25C1703D0088EC33 /* ActiveLabel */,
 				59CA4FB025CA8BB6005FB279 /* PullUpController */,
-				59B67FC6262C3D6C00311F65 /* FloatingPanel */,
 				59DB9CC8262C76C4009A4704 /* Haptica */,
 				593395A326E4B9A20022788C /* Sentry */,
 				59D2B95327059AAB00C695E3 /* SPAlert */,
@@ -481,7 +478,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					59040165257627A3002B062A = {
 						CreatedOnToolsVersion = 12.2;
@@ -504,7 +501,6 @@
 			packageReferences = (
 				59007D8D25C1703D0088EC33 /* XCRemoteSwiftPackageReference "ActiveLabel" */,
 				59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */,
-				59B67FC5262C3D6C00311F65 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
 				59DB9CC7262C76C4009A4704 /* XCRemoteSwiftPackageReference "Haptica" */,
 				593395A226E4B9A20022788C /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				59D2B95227059AAB00C695E3 /* XCRemoteSwiftPackageReference "SPAlert" */,
@@ -1033,14 +1029,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		59B67FC5262C3D6C00311F65 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/scenee/FloatingPanel";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.0;
-			};
-		};
 		59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MarioIannotta/PullUpController";
@@ -1102,11 +1090,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 59625C4527D48D63005D58E1 /* XCRemoteSwiftPackageReference "SwiftHEXColors" */;
 			productName = SwiftHEXColors;
-		};
-		59B67FC6262C3D6C00311F65 /* FloatingPanel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 59B67FC5262C3D6C00311F65 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
-			productName = FloatingPanel;
 		};
 		59CA4FB025CA8BB6005FB279 /* PullUpController */ = {
 			isa = XCSwiftPackageProductDependency;
