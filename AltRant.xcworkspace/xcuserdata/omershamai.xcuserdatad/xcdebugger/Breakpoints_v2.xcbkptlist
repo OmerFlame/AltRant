@@ -4654,8 +4654,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "445"
             endingLineNumber = "445"
-            landmarkName = "getRantFromID(token:id:lastCommentID:completionHandler:)"
-            landmarkType = "7">
+            landmarkName = "SwiftRant"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5492,8 +5492,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "600"
             endingLineNumber = "600"
-            landmarkName = "getSubscribedFeed(_:lastEndCursor:completionHandler:)"
-            landmarkType = "7">
+            landmarkName = "SwiftRant"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
