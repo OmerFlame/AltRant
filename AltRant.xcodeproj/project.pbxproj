@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -430,7 +430,6 @@
 				59040163257627A3002B062A /* Frameworks */,
 				59040164257627A3002B062A /* Resources */,
 				59039ECA25DE484800584667 /* Embed Foundation Extensions */,
-				59E31B7C284F3038002E7FDF /* Increment Build Number */,
 			);
 			buildRules = (
 			);
@@ -565,28 +564,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		59E31B7C284F3038002E7FDF /* Increment Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nagvtool next-version -all\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		59040162257627A3002B062A /* Sources */ = {
@@ -811,7 +788,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1447;
+				CURRENT_PROJECT_VERSION = 1448;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -847,7 +824,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1447;
+				CURRENT_PROJECT_VERSION = 1448;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -879,7 +856,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1447;
+				CURRENT_PROJECT_VERSION = 1448;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -916,7 +893,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1447;
+				CURRENT_PROJECT_VERSION = 1448;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Open with AltRant/Info.plist";
