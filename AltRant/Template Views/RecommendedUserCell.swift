@@ -364,6 +364,7 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
 }
 
 class InternalRecommendedUserCell: UICollectionViewCell {
+    @IBOutlet weak var usernameStackView: UIStackView!
     @IBOutlet weak var userImageView: RoundedImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var scoreLabel: PaddingLabel!
@@ -410,6 +411,9 @@ class InternalRecommendedUserCell: UICollectionViewCell {
         //userImageView.image = nil
         
         contentView.layoutIfNeeded()
+        
+        usernameStackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleUserTap)))
+        userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleUserTap)))
     }
     
     func fetchAndSetUserImage(downloadSemaphore: DispatchSemaphore) {
@@ -479,5 +483,15 @@ class InternalRecommendedUserCell: UICollectionViewCell {
     
     @IBAction func closeHandler() {
         delegate?.didCloseRecommendation(of: userData)
+    }
+    
+    @objc func handleUserTap() {
+        if let parentNavigationController = self.parentNavigationController {
+            let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                return ProfileTableViewController(coder: coder, userID: self.userData.userID)
+            })
+            
+            parentNavigationController.pushViewController(profileVC, animated: true)
+        }
     }
 }

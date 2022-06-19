@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21179.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21169.4"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -38,7 +39,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7C-o1-4uI" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="21.5" width="28.5" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="21.5" width="41" height="20.5"/>
                                         <color key="backgroundColor" systemColor="secondaryLabelColor"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -76,7 +77,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zv8-4X-FrB" userLabel="Subscribe Button">
-                                <rect key="frame" x="337" y="17.5" width="53" height="26"/>
+                                <rect key="frame" x="333" y="17" width="57" height="27"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                 <inset key="titleEdgeInsets" minX="-65" minY="0.0" maxX="-65" maxY="0.0"/>
@@ -142,15 +143,11 @@
                 <outlet property="subscribeButton" destination="Zv8-4X-FrB" id="TzP-do-WQT"/>
                 <outlet property="userImageView" destination="v7l-Km-HSY" id="0oK-6B-abT"/>
                 <outlet property="usernameLabel" destination="5L4-Az-bzy" id="agL-6l-GJb"/>
+                <outlet property="usernameStackView" destination="lZ3-l1-Ln5" id="nsP-Bl-07j"/>
             </connections>
             <point key="canvasLocation" x="21.739130434782609" y="127.56696428571428"/>
         </collectionViewCell>
     </objects>
-    <designables>
-        <designable name="X7C-o1-4uI">
-            <size key="intrinsicContentSize" width="28.5" height="13.5"/>
-        </designable>
-    </designables>
     <resources>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="secondaryLabelColor">

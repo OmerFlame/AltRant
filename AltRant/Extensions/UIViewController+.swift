@@ -38,5 +38,19 @@ extension UIView {
         }
         return nil
     }
+    
+    var parentNavigationController: UINavigationController? {
+        var parentResponder: UIResponder? = self.next
+        
+        while parentResponder != nil {
+            if let viewController = parentResponder as? UINavigationController {
+                return viewController
+            }
+            
+            parentResponder = parentResponder?.next
+        }
+        
+        return nil
+    }
 }
 

@@ -788,7 +788,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1448;
+				CURRENT_PROJECT_VERSION = 1453;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -824,7 +824,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1448;
+				CURRENT_PROJECT_VERSION = 1453;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -856,7 +856,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1448;
+				CURRENT_PROJECT_VERSION = 1453;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -893,7 +893,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1448;
+				CURRENT_PROJECT_VERSION = 1453;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Open with AltRant/Info.plist";
