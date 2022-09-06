@@ -1,11 +1,35 @@
-# AltRant
-  An unofficial devRant iOS client written using the UIKit framework and Swift. I am constantly working on this project and I am not going to throw it away or abandon it until the devRant platform is gone.
 
-# Credits
-  UIScrollView-InfinteScroll by pronebird - [link to repo](https://github.com/pronebird/UIScrollView-InfiniteScroll)
-  
-  IHKeyboardAvoiding by IdleHandsApps - [link to repo](https://github.com/IdleHandsApps/IHKeyboardAvoiding)
-  
-  NotificationBanner by Daltron - [link to repo](https://github.com/Daltron/NotificationBanner)
-  
-  @DFoxinator (David Fox, the creator of the devRant platform) on Twitter - [link to Twitter](https://twitter.com/dfoxinator?lang=en)
+# AltRant
+
+An unofficial devRant iOS client written using the UIKit framework and Swift. I am constantly working on this project and I am not going to throw it away or abandon it until the devRant platform is gone.
+
+<br>
+<br>
+
+## Credits
+
+**[UIScrollView-InfinteScroll]** <br>
+by **[pronebird]**
+
+**[IHKeyboardAvoiding]** <br>
+by **[IdleHandsApps]**
+
+**[NotificationBanner]** <br>
+by **[Daltron]**
+
+**[devRant]** <br>
+by **[@DFoxinator]**
+
+<br>
+
+
+<!---------------------------------------------------------------->
+
+[UIScrollView-InfinteScroll]: https://github.com/pronebird/UIScrollView-InfiniteScroll
+[IHKeyboardAvoiding]: https://github.com/IdleHandsApps/IHKeyboardAvoiding
+[NotificationBanner]: https://github.com/Daltron/NotificationBanner
+[IdleHandsApps]: https://github.com/IdleHandsApps
+[@DFoxinator]: https://twitter.com/dfoxinator
+[pronebird]: https://github.com/pronebird
+[Daltron]: https://github.com/Daltron
+[devRant]: https://devrant.com/
