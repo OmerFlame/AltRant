@@ -1236,7 +1236,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         if let rantIndex = indexForRant(withID: id) {
-            rantTypeContent[rantIndex].voteState = voteState
+            rantTypeContent[rantIndex].voteState = RantInFeed.VoteState(rawValue: voteState) ?? .unvotable
         }
     }
     
@@ -1293,7 +1293,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 //self?.rant?.score = updatedRant.score
                 
                 if let rantIndex = rantIndex {
-                    self?.rantTypeContent[rantIndex].voteState = updatedRant.voteState
+                    self?.rantTypeContent[rantIndex].voteState = RantInFeed.VoteState(rawValue: updatedRant.voteState) ?? .unvotable
                     self?.rantTypeContent[rantIndex].score = updatedRant.score
                 }
                 

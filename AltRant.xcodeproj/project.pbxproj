@@ -67,6 +67,8 @@
 		59906511257644120058C1D7 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906510257644120058C1D7 /* TagView.swift */; };
 		5990652125765FE10058C1D7 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990651A25765FE10058C1D7 /* File.swift */; };
 		5990652D257668FD0058C1D7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990652C257668FD0058C1D7 /* User.swift */; };
+		59A42E8528C722EC00344CF9 /* WeeklyRantHeaderLarge.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59A42E8428C722EC00344CF9 /* WeeklyRantHeaderLarge.xib */; };
+		59A42E8728C7271000344CF9 /* WeeklyRantHeaderLarge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A42E8628C7271000344CF9 /* WeeklyRantHeaderLarge.swift */; };
 		59A7D9FA2737E62D000576B7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A7D9F92737E62D000576B7 /* SettingsViewController.swift */; };
 		59A96EB3265AABBF0040B854 /* UIAlertController+CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A96EB2265AABBF0040B854 /* UIAlertController+CustomView.swift */; };
 		59A9E69925CFCA3500DC6065 /* SecondaryRantInFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */; };
@@ -180,6 +182,8 @@
 		59906510257644120058C1D7 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		5990651A25765FE10058C1D7 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		5990652C257668FD0058C1D7 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		59A42E8428C722EC00344CF9 /* WeeklyRantHeaderLarge.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyRantHeaderLarge.xib; sourceTree = "<group>"; };
+		59A42E8628C7271000344CF9 /* WeeklyRantHeaderLarge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyRantHeaderLarge.swift; sourceTree = "<group>"; };
 		59A7D9F92737E62D000576B7 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		59A96EB2265AABBF0040B854 /* UIAlertController+CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+CustomView.swift"; sourceTree = "<group>"; };
 		59A9E69725CFCA3500DC6065 /* SecondaryRantInFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryRantInFeed.swift; sourceTree = "<group>"; };
@@ -317,6 +321,8 @@
 				590788422795755A002151A1 /* LoadingCell.xib */,
 				59078844279575F7002151A1 /* LoadingCell.swift */,
 				5959E9F927FAC98600E9A10F /* FeedDelegate.swift */,
+				59A42E8428C722EC00344CF9 /* WeeklyRantHeaderLarge.xib */,
+				59A42E8628C7271000344CF9 /* WeeklyRantHeaderLarge.swift */,
 			);
 			path = "Template Views";
 			sourceTree = "<group>";
@@ -528,6 +534,7 @@
 				59C2EFEB25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard in Resources */,
 				59E671642576AD12007EEB28 /* RantCell.xib in Resources */,
 				59040176257627A5002B062A /* LaunchScreen.storyboard in Resources */,
+				59A42E8528C722EC00344CF9 /* WeeklyRantHeaderLarge.xib in Resources */,
 				59039EB525DE47D700584667 /* ios-76x76.png in Resources */,
 				59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */,
 				59306E962578E68600F6AD08 /* RantViewController.storyboard in Resources */,
@@ -616,6 +623,7 @@
 				5958FC79257AD8B8003D1EDD /* KeyboardAvoidingView.swift in Sources */,
 				596B819F25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift in Sources */,
 				59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */,
+				59A42E8728C7271000344CF9 /* WeeklyRantHeaderLarge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -788,7 +796,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1453;
+				CURRENT_PROJECT_VERSION = 1492;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -824,7 +832,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1453;
+				CURRENT_PROJECT_VERSION = 1492;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -856,7 +864,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1453;
+				CURRENT_PROJECT_VERSION = 1492;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -893,7 +901,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1453;
+				CURRENT_PROJECT_VERSION = 1492;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Open with AltRant/Info.plist";

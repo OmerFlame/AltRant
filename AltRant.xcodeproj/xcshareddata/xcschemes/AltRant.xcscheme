@@ -50,9 +50,9 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
-      selectedDebuggerIdentifier = ""
-      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -112,5 +112,24 @@
    <ArchiveAction
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Decrement build number in order to keep build number the same after build"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;cd ${PROJECT_DIR}&#10;&#10;CURRENT_BUILD_NUMBER=$(agvtool vers -terse)&#10;&#10;NEW_BUILD_NUMBER=$(( $CURRENT_BUILD_NUMBER - 1 ))&#10;&#10;agvtool new-version -all $NEW_BUILD_NUMBER&#10;"
+               shellToInvoke = "/bin/sh">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "59040165257627A3002B062A"
+                     BuildableName = "AltRant.app"
+                     BlueprintName = "AltRant"
+                     ReferencedContainer = "container:AltRant.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
    </ArchiveAction>
 </Scheme>

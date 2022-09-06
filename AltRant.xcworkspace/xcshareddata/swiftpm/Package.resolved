@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/faberNovel/ADUtils.git",
       "state" : {
-        "revision" : "b4e22024b226621ed8c4429eef73f490d41cc50f",
-        "version" : "11.2.0"
+        "revision" : "ee4125db3a0e0fa284a265bb66d1dfe8b65c8cea",
+        "version" : "11.3.0"
       }
     },
     {
@@ -105,7 +105,7 @@
       "location" : "https://github.com/OmerFlame/SwiftRant.git",
       "state" : {
         "branch" : "main",
-        "revision" : "74b2582b5b3c0cdba7c0ee015f8057ab53584388"
+        "revision" : "603c2f1d36d0d9680954cd4d21dec2875e4ef34e"
       }
     }
   ],

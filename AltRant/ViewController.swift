@@ -25,8 +25,10 @@ protocol HomeFeedTableViewControllerDelegate: FeedDelegate {
     func reloadData()
 }
 
-class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate, HomeFeedTableViewControllerDelegate {
+class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate, HomeFeedTableViewControllerDelegate/*, WeeklyRantHeaderDelegate*/ {
     fileprivate var currentPage = 0
+    var weeklyRantHeader: WeeklyRantHeaderLarge!
+    
     var rantFeed = rantFeedData()
     var supplementalImages = [IndexPath:File]()
     @IBOutlet weak var menuBarButtonItem: UIBarButtonItem!
@@ -264,6 +266,26 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 self?.currentPage += 1
                 
                 DispatchQueue.main.async {
+                    /*if let news = feed!.news {
+                        self?.weeklyRantHeader = UINib(nibName: "WeeklyRantHeaderLarge", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderLarge
+                        
+                        self?.weeklyRantHeader.headlineLabel.text = news.headline
+                        self?.weeklyRantHeader.subjectLabel.text = news.body
+                        self?.weeklyRantHeader.subtitleLabel.text = news.footer
+                        self?.weeklyRantHeader.frame.size.height = 100
+                        
+                        self?.tableView.tableHeaderView = self?.weeklyRantHeader
+                    }*/
+                    
+                    self?.weeklyRantHeader = UINib(nibName: "WeeklyRantHeaderLarge", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderLarge
+                    
+                    self?.weeklyRantHeader.headlineLabel.text = "Weekly Group Rant"
+                    self?.weeklyRantHeader.subjectLabel.text = "Next big trend in software eng.?"
+                    self?.weeklyRantHeader.subtitleLabel.text = "Add tag 'wk329' to your rant"
+                    self?.weeklyRantHeader.frame.size.height = 100
+                    
+                    self?.tableView.tableHeaderView = self?.weeklyRantHeader
+                    
                     self?.navigationController?.tabBarController?.viewControllers![3].tabBarItem.badgeValue = feed!.notifCount != 0 ? String(feed!.notifCount) : nil
                     
                     CATransaction.begin()
@@ -513,19 +535,25 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     }
     
     @IBAction func handleRefresh() {
+        isLoading = true
+        currentPage = 0
+        let indexPaths = (0..<tableView(tableView, numberOfRowsInSection: 0)).map { return IndexPath(row: $0, section: 0) }
         rantFeed.rantFeed = []
         supplementalImages = [:]
         
         tableView.reloadData()
+        //tableView.deleteRows(at: indexPaths, with: .automatic)
         
         //tableView.beginInfiniteScroll(true)
-        self.performFetch(nil)
+        self.performFetch {
+            self.isLoading = false
+        }
         self.refreshControl!.endRefreshing()
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows,
-           indexPathsForVisibleRows.contains(IndexPath(row: 0, section: 1)) && !isLoading && SwiftRant.shared.tokenFromKeychain != nil {
+           indexPathsForVisibleRows.contains(IndexPath(row: 0, section: 1)) && !isLoading && SwiftRant.shared.tokenFromKeychain != nil && tableView(tableView, numberOfRowsInSection: 0) > 0 {
             isLoading = true
             performFetch {
                 self.isLoading = false
@@ -607,7 +635,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         let rantIndex = indexOfRant(withID: id)
         
         if let rantIndex = rantIndex {
-            rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = voteState
+            rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = RantInFeed.VoteState(rawValue: voteState) ?? .unvotable
             
             //tableView.reloadData()
         }
@@ -641,7 +669,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         
         SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] error, updatedRant in
             if updatedRant != nil {
-                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = updatedRant!.voteState
+                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = RantInFeed.VoteState(rawValue: updatedRant!.voteState) ?? .unvotable
                 self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].score = updatedRant!.score
                 
                 DispatchQueue.main.async {
