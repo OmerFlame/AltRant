@@ -1,12 +1,35 @@
 
+<div align = center>
+
+<br>
+
+<img
+    src = 'ios-76x76.png'
+    width = 120
+/>
+
+<br>
+
 # AltRant
 
-An unofficial devRant iOS client written using the UIKit framework and Swift. I am constantly working on this project and I am not going to throw it away or abandon it until the devRant platform is gone.
+Unofficial **[devRant]** iOS app made <br>
+with Swift + UIKit Framework.
+
+</div>
 
 <br>
 <br>
 
-## Credits
+## Status
+
+I am constantly working on this project and <br>
+I am not going to throw it away or abandon <br>
+it until the devRant platform is gone.
+
+<br>
+<br>
+
+## Acknowledgements
 
 **[UIScrollView-InfinteScroll]** <br>
 by **[pronebird]**
