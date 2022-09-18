@@ -516,11 +516,11 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             tableView.isHidden = true
             
             if shouldLoadFromUsername {
-                SwiftRant.shared.getUserID(of: self.username!, completionHandler: { _, userID in
-                    self.userID = userID!
+                SwiftRant.shared.getUserID(of: self.username!, completionHandler: { result in
+                    self.userID = try! result.get()
                     
-                    SwiftRant.shared.getProfileFromID(self.userID!, token: nil, userContentType: .rants, skip: 0, completionHandler: { _, response in
-                        self.rantTypeContent = response!.content.content.rants
+                    SwiftRant.shared.getProfileFromID(self.userID!, token: nil, userContentType: .rants, skip: 0, completionHandler: { result in
+                        self.rantTypeContent = try! result.get().content.content.rants
                         
                         for i in self.rantTypeContent {
                             if let attachedImage = i.attachedImage {
@@ -538,7 +538,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                             self.loadingIndicator.stopAnimating()
                             
                             self.didFinishLoading = true
-                            self.profileData = response
+                            self.profileData = try! result.get()
                             self.tableView.isHidden = false
                             self.viewDidLoad()
                             self.tableView.reloadData()
@@ -546,8 +546,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     })
                 })
             } else {
-                SwiftRant.shared.getProfileFromID(self.userID!, token: nil, userContentType: .rants, skip: 0, completionHandler: { _, response in
-                    self.rantTypeContent = response!.content.content.rants
+                SwiftRant.shared.getProfileFromID(self.userID!, token: nil, userContentType: .rants, skip: 0, completionHandler: { result in
+                    self.rantTypeContent = try! result.get().content.content.rants
                     
                     for i in self.rantTypeContent {
                         if let attachedImage = i.attachedImage {
@@ -565,7 +565,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                         self.loadingIndicator.stopAnimating()
                         
                         self.didFinishLoading = true
-                        self.profileData = response!
+                        self.profileData = try! result.get()
                         self.tableView.isHidden = false
                         self.viewDidLoad()
                         self.tableView.reloadData()
@@ -580,10 +580,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    func getContent(contentType: Profile.ProfileContentTypes, completion: @escaping ((String?, Profile?) -> Void)) {
+    /*func getContent(contentType: Profile.ProfileContentTypes, completion: @escaping ((String?, Profile?) -> Void)) {
         //APIRequest().getProfileFromID(self.userID!, userContentType: contentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.rantFeed.count : commentTypeContent.commentTypeContent.count), completionHandler: { result in completion(result) })
         SwiftRant.shared.getProfileFromID(self.userID!, token: nil, userContentType: contentType, skip: (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.count : commentTypeContent.commentTypeContent.count), completionHandler: { error, result in completion(error, result) })
-    }
+    }*/
     
     override func viewWillAppear(_ animated: Bool) {
         let targetHeight: CGFloat = 21
@@ -831,9 +831,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         isFetchAlreadyInProgress = true
         
         Task {
-            let (_, response) = await SwiftRant.shared.getProfileFromID(self.userID!, token: nil, userContentType: self.currentContentType, skip: (self.currentContentType == .rants || self.currentContentType == .upvoted || self.currentContentType == .favorite ? self.rantTypeContent.count : self.commentTypeContent.commentTypeContent.count))
+            let result = await SwiftRant.shared.getProfileFromID(self.userID!, token: nil, userContentType: self.currentContentType, skip: (self.currentContentType == .rants || self.currentContentType == .upvoted || self.currentContentType == .favorite ? self.rantTypeContent.count : self.commentTypeContent.commentTypeContent.count))
             
-            guard response != nil else {
+            guard case .success(let response) = result else {
                 self.showAlertWithError("Failed to fetch user content.", retryHandler: { self.performFetch(contentType: contentType, completionHandler) })
             
                 self.isFetchAlreadyInProgress = false
@@ -846,30 +846,30 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             switch contentType {
             case .rants:
                 start = self.rantTypeContent.count
-                end = response!.content.content.rants.count + start
+                end = response.content.content.rants.count + start
             
                 self.commentTypeContent.commentTypeContent = []
                 break
             
             case .upvoted:
                 start = self.rantTypeContent.count
-                end = response!.content.content.upvoted.count + start
+                end = response.content.content.upvoted.count + start
             
                 self.commentTypeContent.commentTypeContent = []
                 break
             
             case .favorite:
                 start = self.rantTypeContent.count
-                end = response!.content.content.favorites!.count + start
+                end = response.content.content.favorites!.count + start
             
                 self.commentTypeContent.commentTypeContent = []
                 break
             
             default:
                 start = self.commentTypeContent.commentTypeContent.count
-                end = response!.content.content.comments.count + start
+                end = response.content.content.comments.count + start
                 
-                for comment in response!.content.content.comments {
+                for comment in response.content.content.comments {
                     if let avatarImage = comment.userAvatar.avatarImage {
                         Task {
                             try? await self.userImageLoader.loadImage(from: URL(string: "https://avatars.devrant.com/\(avatarImage)")!, forUserID: comment.userID)
@@ -887,19 +887,19 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
             switch contentType {
             case .rants:
-                self.rantTypeContent.append(contentsOf: response!.content.content.rants)
+                self.rantTypeContent.append(contentsOf: response.content.content.rants)
                 break
             
             case .upvoted:
-                self.rantTypeContent.append(contentsOf: response!.content.content.upvoted)
+                self.rantTypeContent.append(contentsOf: response.content.content.upvoted)
                 break
             
             case .favorite:
-                self.rantTypeContent.append(contentsOf: response!.content.content.favorites!)
+                self.rantTypeContent.append(contentsOf: response.content.content.favorites!)
                 break
             
             default:
-                self.commentTypeContent.commentTypeContent.append(contentsOf: response!.content.content.comments)
+                self.commentTypeContent.commentTypeContent.append(contentsOf: response.content.content.comments)
                 break
             }
         
@@ -1282,8 +1282,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         let rantIndex = indexForRant(withID: id)
         
-        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] error, updatedRant in
-            if let updatedRant = updatedRant {
+        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] result in
+            if case .success(let updatedRant) = result {
                 /*if let rantInFeed = self?.rantInFeed {
                     rantInFeed.pointee.voteState = vote
                     rantInFeed.pointee.score = updatedRant.score
@@ -1313,8 +1313,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     
                     //#error("Implement a Profile Table View Delegate!")
                 }
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error occurred while voting on the rant.", preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 
@@ -1343,8 +1343,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
 
         
-        SwiftRant.shared.voteOnComment(nil, commentID: id, vote: vote) { error, updatedComment in
-            if let updatedComment = updatedComment {
+        SwiftRant.shared.voteOnComment(nil, commentID: id, vote: vote) { result in
+            if case .success(let updatedComment) = result {
                 /*if let commentInFeed = self.commentInFeed {
                     commentInFeed.pointee.voteState = vote
                     commentInFeed.pointee.score = updatedComment.score
@@ -1374,8 +1374,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 DispatchQueue.main.async {
                     self.parentTableView?.reloadData()
                 }*/
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while voting on the comment.", preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 //alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.handleDownvote(sender) }))

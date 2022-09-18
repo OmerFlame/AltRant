@@ -45,14 +45,14 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                 combinedRantInFeedCount += 1
             }
             
-            SwiftRant.shared.getSubscribedFeed(nil, lastEndCursor: nil) { error, feed in
-                if feed != nil {
-                    let (start, end) = (combinedRantInFeedCount, feed!.rants.count + combinedRantInFeedCount)
-                    var indexPaths = (0..<(combinedRantInFeedCount > 0 ? feed!.rants.count : feed!.rants.count + 1)).map { return IndexPath(row: $0, section: 0) }
+            SwiftRant.shared.getSubscribedFeed(nil, lastEndCursor: nil) { result in
+                if case .success(let feed) = result {
+                    let (start, end) = (combinedRantInFeedCount, feed.rants.count + combinedRantInFeedCount)
+                    var indexPaths = (0..<(combinedRantInFeedCount > 0 ? feed.rants.count : feed.rants.count + 1)).map { return IndexPath(row: $0, section: 0) }
                     
                     //self.subscribedFeed.append(feed!)
                     
-                    for (idx, rant) in feed!.rants.enumerated() {
+                    for (idx, rant) in feed.rants.enumerated() {
                         if rant.attachedImage != nil {
                             if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
                                 self.supplementalImages[rant.id] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
@@ -62,10 +62,10 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                         }
                         
                         for user in rant.relatedUserActions {
-                            if feed!.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage != nil {
+                            if feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage != nil {
                                 let semaphore = DispatchSemaphore(value: 0)
                                 
-                                let url = URL(string: "https://avatars.devrant.com/\(feed!.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)")!
+                                let url = URL(string: "https://avatars.devrant.com/\(feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)")!
                                 
                                 URLSession.shared.dataTask(with: url) { data, _, _ in
                                     if let data = data {
@@ -117,7 +117,7 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                         self.refreshButton.isEnabled = true
                         
                         //indexPaths.append(IndexPath(item: end, section: 0))
-                        self.subscribedFeed.append(feed!)
+                        self.subscribedFeed.append(feed)
                         
                         CATransaction.begin()
                         CATransaction.setCompletionBlock({
@@ -334,14 +334,14 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
             combinedRantInFeedCount += 1
         }
         
-        SwiftRant.shared.getSubscribedFeed(nil, lastEndCursor: nil) { error, feed in
-            if feed != nil {
-                let (start, end) = (combinedRantInFeedCount, feed!.rants.count + combinedRantInFeedCount)
-                var indexPaths = (0..<(combinedRantInFeedCount > 0 ? feed!.rants.count : feed!.rants.count + 1)).map { return IndexPath(row: $0, section: 0) }
+        SwiftRant.shared.getSubscribedFeed(nil, lastEndCursor: nil) { result in
+            if case .success(let feed) = result {
+                let (start, end) = (combinedRantInFeedCount, feed.rants.count + combinedRantInFeedCount)
+                var indexPaths = (0..<(combinedRantInFeedCount > 0 ? feed.rants.count : feed.rants.count + 1)).map { return IndexPath(row: $0, section: 0) }
                 
                 //self.subscribedFeed.append(feed!)
                 
-                for (idx, rant) in feed!.rants.enumerated() {
+                for (idx, rant) in feed.rants.enumerated() {
                     if rant.attachedImage != nil {
                         if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
                             self.supplementalImages[rant.id] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
@@ -351,10 +351,10 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     
                     for user in rant.relatedUserActions {
-                        if feed!.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage != nil {
+                        if feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage != nil {
                             let semaphore = DispatchSemaphore(value: 0)
                             
-                            let url = URL(string: "https://avatars.devrant.com/\(feed!.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)")!
+                            let url = URL(string: "https://avatars.devrant.com/\(feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)")!
                             
                             URLSession.shared.dataTask(with: url) { data, _, _ in
                                 if let data = data {
@@ -406,7 +406,7 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                     self.refreshButton.isEnabled = true
                     
                     //indexPaths.append(IndexPath(item: end, section: 0))
-                    self.subscribedFeed.append(feed!)
+                    self.subscribedFeed.append(feed)
                     
                     CATransaction.begin()
                     CATransaction.setCompletionBlock({
@@ -447,14 +447,14 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                 combinedRantInFeedCount += 1
             }*/
             
-            SwiftRant.shared.getSubscribedFeed(nil, lastEndCursor: nil) { error, feed in
-                if feed != nil {
+            SwiftRant.shared.getSubscribedFeed(nil, lastEndCursor: nil) { result in
+                if case .success(let feed) = result {
                     //let (start, end) = (combinedRantInFeedCount, feed!.rants.count + combinedRantInFeedCount)
-                    let indexPaths = (0..<feed!.rants.count).map { return IndexPath(row: $0, section: self.numberOfSections(in: self.tableView) - 1) }
+                    let indexPaths = (0..<feed.rants.count).map { return IndexPath(row: $0, section: self.numberOfSections(in: self.tableView) - 1) }
                     
-                    self.subscribedFeed.append(feed!)
+                    self.subscribedFeed.append(feed)
                     
-                    for (idx, rant) in feed!.rants.enumerated() {
+                    for (idx, rant) in feed.rants.enumerated() {
                         if rant.attachedImage != nil {
                             if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
                                 self.supplementalImages[rant.id] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
@@ -464,15 +464,15 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                         }
                         
                         for user in rant.relatedUserActions {
-                            if feed!.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage != nil {
-                                if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: feed!.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)!.lastPathComponent).relativePath) {
+                            if feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage != nil {
+                                if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)!.lastPathComponent).relativePath) {
                                     DispatchQueue.main.async {
-                                        self.actionUserImages[user.userID] = UIImage(contentsOfFile: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: feed!.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)!.lastPathComponent).relativePath)
+                                        self.actionUserImages[user.userID] = UIImage(contentsOfFile: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)!.lastPathComponent).relativePath)
                                     }
                                 } else {
                                     let semaphore = DispatchSemaphore(value: 0)
                                     
-                                    let url = URL(string: "https://avatars.devrant.com/\(feed!.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)")!
+                                    let url = URL(string: "https://avatars.devrant.com/\(feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage!)")!
                                     
                                     URLSession.shared.dataTask(with: url) { data, _, _ in
                                         if let data = data {
@@ -560,13 +560,13 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
             return
         }
         
-        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] error, updatedRant in
-            if updatedRant != nil {
+        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] result in
+            if case .success(let updatedRant) = result {
                 //self?.rantContents!.voteState = updatedRant!.voteState
                 //self?.rantContents!.score = updatedRant!.score
                 
-                self?.subscribedFeed[rantIndex!.section].rants[rantIndex!.row].voteState = updatedRant!.voteState
-                self?.subscribedFeed[rantIndex!.section].rants[rantIndex!.row].score = updatedRant!.score
+                self?.subscribedFeed[rantIndex!.section].rants[rantIndex!.row].voteState = updatedRant.voteState
+                self?.subscribedFeed[rantIndex!.section].rants[rantIndex!.row].score = updatedRant.score
                 
                 /*if let parentTableView = self?.parentTableView {
                     DispatchQueue.main.async {
@@ -581,8 +581,8 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                         }
                     }
                 }
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred.", preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 

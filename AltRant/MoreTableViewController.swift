@@ -33,16 +33,24 @@ class MoreTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let profileVC = UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
-            return ProfileTableViewController(coder: coder, userID: SwiftRant.shared.tokenFromKeychain?.authToken.userID)
-        })
+        var vc: UIViewController {
+            if indexPath.row == 0 {
+                return UIStoryboard(name: "ProfileTableViewController", bundle: nil).instantiateViewController(identifier: "ProfileTableViewController", creator: { coder in
+                    return ProfileTableViewController(coder: coder, userID: SwiftRant.shared.tokenFromKeychain?.authToken.userID)
+                })
+            }
+            
+            return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "WeeklyRantFeedViewController", creator: { coder in
+                return WeeklyRantFeedViewController(coder: coder)
+            })
+        }
         
-        navigationController?.pushViewController(profileVC, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return 2
     }
 
     /*

@@ -36,7 +36,7 @@ actor UserImageLoader {
     
     init(store: UserImageStore) {
         self.store = store
-        urlSession = URLSession(configuration: .default)
+        urlSession = URLSession(configuration: .background(withIdentifier: "UserImageStore"))
     }
     
     func loadImage(withUserID id: Int) async throws -> UIImage {
@@ -50,9 +50,10 @@ actor UserImageLoader {
                 return storedImage
             }
             
-            let (profileRetrieveError,profile) = await SwiftRant.shared.getProfileFromID(id, token: nil, userContentType: .rants, skip: 0)
+            let result = await SwiftRant.shared.getProfileFromID(id, token: nil, userContentType: .rants, skip: 0)
             
-            if let profile = profile, profileRetrieveError == nil {
+            switch result {
+            case .success(let profile):
                 if let avatarImage = profile.avatarSmall.avatarImage {
                     let url = URL(string: "https://avatars.devrant.com/\(avatarImage)")!
                     let (data, _) = try await urlSession.data(from: url)
@@ -66,8 +67,8 @@ actor UserImageLoader {
                     await store.store(userID: id, image: image)
                     return image
                 }
-            } else {
-                throw profileRetrieveError ?? String("An unknown error has occurred while attempting to retrieve the user's profile.")
+            case .failure(let failure):
+                throw failure
             }
         }
         
@@ -86,8 +87,17 @@ actor UserImageLoader {
                 return storedImage
             }
             
-            let (data, _) = try await urlSession.data(from: url)
-            let image = UIImage(data: data)!
+            
+            //let (data, _) = try await urlSession.data(from: url)
+            
+            //var resultData: Data! = nil
+            
+            
+            
+            //let image = UIImage(data: data)!
+            //await store.store(userID: id, image: image)
+            
+            let image = await UIImage().loadFromWeb(url: url)!
             await store.store(userID: id, image: image)
             
             activeTasks[id] = nil
@@ -101,6 +111,12 @@ actor UserImageLoader {
     func waitUntilAllTasksAreFinished() async {
         while !activeTasks.isEmpty {
             
+        }
+    }
+    
+    func cancelAllTasks() {
+        for task in activeTasks {
+            task.value.cancel()
         }
     }
 }
@@ -190,18 +206,6 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        /*if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
-            print("RUNNING AS EXTENDED")
-            extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
-            self.navigationController?.navigationBar.backgroundView?.alpha = 1
-        } else {
-            print("RUNNING AS NORMAL")
-            navigationController?.navigationBar.backgroundView?.alpha = 1
-            navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
-        }*/
-        
-        //navigationController?.navigationBar.tintColor = UIButton().tintColor
-        
         if didFinishLoading == false {
             for constraint in self.tableView.constraints {
                 self.tableView.removeConstraint(constraint)
@@ -218,24 +222,10 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             self.loadingIndicator.startAnimating()
             
-            /*DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.loadingIndicator.stopAnimating()
-                self.tableView.isHidden = false
-                
-                //let headerRant = RantCell.loadFromXIB() as! RantCell
-                //headerRant.testConfigure()
-                
-                //self.tableView.tableHeaderView = headerRant
-                
-                self.tableView.dataSource = self
-                self.tableView.register(RantCell.self, forCellReuseIdentifier: "RantCell")
-                self.tableView.reloadData()
-            }*/
-            
             Task {
-                let (error, rant, comments) = await SwiftRant.shared.getRantFromID(token: nil, id: rantID!, lastCommentID: nil)
+                let result = await SwiftRant.shared.getRantFromID(token: nil, id: rantID ?? -1, lastCommentID: nil)
                 
-                if let rant = rant, let comments = comments {
+                if case .success(let (rant, comments)) = result {
                     self.rant = rant
                     
                     self.comments = (!comments.isEmpty ? comments : [])
@@ -265,6 +255,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         if let avatarImage = comment.userAvatar.avatarImage {
                             Task {
                                 try? await self.userImageLoader.loadImage(from: URL(string: "https://avatars.devrant.com/\(avatarImage)")!, forUserID: comment.userID)
+                                
+                                //try? await self.userImageLoader.loadImage(withUserID: comment.userID)
                             }
                         } else {
                             await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hexString: comment.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))!)
@@ -300,20 +292,34 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         }
                     }
                     
-                    let (profileFetchError, profile) = await SwiftRant.shared.getProfileFromID(rant.userID, token: nil, userContentType: .rants, skip: 0)
+                    let profileResult = await SwiftRant.shared.getProfileFromID(rant.userID, token: nil, userContentType: .rants, skip: 0)
                     
-                    if let profile = profile {
+                    if case .success(let profile) = profileResult {
                         self.profile = profile
                         
                         if self.rant?.attachedImage != nil && self.supplementalRantImage == nil {
                             self.supplementalRantImage = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
                         }
                         
+                        
+                        
                         if self.rant?.userAvatarLarge.avatarImage != nil {
-                            self.ranterProfileImage = UIImage().loadFromWeb(url: URL(string: "https://avatars.devrant.com/\(rant.userAvatarLarge.avatarImage!)")!)
+                            self.ranterProfileImage = await UIImage().loadFromWeb(url: URL(string: "https://avatars.devrant.com/\(rant.userAvatarLarge.avatarImage!)")!)
                         }
                         
                         await userImageLoader.waitUntilAllTasksAreFinished()
+                        
+                        if let weekly = rant.weekly {
+                            let header = UINib(nibName: "WeeklyRantHeaderSmall", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderSmall
+                            
+                            header.titleLabel.text = weekly.topic
+                            header.subtitleLabel.text = "Week \(weekly.week) Group Rant"
+                            header.frame.size.height = 50
+                            
+                            (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(header, forHeight: 50)
+                            
+                            //self.tableView.tableHeaderView = header
+                        }
                         
                         self.didFinishLoading = true
                         self.loadingIndicator.stopAnimating()
@@ -357,11 +363,11 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                                 self.loadCompletionHandler?(self)
                             }
                         }*/
-                    } else {
-                        self.showAlertWithError(profileFetchError ?? "An unknown error occurred while fetching the user's profile.", retryHandler: nil)
+                    } else if case .failure(let failure) = profileResult {
+                        self.showAlertWithError(failure.message, retryHandler: nil)
                     }
-                } else {
-                    self.showAlertWithError(error ?? "An unknown error occurred while fetching the rant.", retryHandler: nil)
+                } else if case .failure(let failure) = result {
+                    self.showAlertWithError(failure.message, retryHandler: nil)
                 }
             }
             
@@ -642,6 +648,14 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return rowHeights[indexPath] ?? UITableView.automaticDimension
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        Task {
+            await userImageLoader.cancelAllTasks()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RantCell") as! RantCell
@@ -787,8 +801,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return
         }
         
-        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] error, updatedRant in
-            if let updatedRant = updatedRant {
+        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] result in
+            if case .success(let updatedRant) = result {
                 /*if let rantInFeed = self?.rantInFeed {
                     rantInFeed.pointee.voteState = vote
                     rantInFeed.pointee.score = updatedRant.score
@@ -826,8 +840,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                     //#error("Implement a Profile Table View Delegate!")
                 }
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error occurred while voting on the rant.", preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 
@@ -883,8 +897,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
 
         
-        SwiftRant.shared.voteOnComment(nil, commentID: id, vote: vote) { error, updatedComment in
-            if let updatedComment = updatedComment {
+        SwiftRant.shared.voteOnComment(nil, commentID: id, vote: vote) { result in
+            if case .success(let updatedComment) = result {
                 /*if let commentInFeed = self.commentInFeed {
                     commentInFeed.pointee.voteState = vote
                     commentInFeed.pointee.score = updatedComment.score
@@ -919,8 +933,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 DispatchQueue.main.async {
                     self.parentTableView?.reloadData()
                 }*/
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while voting on the comment.", preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 //alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.handleDownvote(sender) }))
@@ -968,7 +982,15 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
 }
 
 extension RantViewController: ExtensibleNavigationBarInformationProvider {
-    var shouldExtendNavigationBar: Bool { return false }
+    var shouldExtendNavigationBar: Bool {
+        if let rant = self.rant {
+            if rant.weekly != nil {
+                return true
+            }
+        }
+        
+        return false
+    }
 }
 
 class PreviewItem: NSObject, QLPreviewItem {

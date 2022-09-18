@@ -351,11 +351,153 @@
                         <outlet property="composeBarButtonItem" destination="Dn7-le-YMO" id="NIM-eA-Xix"/>
                         <outlet property="menuBarButtonItem" destination="FDx-nt-acY" id="run-ww-5y2"/>
                         <segue destination="MPb-1i-mOS" kind="show" identifier="AfterCompose" id="tBo-8G-Lbg"/>
+                        <segue destination="rQH-ao-7EK" kind="show" identifier="WeeklyRant" id="nEF-RZ-kuB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pmc-NV-DnK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2892.753623188406" y="-104.46428571428571"/>
+            <point key="canvasLocation" x="3054" y="-104"/>
+        </scene>
+        <!--Weekly Rant-->
+        <scene sceneID="tDl-f5-WaE">
+            <objects>
+                <tableViewController storyboardIdentifier="WeeklyRantFeedViewController" title="Weekly Rant" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rQH-ao-7EK" customClass="WeeklyRantFeedViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="200" sectionHeaderHeight="28" estimatedSectionHeaderHeight="1" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" id="TQK-fc-mGO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="rQH-ao-7EK" id="kwF-4w-cdl"/>
+                            <outlet property="delegate" destination="rQH-ao-7EK" id="jeD-dm-jcc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Weekly Rant" id="BQY-RD-5ZH">
+                        <rightBarButtonItems>
+                            <barButtonItem id="l3F-rA-tFI" userLabel="Compose Bar Button Item">
+                                <imageReference key="image" image="square.and.pencil" catalog="system" symbolScale="large"/>
+                                <connections>
+                                    <action selector="openComposeView:" destination="rQH-ao-7EK" id="4C7-qg-ZAi"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem id="8DQ-qh-c8b" userLabel="All Weeklies Bar Button Item">
+                                <imageReference key="image" image="calendar" catalog="system" symbolScale="large"/>
+                                <connections>
+                                    <segue destination="c91-qY-ie3" kind="show" identifier="AllWeeklies" id="Xlm-sq-7Qm"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="D4O-Li-Gll">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="handleRefresh:" destination="rQH-ao-7EK" eventType="valueChanged" id="dIa-FC-Chn"/>
+                        </connections>
+                    </refreshControl>
+                    <connections>
+                        <segue destination="MPb-1i-mOS" kind="show" identifier="RantInFeedCell" id="4z2-g1-ilN"/>
+                        <segue destination="MPb-1i-mOS" kind="show" identifier="AfterCompose" id="T2s-Ff-wD5"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YyM-M4-n8Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3912" y="725"/>
+        </scene>
+        <!--All Weeklies-->
+        <scene sceneID="PpU-l3-7Wo">
+            <objects>
+                <tableViewController id="c91-qY-ie3" customClass="WeeksTableViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Oxg-jG-rI6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeekCell" rowHeight="115" id="MvT-e0-E1Q" customClass="WeekCell" customModule="AltRant" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="414" height="115"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MvT-e0-E1Q" id="7vz-55-0Ha">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="115"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="GLj-Ac-7Sc">
+                                            <rect key="frame" x="20" y="2" width="40" height="44"/>
+                                            <color key="tintColor" systemColor="systemGrayColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="YyC-Fv-FB4"/>
+                                                <constraint firstAttribute="height" constant="40" id="dYU-Zg-DLb"/>
+                                            </constraints>
+                                            <imageReference key="image" image="calendar" catalog="system" symbolScale="large"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Subject Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkk-pb-xeW" userLabel="Subject Label">
+                                            <rect key="frame" x="68" y="4" width="326" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="wYv-IR-yeH">
+                                            <rect key="frame" x="68" y="26.5" width="326" height="84.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Week Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mzb-12-mjj">
+                                                    <rect key="frame" x="0.0" y="0.0" width="69" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYU-71-XfJ" userLabel="Rant Count Label">
+                                                    <rect key="frame" x="292" y="0.0" width="34" height="14.5"/>
+                                                    <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" imagePlacement="leading" imagePadding="3">
+                                                        <imageReference key="image" image="bubble.left.fill" catalog="system" symbolScale="small"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="default"/>
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="13">
+                                                                <attributes>
+                                                                    <color key="NSColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                                    <font key="NSFont" size="12" name="SFPro-Bold"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                        <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                                    </buttonConfiguration>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Mzb-12-mjj" firstAttribute="centerY" secondItem="XYU-71-XfJ" secondAttribute="centerY" id="TgY-6y-mJi"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="lkk-pb-xeW" firstAttribute="leading" secondItem="GLj-Ac-7Sc" secondAttribute="trailing" constant="8" symbolic="YES" id="4Sk-uI-hUj"/>
+                                        <constraint firstItem="GLj-Ac-7Sc" firstAttribute="leading" secondItem="7vz-55-0Ha" secondAttribute="leading" constant="20" symbolic="YES" id="50f-9e-WzK"/>
+                                        <constraint firstItem="wYv-IR-yeH" firstAttribute="top" secondItem="lkk-pb-xeW" secondAttribute="bottom" constant="2" id="FYX-ow-riC"/>
+                                        <constraint firstAttribute="trailing" secondItem="wYv-IR-yeH" secondAttribute="trailing" constant="20" symbolic="YES" id="HLZ-pJ-JdF"/>
+                                        <constraint firstItem="GLj-Ac-7Sc" firstAttribute="top" secondItem="7vz-55-0Ha" secondAttribute="top" constant="4" id="HY3-sM-16w"/>
+                                        <constraint firstAttribute="bottom" secondItem="wYv-IR-yeH" secondAttribute="bottom" constant="4" id="ZdD-hV-bWc"/>
+                                        <constraint firstItem="lkk-pb-xeW" firstAttribute="top" secondItem="GLj-Ac-7Sc" secondAttribute="top" id="fHK-Wd-dHF"/>
+                                        <constraint firstAttribute="trailing" secondItem="lkk-pb-xeW" secondAttribute="trailing" constant="20" symbolic="YES" id="r3G-jD-BHu"/>
+                                        <constraint firstItem="wYv-IR-yeH" firstAttribute="leading" secondItem="GLj-Ac-7Sc" secondAttribute="trailing" constant="8" symbolic="YES" id="zqc-IW-Rxb"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="rantCountLabel" destination="XYU-71-XfJ" id="Zj3-K7-BYs"/>
+                                    <outlet property="subjectLabel" destination="lkk-pb-xeW" id="oLq-hn-r2m"/>
+                                    <outlet property="weekLabel" destination="Mzb-12-mjj" id="2DL-VP-UC8"/>
+                                    <segue destination="rQH-ao-7EK" kind="show" identifier="WeeklyRant" id="Cgm-VC-Hvw"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="c91-qY-ie3" id="3gk-2g-3qO"/>
+                            <outlet property="delegate" destination="c91-qY-ie3" id="iPk-lg-Gri"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="All Weeklies" id="eYV-nc-uwX"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mcv-rv-rcW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4767" y="-104"/>
         </scene>
         <!--Stories-->
         <scene sceneID="sxP-NI-XkN">
@@ -392,7 +534,7 @@
         <!--Subscribed-->
         <scene sceneID="9eB-8K-baO">
             <objects>
-                <navigationController id="F4W-eB-r7W" sceneMemberID="viewController">
+                <navigationController id="F4W-eB-r7W" customClass="ExtensibleNavigationBarNavigationController" customModule="ADNavigationBarExtension" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Subscribed" image="person.2.fill" catalog="system" id="0Tm-aV-3Vg"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="82i-VZ-xXE">
                         <rect key="frame" x="0.0" y="48" width="414" height="44"/>
@@ -861,7 +1003,7 @@
         <!--devRant-->
         <scene sceneID="G2M-bu-gxc">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tru-da-95X" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tru-da-95X" customClass="ExtensibleNavigationBarNavigationController" customModule="ADNavigationBarExtension" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="devRant" image="square.stack.fill" catalog="system" id="udy-Q7-2B4"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nxv-DZ-kL9">
@@ -944,16 +1086,43 @@
                                             <constraint firstItem="ZXi-pm-mRC" firstAttribute="leading" secondItem="SLH-fI-WQk" secondAttribute="leading" id="SFU-9q-3Xc"/>
                                         </constraints>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="y3n-ft-yhx">
-                                        <rect key="frame" x="0.0" y="110" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="YKA-7W-Ych" userLabel="Weekly Rant Cell">
+                                        <rect key="frame" x="0.0" y="110" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="y3n-ft-yhx" id="QuA-dN-V7S">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YKA-7W-Ych" id="64O-Do-ZqS">
+                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="60"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="boQ-Tv-bCu">
+                                                    <rect key="frame" x="20" y="11" width="60" height="37.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="io3-Ye-nfz"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Weekly Rant" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mft-GR-nHb">
+                                                    <rect key="frame" x="80" y="19" width="303.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Mft-GR-nHb" secondAttribute="trailing" id="1Rc-7a-7HK"/>
+                                                <constraint firstItem="boQ-Tv-bCu" firstAttribute="trailing" secondItem="Mft-GR-nHb" secondAttribute="leading" id="IRX-7m-B0p"/>
+                                                <constraint firstAttribute="bottom" secondItem="boQ-Tv-bCu" secondAttribute="bottom" constant="10" id="TeC-No-8V0"/>
+                                                <constraint firstItem="boQ-Tv-bCu" firstAttribute="leading" secondItem="64O-Do-ZqS" secondAttribute="leading" constant="20" symbolic="YES" id="VsE-82-ZKM"/>
+                                                <constraint firstAttribute="bottom" secondItem="Mft-GR-nHb" secondAttribute="bottom" constant="20" symbolic="YES" id="ZwX-nh-570"/>
+                                                <constraint firstItem="Mft-GR-nHb" firstAttribute="top" secondItem="64O-Do-ZqS" secondAttribute="top" constant="19" id="hTe-1g-Sxf"/>
+                                                <constraint firstItem="boQ-Tv-bCu" firstAttribute="top" secondItem="64O-Do-ZqS" secondAttribute="top" constant="10" id="p96-be-2ah"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstItem="64O-Do-ZqS" firstAttribute="top" secondItem="YKA-7W-Ych" secondAttribute="top" id="9z5-L0-nFF"/>
+                                            <constraint firstItem="64O-Do-ZqS" firstAttribute="leading" secondItem="YKA-7W-Ych" secondAttribute="leading" id="ZD7-78-T3C"/>
+                                        </constraints>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="09B-NZ-HdW">
-                                        <rect key="frame" x="0.0" y="153.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="170" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="09B-NZ-HdW" id="n7h-Uh-oSU">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -980,7 +1149,7 @@
         <!--More-->
         <scene sceneID="cU2-nT-TBA">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cQ3-FY-cAe" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cQ3-FY-cAe" customClass="ExtensibleNavigationBarNavigationController" customModule="ADNavigationBarExtension" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="More" image="person.crop.square.fill" catalog="system" id="0ld-Ae-dzX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lkc-xO-efs">
@@ -1545,10 +1714,13 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="LLK-Cr-Cwh"/>
+        <segue reference="Er3-sQ-bs7"/>
+        <segue reference="nEF-RZ-kuB"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="bell.fill" catalog="system" width="123" height="128"/>
+        <image name="bubble.left.fill" catalog="system" width="128" height="110"/>
+        <image name="calendar" catalog="system" width="128" height="107"/>
         <image name="doc.text.fill" catalog="system" width="115" height="128"/>
         <image name="ellipsis.circle.fill" catalog="system" width="128" height="123"/>
         <image name="minuminus" width="26" height="26"/>

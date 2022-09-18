@@ -46,6 +46,15 @@
       }
     },
     {
+      "identity" : "inappsettingskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/futuretap/InAppSettingsKit",
+      "state" : {
+        "revision" : "1c5122f51206ea86b2301ea8a93e7703617a9b40",
+        "version" : "3.3.6"
+      }
+    },
+    {
       "identity" : "osplaceholdertextview",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/OmerFlame/OSPlaceholderTextView",
@@ -105,7 +114,7 @@
       "location" : "https://github.com/OmerFlame/SwiftRant.git",
       "state" : {
         "branch" : "main",
-        "revision" : "603c2f1d36d0d9680954cd4d21dec2875e4ef34e"
+        "revision" : "f5e2b669e5b14aac88036627cf925a353b7dbbf5"
       }
     }
   ],

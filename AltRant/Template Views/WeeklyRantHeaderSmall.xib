@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21223" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21204"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HCK-er-oEc" userLabel="Weekly Rant Header Small" customClass="WeeklyRantHeaderSmall" customModule="AltRant" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next big trend in software eng.?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="PAr-dz-cEm" userLabel="Title Label">
+                    <rect key="frame" x="16" y="4" width="260" height="21"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Week 329 Group Rant - Add tag 'wk329' to your rant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smG-mg-e4C" userLabel="Subtitle Label">
+                    <rect key="frame" x="16" y="27.000000000000004" width="321" height="15.666666666666668"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25E-4n-biJ" userLabel="separator">
+                    <rect key="frame" x="0.0" y="49.666666666666664" width="390" height="0.3333333333333357"/>
+                    <viewLayoutGuide key="safeArea" id="dWI-DR-84e"/>
+                    <color key="backgroundColor" systemColor="systemGrayColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="XPd-HS-qIh"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Lut-Az-sXM"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="smG-mg-e4C" firstAttribute="leading" secondItem="PAr-dz-cEm" secondAttribute="leading" id="3bQ-ar-Mmd"/>
+                <constraint firstAttribute="bottom" secondItem="25E-4n-biJ" secondAttribute="bottom" id="88T-WL-fEd"/>
+                <constraint firstItem="PAr-dz-cEm" firstAttribute="top" secondItem="HCK-er-oEc" secondAttribute="top" constant="4" id="F4a-7f-FFc"/>
+                <constraint firstItem="PAr-dz-cEm" firstAttribute="leading" secondItem="HCK-er-oEc" secondAttribute="leading" constant="16" id="FNR-w0-UkQ"/>
+                <constraint firstAttribute="trailing" secondItem="25E-4n-biJ" secondAttribute="trailing" id="dF6-ZS-7Cc"/>
+                <constraint firstItem="smG-mg-e4C" firstAttribute="top" secondItem="PAr-dz-cEm" secondAttribute="bottom" constant="2" id="o63-9K-9Nh"/>
+                <constraint firstItem="25E-4n-biJ" firstAttribute="leading" secondItem="HCK-er-oEc" secondAttribute="leading" id="tlc-Sh-Yjr"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="subtitleLabel" destination="smG-mg-e4C" id="dqr-03-5SR"/>
+                <outlet property="titleLabel" destination="PAr-dz-cEm" id="7gf-9W-Jar"/>
+            </connections>
+            <point key="canvasLocation" x="138" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

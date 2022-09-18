@@ -41,10 +41,10 @@ class AvatarEditorViewController: UIViewController, AvatarEditorPickerViewContro
         })
         
         // TODO: - Ask for the current image while initializing the class, don't get it manually
-        SwiftRant.shared.getProfileFromID(SwiftRant.shared.tokenFromKeychain!.authToken.userID, token: nil, userContentType: .rants, skip: 0, completionHandler: { [weak self] error, result in
-            if result != nil {
-                SwiftRant.shared.getAvatarCustomizationOptions(nil, type: "g", subType: nil, currentImageID: result!.avatar.avatarImage!, shouldGetPossibleOptions: true) { [weak self] customizationError, customizationResults in
-                    self?.customizationResults = customizationResults
+        SwiftRant.shared.getProfileFromID(SwiftRant.shared.tokenFromKeychain!.authToken.userID, token: nil, userContentType: .rants, skip: 0, completionHandler: { [weak self] result in
+            if case .success(let result) = result {
+                SwiftRant.shared.getAvatarCustomizationOptions(nil, type: "g", subType: nil, currentImageID: result.avatar.avatarImage!, shouldGetPossibleOptions: true) { [weak self] customizationResult in
+                    self?.customizationResults = try? customizationResult.get()
                     
                     if let options = self?.customizationResults.avatars {
                         DispatchQueue.main.async {
@@ -64,7 +64,7 @@ class AvatarEditorViewController: UIViewController, AvatarEditorPickerViewContro
                             }
                         }
                         
-                        self?.pickerViewController.userPoints = result?.score
+                        self?.pickerViewController.userPoints = result.score
                         self?.pickerViewController.selectedIndexPath = IndexPath(row: self?.customizationResults.avatars.firstIndex(where: { $0.isSelected ?? false })! ?? 0, section: 0)
                         self?.pickerViewController.updateTypes(types: self?.customizationResults.types ?? [])
                         self?.pickerViewController.updateOptions(options: options)
@@ -133,16 +133,16 @@ class AvatarEditorViewController: UIViewController, AvatarEditorPickerViewContro
 		
         
         
-        SwiftRant.shared.confirmAvatarCustomization(nil, fullImageID: "https://avatars.devrant.com/\(imageName)", completionHandler: { [weak self] error, success in
-			if success {
+        SwiftRant.shared.confirmAvatarCustomization(nil, fullImageID: "https://avatars.devrant.com/\(imageName)", completionHandler: { [weak self] result in
+            if case .success() = result {
 				DispatchQueue.main.async {
 					self?.navigationController?.navigationBar.isUserInteractionEnabled = true
 					self?.navigationController?.navigationBar.tintColor = .systemBlue
 					
 					self?.navigationController!.popViewController(animated: true)
 				}
-			} else {
-				let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alert = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
 				
 				let retryAction = UIAlertAction(title: "Retry", style: .default, handler: { _ in self?.save() })
 				let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -323,8 +323,8 @@ class AvatarEditorViewController: UIViewController, AvatarEditorPickerViewContro
             editorPickerView.activityIndicator.startAnimating()
         })
         
-        SwiftRant.shared.getAvatarCustomizationOptions(nil, type: category.id, subType: category.subType, currentImageID: currentImageURL, shouldGetPossibleOptions: false, completionHandler: { [weak self] error, results in
-            self?.customizationResults = results
+        SwiftRant.shared.getAvatarCustomizationOptions(nil, type: category.id, subType: category.subType, currentImageID: currentImageURL, shouldGetPossibleOptions: false, completionHandler: { [weak self] result in
+            self?.customizationResults = try? result.get()
             
             DispatchQueue.main.async {
 				self?.currentAvatarImageView.backgroundColor = UIColor(hexString: self?.customizationResults.avatars.first(where: { $0.isSelected ?? false })!.image.backgroundColor ?? "")

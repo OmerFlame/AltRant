@@ -256,8 +256,8 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
                 }
             }
             
-            SwiftRant.shared.subscribeToUser(nil, userID: user.userID) { error, success in
-                if success {
+            SwiftRant.shared.subscribeToUser(nil, userID: user.userID) { result in
+                if case .success() = result {
                     /*self.subscribedUsers.append(user.userID)
                     
                     //let indexPath = dataSource.indexPath(for: user)
@@ -266,7 +266,7 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
                     
                     snapshot.reconfigureItems([user])
                     self.dataSource.apply(snapshot, animatingDifferences: false)*/
-                } else {
+                } else if case .failure(let failure) = result {
                     self.concurrentQueue.async(flags: .barrier) {
                         self.subscribedUsers.removeAll(where: { $0 == user.userID })
                         
@@ -279,7 +279,7 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
                         DispatchQueue.main.async {
                             self.dataSource.apply(snapshot, animatingDifferences: false)
                             
-                            let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while subscribing to the user.", preferredStyle: .alert)
+                            let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                             alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.didSubscribe(to: user) }))
                             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
                             
@@ -303,15 +303,15 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
                 }
             }
             
-            SwiftRant.shared.unsubscribeFromUser(nil, userID: user.userID) { error, success in
-                if success {
+            SwiftRant.shared.unsubscribeFromUser(nil, userID: user.userID) { result in
+                if case .success() = result {
                     /*self.subscribedUsers.removeAll(where: { $0 == user.userID })
                     
                     var snapshot = self.dataSource.snapshot()
                     
                     snapshot.reconfigureItems([user])
                     self.dataSource.apply(snapshot, animatingDifferences: false)*/
-                } else {
+                } else if case .failure(let failure) = result {
                     self.concurrentQueue.async(flags: .barrier) {
                         self.subscribedUsers.append(user.userID)
                         
@@ -324,7 +324,7 @@ class RecommendedUserCell: UITableViewCell, UICollectionViewDelegate, InternalRe
                         DispatchQueue.main.async {
                             self.dataSource.apply(snapshot, animatingDifferences: false)
                             
-                            let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred while unsubscribing from the user.", preferredStyle: .alert)
+                            let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                             alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: { _ in self.didSubscribe(to: user) }))
                             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
                             

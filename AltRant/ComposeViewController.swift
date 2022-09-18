@@ -29,7 +29,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     //let placeholder: String
     var content: String?
-    var tags: String?
+    var tags: String = ""
     
     var isComment: Bool!
     var isEdit: Bool!
@@ -114,6 +114,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
             titleButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
             
             navigationItem.titleView = titleButton
+            
+            tagTextField.text = tags
             
         } else if isComment {
             navigationItem.title = "New Comment"
@@ -286,10 +288,10 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                 var addedContent = [Comment]()
                 let lastCommentID = (viewControllerThatPresented as! RantViewController).comments.last?.id ?? 0
                 
-                SwiftRant.shared.postComment(nil, rantID: rantID!, content: contentTextView.text, image: inputImage) { [weak self] error, success in
-                    if success {
-                        SwiftRant.shared.getRantFromID(token: nil, id: self?.rantID ?? 0, lastCommentID: lastCommentID) { refetchError, _, comments in
-                            if let comments = comments {
+                SwiftRant.shared.postComment(nil, rantID: rantID!, content: contentTextView.text, image: inputImage) { [weak self] result in
+                    if case .success() = result {
+                        SwiftRant.shared.getRantFromID(token: nil, id: self?.rantID ?? 0, lastCommentID: lastCommentID) { result in
+                            if case .success(let (_, comments)) = result {
                                 addedContent = comments
                                 
                                 let start = (self?.viewControllerThatPresented as! RantViewController).comments.count
@@ -372,14 +374,14 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                                         (viewControllerThatPresented as! RantViewController).tableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: true)
                                     })
                                 }*/
-                            } else {
+                            } else if case .failure(let failure) = result {
                                 DispatchQueue.main.async {
                                     self?.navigationItem.rightBarButtonItem?.isEnabled = true
                                     
                                     let viewControllerThetPresented = self?.viewControllerThatPresented
                                     
                                     self?.navigationController?.dismiss(animated: true) {
-                                        let alertController = UIAlertController(title: "Error", message: refetchError ?? "An unknown error has occurred while attempting to retrieve new comments that were posted to this rant. This error occured by either a bug in AltRant, or the creator of the rant deleted the rant right after you posted your comment.", preferredStyle: .alert)
+                                        let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                                         
                                         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                                         
@@ -388,19 +390,19 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                                 }
                             }
                         }
-                    } else {
+                    } else if case .failure(let failure) = result {
                         DispatchQueue.main.async {
                             self?.navigationItem.rightBarButtonItem?.isEnabled = true
                             
-                            self?.showAlertWithError(error ?? "An unknown error occurred while posting the comment.", retryHandler: { self?.submit(sender) })
+                            self?.showAlertWithError(failure.message, retryHandler: { self?.submit(sender) })
                         }
                     }
                 }
             } else {
-                SwiftRant.shared.editComment(nil, commentID: commentID!, content: contentTextView.text, image: inputImage) { [weak self] error, success in
-                    if success {
-                        SwiftRant.shared.getCommentFromID(self?.commentID ?? 0, token: nil) { retrieveError, newComment in
-                            if let newComment = newComment {
+                SwiftRant.shared.editComment(nil, commentID: commentID!, content: contentTextView.text, image: inputImage) { [weak self] result in
+                    if case .success() = result {
+                        SwiftRant.shared.getCommentFromID(self?.commentID ?? 0, token: nil) { result in
+                            if case .success(let newComment) = result {
                                 if (self?.viewControllerThatPresented as! RantViewController).commentImages[self?.commentID ?? 0] != nil {
                                     if UIImage(contentsOfFile: (self?.viewControllerThatPresented as! RantViewController).commentImages[self?.commentID ?? 0]!?.previewItemURL.relativePath ?? "") != self?.inputImage {
                                         if newComment.attachedImage != nil {
@@ -449,30 +451,30 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                                         (viewControllerThatPresented as! RantViewController).tableView.reloadRows(at: [IndexPath(row: row, section: 1)], with: .none)
                                     }
                                 }
-                            } else {
+                            } else if case .failure(let failure) = result {
                                 
                                 DispatchQueue.main.async {
-                                    self?.showAlertWithError(retrieveError ?? "An unknown error occurred while retrieving the new edited comment.", retryHandler: nil)
+                                    self?.showAlertWithError(failure.message, retryHandler: nil)
                                 }
                             }
                         }
-                    } else {
+                    } else if case .failure(let failure) = result {
                         self?.navigationItem.rightBarButtonItem?.isEnabled = true
                         
-                        self?.showAlertWithError(error ?? "An unknown error occurred while posting the comment.", retryHandler: { self?.submit(sender) })
+                        self?.showAlertWithError(failure.message, retryHandler: { self?.submit(sender) })
                     }
                 }
             }
         } else {
             if !isEdit {
-                SwiftRant.shared.postRant(nil, postType: rantType, content: contentTextView.text, tags: tagTextField.text, image: inputImage) { [weak self] error, rantID in
+                SwiftRant.shared.postRant(nil, postType: rantType, content: contentTextView.text, tags: tagTextField.text, image: inputImage) { [weak self] result in
                     DispatchQueue.main.async {
                         self?.navigationItem.rightBarButtonItem?.isEnabled = true
                         self?.navigationItem.leftBarButtonItem?.isEnabled = true
                         
-                        if rantID == nil {
-                            self?.showAlertWithError(error ?? "An unknown error has occurred.", retryHandler: { self?.submit(sender) })
-                        } else {
+                        if case .failure(let failure) = result {
+                            self?.showAlertWithError(failure.message, retryHandler: { self?.submit(sender) })
+                        } else if case .success(let rantID) = result {
                             let viewControllerThatPresented = self?.viewControllerThatPresented
                             
                             self?.navigationController?.dismiss(animated: true) {
@@ -482,12 +484,12 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                     }
                 }
             } else {
-                SwiftRant.shared.editRant(nil, rantID: rantID!, postType: rantType, content: contentTextView.text, tags: tagTextField.text, image: inputImage) { [weak self] error, success in
-                    if success {
+                SwiftRant.shared.editRant(nil, rantID: rantID!, postType: rantType, content: contentTextView.text, tags: tagTextField.text, image: inputImage) { [weak self] result in
+                    if case .success() = result {
                         var file: File?
                         
-                        SwiftRant.shared.getRantFromID(token: nil, id: self?.rantID ?? -1, lastCommentID: (self?.viewControllerThatPresented as! RantViewController).comments.last?.id ?? 0) { retrieveError, updatedRant, _ in
-                            if let updatedRant = updatedRant {
+                        SwiftRant.shared.getRantFromID(token: nil, id: self?.rantID ?? -1, lastCommentID: (self?.viewControllerThatPresented as! RantViewController).comments.last?.id ?? 0) { result in
+                            if case .success(let (updatedRant, _)) = result {
                                 if updatedRant.attachedImage != nil {
                                     file = File.loadFile(image: updatedRant.attachedImage!, size: CGSize(width: updatedRant.attachedImage!.width, height: updatedRant.attachedImage!.height))
                                 }
@@ -502,19 +504,19 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                                         (viewControllerThatPresented as! RantViewController).tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
                                     }
                                 }
-                            } else {
+                            } else if case .failure(let failure) = result {
                                 DispatchQueue.main.async {
                                     self?.navigationItem.rightBarButtonItem?.isEnabled = true
                                     
-                                    self?.showAlertWithError(retrieveError ?? "An unknown error occurred while fetching the updated rant.", retryHandler: nil)
+                                    self?.showAlertWithError(failure.message, retryHandler: nil)
                                 }
                             }
                         }
-                    } else {
+                    } else if case .failure(let failure) = result {
                         DispatchQueue.main.async {
                             self?.navigationItem.rightBarButtonItem?.isEnabled = true
                             
-                            self?.showAlertWithError(error ?? "An unknown error occurred while updating the rant.", retryHandler: { self?.submit(sender) })
+                            self?.showAlertWithError(failure.message, retryHandler: { self?.submit(sender) })
                         }
                     }
                 }

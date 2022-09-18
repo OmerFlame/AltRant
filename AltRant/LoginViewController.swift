@@ -96,10 +96,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let username = usernameTextField.text!
         let password = passwordTextField.text!
         
-        SwiftRant.shared.logIn(username: username, password: password) { error, _ in
-            if error == nil, let tokenFromKeychain = SwiftRant.shared.tokenFromKeychain {
-                SwiftRant.shared.getProfileFromID(tokenFromKeychain.authToken.userID, token: nil, userContentType: .rants, skip: 0) { profileRetrieveError, result in
-                    if error == nil, let result = result {
+        SwiftRant.shared.logIn(username: username, password: password) { result in
+            if case .success(_) = result, let tokenFromKeychain = SwiftRant.shared.tokenFromKeychain {
+                SwiftRant.shared.getProfileFromID(tokenFromKeychain.authToken.userID, token: nil, userContentType: .rants, skip: 0) { result in
+                    if case .success(let result) = result {
                         UserDefaults.standard.set(result.avatar.backgroundColor, forKey: "DRUserColor")
                         
                         DispatchQueue.main.async {
@@ -116,8 +116,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             
                             self.navigationController!.dismiss(animated: true, completion: nil)
                         }
-                    } else {
-                        let alertController = UIAlertController(title: "Error", message: profileRetrieveError ?? "An unknown error occurred while retrieving the user's profile.", preferredStyle: .alert)
+                    } else if case .failure(let failure) = result {
+                        let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                         
                         alertController.addAction(UIAlertAction(title: "Log Out and Try Again", style: .cancel, handler: { _ in
                             let keychainWrapper = KeychainWrapper(serviceName: "SwiftRant", accessGroup: "SwiftRantAccessGroup")
@@ -145,8 +145,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         }
                     }
                 }
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred during logging in. Please try again.", preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 

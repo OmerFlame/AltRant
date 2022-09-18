@@ -214,16 +214,16 @@ class RantInFeedCell: UITableViewCell {
             }
         }*/
         
-        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
-            if updatedRant != nil {
-                self?.rantContents!.pointee.voteState = RantInFeed.VoteState(rawValue: updatedRant!.voteState) ?? .unvotable
-                self?.rantContents!.pointee.score = updatedRant!.score
+        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] result in
+            if case .success(let updatedRant) = result {
+                self?.rantContents!.pointee.voteState = RantInFeed.VoteState(rawValue: updatedRant.voteState) ?? .unvotable
+                self?.rantContents!.pointee.score = updatedRant.score
                 
                 if let parentTableView = self?.parentTableView {
                     parentTableView.reloadData()
                 }
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred.", preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 
@@ -259,16 +259,16 @@ class RantInFeedCell: UITableViewCell {
             }
         }*/
         
-        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] error, updatedRant in
-            if updatedRant != nil {
-                self?.rantContents!.pointee.voteState = RantInFeed.VoteState(rawValue: updatedRant!.voteState) ?? .unvotable
-                self?.rantContents!.pointee.score = updatedRant!.score
+        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] result in
+            if case .success(let updatedRant) = result {
+                self?.rantContents!.pointee.voteState = RantInFeed.VoteState(rawValue: updatedRant.voteState) ?? .unvotable
+                self?.rantContents!.pointee.score = updatedRant.score
                 
                 if let parentTableView = self?.parentTableView {
                     parentTableView.reloadData()
                 }
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred.", preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 

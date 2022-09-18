@@ -329,8 +329,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         
         
         
-        SwiftRant.shared.getNotificationFeed(token: nil, lastCheckTime: nil, shouldGetNewNotifs: shouldGetNewData, category: notificationType) { error, result in
-            if let notificationsResult = result {
+        SwiftRant.shared.getNotificationFeed(token: nil, lastCheckTime: nil, shouldGetNewNotifs: shouldGetNewData, category: notificationType) { result in
+            if case .success(let notificationsResult) = result {
                 let completionSemaphore = DispatchSemaphore(value: 0)
                 let downloadGroup = DispatchGroup()
                 
@@ -422,9 +422,9 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     debugPrint("TASK LEAVING!")
                     self.dispatchGroup.leave()
                 }
-            } else if let error = error {
+            } else if case .failure(let failure) = result {
                 DispatchQueue.main.async {
-                    self.showAlertWithError(error ?? "An unknown error occurred while fetching the user's notifications.", retryHandler: nil)
+                    self.showAlertWithError(failure.message, retryHandler: nil)
                 }
             } else {
                 DispatchQueue.main.async {
@@ -704,8 +704,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         tableView.refreshControl = nil
         (sender as! UIBarButtonItem).isEnabled = false
         
-        SwiftRant.shared.clearNotifications(nil) { error, success in
-            if success {
+        SwiftRant.shared.clearNotifications(nil) { result in
+            if case .success() = result {
                 let unreadNotifications = self.notifications.filter({ $0.read == 0 })
                 
                 for notification in unreadNotifications {
@@ -721,9 +721,9 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     (sender as! UIBarButtonItem).isEnabled = true
                     self.tableView.reloadData()
                 }
-            } else {
+            } else if case .failure(let failure) = result {
                 DispatchQueue.main.async {
-                    self.showAlertWithError(error ?? "An unknown error has occurred while clearing notifications.", retryHandler: { self.clearNotifications(sender) })
+                    self.showAlertWithError(failure.message, retryHandler: { self.clearNotifications(sender) })
                 }
             }
         }

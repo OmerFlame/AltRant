@@ -18,4 +18,8 @@ class WeeklyRantHeaderLarge: UIView {
     @IBOutlet weak var closeButton: UIButton!
     
     public var delegate: WeeklyRantHeaderDelegate?
+    
+    @IBAction func close(_ sender: Any) {
+        delegate?.didCloseWeeklyRantHeader(self)
+    }
 }

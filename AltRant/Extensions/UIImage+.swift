@@ -20,7 +20,7 @@ public extension UIImage {
         self.init(cgImage: cgImage)
     }
     
-    func loadFromWeb(url: URL) -> UIImage? {
+    func loadFromWeb(url: URL) async -> UIImage? {
         if let data = try? Data(contentsOf: url) {
             if let image = UIImage(data: data) {
                 return image

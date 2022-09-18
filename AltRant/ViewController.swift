@@ -12,6 +12,7 @@ import ADNavigationBarExtension
 import UserNotifications
 import SwiftRant
 import SwiftKeychainWrapper
+import InAppSettingsKit
 //import Sentry
 
 class rantFeedData {
@@ -28,11 +29,14 @@ protocol HomeFeedTableViewControllerDelegate: FeedDelegate {
 class HomeFeedTableViewController: UITableViewController, UITabBarControllerDelegate, HomeFeedTableViewControllerDelegate/*, WeeklyRantHeaderDelegate*/ {
     fileprivate var currentPage = 0
     var weeklyRantHeader: WeeklyRantHeaderLarge!
+    var weeklyHeaderHeightConstraint: NSLayoutConstraint?
     
     var rantFeed = rantFeedData()
     var supplementalImages = [IndexPath:File]()
     @IBOutlet weak var menuBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var composeBarButtonItem: UIBarButtonItem!
+    
+    var settingsNavigationController: UINavigationController?
     
     var cellHeights = [IndexPath:CGFloat]()
     
@@ -120,9 +124,18 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                                     },
                 
                                     UIAction(title: "Settings", image: UIImage(systemName: "gearshape.fill")!) { action in
-                                        let settingsVC = UIStoryboard(name: "SettingsViewController", bundle: nil).instantiateViewController(withIdentifier: "SettingsViewController") as! UINavigationController
+                                        self.settingsNavigationController = UIStoryboard(name: "SettingsViewController", bundle: nil).instantiateViewController(withIdentifier: "SettingsViewController") as! UINavigationController
+                                        (self.settingsNavigationController?.viewControllers.first as! IASKAppSettingsViewController).delegate = self
                                         
-                                        self.present(settingsVC, animated: true, completion: nil)
+                                        NotificationCenter.default.addObserver(self, selector: #selector(self.updateHiddenKeys), name: Notification.Name.IASKSettingChanged, object: nil)
+                                        
+                                        //self.present(settingsVC, animated: true, completion: nil)
+                                        
+                                        self.present(self.settingsNavigationController!, animated: true)
+                                        
+                                        //(self.settingsNavigationController?.viewControllers.first as! IASKAppSettingsViewController).
+                                        
+                                        self.updateHiddenKeys()
                                     },
                 
                                     UIAction(title: "Log Out", image: UIImage(systemName: "power")!) { action in
@@ -171,10 +184,10 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             timer = Timer.scheduledTimer(withTimeInterval: 21, repeats: true) { _ in
                 debugPrint("Running extended notification timer!")
                 
-                SwiftRant.shared.getRantFeed(token: nil, skip: 0, prevSet: nil) { [weak self] error, feed in
+                SwiftRant.shared.getRantFeed(token: nil, skip: 0, prevSet: nil) { [weak self] result in
                     DispatchQueue.main.async {
                         
-                        if let numNotifs = feed?.notifCount {
+                        if case .success(let feed) = result, let numNotifs = feed.notifCount {
                             let currentNotificationCount = Int(self?.navigationController!.tabBarController!.viewControllers![3].tabBarItem.badgeValue ?? "0")!
                             
                             if currentNotificationCount < numNotifs {
@@ -244,16 +257,16 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             combinedRantInFeedCount += feed.rants.count
         }
         
-        SwiftRant.shared.getRantFeed(token: nil, skip: combinedRantInFeedCount, prevSet: rantFeed.rantFeed.last?.set ?? nil) { [weak self] error, feed in
+        SwiftRant.shared.getRantFeed(token: nil, skip: combinedRantInFeedCount, prevSet: rantFeed.rantFeed.last?.set ?? nil) { [weak self] result in
             defer { completionHandler?() }
             
-            if feed != nil {
-                let (start, end) = (combinedRantInFeedCount, feed!.rants.count + combinedRantInFeedCount)
+            if case .success(let feed) = result {
+                let (start, end) = (combinedRantInFeedCount, feed.rants.count + combinedRantInFeedCount)
                 let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
                 
-                self?.rantFeed.rantFeed.append(feed!)
+                self?.rantFeed.rantFeed.append(feed)
                 
-                for (idx, rant) in feed!.rants.enumerated() {
+                for (idx, rant) in feed.rants.enumerated() {
                     if rant.attachedImage != nil {
                         if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
                             self?.supplementalImages[indexPaths[idx]] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
@@ -265,8 +278,24 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 
                 self?.currentPage += 1
                 
+                var tempNews: RantFeed.News? = nil
+                
+                if UserDefaults.standard.bool(forKey: "AlwaysLoadWRWHeader") && feed.news == nil {
+                    let semaphore = DispatchSemaphore(value: 0)
+                    
+                    SwiftRant.shared.getWeeklyRants(token: nil, skip: 0, completionHandler: { result in
+                        if case .success(let feed) = result {
+                            tempNews = feed.news!
+                            
+                            semaphore.signal()
+                        }
+                    })
+                    
+                    semaphore.wait()
+                }
+                
                 DispatchQueue.main.async {
-                    /*if let news = feed!.news {
+                    if let news = feed.news {
                         self?.weeklyRantHeader = UINib(nibName: "WeeklyRantHeaderLarge", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderLarge
                         
                         self?.weeklyRantHeader.headlineLabel.text = news.headline
@@ -275,18 +304,41 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                         self?.weeklyRantHeader.frame.size.height = 100
                         
                         self?.tableView.tableHeaderView = self?.weeklyRantHeader
-                    }*/
+                        
+                        self?.weeklyHeaderHeightConstraint = self?.tableView.tableHeaderView?.heightAnchor.constraint(equalToConstant: 100)
+                        
+                        self?.weeklyHeaderHeightConstraint?.isActive = true
+                        
+                        self?.tableView.tableHeaderView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self?.didTapWeeklyHeader)))
+                        
+                        self?.weeklyRantHeader.delegate = self
+                    } else if let news = tempNews {
+                        self?.weeklyRantHeader = UINib(nibName: "WeeklyRantHeaderLarge", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderLarge
+                        
+                        self?.weeklyRantHeader.headlineLabel.text = "Weekly Group Rant"
+                        self?.weeklyRantHeader.subjectLabel.text = news.headline
+                        self?.weeklyRantHeader.subtitleLabel.text = news.footer.components(separatedBy: " - ")[1]
+                        self?.weeklyRantHeader.frame.size.height = 100
+                        
+                        self?.tableView.tableHeaderView = self?.weeklyRantHeader
+                        
+                        self?.weeklyHeaderHeightConstraint = self?.tableView.tableHeaderView?.heightAnchor.constraint(equalToConstant: 100)
+                        
+                        self?.weeklyHeaderHeightConstraint?.isActive = true
+                        
+                        self?.tableView.tableHeaderView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self?.didTapWeeklyHeader)))
+                        
+                        self?.weeklyRantHeader.delegate = self
+                    }
                     
-                    self?.weeklyRantHeader = UINib(nibName: "WeeklyRantHeaderLarge", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderLarge
+                    /*self?.weeklyRantHeader = UINib(nibName: "WeeklyRantHeaderLarge", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderLarge
                     
                     self?.weeklyRantHeader.headlineLabel.text = "Weekly Group Rant"
-                    self?.weeklyRantHeader.subjectLabel.text = "Next big trend in software eng.?"
-                    self?.weeklyRantHeader.subtitleLabel.text = "Add tag 'wk329' to your rant"
-                    self?.weeklyRantHeader.frame.size.height = 100
+                    self?.weeklyRantHeader.subjectLabel.text = "Your most embarrassing programming story?"
+                    self?.weeklyRantHeader.subtitleLabel.text = "Add tag 'wk316' to your rant"
+                    self?.weeklyRantHeader.frame.size.height = 100*/
                     
-                    self?.tableView.tableHeaderView = self?.weeklyRantHeader
-                    
-                    self?.navigationController?.tabBarController?.viewControllers![3].tabBarItem.badgeValue = feed!.notifCount != 0 ? String(feed!.notifCount) : nil
+                    self?.navigationController?.tabBarController?.viewControllers![3].tabBarItem.badgeValue = feed.notifCount != 0 ? String(feed.notifCount!) : nil
                     
                     CATransaction.begin()
                     
@@ -306,9 +358,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                     
                     CATransaction.commit()
                 }
-            } else {
+            } else if case .failure(let failure) = result {
                 DispatchQueue.main.async {
-                    self?.showAlertWithError(error ?? "An unknown error has occurred.")
+                    self?.showAlertWithError(failure.message)
                 }
             }
         }
@@ -581,7 +633,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             rantViewController.rantInFeed = nil
             rantViewController.supplementalRantImage = nil
             rantViewController.loadCompletionHandler = nil
-        }
+        }/* else if segue.identifier == "WeeklyRant", let weeklyRantFeedViewController = segue.destination as? WeeklyRantFeedViewController {
+            
+        }*/
     }
     
     @IBAction func openComposeView(_ sender: UIBarButtonItem) {
@@ -599,7 +653,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     // MARK: - Tab Bar Controller Delegate
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if let notificationsViewController = (viewController as? ExtensibleNavigationBarNavigationController) {
+        if let notificationsViewController = (viewController as? ExtensibleNavigationBarNavigationController), notificationsViewController.viewControllers.contains(where: { $0 is NotificationsTableViewController }) {
             debugPrint("Creating notification refresh timer!")
             
             (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = Timer(timeInterval: 5, repeats: true) { _ in
@@ -667,16 +721,16 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         }
 
         
-        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] error, updatedRant in
-            if updatedRant != nil {
-                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = RantInFeed.VoteState(rawValue: updatedRant!.voteState) ?? .unvotable
-                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].score = updatedRant!.score
+        SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] result in
+            if case .success(let updatedRant) = result {
+                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = RantInFeed.VoteState(rawValue: updatedRant.voteState) ?? .unvotable
+                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].score = updatedRant.score
                 
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred.", preferredStyle: .alert)
+            } else if case .failure(let failure) = result {
+                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 
@@ -684,12 +738,50 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             }
         }
     }
+    
+    @objc func didTapWeeklyHeader() {
+        performSegue(withIdentifier: "WeeklyRant", sender: nil)
+    }
 }
 
 extension HomeFeedTableViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: { $0.row >= rantFeed.rantFeed.count }) {
             performFetch(nil)
+        }
+    }
+}
+
+extension HomeFeedTableViewController: IASKSettingsDelegate {
+    @objc func updateHiddenKeys() {
+        var hiddenKeys = Set<String>()
+        if !UserDefaults.standard.bool(forKey: "NotificationServer") {
+            hiddenKeys.formUnion(["NotificationServerAddress", "NotificationServerPort"])
+        }
+        
+        (settingsNavigationController?.viewControllers.first as! IASKAppSettingsViewController).setHiddenKeys(hiddenKeys, animated: true)
+    }
+    
+    func settingsViewControllerDidEnd(_ settingsViewController: IASKAppSettingsViewController) {
+        settingsViewController.dismiss(animated: true)
+    }
+}
+
+extension HomeFeedTableViewController: WeeklyRantHeaderDelegate {
+    func didCloseWeeklyRantHeader(_ weeklyRantHeader: WeeklyRantHeaderLarge) {
+        var newFrame = weeklyRantHeader.frame
+        
+        newFrame.size.height = 0
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            weeklyRantHeader.alpha = 0
+            self.weeklyHeaderHeightConstraint?.constant = 0
+            weeklyRantHeader.frame.size = CGSize(width: weeklyRantHeader.frame.width, height: 0)
+            self.tableView.tableHeaderView = weeklyRantHeader
+            self.tableView.layoutIfNeeded()
+        }) { finished in
+            weeklyRantHeader.isHidden = finished
+            self.tableView.tableHeaderView = nil
         }
     }
 }

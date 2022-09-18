@@ -11,7 +11,7 @@ import QuickLook
 import SwiftRant
 import SwiftHEXColors
 
-class RantCell: UITableViewCell, UITextViewDelegate {
+class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
@@ -166,6 +166,7 @@ class RantCell: UITableViewCell, UITextViewDelegate {
         
         tagList.removeAllTags()
         tagList.addTags(rantContents!.tags)
+        tagList.delegate = self
         
         if rantContents!.userAvatar.avatarImage == nil {
             userProfileImageView.image = UIImage(color: UIColor(hexString: rantContents!.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))
@@ -588,5 +589,19 @@ class RantCell: UITableViewCell, UITextViewDelegate {
             
             parentTableViewController.navigationController?.pushViewController(profileVC, animated: true)
         }
+    }
+    
+    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
+        guard let weekly = rantContents.weekly, title == "wk\(weekly.week)" else {
+            return
+        }
+        
+        let vc: WeeklyRantFeedViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "WeeklyRantFeedViewController", creator: { coder in
+            return WeeklyRantFeedViewController(coder: coder)
+        })
+        
+        vc.week = weekly.week
+        
+        parentTableViewController?.navigationController?.pushViewController(vc, animated: true)
     }
 }

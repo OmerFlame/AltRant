@@ -30,6 +30,7 @@
 		590FBD312631BBAA001DDA9B /* Pluginfile in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2C2631BBAA001DDA9B /* Pluginfile */; };
 		590FBD322631BBAA001DDA9B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD2D2631BBAA001DDA9B /* README.md */; };
 		590FBD372631BFF4001DDA9B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 590FBD362631BFF3001DDA9B /* .gitignore */; };
+		59200B6828CDC8490006C607 /* WeeklyRantHeaderMedium.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59200B6728CDC8490006C607 /* WeeklyRantHeaderMedium.xib */; };
 		5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5921F2C12598E53900540CF5 /* MoreTableViewController.swift */; };
 		5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5922A55425778C90009F3025 /* LoginViewController.storyboard */; };
 		592B1B2F2578F31300109377 /* RantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592B1B2E2578F31300109377 /* RantViewController.swift */; };
@@ -58,10 +59,17 @@
 		595B984A27C60BB900C30068 /* RantInSubscribedFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B984927C60BB900C30068 /* RantInSubscribedFeedCell.swift */; };
 		595B984C27C6235900C30068 /* RecommendedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595B984B27C6235900C30068 /* RecommendedUserCell.swift */; };
 		59625C4727D48D63005D58E1 /* SwiftHEXColors in Frameworks */ = {isa = PBXBuildFile; productRef = 59625C4627D48D63005D58E1 /* SwiftHEXColors */; };
+		5964685228D6ECD800B85017 /* WeekCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5964685128D6ECD800B85017 /* WeekCell.swift */; };
 		596B819F25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */; };
+		597D9A5E28CDF9AC0046AC3B /* WeeklyRantHeaderSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597D9A5D28CDF9AC0046AC3B /* WeeklyRantHeaderSmall.swift */; };
 		5980330A27D499E700E59922 /* RecommendedUsersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5980330927D499E700E59922 /* RecommendedUsersCell.xib */; };
 		5980330C27D49C2B00E59922 /* InternalRecommendedUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5980330B27D49C2B00E59922 /* InternalRecommendedUserCell.xib */; };
-		59835E872737C0050022D272 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59835E862737C0050022D272 /* SettingsViewController.storyboard */; };
+		59835E872737C0050022D272 /* SettingsViewControllerBackup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59835E862737C0050022D272 /* SettingsViewControllerBackup.storyboard */; };
+		598FEE7128D2F1F3003CF357 /* InAppSettingsKit in Frameworks */ = {isa = PBXBuildFile; productRef = 598FEE7028D2F1F3003CF357 /* InAppSettingsKit */; };
+		598FEE7528D2FB13003CF357 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 598FEE7428D2FB13003CF357 /* InAppSettings.bundle */; };
+		598FEE7728D2FC44003CF357 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 598FEE7628D2FC44003CF357 /* SettingsViewController.storyboard */; };
+		598FEE7928D31ADC003CF357 /* WeeklyRantHeaderSmall.xib in Resources */ = {isa = PBXBuildFile; fileRef = 598FEE7828D31ADC003CF357 /* WeeklyRantHeaderSmall.xib */; };
+		598FEE7B28D31DC8003CF357 /* WeeksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598FEE7A28D31DC8003CF357 /* WeeksTableViewController.swift */; };
 		5990650A257643B30058C1D7 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906509257643B30058C1D7 /* CloseButton.swift */; };
 		5990650E257643D60058C1D7 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5990650D257643D60058C1D7 /* TagListView.swift */; };
 		59906511257644120058C1D7 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59906510257644120058C1D7 /* TagView.swift */; };
@@ -95,6 +103,7 @@
 		59E671672576BAF4007EEB28 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671662576BAF4007EEB28 /* PaddingLabel.swift */; };
 		59E6716A2576BD74007EEB28 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671692576BD74007EEB28 /* RoundedImageView.swift */; };
 		59E671752576CE5B007EEB28 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E671732576CE5B007EEB28 /* LoginViewController.swift */; };
+		59EF12D928C9DF23002D23CA /* WeeklyRantFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF12D828C9DF23002D23CA /* WeeklyRantFeedViewController.swift */; };
 		59FFE6E72594AD9800C3AB0B /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -146,6 +155,7 @@
 		590FBD2D2631BBAA001DDA9B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		590FBD362631BFF3001DDA9B /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		591A752D257F518F001E1FC2 /* AltRant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AltRant.entitlements; sourceTree = "<group>"; };
+		59200B6728CDC8490006C607 /* WeeklyRantHeaderMedium.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyRantHeaderMedium.xib; sourceTree = "<group>"; };
 		5921F2C12598E53900540CF5 /* MoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewController.swift; sourceTree = "<group>"; };
 		5922A55425778C90009F3025 /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		592B1B2E2578F31300109377 /* RantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantViewController.swift; sourceTree = "<group>"; };
@@ -173,10 +183,16 @@
 		595B984727C60B5100C30068 /* SubscribedFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribedFeedViewController.swift; sourceTree = "<group>"; };
 		595B984927C60BB900C30068 /* RantInSubscribedFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantInSubscribedFeedCell.swift; sourceTree = "<group>"; };
 		595B984B27C6235900C30068 /* RecommendedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedUserCell.swift; sourceTree = "<group>"; };
+		5964685128D6ECD800B85017 /* WeekCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCell.swift; sourceTree = "<group>"; };
 		596B819E25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITapGestureRecognizer+didTapInsideWrappedText.swift"; sourceTree = "<group>"; };
+		597D9A5D28CDF9AC0046AC3B /* WeeklyRantHeaderSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyRantHeaderSmall.swift; sourceTree = "<group>"; };
 		5980330927D499E700E59922 /* RecommendedUsersCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecommendedUsersCell.xib; sourceTree = "<group>"; };
 		5980330B27D49C2B00E59922 /* InternalRecommendedUserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InternalRecommendedUserCell.xib; sourceTree = "<group>"; };
-		59835E862737C0050022D272 /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
+		59835E862737C0050022D272 /* SettingsViewControllerBackup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewControllerBackup.storyboard; sourceTree = "<group>"; };
+		598FEE7428D2FB13003CF357 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
+		598FEE7628D2FC44003CF357 /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
+		598FEE7828D31ADC003CF357 /* WeeklyRantHeaderSmall.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyRantHeaderSmall.xib; sourceTree = "<group>"; };
+		598FEE7A28D31DC8003CF357 /* WeeksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeksTableViewController.swift; sourceTree = "<group>"; };
 		59906509257643B30058C1D7 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		5990650D257643D60058C1D7 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
 		59906510257644120058C1D7 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
@@ -207,6 +223,7 @@
 		59E671662576BAF4007EEB28 /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		59E671692576BD74007EEB28 /* RoundedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		59E671732576CE5B007EEB28 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		59EF12D828C9DF23002D23CA /* WeeklyRantFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyRantFeedViewController.swift; sourceTree = "<group>"; };
 		59FFE6E52594AD9800C3AB0B /* ComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,6 +235,7 @@
 				59D2B95427059AAB00C695E3 /* SPAlert in Frameworks */,
 				5907884B2796B3A8002151A1 /* ADNavigationBarExtension in Frameworks */,
 				594A21EA27B3B48D00AD6D75 /* OSPlaceholderTextView in Frameworks */,
+				598FEE7128D2F1F3003CF357 /* InAppSettingsKit in Frameworks */,
 				59CA4FB125CA8BB6005FB279 /* PullUpController in Frameworks */,
 				59625C4727D48D63005D58E1 /* SwiftHEXColors in Frameworks */,
 				590788482796ACB6002151A1 /* BadgeControl in Frameworks */,
@@ -293,8 +311,12 @@
 				59C2EFE225E25C2D00BBCDAB /* AvatarEditorViewController.swift */,
 				59C2EFEE25E25E5E00BBCDAB /* AvatarEditorPickerViewController.swift */,
 				59C2EFEA25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard */,
-				59835E862737C0050022D272 /* SettingsViewController.storyboard */,
+				59835E862737C0050022D272 /* SettingsViewControllerBackup.storyboard */,
+				598FEE7628D2FC44003CF357 /* SettingsViewController.storyboard */,
 				59A7D9F92737E62D000576B7 /* SettingsViewController.swift */,
+				59EF12D828C9DF23002D23CA /* WeeklyRantFeedViewController.swift */,
+				598FEE7A28D31DC8003CF357 /* WeeksTableViewController.swift */,
+				598FEE7428D2FB13003CF357 /* InAppSettings.bundle */,
 			);
 			path = AltRant;
 			sourceTree = "<group>";
@@ -322,7 +344,11 @@
 				59078844279575F7002151A1 /* LoadingCell.swift */,
 				5959E9F927FAC98600E9A10F /* FeedDelegate.swift */,
 				59A42E8428C722EC00344CF9 /* WeeklyRantHeaderLarge.xib */,
+				59200B6728CDC8490006C607 /* WeeklyRantHeaderMedium.xib */,
+				598FEE7828D31ADC003CF357 /* WeeklyRantHeaderSmall.xib */,
+				597D9A5D28CDF9AC0046AC3B /* WeeklyRantHeaderSmall.swift */,
 				59A42E8628C7271000344CF9 /* WeeklyRantHeaderLarge.swift */,
+				5964685128D6ECD800B85017 /* WeekCell.swift */,
 			);
 			path = "Template Views";
 			sourceTree = "<group>";
@@ -454,6 +480,7 @@
 				594A21E627B3B03C00AD6D75 /* SwiftRant */,
 				594A21E927B3B48D00AD6D75 /* OSPlaceholderTextView */,
 				59625C4627D48D63005D58E1 /* SwiftHEXColors */,
+				598FEE7028D2F1F3003CF357 /* InAppSettingsKit */,
 			);
 			productName = AltRant;
 			productReference = 59040166257627A3002B062A /* AltRant.app */;
@@ -514,6 +541,7 @@
 				594A21E527B3B03C00AD6D75 /* XCRemoteSwiftPackageReference "SwiftRant" */,
 				594A21E827B3B48D00AD6D75 /* XCRemoteSwiftPackageReference "OSPlaceholderTextView" */,
 				59625C4527D48D63005D58E1 /* XCRemoteSwiftPackageReference "SwiftHEXColors" */,
+				598FEE6F28D2F1F3003CF357 /* XCRemoteSwiftPackageReference "InAppSettingsKit" */,
 			);
 			productRefGroup = 59040167257627A3002B062A /* Products */;
 			projectDirPath = "";
@@ -530,6 +558,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				598FEE7928D31ADC003CF357 /* WeeklyRantHeaderSmall.xib in Resources */,
 				5980330C27D49C2B00E59922 /* InternalRecommendedUserCell.xib in Resources */,
 				59C2EFEB25E25C7F00BBCDAB /* AvatarEditorViewController.storyboard in Resources */,
 				59E671642576AD12007EEB28 /* RantCell.xib in Resources */,
@@ -542,14 +571,17 @@
 				59C3A1E5257E972F0082E76F /* CommentCell.xib in Resources */,
 				590FBD312631BBAA001DDA9B /* Pluginfile in Resources */,
 				590FBD372631BFF4001DDA9B /* .gitignore in Resources */,
+				598FEE7728D2FC44003CF357 /* SettingsViewController.storyboard in Resources */,
 				59A9E69A25CFCA3500DC6065 /* SecondaryRantInFeedCell.xib in Resources */,
 				590FBD322631BBAA001DDA9B /* README.md in Resources */,
 				59040173257627A5002B062A /* Assets.xcassets in Resources */,
 				59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */,
 				5980330A27D499E700E59922 /* RecommendedUsersCell.xib in Resources */,
 				59040171257627A3002B062A /* Main.storyboard in Resources */,
+				59200B6828CDC8490006C607 /* WeeklyRantHeaderMedium.xib in Resources */,
 				5922A55525778C90009F3025 /* LoginViewController.storyboard in Resources */,
-				59835E872737C0050022D272 /* SettingsViewController.storyboard in Resources */,
+				59835E872737C0050022D272 /* SettingsViewControllerBackup.storyboard in Resources */,
+				598FEE7528D2FB13003CF357 /* InAppSettings.bundle in Resources */,
 				5904018325762953002B062A /* RantInFeedCell.xib in Resources */,
 				590788432795755A002151A1 /* LoadingCell.xib in Resources */,
 			);
@@ -608,6 +640,7 @@
 				5959E9FA27FAC98600E9A10F /* FeedDelegate.swift in Sources */,
 				59046D9F25A31F0D00C9B4D3 /* NotificationsTableViewController.swift in Sources */,
 				59B85CBE25988DA300E46948 /* UINavigationController+.swift in Sources */,
+				5964685228D6ECD800B85017 /* WeekCell.swift in Sources */,
 				59046DA225A3257400C9B4D3 /* ScrollUISegmentController.swift in Sources */,
 				592B1B2F2578F31300109377 /* RantViewController.swift in Sources */,
 				59906511257644120058C1D7 /* TagView.swift in Sources */,
@@ -617,12 +650,15 @@
 				59D253562593334400BEA35A /* Double+truncate.swift in Sources */,
 				59A96EB3265AABBF0040B854 /* UIAlertController+CustomView.swift in Sources */,
 				5958FC76257AD89A003D1EDD /* KeyboardAvoiding.swift in Sources */,
+				597D9A5E28CDF9AC0046AC3B /* WeeklyRantHeaderSmall.swift in Sources */,
 				59E6716A2576BD74007EEB28 /* RoundedImageView.swift in Sources */,
+				598FEE7B28D31DC8003CF357 /* WeeksTableViewController.swift in Sources */,
 				59039EB225DE3EC800584667 /* UserDefaults+group.swift in Sources */,
 				5904018225762953002B062A /* RantInFeedCell.swift in Sources */,
 				5958FC79257AD8B8003D1EDD /* KeyboardAvoidingView.swift in Sources */,
 				596B819F25B06E56000D8922 /* UITapGestureRecognizer+didTapInsideWrappedText.swift in Sources */,
 				59C3A1E4257E972F0082E76F /* CommentCell.swift in Sources */,
+				59EF12D928C9DF23002D23CA /* WeeklyRantFeedViewController.swift in Sources */,
 				59A42E8728C7271000344CF9 /* WeeklyRantHeaderLarge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -796,7 +832,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1492;
+				CURRENT_PROJECT_VERSION = 1583;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -832,7 +868,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1492;
+				CURRENT_PROJECT_VERSION = 1583;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -864,7 +900,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1492;
+				CURRENT_PROJECT_VERSION = 1583;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -901,7 +937,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1492;
+				CURRENT_PROJECT_VERSION = 1583;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Open with AltRant/Info.plist";
@@ -1018,6 +1054,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		598FEE6F28D2F1F3003CF357 /* XCRemoteSwiftPackageReference "InAppSettingsKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/futuretap/InAppSettingsKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		59CA4FAF25CA8BB6005FB279 /* XCRemoteSwiftPackageReference "PullUpController" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MarioIannotta/PullUpController";
@@ -1079,6 +1123,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 59625C4527D48D63005D58E1 /* XCRemoteSwiftPackageReference "SwiftHEXColors" */;
 			productName = SwiftHEXColors;
+		};
+		598FEE7028D2F1F3003CF357 /* InAppSettingsKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 598FEE6F28D2F1F3003CF357 /* XCRemoteSwiftPackageReference "InAppSettingsKit" */;
+			productName = InAppSettingsKit;
 		};
 		59CA4FB025CA8BB6005FB279 /* PullUpController */ = {
 			isa = XCSwiftPackageProductDependency;

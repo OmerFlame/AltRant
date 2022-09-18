@@ -94,8 +94,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
+            startingLineNumber = "623"
+            endingLineNumber = "623"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,8 +126,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "755"
-            endingLineNumber = "755"
+            startingLineNumber = "769"
+            endingLineNumber = "769"
             landmarkName = "goBack(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "699"
-            endingLineNumber = "699"
+            startingLineNumber = "713"
+            endingLineNumber = "713"
             landmarkName = "RantViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -608,7 +608,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "39"
                   endingLineNumber = "39"
-                  offsetFromSymbolStart = "904">
+                  offsetFromSymbolStart = "924">
                </Location>
                <Location
                   uuid = "3DF2ECBB-30A4-4FB4-B6B0-8988CC2A7A02 - 2fc60e058c8f7336"
@@ -623,7 +623,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "39"
                   endingLineNumber = "39"
-                  offsetFromSymbolStart = "924">
+                  offsetFromSymbolStart = "944">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -638,8 +638,8 @@
             filePath = "AltRant/Template Views/RantCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "configure(with:userImage:supplementalImage:profile:parentTableViewController:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -654,8 +654,8 @@
             filePath = "AltRant/Template Views/RantCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "configure(with:userImage:supplementalImage:profile:parentTableViewController:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -670,8 +670,8 @@
             filePath = "AltRant/Template Views/RantCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "configure(with:userImage:supplementalImage:profile:parentTableViewController:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -718,8 +718,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "542"
+            endingLineNumber = "542"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -766,8 +766,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "422"
+            endingLineNumber = "422"
             landmarkName = "performFetch(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -846,8 +846,8 @@
             filePath = "AltRant/Template Views/RantCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "305"
-            endingLineNumber = "305"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "configure(with:userImage:supplementalImage:profile:parentTableViewController:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -862,8 +862,8 @@
             filePath = "AltRant/Template Views/RantCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "308"
-            endingLineNumber = "308"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
             landmarkName = "configure(with:userImage:supplementalImage:profile:parentTableViewController:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1006,8 +1006,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "applicationDidEnterBackground(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1022,8 +1022,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "applicationWillEnterForeground(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1038,8 +1038,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "230"
-            endingLineNumber = "230"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "applicationWillResignActive(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1054,8 +1054,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "applicationDidBecomeActive(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1086,8 +1086,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "422"
-            endingLineNumber = "422"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
             landmarkName = "checkForSharedURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1102,8 +1102,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
+            startingLineNumber = "478"
+            endingLineNumber = "478"
             landmarkName = "checkForSharedURL()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1806,8 +1806,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "650"
-            endingLineNumber = "650"
+            startingLineNumber = "664"
+            endingLineNumber = "664"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1822,8 +1822,8 @@
             filePath = "AltRant/Template Views/RantCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "579"
-            endingLineNumber = "579"
+            startingLineNumber = "580"
+            endingLineNumber = "580"
             landmarkName = "handleImageTap(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1838,8 +1838,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "675"
-            endingLineNumber = "675"
+            startingLineNumber = "689"
+            endingLineNumber = "689"
             landmarkName = "previewController(_:previewItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1854,8 +1854,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2710,22 +2710,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6F4FEE85-94C3-4132-B7DE-7083C7E17E08"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/RantViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "203"
-            endingLineNumber = "203"
-            landmarkName = "viewDidAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "8B9C5712-7C49-45CF-B61D-73CB9FD9969E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -2908,8 +2892,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3469,14 +3453,14 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "136"
                   endingLineNumber = "136"
-                  offsetFromSymbolStart = "1840">
+                  offsetFromSymbolStart = "1876">
                </Location>
                <Location
-                  uuid = "A80C44AF-ECFE-4318-AC4C-8A67AE84E595 - 508339505639e09b"
+                  uuid = "A80C44AF-ECFE-4318-AC4C-8A67AE84E595 - 9b8622dbe3080375"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.String&gt;, Swift.Bool) -&gt; () in AltRant.AvatarEditorViewController.save() -&gt; ()"
+                  symbolName = "closure #1 (Swift.Result&lt;(), SwiftRant.SwiftRantError&gt;) -&gt; () in AltRant.AvatarEditorViewController.save() -&gt; ()"
                   moduleName = "AltRant"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AvatarEditorViewController.swift"
@@ -3484,14 +3468,14 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "136"
                   endingLineNumber = "136"
-                  offsetFromSymbolStart = "280">
+                  offsetFromSymbolStart = "300">
                </Location>
                <Location
-                  uuid = "A80C44AF-ECFE-4318-AC4C-8A67AE84E595 - d268f7567ed50c45"
+                  uuid = "A80C44AF-ECFE-4318-AC4C-8A67AE84E595 - 2ed2bcae1b486360"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Optional&lt;Swift.String&gt;, Swift.Bool) -&gt; () in AltRant.AvatarEditorViewController.save() -&gt; ()"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;(), SwiftRant.SwiftRantError&gt;) -&gt; () in AltRant.AvatarEditorViewController.save() -&gt; ()"
                   moduleName = "AltRant"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AvatarEditorViewController.swift"
@@ -3502,11 +3486,11 @@
                   offsetFromSymbolStart = "56">
                </Location>
                <Location
-                  uuid = "A80C44AF-ECFE-4318-AC4C-8A67AE84E595 - d4dbbb3511a80048"
+                  uuid = "A80C44AF-ECFE-4318-AC4C-8A67AE84E595 - 5afe22bbcacb7757"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.UIAlertAction) -&gt; () in closure #1 (Swift.Optional&lt;Swift.String&gt;, Swift.Bool) -&gt; () in AltRant.AvatarEditorViewController.save() -&gt; ()"
+                  symbolName = "closure #2 (__C.UIAlertAction) -&gt; () in closure #1 (Swift.Result&lt;(), SwiftRant.SwiftRantError&gt;) -&gt; () in AltRant.AvatarEditorViewController.save() -&gt; ()"
                   moduleName = "AltRant"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AvatarEditorViewController.swift"
@@ -3517,11 +3501,11 @@
                   offsetFromSymbolStart = "28">
                </Location>
                <Location
-                  uuid = "A80C44AF-ECFE-4318-AC4C-8A67AE84E595 - 8dc5fa3d15e45843"
+                  uuid = "A80C44AF-ECFE-4318-AC4C-8A67AE84E595 - ef6ad495b1c6cf6e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #3 @Swift.MainActor () -&gt; () in closure #1 (Swift.Optional&lt;Swift.String&gt;, Swift.Bool) -&gt; () in AltRant.AvatarEditorViewController.save() -&gt; ()"
+                  symbolName = "closure #3 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;(), SwiftRant.SwiftRantError&gt;) -&gt; () in AltRant.AvatarEditorViewController.save() -&gt; ()"
                   moduleName = "AltRant"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AvatarEditorViewController.swift"
@@ -3657,8 +3641,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3689,8 +3673,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3705,8 +3689,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
+            startingLineNumber = "538"
+            endingLineNumber = "538"
             landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3769,8 +3753,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "770"
-            endingLineNumber = "770"
+            startingLineNumber = "784"
+            endingLineNumber = "784"
             landmarkName = "fixNavigationBar()"
             landmarkType = "7">
          </BreakpointContent>
@@ -3849,8 +3833,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3865,8 +3849,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3881,8 +3865,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3897,8 +3881,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3913,8 +3897,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3929,8 +3913,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3945,8 +3929,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3955,22 +3939,6 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "04CA0212-2179-47E2-ADAD-6FD66156E60C"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/AppDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "13C2C37C-7BDC-42A7-8A15-6E9B00F98E54"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -3986,6 +3954,22 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "13C2C37C-7BDC-42A7-8A15-6E9B00F98E54"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/AppDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             uuid = "C1BA0D56-AA46-47CF-9B94-328C51ED0815"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -3993,13 +3977,13 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C1BA0D56-AA46-47CF-9B94-328C51ED0815 - f1f67f44eee4db5"
+                  uuid = "C1BA0D56-AA46-47CF-9B94-328C51ED0815 - f1f67f44eee4df7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4009,12 +3993,12 @@
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AppDelegate.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "153"
-                  endingLineNumber = "153"
+                  startingLineNumber = "155"
+                  endingLineNumber = "155"
                   offsetFromSymbolStart = "2988">
                </Location>
                <Location
-                  uuid = "C1BA0D56-AA46-47CF-9B94-328C51ED0815 - a8cf0650ef51ff0b"
+                  uuid = "C1BA0D56-AA46-47CF-9B94-328C51ED0815 - a8cf0650ef51fec9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4024,8 +4008,8 @@
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AppDelegate.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "154"
-                  endingLineNumber = "154"
+                  startingLineNumber = "156"
+                  endingLineNumber = "156"
                   offsetFromSymbolStart = "88">
                </Location>
             </Locations>
@@ -4041,13 +4025,13 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "BE6AE640-9498-430E-AD61-6D17AC4BCC4E - a8cf0650ef51ff0b"
+                  uuid = "BE6AE640-9498-430E-AD61-6D17AC4BCC4E - a8cf0650ef51fec9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4057,12 +4041,12 @@
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AppDelegate.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "154"
-                  endingLineNumber = "154"
+                  startingLineNumber = "156"
+                  endingLineNumber = "156"
                   offsetFromSymbolStart = "88">
                </Location>
                <Location
-                  uuid = "BE6AE640-9498-430E-AD61-6D17AC4BCC4E - a8cf0650ef51ff0b"
+                  uuid = "BE6AE640-9498-430E-AD61-6D17AC4BCC4E - a8cf0650ef51fec9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4072,12 +4056,12 @@
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AppDelegate.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "154"
-                  endingLineNumber = "154"
-                  offsetFromSymbolStart = "720">
+                  startingLineNumber = "156"
+                  endingLineNumber = "156"
+                  offsetFromSymbolStart = "744">
                </Location>
                <Location
-                  uuid = "BE6AE640-9498-430E-AD61-6D17AC4BCC4E - 59dd90cf01619eba"
+                  uuid = "BE6AE640-9498-430E-AD61-6D17AC4BCC4E - 59dd90cf01619f78"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4087,8 +4071,8 @@
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AppDelegate.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "154"
-                  endingLineNumber = "154"
+                  startingLineNumber = "156"
+                  endingLineNumber = "156"
                   offsetFromSymbolStart = "28">
                </Location>
             </Locations>
@@ -4104,13 +4088,13 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "userNotificationCenter(_:didReceive:withCompletionHandler:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "66B389FB-208C-4B2F-9792-571D0C531631 - a8cf0650ef51ff28"
+                  uuid = "66B389FB-208C-4B2F-9792-571D0C531631 - a8cf0650ef51fee6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4120,12 +4104,12 @@
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AppDelegate.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "155"
-                  endingLineNumber = "155"
-                  offsetFromSymbolStart = "736">
+                  startingLineNumber = "157"
+                  endingLineNumber = "157"
+                  offsetFromSymbolStart = "760">
                </Location>
                <Location
-                  uuid = "66B389FB-208C-4B2F-9792-571D0C531631 - a8cf0650ef51ff28"
+                  uuid = "66B389FB-208C-4B2F-9792-571D0C531631 - a8cf0650ef51fee6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4135,9 +4119,9 @@
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/AppDelegate.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "155"
-                  endingLineNumber = "155"
-                  offsetFromSymbolStart = "848">
+                  startingLineNumber = "157"
+                  endingLineNumber = "157"
+                  offsetFromSymbolStart = "872">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -4152,8 +4136,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4168,8 +4152,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
             landmarkName = "urlSession(_:didReceive:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4184,8 +4168,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "application(_:configurationForConnecting:options:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4264,8 +4248,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "AppDelegate"
             landmarkType = "3">
          </BreakpointContent>
@@ -4280,8 +4264,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "AppDelegate"
             landmarkType = "3">
          </BreakpointContent>
@@ -4296,8 +4280,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "application(_:continue:restorationHandler:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4504,8 +4488,8 @@
             filePath = "AltRant/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "301"
-            endingLineNumber = "301"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
             landmarkName = "encrypt(string:publicKey:)"
             landmarkType = "9">
          </BreakpointContent>
@@ -4712,8 +4696,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
             landmarkName = "performFetch(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4746,8 +4730,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "114"
             endingLineNumber = "114"
-            landmarkName = "init(from:)"
-            landmarkType = "7">
+            landmarkName = "CodingKeys"
+            landmarkType = "13">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4842,8 +4826,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "456"
             endingLineNumber = "456"
-            landmarkName = "SwiftRant"
-            landmarkType = "3">
+            landmarkName = "getWeeklyRants(token:limit:skip:week:completionHandler:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4929,22 +4913,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D114D730-5D67-4C9C-B4F8-95A2AE67A86E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/RantViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
-            landmarkName = "viewDidAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "FD1C320A-CF0E-4B02-8B94-EDA96C1F3326"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4952,13 +4920,13 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "FD1C320A-CF0E-4B02-8B94-EDA96C1F3326 - a7bcbbe11109c8cf"
+                  uuid = "FD1C320A-CF0E-4B02-8B94-EDA96C1F3326 - a7bcbbe11109c9b7"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4968,12 +4936,12 @@
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "302"
-                  endingLineNumber = "302"
-                  offsetFromSymbolStart = "7468">
+                  startingLineNumber = "310"
+                  endingLineNumber = "310"
+                  offsetFromSymbolStart = "6240">
                </Location>
                <Location
-                  uuid = "FD1C320A-CF0E-4B02-8B94-EDA96C1F3326 - 332335b1a1cb48cb"
+                  uuid = "FD1C320A-CF0E-4B02-8B94-EDA96C1F3326 - 332335b1a1cb49b3"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -4983,27 +4951,41 @@
                   urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "302"
-                  endingLineNumber = "302"
-                  offsetFromSymbolStart = "172">
+                  startingLineNumber = "310"
+                  endingLineNumber = "310"
+                  offsetFromSymbolStart = "288">
+               </Location>
+               <Location
+                  uuid = "FD1C320A-CF0E-4B02-8B94-EDA96C1F3326 - 53d36a86bd2bf0f0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) await resume partial function for closure #1 @Sendable () async -&gt; () in AltRant.RantViewController.viewDidAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "310"
+                  endingLineNumber = "310"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  uuid = "FD1C320A-CF0E-4B02-8B94-EDA96C1F3326 - 87b38cfb8d5b2df9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(11) suspend resume partial function for closure #1 @Sendable () async -&gt; () in AltRant.RantViewController.viewDidAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "310"
+                  endingLineNumber = "310"
+                  offsetFromSymbolStart = "108">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BD88E2F4-63DF-4564-8A5C-A3B1A7F915B6"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/RantViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "waitUntilAllTasksAreFinished()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5016,8 +4998,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5032,8 +5014,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "656"
-            endingLineNumber = "656"
+            startingLineNumber = "670"
+            endingLineNumber = "670"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5048,8 +5030,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "647"
-            endingLineNumber = "647"
+            startingLineNumber = "661"
+            endingLineNumber = "661"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5256,8 +5238,8 @@
             filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "322"
-            endingLineNumber = "322"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5367,8 +5349,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "588"
-            endingLineNumber = "588"
+            startingLineNumber = "642"
+            endingLineNumber = "642"
             landmarkName = "openComposeView(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5401,8 +5383,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "613"
             endingLineNumber = "613"
-            landmarkName = "SwiftRant"
-            landmarkType = "3">
+            landmarkName = "getNotificationFeed(token:lastCheckTime:shouldGetNewNotifs:category:completionHandler:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5616,8 +5598,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "611"
             endingLineNumber = "611"
-            landmarkName = "SwiftRant"
-            landmarkType = "3">
+            landmarkName = "getNotificationFeed(token:lastCheckTime:shouldGetNewNotifs:category:completionHandler:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5678,8 +5660,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "672"
-            endingLineNumber = "672"
+            startingLineNumber = "726"
+            endingLineNumber = "726"
             landmarkName = "didVoteOnRant(withID:vote:cell:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5694,10 +5676,57 @@
             filePath = "AltRant/ComposeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "370"
+            endingLineNumber = "370"
             landmarkName = "submit(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "68D65348-AF33-4C5F-A604-F9A3135A6F2B - 5d98477247089923"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;(SwiftRant.Rant, Swift.Array&lt;SwiftRant.Comment&gt;), SwiftRant.SwiftRantError&gt;) -&gt; () in closure #1 (Swift.Result&lt;(), SwiftRant.SwiftRantError&gt;) -&gt; () in AltRant.ComposeViewController.submit(__C.UIBarButtonItem) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/ComposeViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "600">
+               </Location>
+               <Location
+                  uuid = "68D65348-AF33-4C5F-A604-F9A3135A6F2B - 5d98477247089923"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;(SwiftRant.Rant, Swift.Array&lt;SwiftRant.Comment&gt;), SwiftRant.SwiftRantError&gt;) -&gt; () in closure #1 (Swift.Result&lt;(), SwiftRant.SwiftRantError&gt;) -&gt; () in AltRant.ComposeViewController.submit(__C.UIBarButtonItem) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/ComposeViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "2228">
+               </Location>
+               <Location
+                  uuid = "68D65348-AF33-4C5F-A604-F9A3135A6F2B - 5d98477247089923"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;(SwiftRant.Rant, Swift.Array&lt;SwiftRant.Comment&gt;), SwiftRant.SwiftRantError&gt;) -&gt; () in closure #1 (Swift.Result&lt;(), SwiftRant.SwiftRantError&gt;) -&gt; () in AltRant.ComposeViewController.submit(__C.UIBarButtonItem) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/ComposeViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "377"
+                  endingLineNumber = "377"
+                  offsetFromSymbolStart = "2256">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5710,8 +5739,8 @@
             filePath = "AltRant/ComposeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
             landmarkName = "submit(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5720,6 +5749,198 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "B1B5DF96-06A0-4165-9A3E-8EEFCCA65BBF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
+            landmarkName = "performFetch(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "12CDC916-2ACA-46FE-BCF9-093755A7E49A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "performFetch(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1AE38A9B-0832-4398-A1AA-801F19B23E5D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "597"
+            endingLineNumber = "597"
+            landmarkName = "handleRefresh()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "27321BBE-8301-4BCD-A055-97EB33F2F481"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
+            landmarkName = "performFetch(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1AD93B00-A930-4092-BA20-745CC4F729F2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
+            landmarkName = "performFetch(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B506D04E-19A7-4256-B012-2C60C9DCB9F6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
+            landmarkName = "performFetch(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DFA0BC0A-E32D-492A-A49A-A440F06D4CE3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "566"
+            endingLineNumber = "566"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8C1F7A90-0F8B-4FFA-990C-981E7751F32E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "568"
+            endingLineNumber = "568"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "07AB114C-9EC7-44B5-BEEC-E03D6259D4A3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "569"
+            endingLineNumber = "569"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EF9BF715-ADDA-40CD-A3F6-29574D3AC03B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "570"
+            endingLineNumber = "570"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4F9174C6-0602-4F0A-8F76-6880CBD748A3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "576"
+            endingLineNumber = "576"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D8CF937E-FDC0-4380-97C3-2A72D4BFA3AE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "609"
+            endingLineNumber = "609"
+            landmarkName = "scrollViewDidScroll(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A0A4BCF6-C90C-4392-AB71-491135654069"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -5735,15 +5956,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "12CDC916-2ACA-46FE-BCF9-093755A7E49A"
+            uuid = "565F6449-EB81-4293-8ADE-AE3A86EF090D"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
             landmarkName = "performFetch(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5751,31 +5972,63 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1AE38A9B-0832-4398-A1AA-801F19B23E5D"
+            uuid = "383D4D19-4543-45F3-B626-C96F48528102"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/SwiftRant.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "545"
-            endingLineNumber = "545"
-            landmarkName = "handleRefresh()"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
+            landmarkName = "getWeeklyRants(token:limit:skip:week:completionHandler:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "383D4D19-4543-45F3-B626-C96F48528102 - a5a39c565622a802"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in SwiftRant.SwiftRant.getWeeklyRants(token: Swift.Optional&lt;SwiftRant.UserCredentials&gt;, limit: Swift.Int, skip: Swift.Int, week: Swift.Int, completionHandler: (Swift.Optional&lt;Swift.String&gt;, Swift.Optional&lt;SwiftRant.RantFeed&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/SwiftRant.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "428"
+                  endingLineNumber = "428"
+                  offsetFromSymbolStart = "144">
+               </Location>
+               <Location
+                  uuid = "383D4D19-4543-45F3-B626-C96F48528102 - a5a39c565622a802"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in SwiftRant.SwiftRant.getWeeklyRants(token: Swift.Optional&lt;SwiftRant.UserCredentials&gt;, limit: Swift.Int, skip: Swift.Int, week: Swift.Int, completionHandler: (Swift.Optional&lt;Swift.String&gt;, Swift.Optional&lt;SwiftRant.RantFeed&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/SwiftRant.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "428"
+                  endingLineNumber = "428"
+                  offsetFromSymbolStart = "192">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "27321BBE-8301-4BCD-A055-97EB33F2F481"
+            uuid = "52DA43CC-6E94-4C0B-97EA-B45DE767C40A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
+            filePath = "AltRant/WeeklyRantFeedViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "performFetch(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5783,143 +6036,646 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1AD93B00-A930-4092-BA20-745CC4F729F2"
+            uuid = "56E4DD02-71C7-4D0D-BA9F-FF3B467B5D8F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
+            filePath = "AltRant/WeeklyRantFeedViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "performFetch(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2F4C1EC2-FB94-4C0F-ABDE-F6B5E7C453F0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/RantFeed.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EF8F68E3-69B7-4ECE-84B3-2EA886A27D2E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/RantFeed.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FB428CEF-8046-475E-96B3-8C5A285F2E2A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/Extensions/UIImage+.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "loadFromWeb(url:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FB428CEF-8046-475E-96B3-8C5A285F2E2A - 6622cdc1d8a291dc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for __C.UIImage.loadFromWeb(url: Foundation.URL) async -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/Extensions/UIImage+.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "FB428CEF-8046-475E-96B3-8C5A285F2E2A - 6622cdc1d8a291dc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for __C.UIImage.loadFromWeb(url: Foundation.URL) async -&gt; Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/Extensions/UIImage+.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "208">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "87B192E5-677A-4CEA-9464-83F7F557757E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/RantViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "viewDidAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "62524751-DCEF-4731-BB2C-312EB6AE2EE0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/WeeklyRantFeedViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "performFetch(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "33737036-B0AA-4D07-A77E-C134DB1B8B0F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/RantViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "307"
             endingLineNumber = "307"
-            landmarkName = "performFetch(_:)"
+            landmarkName = "viewDidAppear(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "33737036-B0AA-4D07-A77E-C134DB1B8B0F - a7bcbbe11109c92a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for closure #1 @Sendable () async -&gt; () in AltRant.RantViewController.viewDidAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "307"
+                  endingLineNumber = "307"
+                  offsetFromSymbolStart = "4936">
+               </Location>
+               <Location
+                  uuid = "33737036-B0AA-4D07-A77E-C134DB1B8B0F - 3778895f03bc6c32"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) await resume partial function for closure #1 @Sendable () async -&gt; () in AltRant.RantViewController.viewDidAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "307"
+                  endingLineNumber = "307"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "33737036-B0AA-4D07-A77E-C134DB1B8B0F - 332335b1a1cb492e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for closure #1 @Sendable () async -&gt; () in AltRant.RantViewController.viewDidAppear(Swift.Bool) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "307"
+                  endingLineNumber = "307"
+                  offsetFromSymbolStart = "172">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "221DB63C-891F-43C8-A66E-BC9B30614DDE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/RantViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "waitUntilAllTasksAreFinished()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B506D04E-19A7-4256-B012-2C60C9DCB9F6"
+            uuid = "8CE1E77F-FCAB-4A75-A5A1-FF975005B86A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/RantViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "loadImage(from:forUserID:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8CE1E77F-FCAB-4A75-A5A1-FF975005B86A - d8415e46bd1ff094"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "196">
+               </Location>
+               <Location
+                  uuid = "8CE1E77F-FCAB-4A75-A5A1-FF975005B86A - 91e42e07fe8d1395"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "8CE1E77F-FCAB-4A75-A5A1-FF975005B86A - 6a8aa1c53e7cb296"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "68">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "116F00B4-5357-4FCE-9FD9-F54B41ABFDF8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/RantViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "loadImage(from:forUserID:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "116F00B4-5357-4FCE-9FD9-F54B41ABFDF8 - d8415e46bd1ff0b7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "288">
+               </Location>
+               <Location
+                  uuid = "116F00B4-5357-4FCE-9FD9-F54B41ABFDF8 - 91e42e07fe8d1395"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "116F00B4-5357-4FCE-9FD9-F54B41ABFDF8 - 91e42e07fe8d13b6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "116F00B4-5357-4FCE-9FD9-F54B41ABFDF8 - 6a8aa1c53e7cb296"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "116F00B4-5357-4FCE-9FD9-F54B41ABFDF8 - 6a8aa1c53e7cb2b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "124">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9A76E09E-D670-4DA3-A5A0-7C7EC0AF1F91"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/RantViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "loadImage(from:forUserID:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0343D4D5-8CEF-464D-A842-CF65C93B4D58"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/RantViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "loadImage(withUserID:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0343D4D5-8CEF-464D-A842-CF65C93B4D58 - ffb377e50908820"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(withUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "416">
+               </Location>
+               <Location
+                  uuid = "0343D4D5-8CEF-464D-A842-CF65C93B4D58 - ee43dce6b082bfc1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(withUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "0343D4D5-8CEF-464D-A842-CF65C93B4D58 - f05ec8991a494c26"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for closure #1 @Sendable () async throws -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(withUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "200">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "88D36AF2-1493-4343-8ED7-EE831F367C63"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/RantViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "257"
+            endingLineNumber = "257"
+            landmarkName = "viewDidAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8C6FF980-7FFE-4F0C-BE71-BFCC61ECB488"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/RantViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "loadImage(from:forUserID:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8C6FF980-7FFE-4F0C-BE71-BFCC61ECB488 - 631663c6d6ad8bd7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for closure #1 @Sendable () async -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "192">
+               </Location>
+               <Location
+                  uuid = "8C6FF980-7FFE-4F0C-BE71-BFCC61ECB488 - 2763e61dad6be1bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for closure #1 @Sendable () async -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "8C6FF980-7FFE-4F0C-BE71-BFCC61ECB488 - 2763e61dad6be1da"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for closure #1 @Sendable () async -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "8C6FF980-7FFE-4F0C-BE71-BFCC61ECB488 - e4cd6c50a421c7b8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for closure #1 @Sendable () async -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "8C6FF980-7FFE-4F0C-BE71-BFCC61ECB488 - e4cd6c50a421c7d9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for closure #1 @Sendable () async -&gt; __C.UIImage in AltRant.UserImageLoader.loadImage(from: Foundation.URL, forUserID: Swift.Int) async throws -&gt; __C.UIImage"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/RantViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FD7972AB-2B7F-4B4E-93C7-DDAFBB01EE27"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/SwiftRant.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "455"
+            endingLineNumber = "455"
+            landmarkName = "getWeeklyRants(token:limit:skip:week:completionHandler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AA89C42D-0162-49B6-8090-36C6FB7E5FB7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "296"
-            endingLineNumber = "296"
-            landmarkName = "performFetch(_:)"
+            startingLineNumber = "757"
+            endingLineNumber = "757"
+            landmarkName = "updateHiddenKeys()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DFA0BC0A-E32D-492A-A49A-A440F06D4CE3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "514"
-            endingLineNumber = "514"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8C1F7A90-0F8B-4FFA-990C-981E7751F32E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "516"
-            endingLineNumber = "516"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "07AB114C-9EC7-44B5-BEEC-E03D6259D4A3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "517"
-            endingLineNumber = "517"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EF9BF715-ADDA-40CD-A3F6-29574D3AC03B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "518"
-            endingLineNumber = "518"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4F9174C6-0602-4F0A-8F76-6880CBD748A3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "524"
-            endingLineNumber = "524"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D8CF937E-FDC0-4380-97C3-2A72D4BFA3AE"
+            uuid = "64AED507-9C8D-4796-A0BF-65BA1767E47B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
+            filePath = "AltRant/Template Views/RantCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "557"
-            endingLineNumber = "557"
-            landmarkName = "scrollViewDidScroll(_:)"
+            startingLineNumber = "595"
+            endingLineNumber = "595"
+            landmarkName = "tagPressed(_:tagView:sender:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "64AED507-9C8D-4796-A0BF-65BA1767E47B - 7616907448c50403"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AltRant.RantCell.tagPressed(_: Swift.String, tagView: AltRant.TagView, sender: AltRant.TagListView) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/Template%20Views/RantCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "595"
+                  endingLineNumber = "595"
+                  offsetFromSymbolStart = "264">
+               </Location>
+               <Location
+                  uuid = "64AED507-9C8D-4796-A0BF-65BA1767E47B - 7616907448c50403"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AltRant.RantCell.tagPressed(_: Swift.String, tagView: AltRant.TagView, sender: AltRant.TagListView) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Desktop/Projects/AltRant/AltRant/Template%20Views/RantCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "595"
+                  endingLineNumber = "595"
+                  offsetFromSymbolStart = "648">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A0A4BCF6-C90C-4392-AB71-491135654069"
-            shouldBeEnabled = "Yes"
+            uuid = "79322D12-4289-49D5-BBF0-7ABC427F9B4D"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "performFetch(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5927,16 +6683,112 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "565F6449-EB81-4293-8ADE-AE3A86EF090D"
-            shouldBeEnabled = "Yes"
+            uuid = "BDEAC8B3-CE22-4B16-9330-BCD35851CF1B"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AltRant/ViewController.swift"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/SwiftRant.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
-            landmarkName = "performFetch(_:)"
+            startingLineNumber = "537"
+            endingLineNumber = "537"
+            landmarkName = "getWeekList(token:completionHandler:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BDEAC8B3-CE22-4B16-9330-BCD35851CF1B - c88aecef5af1a839"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in SwiftRant.SwiftRant.getWeekList(token: Swift.Optional&lt;SwiftRant.UserCredentials&gt;, completionHandler: (Swift.Result&lt;SwiftRant.WeeklyList, SwiftRant.SwiftRantError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/SwiftRant.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "537"
+                  endingLineNumber = "537"
+                  offsetFromSymbolStart = "172">
+               </Location>
+               <Location
+                  uuid = "BDEAC8B3-CE22-4B16-9330-BCD35851CF1B - c88aecef5af1a839"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in SwiftRant.SwiftRant.getWeekList(token: Swift.Optional&lt;SwiftRant.UserCredentials&gt;, completionHandler: (Swift.Result&lt;SwiftRant.WeeklyList, SwiftRant.SwiftRantError&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "AltRant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/omershamai/Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/SwiftRant.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "537"
+                  endingLineNumber = "537"
+                  offsetFromSymbolStart = "220">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E24E4E1-F9EA-4984-9EF5-0C20B92E279D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/SwiftRant.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "540"
+            endingLineNumber = "540"
+            landmarkName = "getWeekList(token:completionHandler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6D76E3A3-5A4E-41E9-BDD5-60F10FEB034A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/Weekly.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B199CEE7-154E-40BB-8E36-5218B67EBA09"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/Weekly.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9F7D920E-8CEF-4083-9EDC-0090FAA458B6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../../Library/Developer/Xcode/DerivedData/AltRant-bwnjdwfdsnkzhodmwwnkydfwaxds/SourcePackages/checkouts/SwiftRant/Sources/SwiftRant/SwiftRant.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "542"
+            endingLineNumber = "542"
+            landmarkName = "getWeekList(token:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
