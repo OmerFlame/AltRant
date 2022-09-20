@@ -656,9 +656,11 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         if let notificationsViewController = (viewController as? ExtensibleNavigationBarNavigationController), notificationsViewController.viewControllers.contains(where: { $0 is NotificationsTableViewController }) {
             debugPrint("Creating notification refresh timer!")
             
-            (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = Timer(timeInterval: 5, repeats: true) { _ in
+            /*(notificationsViewController.viewControllers.first! as! NotificationsTableViewController).notifRefreshTimer = Timer(timeInterval: 5, repeats: true) { _ in
                 (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).getAllData(notificationType: (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).currentNotificationType, shouldGetNewData: true, completion: nil)
-            }
+            }*/
+            
+            (notificationsViewController.viewControllers.first! as! NotificationsTableViewController).scheduleNotificationFetches()
         } else {
             debugPrint("Destroying notification refresh timer!")
             

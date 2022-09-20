@@ -98,35 +98,47 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     }
     
     func scheduleNotificationFetches() {
-        self.notifRefreshTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
-            debugPrint("Notification Refresh Timer Fired!")
-            
-            if self.isLoading == false {
-                self.isLoading = true
-                //let refreshControlBackup = self.tableView.refreshControl
-                //self.tableView.refreshControl = nil
-                //self.tableView.refreshControl!.isEnabled = false
+        if self.notifRefreshTimer == nil {
+            self.notifRefreshTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
+                debugPrint("Notification Refresh Timer Fired!")
                 
-                self.tableView.refreshControl?.beginRefreshing()
-                
-                self.getAllData(notificationType: self.currentNotificationType, shouldGetNewData: true, completion: nil)
-                
-                self.dispatchGroup.notify(queue: .main) { [weak self] in
-                    //self?.tableView.beginUpdates()
-                    //self?.tableView.insertRows(at: self?.indexPathsToInsert ?? [], with: .automatic)
-                    //self?.tableView.endUpdates()
+                if self.isLoading == false {
+                    self.isLoading = true
+                    self.segmentedControl.isEnabled = false
+                    //let refreshControlBackup = self.tableView.refreshControl
+                    //self.tableView.refreshControl = nil
+                    //self.tableView.refreshControl!.isEnabled = false
                     
-                    self?.tableView.reloadData()
+                    self.tableView.refreshControl?.beginRefreshing()
                     
-                    self?.isLoading = false
-                    self?.tableView.refreshControl?.endRefreshing()
-                    //self?.tableView.refreshControl!.isEnabled = true
-                    //self?.tableView.refreshControl = refreshControlBackup
+                    self.getAllData(notificationType: self.currentNotificationType, shouldGetNewData: true, completion: nil)
+                    
+                    self.dispatchGroup.notify(queue: .main) { [weak self] in
+                        //self?.tableView.beginUpdates()
+                        //self?.tableView.insertRows(at: self?.indexPathsToInsert ?? [], with: .automatic)
+                        //self?.tableView.endUpdates()
+                        
+                        self?.tableView.reloadData()
+                        
+                        self?.isLoading = false
+                        self?.tableView.refreshControl?.endRefreshing()
+                        
+                        self?.segmentedControl.isEnabled = true
+                        //self?.tableView.refreshControl!.isEnabled = true
+                        //self?.tableView.refreshControl = refreshControlBackup
+                    }
                 }
             }
         }
-        
     }
+    
+    /*override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        notifRefreshTimer.invalidate()
+        
+        notifRefreshTimer = nil
+    }*/
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -136,6 +148,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             tableView.refreshControl?.beginRefreshing()
             
             isLoading = true
+            
+            segmentedControl.isEnabled = false
             
             getAllData(notificationType: currentNotificationType, shouldGetNewData: false, completion: nil)
             
@@ -157,13 +171,15 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     
                     self.tableView.refreshControl?.endRefreshing()
                     
+                    self.segmentedControl.isEnabled = true
+                    
                     self.scheduleNotificationFetches()
                 }
             }
         } else {
-            if notifRefreshTimer == nil {
+            /*if notifRefreshTimer == nil {
                 self.scheduleNotificationFetches()
-            }
+            }*/
         }
     }
     
@@ -176,7 +192,12 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             notifRefreshTimer.invalidate()
             
+            notifRefreshTimer = nil
+            
             isLoading = true
+            
+            segmentedControl.isEnabled = false
+            
             getAllData(notificationType: currentNotificationType, shouldGetNewData: true, completion: nil)
             
             //if dispatchGroup.debugDescription.components(separatedBy: ",").filter({ $0.contains("count") }).first?.components(separatedBy: CharacterSet.decimalDigits.inverted).compactMap { Int($0) }.first
@@ -190,6 +211,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 //self.tableView.reloadData()
                 
                 self.isLoading = false
+                
+                self.segmentedControl.isEnabled = true
                 
                 sender.endRefreshing()
                 
@@ -691,12 +714,15 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             }
             
             rantViewController.rantID = notifications[indexPath.row].rantID
+            let notification = notifications[indexPath.row]
+            let usernameMap = usernameMap!
+            
             rantViewController.loadCompletionHandler = { tableViewController in
                 DispatchQueue.global(qos: .userInitiated).async {
                     if let idx = tableViewController!.comments.firstIndex(where: {
-                        $0.createdTime == self.notifications[indexPath.row].createdTime && $0.username == self.usernameMap!.array.first(where: {
-                            $0.uidForUsername == String(self.notifications[indexPath.row].uid)
-                        })!.name || $0.id == self.notifications[indexPath.row].commentID
+                        $0.createdTime == notification.createdTime && $0.username == usernameMap.array.first(where: {
+                            $0.uidForUsername == String(notification.uid)
+                        })!.name || $0.id == notification.commentID
                     }) {
                         DispatchQueue.main.async {
                             tableViewController!.tableView.scrollToRow(at: IndexPath(row: idx, section: 1), at: .middle, animated: true)
