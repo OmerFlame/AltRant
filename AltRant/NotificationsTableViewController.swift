@@ -40,6 +40,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     //private var workItems = [DispatchWorkItem]()
     private var dispatchGroup = DispatchGroup()
     
+    
     private let accessQueue = DispatchQueue(label: "SynchronizedArrayAccess", attributes: .concurrent)
     
     private var indexPathsToInsert = [IndexPath]()
@@ -49,6 +50,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadingIndicator.stopAnimating()
         
         let containerView = UIToolbar()
         
@@ -100,9 +103,11 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             
             if self.isLoading == false {
                 self.isLoading = true
-                let refreshControlBackup = self.tableView.refreshControl
-                self.tableView.refreshControl = nil
+                //let refreshControlBackup = self.tableView.refreshControl
+                //self.tableView.refreshControl = nil
                 //self.tableView.refreshControl!.isEnabled = false
+                
+                self.tableView.refreshControl?.beginRefreshing()
                 
                 self.getAllData(notificationType: self.currentNotificationType, shouldGetNewData: true, completion: nil)
                 
@@ -114,8 +119,9 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     self?.tableView.reloadData()
                     
                     self?.isLoading = false
+                    self?.tableView.refreshControl?.endRefreshing()
                     //self?.tableView.refreshControl!.isEnabled = true
-                    self?.tableView.refreshControl = refreshControlBackup
+                    //self?.tableView.refreshControl = refreshControlBackup
                 }
             }
         }
@@ -126,7 +132,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         super.viewDidAppear(animated)
         
         if !didFinishLoading {
-            loadingIndicator.startAnimating()
+            //loadingIndicator.startAnimating()
+            tableView.refreshControl?.beginRefreshing()
             
             isLoading = true
             
@@ -148,37 +155,47 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     
                     self.isLoading = false
                     
+                    self.tableView.refreshControl?.endRefreshing()
+                    
                     self.scheduleNotificationFetches()
                 }
             }
         } else {
-            self.scheduleNotificationFetches()
+            if notifRefreshTimer == nil {
+                self.scheduleNotificationFetches()
+            }
         }
     }
     
     @objc func didPullToRefresh(_ sender: UIRefreshControl) {
-        unreadNotificationCounters = nil
         
-        tableView.reloadData()
-        
-        notifRefreshTimer.invalidate()
-        
-        isLoading = true
-        getAllData(notificationType: currentNotificationType, shouldGetNewData: true, completion: nil)
-        
-        dispatchGroup.notify(queue: .main) {
-            sender.endRefreshing()
+        if !isLoading {
+            unreadNotificationCounters = nil
             
-            //self.tableView.beginUpdates()
-            //self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
-            //self.tableView.endUpdates()
+            //tableView.reloadData()
             
-            self.tableView.reloadData()
+            notifRefreshTimer.invalidate()
             
-            self.isLoading = false
+            isLoading = true
+            getAllData(notificationType: currentNotificationType, shouldGetNewData: true, completion: nil)
+            
+            //if dispatchGroup.debugDescription.components(separatedBy: ",").filter({ $0.contains("count") }).first?.components(separatedBy: CharacterSet.decimalDigits.inverted).compactMap { Int($0) }.first
+            
+            dispatchGroup.notify(queue: .main) {
+                
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: self.indexPathsToInsert, with: .automatic)
+                self.tableView.endUpdates()
+                
+                //self.tableView.reloadData()
+                
+                self.isLoading = false
+                
+                sender.endRefreshing()
+                
+                self.scheduleNotificationFetches()
+            }
         }
-        
-        scheduleNotificationFetches()
     }
 
     // MARK: - Table View Data Source
@@ -331,7 +348,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         
         SwiftRant.shared.getNotificationFeed(token: nil, lastCheckTime: nil, shouldGetNewNotifs: shouldGetNewData, category: notificationType) { result in
             if case .success(let notificationsResult) = result {
-                let completionSemaphore = DispatchSemaphore(value: 0)
+                //let completionSemaphore = DispatchSemaphore(value: 0)
                 let downloadGroup = DispatchGroup()
                 
                 for item in notificationsResult.items {
@@ -405,7 +422,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 DispatchQueue.main.async {
                     self.didFinishLoading = true
                     self.didSuccessfullyFetchNotifications = true
-                    self.loadingIndicator.stopAnimating()
+                    //self.loadingIndicator.stopAnimating()
                     self.tableView.isHidden = false
                     
                     if self.tableView.dataSource == nil || self.tableView.delegate == nil {
@@ -423,19 +440,29 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                     self.dispatchGroup.leave()
                 }
             } else if case .failure(let failure) = result {
+                self.didFinishLoading = true
+                self.didSuccessfullyFetchNotifications = false
+                
+                self.accessQueue.async(flags: .barrier) {
+                    self.indexPathsToInsert = []
+                }
+                
                 DispatchQueue.main.async {
                     self.showAlertWithError(failure.message, retryHandler: nil)
+                    
+                    debugPrint("TASK LEAVING!")
+                    self.dispatchGroup.leave()
                 }
-            } else {
+            }/* else {
                 DispatchQueue.main.async {
                     self.didFinishLoading = true
-                    self.loadingIndicator.stopAnimating()
+                    //self.loadingIndicator.stopAnimating()
                     self.didSuccessfullyFetchNotifications = false
                     
                     debugPrint("TASK LEAVING!")
                     self.dispatchGroup.leave()
                 }
-            }
+            }*/
         }
         
         /*DispatchQueue.global(qos: .userInitiated).async {
@@ -743,7 +770,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             dispatchGroup.wait()
         }*/
         
-        if sender.selectedSegmentIndex == 0 {
+        /*if sender.selectedSegmentIndex == 0 {
             currentNotificationType = .all
         } else if sender.selectedSegmentIndex == 1 {
             currentNotificationType = .upvotes
@@ -753,7 +780,9 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             currentNotificationType = .comments
         } else if sender.selectedSegmentIndex == 4 {
             currentNotificationType = .subs
-        }
+        }*/
+        
+        currentNotificationType = .init(rawValue: sender.selectedSegmentIndex)!
         
         //let indexPaths = (0..<tableView(tableView, numberOfRowsInSection: 0)).map { IndexPath(row: $0, section: 0) }
         let indexPaths = tableView.indexPathsForRows(in: CGRect(origin: .zero, size: tableView.contentSize)) ?? []
