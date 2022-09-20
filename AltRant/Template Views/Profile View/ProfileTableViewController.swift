@@ -656,88 +656,90 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillDisappear(_ animated: Bool) {
         let targetHeight: CGFloat = 21
         
-        var thresholdHeight = tableView.tableHeaderView!.frame.size.height - navigationController!.navigationBar.frame.maxY - headerTitle.frame.size.height - 2 * (blurView.frame.size.height - 21)
-        
-        thresholdHeight += 42
-        
-        let previousTintColor = navigationController!.navigationBar.tintColor
-        let previousBackgroundAlpha = navigationController!.navigationBar.backgroundView!.alpha
-        let previousTitleView = navigationItem.titleView
-        
-        var offset = ((tableView.contentOffset.y - thresholdHeight) / targetHeight)
-        
-        if offset > 1 {offset = 1}
-        
-        if offset < 0 { offset = 0 }
-        
-        if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
+        if let tableHeaderView = tableView.tableHeaderView, let navigationController = navigationController {
+            var thresholdHeight = tableHeaderView.frame.size.height - navigationController.navigationBar.frame.maxY - headerTitle.frame.size.height - 2 * (blurView.frame.size.height - 21)
             
-            print("RUNNING AS EXTENSIVE")
-            transitionCoordinator?.animate(alongsideTransition: { context in
-                if self.navigationItem.titleView!.alpha == 0 {
-                    self.navigationItem.titleView!.isHidden = true
-                }
-                
-                extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
-                self.navigationController?.navigationBar.backgroundView?.alpha = 1
-                
-                self.navigationController?.navigationBar.tintColor = UIButton().tintColor
-            }, completion: { context in
-                if context.isCancelled && self.navigationController?.topViewController == self {
-                    
-                    print("CANCELLED")
-                    
-                    print("FROM: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
-                    print("TO: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
-                    self.navigationItem.titleView!.isHidden = false
-                    extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = previousBackgroundAlpha
-                    self.navigationController?.navigationBar.backgroundView?.alpha = previousBackgroundAlpha
-                    
-                    self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = previousBackgroundAlpha
-                    
-                    self.navigationController?.navigationBar.tintColor = previousTintColor
-                }
-            })
-        } else {
-            print("NOT RUNNING AS EXTENSIVE")
+            thresholdHeight += 42
             
-            transitionCoordinator?.animate(alongsideTransition: { context in
-                if self.navigationItem.titleView!.alpha == 0 {
-                    self.navigationItem.titleView!.isHidden = true
-                }
+            let previousTintColor = navigationController.navigationBar.tintColor
+            let previousBackgroundAlpha = navigationController.navigationBar.backgroundView!.alpha
+            let previousTitleView = navigationItem.titleView
+            
+            var offset = ((tableView.contentOffset.y - thresholdHeight) / targetHeight)
+            
+            if offset > 1 {offset = 1}
+            
+            if offset < 0 { offset = 0 }
+            
+            if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
                 
-                self.navigationController?.navigationBar.backgroundView?.alpha = 1
-                self.navigationController?.navigationBar.visualEffectView?.alpha = 1
-                self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
-                
-                self.navigationController?.navigationBar.tintColor = UIButton().tintColor
-            }, completion: { context in
-                if context.isCancelled {
-                    
-                    print("CANCELLED")
-                    
-                    print("FROM: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
-                    print("TO: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
-                    self.navigationItem.titleView!.isHidden = false
-                    
-                    if self.navigationController?.topViewController == self {
-                    
-                        print("PREVIOUS BACKGROUND ALPHA: \(previousBackgroundAlpha)")
-                        self.navigationController?.navigationBar.backgroundView?.alpha = previousBackgroundAlpha
-                    
-                        self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = previousBackgroundAlpha
-                    
-                        self.navigationController?.navigationBar.tintColor = previousTintColor
-                        self.scrollViewDidScroll(self.tableView)
-                    } else {
-                        self.navigationController?.navigationBar.backgroundView?.alpha = 1
-                        self.navigationController?.navigationBar.visualEffectView?.alpha = 1
-                        self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
-                        
-                        self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+                print("RUNNING AS EXTENSIVE")
+                transitionCoordinator?.animate(alongsideTransition: { context in
+                    if self.navigationItem.titleView!.alpha == 0 {
+                        self.navigationItem.titleView!.isHidden = true
                     }
-                }
-            })
+                    
+                    extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
+                    self.navigationController?.navigationBar.backgroundView?.alpha = 1
+                    
+                    self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+                }, completion: { context in
+                    if context.isCancelled && self.navigationController?.topViewController == self {
+                        
+                        print("CANCELLED")
+                        
+                        print("FROM: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
+                        print("TO: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
+                        self.navigationItem.titleView!.isHidden = false
+                        extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = previousBackgroundAlpha
+                        self.navigationController?.navigationBar.backgroundView?.alpha = previousBackgroundAlpha
+                        
+                        self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = previousBackgroundAlpha
+                        
+                        self.navigationController?.navigationBar.tintColor = previousTintColor
+                    }
+                })
+            } else {
+                print("NOT RUNNING AS EXTENSIVE")
+                
+                transitionCoordinator?.animate(alongsideTransition: { context in
+                    if self.navigationItem.titleView!.alpha == 0 {
+                        self.navigationItem.titleView!.isHidden = true
+                    }
+                    
+                    self.navigationController?.navigationBar.backgroundView?.alpha = 1
+                    self.navigationController?.navigationBar.visualEffectView?.alpha = 1
+                    self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
+                    
+                    self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+                }, completion: { context in
+                    if context.isCancelled {
+                        
+                        print("CANCELLED")
+                        
+                        print("FROM: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
+                        print("TO: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
+                        self.navigationItem.titleView!.isHidden = false
+                        
+                        if self.navigationController?.topViewController == self {
+                        
+                            print("PREVIOUS BACKGROUND ALPHA: \(previousBackgroundAlpha)")
+                            self.navigationController?.navigationBar.backgroundView?.alpha = previousBackgroundAlpha
+                        
+                            self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = previousBackgroundAlpha
+                        
+                            self.navigationController?.navigationBar.tintColor = previousTintColor
+                            self.scrollViewDidScroll(self.tableView)
+                        } else {
+                            self.navigationController?.navigationBar.backgroundView?.alpha = 1
+                            self.navigationController?.navigationBar.visualEffectView?.alpha = 1
+                            self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = 1
+                            
+                            self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+                        }
+                    }
+                })
+            }
         }
         
         super.viewWillDisappear(animated)
