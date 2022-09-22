@@ -808,7 +808,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
             currentNotificationType = .subs
         }*/
         
-        currentNotificationType = .init(rawValue: sender.selectedSegmentIndex)!
+        currentNotificationType = Notifications.Categories.allCases[sender.selectedSegmentIndex]
         
         //let indexPaths = (0..<tableView(tableView, numberOfRowsInSection: 0)).map { IndexPath(row: $0, section: 0) }
         let indexPaths = tableView.indexPathsForRows(in: CGRect(origin: .zero, size: tableView.contentSize)) ?? []

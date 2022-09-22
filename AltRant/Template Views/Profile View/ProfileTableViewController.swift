@@ -20,10 +20,10 @@ class commentFeedData {
 }
 
 protocol ProfileTableViewControllerDelegate: FeedDelegate {
-    func setVoteStateForRant(withID id: Int, voteState: Int)
+    func setVoteStateForRant(withID id: Int, voteState: VoteState)
     func setScoreForRant(withID id: Int, score: Int)
     
-    func setVoteStateForComment(withID id: Int, voteState: Int)
+    func setVoteStateForComment(withID id: Int, voteState: VoteState)
     func setScoreForComment(withID id: Int, score: Int)
     
     func reloadData()
@@ -1232,13 +1232,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // MARK: - Profile Table View Controller Delegate
-    func setVoteStateForRant(withID id: Int, voteState: Int) {
-        guard (-1...1).contains(voteState) && [Profile.ProfileContentTypes.rants, Profile.ProfileContentTypes.favorite, Profile.ProfileContentTypes.upvoted].contains(currentContentType) else {
-            return
-        }
-        
+    func setVoteStateForRant(withID id: Int, voteState: VoteState) {
         if let rantIndex = indexForRant(withID: id) {
-            rantTypeContent[rantIndex].voteState = RantInFeed.VoteState(rawValue: voteState) ?? .unvotable
+            rantTypeContent[rantIndex].voteState = voteState
         }
     }
     
@@ -1252,11 +1248,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    func setVoteStateForComment(withID id: Int, voteState: Int) {
-        guard (-1...1).contains(voteState) && currentContentType == .comments else {
-            return
-        }
-        
+    func setVoteStateForComment(withID id: Int, voteState: VoteState) {
         if let commentIndex = indexForComment(withID: id) {
             commentTypeContent.commentTypeContent[commentIndex].voteState = voteState
         }
@@ -1277,11 +1269,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // MARK: - Feed Delegate
-    func didVoteOnRant(withID id: Int, vote: Int, cell: SecondaryRantInFeedCell) {
-        guard (-1...1).contains(vote) && [Profile.ProfileContentTypes.rants, Profile.ProfileContentTypes.favorite, Profile.ProfileContentTypes.upvoted].contains(currentContentType) else {
-            return
-        }
-        
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: SecondaryRantInFeedCell) {
         let rantIndex = indexForRant(withID: id)
         
         SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] result in
@@ -1295,7 +1283,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 //self?.rant?.score = updatedRant.score
                 
                 if let rantIndex = rantIndex {
-                    self?.rantTypeContent[rantIndex].voteState = RantInFeed.VoteState(rawValue: updatedRant.voteState) ?? .unvotable
+                    self?.rantTypeContent[rantIndex].voteState = updatedRant.voteState
                     self?.rantTypeContent[rantIndex].score = updatedRant.score
                 }
                 
@@ -1328,11 +1316,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    func didVoteOnComment(withID id: Int, vote: Int, cell: CommentCell) {
-        guard (-1...1).contains(vote) && currentContentType == .comments else {
-            return
-        }
-        
+    func didVoteOnComment(withID id: Int, vote: VoteState, cell: CommentCell) {
         let commentIndex = indexForComment(withID: id)
         
         guard let commentIndex = commentIndex else {

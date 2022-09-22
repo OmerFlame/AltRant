@@ -20,7 +20,7 @@ class rantFeedData {
 }
 
 protocol HomeFeedTableViewControllerDelegate: FeedDelegate {
-    func changeRantVoteState(rantID id: Int, voteState: Int)
+    func changeRantVoteState(rantID id: Int, voteState: VoteState)
     func changeRantScore(rantID id: Int, score: Int)
     
     func reloadData()
@@ -683,15 +683,11 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     }
     
     // MARK: - Home Feed Table View Controller Delegate
-    func changeRantVoteState(rantID id: Int, voteState: Int) {
-        guard (-1...1).contains(voteState) else {
-            return
-        }
-        
+    func changeRantVoteState(rantID id: Int, voteState: VoteState) {
         let rantIndex = indexOfRant(withID: id)
         
         if let rantIndex = rantIndex {
-            rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = RantInFeed.VoteState(rawValue: voteState) ?? .unvotable
+            rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = voteState
             
             //tableView.reloadData()
         }
@@ -712,7 +708,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     }
     
     // MARK: - Feed Delegate
-    func didVoteOnRant(withID id: Int, vote: Int, cell: SecondaryRantInFeedCell) {
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: SecondaryRantInFeedCell) {
         let rantIndex = indexOfRant(withID: id)
         
         guard let rantIndex = rantIndex else {
@@ -725,7 +721,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         
         SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] result in
             if case .success(let updatedRant) = result {
-                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = RantInFeed.VoteState(rawValue: updatedRant.voteState) ?? .unvotable
+                self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].voteState = updatedRant.voteState
                 self?.rantFeed.rantFeed[rantIndex.section].rants[rantIndex.row].score = updatedRant.score
                 
                 DispatchQueue.main.async {

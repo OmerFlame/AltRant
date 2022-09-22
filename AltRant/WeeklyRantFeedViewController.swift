@@ -67,46 +67,49 @@ class WeeklyRantFeedViewController: UITableViewController, HomeFeedTableViewCont
                 
                 //tableView.tableHeaderView = UINib(nibName: "WeeklyRantHeaderMedium", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderMedium
                 
-                
-                let (start, end) = (combinedRantInFeedCount, feed.rants.count + combinedRantInFeedCount)
-                let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
-                
-                self?.feeds.append(feed)
-                
-                for (idx, rant) in feed.rants.enumerated() {
-                    if rant.attachedImage != nil {
-                        if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
-                            self?.supplementalImages[indexPaths[idx]] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
-                        } else {
-                            self?.supplementalImages[indexPaths[idx]] = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
+                if !feed.rants.isEmpty {
+                    let (start, end) = (combinedRantInFeedCount, feed.rants.count + combinedRantInFeedCount)
+                    let indexPaths = (start..<end).map { return IndexPath(row: $0, section: 0) }
+                    
+                    self?.feeds.append(feed)
+                    
+                    for (idx, rant) in feed.rants.enumerated() {
+                        if rant.attachedImage != nil {
+                            if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
+                                self?.supplementalImages[indexPaths[idx]] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
+                            } else {
+                                self?.supplementalImages[indexPaths[idx]] = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
+                            }
                         }
                     }
-                }
-                
-                self?.currentPage += 1
-                
-                DispatchQueue.main.async {
-                    self?.weeklyRantHeader = UINib(nibName: "WeeklyRantHeaderMedium", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderSmall
                     
-                    self?.weeklyRantHeader.titleLabel.text = feed.news!.headline
-                    self?.weeklyRantHeader.subtitleLabel.text = feed.news!.footer
-                    self?.weeklyRantHeader.frame.size.height = 65
+                    self?.currentPage += 1
                     
-                    //self?.tableView.tableHeaderView = self?.weeklyRantHeader
-                    
-                    (self?.navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(self?.weeklyRantHeader, forHeight: 65)
-                    
-                    CATransaction.begin()
-                    
-                    CATransaction.setCompletionBlock {
-                        self?.tableView.reloadData()
+                    DispatchQueue.main.async {
+                        self?.weeklyRantHeader = UINib(nibName: "WeeklyRantHeaderMedium", bundle: nil).instantiate(withOwner: nil)[0] as! WeeklyRantHeaderSmall
+                        
+                        self?.weeklyRantHeader.titleLabel.text = feed.news!.headline
+                        self?.weeklyRantHeader.subtitleLabel.text = feed.news!.footer
+                        self?.weeklyRantHeader.frame.size.height = 65
+                        
+                        //self?.tableView.tableHeaderView = self?.weeklyRantHeader
+                        
+                        (self?.navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(self?.weeklyRantHeader, forHeight: 65)
+                        
+                        CATransaction.begin()
+                        
+                        CATransaction.setCompletionBlock {
+                            self?.tableView.reloadData()
+                        }
+                        
+                        self?.tableView.beginUpdates()
+                        self?.tableView.insertRows(at: indexPaths, with: .automatic)
+                        self?.tableView.endUpdates()
+                        
+                        CATransaction.commit()
                     }
-                    
-                    self?.tableView.beginUpdates()
-                    self?.tableView.insertRows(at: indexPaths, with: .automatic)
-                    self?.tableView.endUpdates()
-                    
-                    CATransaction.commit()
+                } else {
+                    return
                 }
             } else if case .failure(let failure) = result {
                 DispatchQueue.main.async {
@@ -262,15 +265,11 @@ class WeeklyRantFeedViewController: UITableViewController, HomeFeedTableViewCont
         return nil
     }
     
-    func changeRantVoteState(rantID id: Int, voteState: Int) {
-        guard (-1...1).contains(voteState) else {
-            return
-        }
-        
+    func changeRantVoteState(rantID id: Int, voteState: VoteState) {
         let rantIndex = indexOfRant(withID: id)
         
         if let rantIndex = rantIndex {
-            feeds[rantIndex.section].rants[rantIndex.row].voteState = RantInFeed.VoteState(rawValue: voteState) ?? .unvotable
+            feeds[rantIndex.section].rants[rantIndex.row].voteState = voteState
             
             //tableView.reloadData()
         }
@@ -286,7 +285,7 @@ class WeeklyRantFeedViewController: UITableViewController, HomeFeedTableViewCont
         }
     }
     
-    func didVoteOnRant(withID id: Int, vote: Int, cell: SecondaryRantInFeedCell) {
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: SecondaryRantInFeedCell) {
         let rantIndex = indexOfRant(withID: id)
         
         guard let rantIndex = rantIndex else {
@@ -299,7 +298,7 @@ class WeeklyRantFeedViewController: UITableViewController, HomeFeedTableViewCont
         
         SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] result in
             if case .success(let updatedRant) = result {
-                self?.feeds[rantIndex.section].rants[rantIndex.row].voteState = RantInFeed.VoteState(rawValue: updatedRant.voteState) ?? .unvotable
+                self?.feeds[rantIndex.section].rants[rantIndex.row].voteState = updatedRant.voteState
                 self?.feeds[rantIndex.section].rants[rantIndex.row].score = updatedRant.score
                 
                 DispatchQueue.main.async {

@@ -90,15 +90,15 @@ class RantInSubscribedFeedCell: UITableViewCell {
         trailingUserActionImageView.isHidden = false
         userActionDescriptionLabel.isHidden = false
         
-        upvoteButton.tintColor = (rantContents!.voteState == 1 ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
+        upvoteButton.tintColor = (rantContents!.voteState == .upvoted ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
         scoreLabel.text = String(rantContents!.score)
-        downvoteButton.tintColor = (rantContents!.voteState == -1 ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
+        downvoteButton.tintColor = (rantContents!.voteState == .downvoted ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
         
-        upvoteButton.isEnabled = rantContents!.voteState != -2
-        downvoteButton.isEnabled = rantContents!.voteState != -2
+        upvoteButton.isEnabled = rantContents!.voteState != .unvotable
+        downvoteButton.isEnabled = rantContents!.voteState != .unvotable
         
-        upvoteButton.isUserInteractionEnabled = rantContents!.voteState != -2
-        downvoteButton.isUserInteractionEnabled = rantContents!.voteState != -2
+        upvoteButton.isUserInteractionEnabled = rantContents!.voteState != .unvotable
+        downvoteButton.isUserInteractionEnabled = rantContents!.voteState != .unvotable
         
         if image == nil {
             supplementalImageView.image = nil
@@ -226,16 +226,16 @@ class RantInSubscribedFeedCell: UITableViewCell {
     }
     
     @IBAction func handleUpvote(_ sender: Any) {
-        var vote: Int {
+        var vote: VoteState {
             switch self.rantContents!.voteState {
-            case 0:
-                return 1
+            case .unvoted:
+                return.upvoted
                 
-            case 1:
-                return 0
+            case .upvoted:
+                return .unvoted
                 
             default:
-                return 1
+                return .upvoted
             }
         }
         
@@ -264,16 +264,16 @@ class RantInSubscribedFeedCell: UITableViewCell {
     }
     
     @IBAction func handleDownvote(_ sender: Any) {
-        var vote: Int {
+        var vote: VoteState {
             switch self.rantContents!.voteState {
-            case 0:
-                return -1
+            case .unvoted:
+                return .downvoted
                 
-            case -1:
-                return 0
+            case .downvoted:
+                return .unvoted
                 
             default:
-                return -1
+                return .downvoted
             }
         }
         

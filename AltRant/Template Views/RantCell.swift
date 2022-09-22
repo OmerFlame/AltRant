@@ -96,10 +96,10 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
         
         bodyLabel.text = rantContents!.text
         
-        upvoteButton.tintColor = (model.voteState == 1 ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
+        upvoteButton.tintColor = (model.voteState == .upvoted ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         //scoreLabel.text = String(rantContents!.score)
         scoreLabel.text = formatNumber(rantContents!.score)
-        downvoteButton.tintColor = (model.voteState == -1 ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
+        downvoteButton.tintColor = (model.voteState == .downvoted ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         
         if supplementalImage == nil {
             supplementalImageView.isHidden = true
@@ -159,8 +159,8 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
             //supplementalImageView.frame.size = supplementalImage!.size
         }
         
-        upvoteButton.isEnabled = rantContents!.voteState != -2
-        downvoteButton.isEnabled = rantContents!.voteState != -2
+        upvoteButton.isEnabled = rantContents!.voteState != .unvotable
+        downvoteButton.isEnabled = rantContents!.voteState != .unvotable
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
         
@@ -435,23 +435,23 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
     }*/
     
     @IBAction func upvote(_ sender: UIButton) {
-        var vote: Int {
+        var vote: VoteState {
             switch self.rantContents!.voteState {
-            case 0:
-                return 1
+            case .unvoted:
+                return .upvoted
                 
-            case 1:
-                return 0
+            case .upvoted:
+                return .unvoted
                 
             default:
-                return 1
+                return .upvoted
             }
         }
         
         //let success = APIRequest().voteOnRant(rantID: self.rantContents!.id, vote: vote)
         
         delegate?.changeRantVoteState(voteState: vote)
-        delegate?.changeRantScore(score: rantContents!.voteState == 1 ? rantContents!.score - 1 : rantContents!.score + vote)
+        delegate?.changeRantScore(score: rantContents!.voteState == .upvoted ? rantContents!.score - 1 : rantContents!.score + vote.rawValue)
         
         DispatchQueue.main.async {
             self.delegate?.reloadData()
@@ -506,21 +506,21 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
     }
     
     @IBAction func downvote(_ sender: UIButton) {
-        var vote: Int {
+        var vote: VoteState {
             switch self.rantContents!.voteState {
-            case 0:
-                return -1
+            case .unvoted:
+                return .downvoted
                 
-            case -1:
-                return 0
+            case .downvoted:
+                return .unvoted
                 
             default:
-                return -1
+                return .downvoted
             }
         }
         
         delegate?.changeRantVoteState(voteState: vote)
-        delegate?.changeRantScore(score: rantContents!.voteState == 1 ? rantContents!.score - 1 : rantContents!.score + vote)
+        delegate?.changeRantScore(score: rantContents!.voteState == .upvoted ? rantContents!.score - 1 : rantContents!.score + vote.rawValue)
         
         DispatchQueue.main.async {
             self.delegate?.reloadData()

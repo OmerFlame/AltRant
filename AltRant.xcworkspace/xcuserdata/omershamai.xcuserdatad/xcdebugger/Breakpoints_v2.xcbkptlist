@@ -4746,8 +4746,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "270"
             endingLineNumber = "270"
-            landmarkName = "init(from:)"
-            landmarkType = "7">
+            landmarkName = "RantType"
+            landmarkType = "13">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5564,8 +5564,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "728"
-            endingLineNumber = "728"
+            startingLineNumber = "724"
+            endingLineNumber = "724"
             landmarkName = "didVoteOnRant(withID:vote:cell:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6052,22 +6052,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "62524751-DCEF-4731-BB2C-312EB6AE2EE0"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AltRant/WeeklyRantFeedViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "performFetch(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "33737036-B0AA-4D07-A77E-C134DB1B8B0F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -6514,8 +6498,8 @@
             filePath = "AltRant/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "759"
-            endingLineNumber = "759"
+            startingLineNumber = "755"
+            endingLineNumber = "755"
             landmarkName = "updateHiddenKeys()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6708,7 +6692,23 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "138"
             endingLineNumber = "138"
-            landmarkName = "viewWillDisappear(_:)"
+            landmarkName = "NotificationsTableViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "28FF53EB-7253-40F4-8499-C09505E4948F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AltRant/WeeklyRantFeedViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

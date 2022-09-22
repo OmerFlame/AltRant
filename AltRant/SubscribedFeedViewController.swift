@@ -9,7 +9,7 @@ import UIKit
 import SwiftRant
 
 protocol SubscribedFeedViewControllerDelegate: AnyObject {
-    func setVoteStateForRant(withID id: Int, voteState: Int)
+    func setVoteStateForRant(withID id: Int, voteState: VoteState)
     func setScoreForRant(withID id: Int, score: Int)
     
     func reloadData()
@@ -543,11 +543,7 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // MARK: - Feed Delegate
-    func didVoteOnRant(withID id: Int, vote: Int, cell: RantInSubscribedFeedCell) {
-        guard (-1...1).contains(vote) else {
-            return
-        }
-        
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantInSubscribedFeedCell) {
         let rantIndex = indexOfRant(withID: id)
         
         guard rantIndex != nil else {
@@ -595,11 +591,7 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // MARK: - Subscribed Feed View Controller Delegate
-    func setVoteStateForRant(withID id: Int, voteState: Int) {
-        guard (-1...1).contains(voteState) else {
-            return
-        }
-        
+    func setVoteStateForRant(withID id: Int, voteState: VoteState) {
         if let rantIndex = indexOfRant(withID: id) {
             subscribedFeed[rantIndex.section].rants[rantIndex.row].voteState = voteState
         }

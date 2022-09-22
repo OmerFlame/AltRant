@@ -139,10 +139,10 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         bodyLabel.isHidden = false
         supplementalImageView.isHidden = false
         
-        upvoteButton.tintColor = (model.voteState == 1 ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
+        upvoteButton.tintColor = (model.voteState == .upvoted ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         //scoreLabel.text = String(commentContents!.score)
         scoreLabel.text = formatNumber(commentContents!.score)
-        downvoteButton.tintColor = (model.voteState == -1 ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
+        downvoteButton.tintColor = (model.voteState == .downvoted ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         
         if supplementalImage == nil {
             supplementalImageView.isHidden = true
@@ -161,8 +161,8 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             supplementalImageView.image = newImage
         }
         
-        upvoteButton.isEnabled = commentContents!.voteState != -2
-        downvoteButton.isEnabled = commentContents!.voteState != -2
+        upvoteButton.isEnabled = commentContents!.voteState != .unvotable
+        downvoteButton.isEnabled = commentContents!.voteState != .unvotable
         
         bodyLabel.text = commentContents!.body
         
@@ -404,24 +404,24 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
     }
     
     @IBAction func handleUpvote(_ sender: UIButton) {
-        var vote: Int {
+        var vote: VoteState {
             switch self.commentContents!.voteState {
-            case 0:
-                return 1
+            case .unvoted:
+                return .upvoted
                 
-            case 1:
-                return 0
+            case .upvoted:
+                return .unvoted
                 
             default:
-                return 1
+                return .upvoted
             }
         }
         
         (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForComment(withID: commentContents!.id, voteState: vote)
         (delegate as? RantViewControllerDelegate)?.changeCommentVoteState(commentID: commentContents!.id, voteState: vote)
         
-        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForComment(withID: commentContents!.id, score: commentContents!.voteState == 1 ? commentContents!.score - 1 : commentContents!.score + vote)
-        (delegate as? RantViewControllerDelegate)?.changeCommentScore(commentID: commentContents!.id, score: commentContents!.voteState == 1 ? commentContents!.score - 1 : commentContents!.score + vote)
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForComment(withID: commentContents!.id, score: commentContents!.voteState == .upvoted ? commentContents!.score - 1 : commentContents!.score + vote.rawValue)
+        (delegate as? RantViewControllerDelegate)?.changeCommentScore(commentID: commentContents!.id, score: commentContents!.voteState == .upvoted ? commentContents!.score - 1 : commentContents!.score + vote.rawValue)
         
         DispatchQueue.main.async {
             (self.delegate as? ProfileTableViewControllerDelegate)?.reloadData()
@@ -493,24 +493,24 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
     }
     
     @IBAction func handleDownvote(_ sender: UIButton) {
-        var vote: Int {
+        var vote: VoteState {
             switch self.commentContents!.voteState {
-            case 0:
-                return -1
+            case .unvoted:
+                return .downvoted
                 
-            case -1:
-                return 0
+            case .downvoted:
+                return .unvoted
                 
             default:
-                return -1
+                return .downvoted
             }
         }
         
         (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForComment(withID: commentContents!.id, voteState: vote)
         (delegate as? RantViewControllerDelegate)?.changeCommentVoteState(commentID: commentContents!.id, voteState: vote)
         
-        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForComment(withID: commentContents!.id, score: commentContents!.voteState == -1 ? commentContents!.score + 1 : commentContents!.score + vote)
-        (delegate as? RantViewControllerDelegate)?.changeCommentScore(commentID: commentContents!.id, score: commentContents!.voteState == -1 ? commentContents!.score + 1 : commentContents!.score + vote)
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForComment(withID: commentContents!.id, score: commentContents!.voteState == .downvoted ? commentContents!.score + 1 : commentContents!.score + vote.rawValue)
+        (delegate as? RantViewControllerDelegate)?.changeCommentScore(commentID: commentContents!.id, score: commentContents!.voteState == .downvoted ? commentContents!.score + 1 : commentContents!.score + vote.rawValue)
         
         DispatchQueue.main.async {
             (self.delegate as? ProfileTableViewControllerDelegate)?.reloadData()

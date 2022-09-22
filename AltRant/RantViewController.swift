@@ -122,10 +122,10 @@ actor UserImageLoader {
 }
 
 protocol RantViewControllerDelegate: FeedDelegate {
-    func changeRantVoteState(voteState: Int)
+    func changeRantVoteState(voteState: VoteState)
     func changeRantScore(score: Int)
     
-    func changeCommentVoteState(commentID id: Int, voteState: Int)
+    func changeCommentVoteState(commentID id: Int, voteState: VoteState)
     func changeCommentScore(commentID id: Int, score: Int)
     
     func reloadData()
@@ -796,11 +796,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - Feed Delegate
     
-    func didVoteOnRant(withID id: Int, vote: Int, cell: RantCell) {
-        guard (-1...1).contains(vote) else {
-            return
-        }
-        
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantCell) {
         SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] result in
             if case .success(let updatedRant) = result {
                 /*if let rantInFeed = self?.rantInFeed {
@@ -880,11 +876,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return nil
     }
     
-    func didVoteOnComment(withID id: Int, vote: Int, cell: CommentCell) {
-        guard (-1...1).contains(vote) else {
-            return
-        }
-        
+    func didVoteOnComment(withID id: Int, vote: VoteState, cell: CommentCell) {
         let commentIndex = indexOfComment(withID: id)
         
         guard let commentIndex = commentIndex else {
@@ -950,11 +942,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func changeRantVoteState(voteState: Int) {
-        guard (-1...1).contains(voteState) else {
-            return
-        }
-        
+    func changeRantVoteState(voteState: VoteState) {
         rant?.voteState = voteState
     }
     
@@ -962,11 +950,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         rant?.score = score
     }
     
-    func changeCommentVoteState(commentID id: Int, voteState: Int) {
-        guard (-1...1).contains(voteState) else {
-            return
-        }
-        
+    func changeCommentVoteState(commentID id: Int, voteState: VoteState) {
         comments[comments.firstIndex(where: { $0.id == id })!].voteState = voteState
         //comments.first(where: { $0.id == id })?.voteState = voteState
     }

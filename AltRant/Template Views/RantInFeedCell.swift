@@ -188,16 +188,16 @@ class RantInFeedCell: UITableViewCell {
     }
     
     @IBAction func handleUpvote(_ sender: UIButton) {
-        var vote: Int {
-            switch self.rantContents!.pointee.voteState.rawValue {
-            case 0:
-                return 1
+        var vote: VoteState {
+            switch self.rantContents!.pointee.voteState {
+            case .unvoted:
+                return .upvoted
                 
-            case 1:
-                return 0
+            case .upvoted:
+                return .unvoted
                 
             default:
-                return 1
+                return .upvoted
             }
         }
         
@@ -216,7 +216,7 @@ class RantInFeedCell: UITableViewCell {
         
         SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] result in
             if case .success(let updatedRant) = result {
-                self?.rantContents!.pointee.voteState = RantInFeed.VoteState(rawValue: updatedRant.voteState) ?? .unvotable
+                self?.rantContents!.pointee.voteState = updatedRant.voteState
                 self?.rantContents!.pointee.score = updatedRant.score
                 
                 if let parentTableView = self?.parentTableView {
@@ -233,16 +233,16 @@ class RantInFeedCell: UITableViewCell {
     }
     
     @IBAction func handleDownvote(_ sender: UIButton) {
-        var vote: Int {
-            switch self.rantContents!.pointee.voteState.rawValue {
-            case 0:
-                return -1
+        var vote: VoteState {
+            switch self.rantContents!.pointee.voteState {
+            case .unvoted:
+                return .downvoted
                 
-            case -1:
-                return 0
+            case .downvoted:
+                return .unvoted
                 
             default:
-                return -1
+                return .downvoted
             }
         }
         
@@ -261,7 +261,7 @@ class RantInFeedCell: UITableViewCell {
         
         SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] result in
             if case .success(let updatedRant) = result {
-                self?.rantContents!.pointee.voteState = RantInFeed.VoteState(rawValue: updatedRant.voteState) ?? .unvotable
+                self?.rantContents!.pointee.voteState = updatedRant.voteState
                 self?.rantContents!.pointee.score = updatedRant.score
                 
                 if let parentTableView = self?.parentTableView {

@@ -194,16 +194,16 @@ class SecondaryRantInFeedCell: UITableViewCell {
     }
     
     @IBAction func handleUpvote(_ sender: UIButton) {
-        var vote: Int {
-            switch self.rantContents!.voteState.rawValue {
-            case 0:
-                return 1
+        var vote: VoteState {
+            switch self.rantContents!.voteState {
+            case .unvoted:
+                return .upvoted
                 
-            case 1:
-                return 0
+            case .upvoted:
+                return .unvoted
                 
             default:
-                return 1
+                return .upvoted
             }
         }
         
@@ -224,8 +224,8 @@ class SecondaryRantInFeedCell: UITableViewCell {
         (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantVoteState(rantID: rantContents!.id, voteState: vote)
         (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForRant(withID: rantContents!.id, voteState: vote)
         
-        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantScore(rantID: rantContents!.id, score: rantContents!.voteState.rawValue == 1 ? rantContents!.score - 1 : rantContents!.score + vote)
-        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForRant(withID: rantContents!.id, score: rantContents!.voteState.rawValue == 1 ? rantContents!.score - 1 : rantContents!.score + vote)
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantScore(rantID: rantContents!.id, score: rantContents!.voteState == .upvoted ? rantContents!.score - 1 : rantContents!.score + vote.rawValue)
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForRant(withID: rantContents!.id, score: rantContents!.voteState == .upvoted ? rantContents!.score - 1 : rantContents!.score + vote.rawValue)
         
         DispatchQueue.main.async {
             (self.delegate as? HomeFeedTableViewControllerDelegate)?.reloadData()
@@ -253,16 +253,16 @@ class SecondaryRantInFeedCell: UITableViewCell {
     }
     
     @IBAction func handleDownvote(_ sender: UIButton) {
-        var vote: Int {
-            switch self.rantContents!.voteState.rawValue {
-            case 0:
-                return -1
+        var vote: VoteState {
+            switch self.rantContents!.voteState {
+            case .unvoted:
+                return .downvoted
                 
-            case -1:
-                return 0
+            case .downvoted:
+                return .unvoted
                 
             default:
-                return -1
+                return .downvoted
             }
         }
         
@@ -270,8 +270,8 @@ class SecondaryRantInFeedCell: UITableViewCell {
         (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantVoteState(rantID: rantContents!.id, voteState: vote)
         (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForRant(withID: rantContents!.id, voteState: vote)
         
-        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantScore(rantID: rantContents!.id, score: rantContents!.voteState.rawValue == -1 ? rantContents!.score + 1 : rantContents!.score + vote)
-        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForRant(withID: rantContents!.id, score: rantContents!.voteState.rawValue == -1 ? rantContents!.score + 1 : rantContents!.score + vote)
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantScore(rantID: rantContents!.id, score: rantContents!.voteState == .downvoted ? rantContents!.score + 1 : rantContents!.score + vote.rawValue)
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForRant(withID: rantContents!.id, score: rantContents!.voteState == .downvoted ? rantContents!.score + 1 : rantContents!.score + vote.rawValue)
         
         DispatchQueue.main.async {
             (self.delegate as? HomeFeedTableViewControllerDelegate)?.reloadData()
