@@ -426,7 +426,7 @@ class InternalRecommendedUserCell: UICollectionViewCell {
             } else {
                 let url = URL(string: "https://avatars.devrant.com/\(self.userData.avatar.avatarImage!)")!
                 //userImageView.image = nil
-                DispatchQueue.global().async {
+                DispatchQueue.global(qos: .userInitiated).async {
                     downloadSemaphore.wait()
                     
                     self.downloadTask = URLSession.shared.dataTask(with: url) { data, _, _ in

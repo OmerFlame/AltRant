@@ -71,7 +71,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         segmentedControl.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20).isActive = true
         segmentedControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20).isActive = true
         segmentedControl.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        segmentedControl.heightAnchor.constraint(equalTo: containerView.heightAnchor, constant: -10).isActive = true
+        segmentedControl.heightAnchor.constraint(equalToConstant: 33).isActive = true
         
         segmentedControl.selectedSegmentIndex = 0
         
@@ -177,10 +177,21 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 }
             }
         } else {
-            /*if notifRefreshTimer == nil {
+            if notifRefreshTimer == nil {
+                debugPrint("Creating notification refresh timer!")
+                
                 self.scheduleNotificationFetches()
-            }*/
+            }
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        debugPrint("Destroying notification refresh timer!")
+        
+        notifRefreshTimer?.invalidate()
+        notifRefreshTimer = nil
     }
     
     @objc func didPullToRefresh(_ sender: UIRefreshControl) {

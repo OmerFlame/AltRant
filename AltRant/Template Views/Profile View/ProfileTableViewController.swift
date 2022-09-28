@@ -45,6 +45,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
     var testBlurView: UIVisualEffectView!
     var headerTitle: UIStackView!
+    var smallHeaderTitle: UIStackView!
     var blurView: UIVisualEffectView!
     var scoreRect: UIView!
     var scoreLabel: PaddingLabel!
@@ -137,6 +138,12 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hexString: profileData!.avatar.backgroundColor)!, percent: Double(sqrt(offset)))
         
         // Set the opacity of the custom title view of the navigation bar to the square root of the offset.
+        if offset > 0 {
+            navigationItem.titleView = smallHeaderTitle
+        } else {
+            navigationItem.titleView = nil
+        }
+        smallHeaderTitle?.alpha = sqrt(offset)
         navigationItem.titleView?.alpha = sqrt(offset)
         
         /* In here, we start to meddle with private views inside the navigation bar that provide the blur effect that the navigation bar has.
@@ -368,13 +375,13 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         smallScoreLabel.rightInset = 5
         smallScoreLabel.text = "+\(String(profileData!.score))"
         smallScoreLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
-        smallScoreLabel.textColor = .black
-        smallScoreLabel.backgroundColor = .white
+        smallScoreLabel.textColor = .systemBackground
+        smallScoreLabel.backgroundColor = .label
         smallScoreLabel.layer.masksToBounds = true
         smallScoreLabel.clipsToBounds = true
         smallScoreLabel.cornerRadius = 5
-        smallScoreLabel.layer.borderWidth = 1
-        smallScoreLabel.layer.borderColor = UIColor.black.cgColor
+        //smallScoreLabel.layer.borderWidth = 1
+        //smallScoreLabel.layer.borderColor = UIColor.black.cgColor
         
         smallScoreLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         
@@ -420,7 +427,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         headerTitle.addArrangedSubview(largeLabel)
         headerTitle.addArrangedSubview(scoreLabelContainerView)
         
-        let smallHeaderTitle = UIStackView(frame: CGRect(x: 0, y: 0, width: smallLabel.frame.size.width + 5 + smallScoreLabel.intrinsicContentSize.width, height: max(smallLabel.frame.size.height, smallScoreLabel.intrinsicContentSize.height)))
+        smallHeaderTitle = UIStackView(frame: CGRect(x: 0, y: 0, width: smallLabel.frame.size.width + 5 + smallScoreLabel.intrinsicContentSize.width, height: max(smallLabel.frame.size.height, smallScoreLabel.intrinsicContentSize.height)))
         
         smallHeaderTitle.axis = .horizontal
         smallHeaderTitle.alignment = .center
@@ -434,7 +441,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.tableHeaderView!.addSubview(headerTitle)
         tableView.tableHeaderView!.addSubview(blurView)
         
-        navigationItem.titleView = smallHeaderTitle
+        //navigationItem.titleView = smallHeaderTitle
         
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         blurView.translatesAutoresizingMaskIntoConstraints = false
