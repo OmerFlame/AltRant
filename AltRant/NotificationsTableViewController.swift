@@ -390,6 +390,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                             let session = URLSession(configuration: .default)
                             
                             session.dataTask(with: URL(string: "https://avatars.devrant.com/\(avatarLink)")!) { data, _, _ in
+                                
                                 self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: data!)!)
                                 
                                 FileManager.default.createFile(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(avatarLink).relativePath, contents: data, attributes: nil)
