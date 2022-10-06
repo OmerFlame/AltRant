@@ -27,6 +27,10 @@ actor UserImageStore {
     func image(forUserID id: Int) -> UIImage? {
         return images[id]
     }
+    
+    func removeAllImages() {
+        images = [:]
+    }
 }
 
 actor UserImageLoader {
@@ -165,7 +169,6 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var rowHeights = [IndexPath:CGFloat]()
     
-    var rantTextWithLinks: NSAttributedString?
     var textsWithLinks = [Int:NSAttributedString]()
     
     let userImageStore = UserImageStore()
@@ -208,6 +211,9 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidAppear(animated)
         
         if didFinishLoading == false {
+            navigationItem.rightBarButtonItems![0].isEnabled = false
+            navigationItem.rightBarButtonItems![1].isEnabled = false
+            
             for constraint in self.tableView.constraints {
                 self.tableView.removeConstraint(constraint)
             }
@@ -332,6 +338,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         self.tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
                         
                         self.tableView.reloadData {
+                            self.navigationItem.rightBarButtonItems![0].isEnabled = true
+                            self.navigationItem.rightBarButtonItems![1].isEnabled = true
                             self.loadCompletionHandler?(self)
                         }
                         
@@ -754,6 +762,26 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    @IBAction func refresh(_ sender: Any) {
+        tappedRant = nil
+        tappedComment = nil
+        supplementalRantImage = nil
+        commentImages = [:]
+        rant = nil
+        comments = []
+        profile = nil
+        ranterProfileImage = nil
+        textsWithLinks = [:]
+        loadCompletionHandler = nil
+        
+        didFinishLoading = false
+        
+        //tableView.reloadData()
+        tableView.isHidden = true
+        
+        viewDidAppear(false)
+    }
+    
     @IBAction func compose(_ sender: Any) {
         let composeVC = UIStoryboard(name: "ComposeViewController", bundle: nil).instantiateViewController(identifier: "ComposeViewController") as! UINavigationController
         (composeVC.viewControllers.first as! ComposeViewController).rantID = rantID
@@ -963,6 +991,79 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func reloadData() {
         tableView.reloadData()
+    }
+    
+    func didDeleteRant(withID id: Int) {
+        SwiftRant.shared.deleteRant(nil, rantID: rant!.id) { result in
+            if case .success() = result {
+                let successAlertController = UIAlertController(title: "Success", message: "Rant successfully deleted!", preferredStyle: .alert)
+                
+                successAlertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                DispatchQueue.main.async {
+                    let navigationController = self.navigationController
+                    
+                    self.navigationController?.popViewController(animated: true) {
+                        
+                        navigationController?.topViewController?.present(successAlertController, animated: true, completion: nil)
+                    }
+                }
+            } else if case .failure(let failure) = result {
+                let failureAlertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
+                
+                failureAlertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                //failureAlertController.addAction(UIAlertAction(title: "Retry", style: .destructive, handler: { _ in self.delete() }))
+                
+                DispatchQueue.main.async {
+                    self.title = "Rant"
+                    self.navigationItem.leftBarButtonItem?.isEnabled = true
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                    
+                    self.navigationItem.rightBarButtonItems![0].isEnabled = true
+                    self.navigationItem.rightBarButtonItems![1].isEnabled = true
+                    
+                    self.present(failureAlertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func didDeleteComment(withID id: Int, cell: CommentCell) {
+        let originalColor = navigationController?.navigationBar.tintColor
+        
+        navigationController?.navigationBar.isUserInteractionEnabled = false
+        navigationController?.navigationBar.tintColor = UIColor.systemGray
+        
+        SwiftRant.shared.deleteComment(nil, commentID: id) { result in
+            if case .success() = result {
+                let commentIdx = self.comments.firstIndex(where: {
+                    $0.id == id
+                })!
+                
+                self.comments.remove(at: commentIdx)
+                self.commentImages[id] = nil
+                
+                DispatchQueue.main.async {
+                    self.title = "Rant"
+                    self.navigationController?.navigationBar.isUserInteractionEnabled = true
+                    self.navigationController?.navigationBar.tintColor = originalColor
+                    
+                    self.tableView.deleteRows(at: [IndexPath(row: commentIdx, section: 1)], with: .fade)
+                }
+            } else if case .failure(let failure) = result {
+                let failureAlertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
+                
+                failureAlertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                
+                DispatchQueue.main.async {
+                    self.title = "Rant"
+                    self.navigationController?.navigationBar.isUserInteractionEnabled = true
+                    self.navigationController?.navigationBar.tintColor = originalColor
+                    
+                    self.present(failureAlertController, animated: true, completion: nil)
+                }
+            }
+        }
     }
 }
 

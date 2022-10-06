@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21223" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -1673,12 +1673,20 @@
                                 <action selector="goBack:" destination="MPb-1i-mOS" id="VBj-ud-eau"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="JTp-qS-SaQ" userLabel="Compose Button Item">
-                            <imageReference key="image" image="square.and.pencil" catalog="system" symbolScale="large"/>
-                            <connections>
-                                <action selector="compose:" destination="MPb-1i-mOS" id="Vu0-9z-1lt"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem id="JTp-qS-SaQ" userLabel="Compose Button Item">
+                                <imageReference key="image" image="square.and.pencil" catalog="system" symbolScale="large"/>
+                                <connections>
+                                    <action selector="compose:" destination="MPb-1i-mOS" id="Vu0-9z-1lt"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem id="0cg-id-uev">
+                                <imageReference key="image" image="arrow.clockwise" catalog="system" symbolScale="large"/>
+                                <connections>
+                                    <action selector="refresh:" destination="MPb-1i-mOS" id="Swt-8C-dqh"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -1714,10 +1722,11 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="Er3-sQ-bs7"/>
+        <segue reference="4z2-g1-ilN"/>
         <segue reference="nEF-RZ-kuB"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="arrow.clockwise" catalog="system" width="113" height="128"/>
         <image name="bell.fill" catalog="system" width="123" height="128"/>
         <image name="bubble.left.fill" catalog="system" width="128" height="110"/>
         <image name="calendar" catalog="system" width="128" height="107"/>

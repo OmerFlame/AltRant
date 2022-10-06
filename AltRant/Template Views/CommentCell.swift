@@ -313,13 +313,6 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
     }
     
     func delete() {
-        let originalColor = self.parentTableViewController?.navigationController?.navigationBar.tintColor
-        
-        self.parentTableViewController?.navigationController?.navigationBar.isUserInteractionEnabled = false
-        self.parentTableViewController?.navigationController?.navigationBar.tintColor = UIColor.systemGray
-        
-        let originalTitle = self.parentTableViewController?.title
-        
         self.parentTableViewController?.title = "Deleting your comment..."
         
         delegate?.didDeleteComment(withID: commentContents.id, cell: self)

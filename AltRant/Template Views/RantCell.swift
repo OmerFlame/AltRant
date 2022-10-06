@@ -356,6 +356,9 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
         self.parentTableViewController?.navigationItem.leftBarButtonItem?.isEnabled = false
         self.parentTableViewController?.navigationItem.rightBarButtonItem?.isEnabled = false
         
+        self.parentTableViewController?.navigationItem.rightBarButtonItems![0].isEnabled = false
+        self.parentTableViewController?.navigationItem.rightBarButtonItems![1].isEnabled = false
+        
         let originalTitle = self.parentTableViewController?.title
         
         self.parentTableViewController?.title = "Deleting..."
