@@ -255,57 +255,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
                 reportModifyButton.setTitle("Report", for: .normal)
             }
             
-            if let links = commentContents.links {
-                // We create the variables that we will use in the loop in order to avoid excessive RAM usage.
-                
-                /*let semiboldAttrString = NSMutableAttributedString(string: commentContents.body)
-                let stringAsData = commentContents.body.data(using: .utf8)!
-                
-                var temporaryStringBytes = Data()
-                var temporaryGenericUseString = ""
-                
-                var temporaryRange = NSRange(location: 0, length: 1)
-                
-                semiboldAttrString.addAttribute(.font, value: bodyLabel.font!, range: (commentContents.body as NSString).range(of: commentContents.body))
-                semiboldAttrString.addAttribute(.foregroundColor, value: UIColor.label, range: (commentContents.body as NSString).range(of: commentContents.body))
-                
-                for i in links {
-                    
-                    if i.start == nil && i.end == nil {
-                        temporaryRange = (commentContents.body as NSString).range(of: i.title)
-                        
-                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: temporaryRange)
-                        
-                        if i.type == "mention" {
-                            semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: temporaryRange)
-                        } else {
-                            semiboldAttrString.addAttribute(.link, value: i.url, range: temporaryRange)
-                        }
-                    } else {
-                        // The devRant API returns offsets for links in byte offsets, not in normalized character offsets, so we need to get the raw bytes between the start offset (i.start) and end offset (i.end) and turn the entire thing to a String again, encoded in UTF-8.
-                        
-                        // Get the raw bytes in the given range from the devRant API
-                        temporaryStringBytes = stringAsData[stringAsData.index(stringAsData.startIndex, offsetBy: i.start!)..<stringAsData.index(stringAsData.startIndex, offsetBy: i.end!)]
-                        
-                        // Turn the raw data into a String again
-                        temporaryGenericUseString = String(data: temporaryStringBytes, encoding: .utf8)!
-                        
-                        // Get the range using the sanitized String that we just got from the raw data
-                        temporaryRange = (commentContents.body as NSString).range(of: temporaryGenericUseString)
-                        
-                        // And use it to add our desired attributes
-                        semiboldAttrString.addAttribute(.font, value: UIFont.systemFont(ofSize: bodyLabel.font!.pointSize, weight: .semibold), range: temporaryRange)
-                        
-                        if i.type == "mention" {
-                            semiboldAttrString.addAttribute(.link, value: "mention://\(i.url)", range: temporaryRange)
-                        } else {
-                            semiboldAttrString.addAttribute(.link, value: i.url, range: temporaryRange)
-                        }
-                    }
-                }
-                
-                bodyLabel.attributedText = semiboldAttrString*/
-                
+            if commentContents.links != nil {
                 if let parentTableViewController = parentTableViewController, let controller = parentTableViewController as? RantViewController {
                     bodyLabel.attributedText = controller.textsWithLinks[commentContents.id]
                 }

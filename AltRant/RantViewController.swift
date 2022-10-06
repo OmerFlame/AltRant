@@ -165,6 +165,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var rowHeights = [IndexPath:CGFloat]()
     
+    var rantTextWithLinks: NSAttributedString?
     var textsWithLinks = [Int:NSAttributedString]()
     
     let userImageStore = UserImageStore()

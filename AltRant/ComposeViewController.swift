@@ -494,6 +494,27 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                                     file = File.loadFile(image: updatedRant.attachedImage!, size: CGSize(width: updatedRant.attachedImage!.width, height: updatedRant.attachedImage!.height))
                                 }
                                 
+                                if let links = updatedRant.links {
+                                    
+                                    let attributedString = NSMutableAttributedString(string: updatedRant.text)
+                                    
+                                    attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: (updatedRant.text as NSString).range(of: updatedRant.text))
+                                    
+                                    attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: (updatedRant.text as NSString).range(of: updatedRant.text))
+                                    
+                                    for link in links {
+                                        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize, weight: .semibold), range: link.calculatedRange)
+                                        
+                                        if link.type == "mention" {
+                                            attributedString.addAttribute(.link, value: "mention://\(link.url)", range: link.calculatedRange)
+                                        } else {
+                                            attributedString.addAttribute(.link, value: link.url, range: link.calculatedRange)
+                                        }
+                                    }
+                                    
+                                    (self?.viewControllerThatPresented as! RantViewController).textsWithLinks[updatedRant.id] = attributedString
+                                }
+                                
                                 DispatchQueue.main.async {
                                     let viewControllerThatPresented = self?.viewControllerThatPresented
                                     
