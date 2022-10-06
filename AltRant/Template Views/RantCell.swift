@@ -355,6 +355,29 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
         supplementalImageView.addGestureRecognizer(imageGestureRecognizer)
         userStackView.addGestureRecognizer(userGestureRecognizer)
         
+        if let gestureRecognizers = bodyLabel.gestureRecognizers {
+            print("GESTURE RECOGNIZERS IN BODY LABEL FOUND! SEARCHING DOUBLE TAP...")
+            
+            for (idx, gestureRecognizer) in gestureRecognizers.enumerated() {
+                if gestureRecognizer is UITapGestureRecognizer && (gestureRecognizer as! UITapGestureRecognizer).numberOfTapsRequired > 1 {
+                    print("FOUND DOUBLE+ TAP! NUMBER OF TAPS REQUIRED: \((gestureRecognizer as! UITapGestureRecognizer).numberOfTapsRequired)")
+                    //bodyLabel.removeGestureRecognizer(gestureRecognizer)
+                    
+                    let newDoubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
+                    newDoubleTapGesture.numberOfTapsRequired = 2
+                    bodyLabel.addGestureRecognizer(newDoubleTapGesture)
+                    
+                    
+                    gestureRecognizer.removeTarget(nil, action: nil)
+                    gestureRecognizer.require(toFail: newDoubleTapGesture)
+                    
+                    print(gestureRecognizer.debugDescription)
+                    
+                    print("---------------------------")
+                }
+            }
+        }
+        
         //layoutSubviews()
     }
     
@@ -384,6 +407,21 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
             
             delegate?.didUnfavoriteRant(withID: rantContents.id, cell: self)
         }
+    }
+    
+    @objc func didDoubleTap() {
+        guard rantContents.voteState != .upvoted && rantContents.voteState != .unvotable else {
+            return
+        }
+        
+        delegate?.changeRantVoteState(voteState: .upvoted)
+        delegate?.changeRantScore(score: rantContents!.score + VoteState.upvoted.rawValue)
+        
+        DispatchQueue.main.async {
+            self.delegate?.reloadData()
+        }
+        
+        delegate?.didVoteOnRant(withID: rantContents.id, vote: .upvoted, cell: self)
     }
     
     func delete() {

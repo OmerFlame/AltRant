@@ -317,7 +317,49 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         
         if !allowedToPreview {
             actionsStackView.isHidden = true
+        } else {
+            if let gestureRecognizers = bodyLabel.gestureRecognizers {
+                print("GESTURE RECOGNIZERS IN BODY LABEL FOUND! SEARCHING DOUBLE TAP...")
+                
+                for (idx, gestureRecognizer) in gestureRecognizers.enumerated() {
+                    if gestureRecognizer is UITapGestureRecognizer && (gestureRecognizer as! UITapGestureRecognizer).numberOfTapsRequired > 1 {
+                        print("FOUND DOUBLE+ TAP! NUMBER OF TAPS REQUIRED: \((gestureRecognizer as! UITapGestureRecognizer).numberOfTapsRequired)")
+                        //bodyLabel.removeGestureRecognizer(gestureRecognizer)
+                        
+                        let newDoubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
+                        newDoubleTapGesture.numberOfTapsRequired = 2
+                        bodyLabel.addGestureRecognizer(newDoubleTapGesture)
+                        
+                        
+                        gestureRecognizer.removeTarget(nil, action: nil)
+                        gestureRecognizer.require(toFail: newDoubleTapGesture)
+                        
+                        print(gestureRecognizer.debugDescription)
+                        
+                        print("---------------------------")
+                    }
+                }
+            }
         }
+    }
+    
+    @objc func didDoubleTap() {
+        guard commentContents.voteState != .upvoted && commentContents.voteState != .unvotable else {
+            return
+        }
+        
+        (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForComment(withID: commentContents!.id, voteState: .upvoted)
+        (delegate as? RantViewControllerDelegate)?.changeCommentVoteState(commentID: commentContents!.id, voteState: .upvoted)
+        
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForComment(withID: commentContents!.id, score: commentContents!.voteState == .upvoted ? commentContents!.score - 1 : commentContents!.score + VoteState.upvoted.rawValue)
+        (delegate as? RantViewControllerDelegate)?.changeCommentScore(commentID: commentContents!.id, score: commentContents!.voteState == .upvoted ? commentContents!.score - 1 : commentContents!.score + VoteState.upvoted.rawValue)
+        
+        DispatchQueue.main.async {
+            (self.delegate as? ProfileTableViewControllerDelegate)?.reloadData()
+            (self.delegate as? RantViewControllerDelegate)?.reloadData()
+        }
+        
+        delegate?.didVoteOnComment(withID: commentContents.id, vote: .upvoted, cell: self)
     }
     
     func delete() {

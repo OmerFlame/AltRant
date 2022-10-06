@@ -682,7 +682,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 
                 print("RUNNING AS EXTENSIVE")
                 transitionCoordinator?.animate(alongsideTransition: { context in
-                    if self.navigationItem.titleView!.alpha == 0 {
+                    
+                    if self.navigationItem.titleView != nil && self.navigationItem.titleView!.alpha == 0 {
                         self.navigationItem.titleView!.isHidden = true
                     }
                     

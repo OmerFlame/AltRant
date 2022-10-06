@@ -46,6 +46,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     private var indexPathsToInsert = [IndexPath]()
     private var badgeValue: String?
     
+    private var extensionView: UIView!
+    
     // MARK: - View Controller Lifecycle Overrides
     
     override func viewDidLoad() {
@@ -53,7 +55,7 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         
         loadingIndicator.stopAnimating()
         
-        let containerView = UIToolbar()
+        extensionView = UIToolbar()
         
         segmentedControl = UISegmentedControl(frame: CGRect(x: 20, y: 0, width: 0, height: 43))
         segmentedControl.apportionsSegmentWidthsByContent = true
@@ -64,13 +66,13 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
         segmentedControl.insertSegment(withTitle: "Comments", at: 3, animated: false)
         segmentedControl.insertSegment(withTitle: "Subscriptions", at: 4, animated: false)
         
-        containerView.addSubview(segmentedControl)
-        (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(containerView, forHeight: 43)
+        extensionView.addSubview(segmentedControl)
+        (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(extensionView, forHeight: 43)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
-        segmentedControl.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20).isActive = true
-        segmentedControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20).isActive = true
-        segmentedControl.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+        segmentedControl.leadingAnchor.constraint(equalTo: extensionView.leadingAnchor, constant: 20).isActive = true
+        segmentedControl.trailingAnchor.constraint(equalTo: extensionView.trailingAnchor, constant: -20).isActive = true
+        segmentedControl.topAnchor.constraint(equalTo: extensionView.topAnchor).isActive = true
         segmentedControl.heightAnchor.constraint(equalToConstant: 33).isActive = true
         
         segmentedControl.selectedSegmentIndex = 0
@@ -142,6 +144,29 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        (navigationController as! ExtensibleNavigationBarNavigationController).setNavigationBarExtensionView(extensionView, forHeight: 43)
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        segmentedControl.leadingAnchor.constraint(equalTo: extensionView.leadingAnchor, constant: 20).isActive = true
+        segmentedControl.trailingAnchor.constraint(equalTo: extensionView.trailingAnchor, constant: -20).isActive = true
+        segmentedControl.topAnchor.constraint(equalTo: extensionView.topAnchor).isActive = true
+        segmentedControl.heightAnchor.constraint(equalToConstant: 33).isActive = true
+        
+        segmentedControl.selectedSegmentIndex = 0
+        
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.shadowColor = .clear
+        
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.clipsToBounds = true
+        
+        segmentedControl.addTarget(self, action: #selector(handleChange(_:)), for: .valueChanged)
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
         
         if !didFinishLoading {
             //loadingIndicator.startAnimating()
