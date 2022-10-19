@@ -266,6 +266,7 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                 
                 return cell
             } else {
+                //print("indexPath.row: \(indexPath.row)")
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RantInSubscribedFeedCell") as! RantInSubscribedFeedCell
                 
                 let idxPath = IndexPath(row: indexPath.row > 3 && indexPath.section == 0 ? indexPath.row - 1 : indexPath.row, section: indexPath.section)
@@ -289,7 +290,20 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                 
                 cell.configure(feedOffset: idxPath.section, rantOffset: idxPath.row, image: supplementalImages[subscribedFeed[idxPath.section].rants[idxPath.row].id], leadingUserActionImage: firstActionUserImage, trailingUserActionImage: secondActionUserImage, parentTableViewController: self, parentTableView: tableView)
                 
+                var attributedTitle = NSMutableAttributedString(string: "\(subscribedFeed[idxPath.section].rants[idxPath.row].commentCount)")
+                
+                let attributes = [
+                    NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12),
+                    NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+                ]
+                
+                attributedTitle.addAttributes(attributes, range: NSRange(location: 0, length: attributedTitle.length))
+                
+                cell.commentCountLabel.setAttributedTitle(attributedTitle, for: .normal)
+                
                 cell.delegate = self
+                
+                cell.layoutSubviews()
                 
                 return cell
             }

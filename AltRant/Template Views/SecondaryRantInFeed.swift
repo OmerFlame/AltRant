@@ -14,11 +14,14 @@ class SecondaryRantInFeedCell: UITableViewCell {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
+    @IBOutlet weak var contentStackView: UIStackView!
+    @IBOutlet weak var tagStackView: UIStackView!
     @IBOutlet weak var textStackView: UIStackView!
     @IBOutlet weak var bodyLabel: UITextView!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var commentCountLabel: UIButton!
     
     var rantContents: RantInFeed? = nil
     var parentTableViewController: UIViewController? = nil
@@ -39,6 +42,8 @@ class SecondaryRantInFeedCell: UITableViewCell {
         
         supplementalImageView.image = nil
         supplementalImageView.isHidden = true
+        
+        imageViewHeightConstraint.constant = 0
         
         supplementalImage = nil
         
@@ -95,6 +100,7 @@ class SecondaryRantInFeedCell: UITableViewCell {
         bodyLabel.isHidden = false
         supplementalImageView.isHidden = false
         tagList.isHidden = false
+        commentCountLabel?.isHidden = rantContents!.commentCount == 0
         
         upvoteButton.tintColor = (rantContents!.voteState.rawValue == 1 ? UIColor(hexString: rantContents!.userAvatar.backgroundColor)! : UIColor.systemGray)
         scoreLabel.text = String(rantContents!.score)

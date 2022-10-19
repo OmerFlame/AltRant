@@ -22,6 +22,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
     @IBOutlet weak var trailingUserActionImageView: RoundedImageView!
     @IBOutlet weak var userActionDescriptionLabel: UILabel!
     @IBOutlet weak var trailingUserActionImageLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var commentCountLabel: UIButton!
     
     var rantContents: RantInSubscribedFeed? = nil
     //var subscribedFeed: UnsafeMutablePointer<SubscribedFeed>? = nil
@@ -53,6 +54,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
         supplementalImageView.image = nil
         supplementalImage = nil
         bodyLabel.text = nil
+        commentCountLabel.isHidden = true
     }
     
     func configure(feedOffset: Int, rantOffset: Int, image: File?, leadingUserActionImage: UIImage?, trailingUserActionImage: UIImage?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
@@ -89,6 +91,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
         leadingUserActionImageView.isHidden = false
         trailingUserActionImageView.isHidden = false
         userActionDescriptionLabel.isHidden = false
+        commentCountLabel.isHidden = rantContents!.commentCount == 0
         
         upvoteButton.tintColor = (rantContents!.voteState == .upvoted ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
         scoreLabel.text = String(rantContents!.score)
@@ -128,6 +131,10 @@ class RantInSubscribedFeedCell: UITableViewCell {
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
         
         tagList.removeAllTags()
+        
+        print("TAGS: \(rantContents!.tags)")
+        print("---------------------------------------------")
+        
         tagList.addTags(rantContents!.tags)
         
         leadingUserActionImageView.image = self.leadingUserActionImage

@@ -215,6 +215,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.backgroundView?.alpha = 0
         
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 500
+        //tableView.rowHeight = UITableView.automaticDimension
+        
         //navigationController?.title = ""
         navigationItem.title = ""
         
@@ -225,6 +229,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         (tableView.tableHeaderView as! StretchyTableHeaderView).containerView.backgroundColor = UIColor(hexString: profileData!.avatar.backgroundColor)!
         (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.backgroundColor = UIColor(hexString: profileData!.avatar.backgroundColor)!
         (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.backgroundColor = UIColor(hexString: profileData!.avatar.backgroundColor)!
+        
+        tableView.register(UINib(nibName: "SecondaryRantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
+        tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
+        tableView.register(UINib(nibName: "LoadingCell", bundle: nil), forCellReuseIdentifier: "LoadingCell")
         
         if profileData!.avatar.avatarImage != nil {
             let completionSemaphore = DispatchSemaphore(value: 0)
@@ -1058,26 +1066,94 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite {
             if indexPath.row >= rantTypeContent.count || indexPath.row >= rantContentImages.count {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
-                cell.configureLoading()
+                //let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
+                //cell.configureLoading()
                 
-                cell.layoutIfNeeded()
+                //cell.layoutIfNeeded()
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell") as! LoadingCell
+                
+                cell.activityIndicator.startAnimating()
                 
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
                 cell.configure(with: rantTypeContent[indexPath.row], image: rantContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
                 
-                cell.layoutIfNeeded()
+                var attributedTitle = NSMutableAttributedString(string: "\(rantTypeContent[indexPath.row].commentCount)")
+                
+                let attributes = [
+                    NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12),
+                    NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+                ]
+                
+                attributedTitle.addAttributes(attributes, range: NSRange(location: 0, length: attributedTitle.length))
+                
+                cell.commentCountLabel?.setAttributedTitle(attributedTitle, for: .normal)
+                
+                cell.contentView.layoutIfNeeded()
+                
+                // Here, we modify the original margin constraints and convert them to normal, non-margin constraints.
+                // This is essential because cells with margin constraints to the content view glitch and bug out in this specific view controller, probably because of the stretchy header and the unconventional scrolling dynamics.
+                // If we wouldn't perform this fix, the cells would contract and expand in size while scrolling them out of the viewable region, while breaking about 1000 constraints per second.
+                // **I have no idea what is making this happen, but this is a solution that I came up with after days of fighting with this issue and almost giving up.**
+                for constraint in cell.contentView.constraints {
+                    switch constraint.identifier {
+                    case "leadingMarginSpace":
+                        cell.contentView.removeConstraint(constraint)
+                        
+                        let newConstraint = cell.contentStackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 20)
+                        newConstraint.isActive = true
+                        
+                        cell.contentView.addConstraint(newConstraint)
+                        break
+                        
+                    case "trailingMarginSpace":
+                        cell.contentView.removeConstraint(constraint)
+                        
+                        let newConstraint = cell.contentView.trailingAnchor.constraint(equalTo: cell.contentStackView.trailingAnchor, constant: 24)
+                        newConstraint.isActive = true
+                        
+                        cell.contentView.addConstraint(newConstraint)
+                        break
+                        
+                    case "bottomMarginSpace":
+                        cell.contentView.removeConstraint(constraint)
+                        
+                        let newConstraint = cell.contentView.bottomAnchor.constraint(equalTo: cell.tagStackView.bottomAnchor, constant: 15)
+                        newConstraint.isActive = true
+                        
+                        cell.contentView.addConstraint(newConstraint)
+                        break
+                        
+                    case "topMarginSpace":
+                        cell.contentView.removeConstraint(constraint)
+                        
+                        let newConstraint = cell.contentStackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 15)
+                        newConstraint.isActive = true
+                        
+                        cell.contentView.addConstraint(newConstraint)
+                        break
+                        
+                    default:
+                        break
+                    }
+                }
                 
                 return cell
             }
         } else {
             if indexPath.row >= commentTypeContent.commentTypeContent.count || indexPath.row >= commentContentImages.count {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.configureLoading()
+                //let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
+                //cell.configureLoading()
                 
-                cell.layoutIfNeeded()
+                //cell.layoutIfNeeded()
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell") as! LoadingCell
+                
+                cell.activityIndicator.startAnimating()
+                
+                //return cell
                 
                 return cell
             } else {
@@ -1158,6 +1234,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite || currentContentType == .viewed {
             performSegue(withIdentifier: "rantInFeed", sender: tableView.cellForRow(at: indexPath))
         }
+        
+        if currentContentType == .comments {
+            performSegue(withIdentifier: "commentInFeed", sender: indexPath)
+        }
     }
     
     func shouldUpdateBlurPosition() {
@@ -1179,7 +1259,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             rantViewController.supplementalRantImage = rantContentImages[indexPath.row]
             rantViewController.loadCompletionHandler = nil
         } else if segue.identifier == "commentInFeed", let rantViewController = segue.destination as? RantViewController {
-            let indexPath = tableView.indexPath(for: sender as! UITableViewCell)!
+            let indexPath = sender as! IndexPath
             
             rantViewController.rantID = commentTypeContent.commentTypeContent[indexPath.row].rantID
             //rantViewController.rantInFeed = nil

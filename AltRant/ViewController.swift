@@ -58,6 +58,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         tableView.rowHeight = UITableView.automaticDimension
         
         let loadingCellNib = UINib(nibName: "LoadingCell", bundle: nil)
+        let rantInFeedCellNib = UINib(nibName: "SecondaryRantInFeedCell", bundle: nil)
+        
+        tableView.register(rantInFeedCellNib, forCellReuseIdentifier: "RantInFeedCell")
         tableView.register(loadingCellNib, forCellReuseIdentifier: "LoadingCell")
         
         //edgesForExtendedLayout = []
@@ -529,6 +532,17 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             
             cell.configure(with: Optional(rantFeed.rantFeed[feedOffset].rants[rantOffset]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
             
+            var attributedTitle = NSMutableAttributedString(string: "\(rantFeed.rantFeed[feedOffset].rants[rantOffset].commentCount)")
+            
+            let attributes = [
+                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12),
+                NSAttributedString.Key.foregroundColor: UIColor.secondaryLabel
+            ]
+            
+            attributedTitle.addAttributes(attributes, range: NSRange(location: 0, length: attributedTitle.length))
+            
+            cell.commentCountLabel.setAttributedTitle(attributedTitle, for: .normal)
+            
             cell.delegate = self
             
             cell.layoutIfNeeded()
@@ -554,6 +568,12 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             
             return cell
         }*/
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        performSegue(withIdentifier: "RantInFeedCell", sender: tableView.cellForRow(at: indexPath))
     }
     
     override func viewDidLayoutSubviews() {
