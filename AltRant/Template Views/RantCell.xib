@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -65,10 +65,10 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yuX-uq-o07" userLabel="Text Stack View">
-                                <rect key="frame" x="41" y="0.0" width="311" height="553"/>
+                                <rect key="frame" x="41" y="0.0" width="311" height="562"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Oor-eU-QMg" userLabel="User Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="126.5" height="45"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Oor-eU-QMg" userLabel="User Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="311" height="45"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doc" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="2hb-pL-s5Y" userLabel="User Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
@@ -78,16 +78,16 @@
                                                 </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="yPG-1D-1eq" userLabel="Username Stack View">
-                                                <rect key="frame" x="48" y="0.0" width="78.5" height="45"/>
+                                                <rect key="frame" x="48" y="0.0" width="224.5" height="42"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXy-0T-HQX" userLabel="Username">
-                                                        <rect key="frame" x="0.0" y="0.0" width="78.5" height="22"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="224.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jaB-qT-1n0" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="23" width="41" height="22"/>
+                                                        <rect key="frame" x="0.0" y="21.5" width="31" height="20.5"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -117,6 +117,12 @@
                                                     <constraint firstItem="EXy-0T-HQX" firstAttribute="leading" secondItem="yPG-1D-1eq" secondAttribute="leading" id="rEq-7t-OCw"/>
                                                 </constraints>
                                             </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="topRight" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6f-hi-GAZ" userLabel="Post Time Label">
+                                                <rect key="frame" x="275.5" y="0.0" width="35.5" height="16"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <viewLayoutGuide key="safeArea" id="hj6-FP-oDW"/>
                                     </stackView>
@@ -140,10 +146,10 @@
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="J1t-xi-NTS">
-                                        <rect key="frame" x="0.0" y="541" width="311" height="12"/>
+                                        <rect key="frame" x="0.0" y="541" width="311" height="21"/>
                                         <subviews>
                                             <view contentMode="scaleAspectFit" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Hk3-1C-ciB" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="266" height="12"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="266" height="21"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -184,6 +190,7 @@
                                     <constraint firstAttribute="trailing" secondItem="zU9-ah-sF5" secondAttribute="trailing" id="83x-A3-XMs"/>
                                     <constraint firstItem="zU9-ah-sF5" firstAttribute="trailing" secondItem="J1t-xi-NTS" secondAttribute="trailing" id="hlb-bb-HIK"/>
                                     <constraint firstItem="zU9-ah-sF5" firstAttribute="leading" secondItem="yuX-uq-o07" secondAttribute="leading" id="mEZ-Wj-ZPE"/>
+                                    <constraint firstAttribute="trailing" secondItem="Oor-eU-QMg" secondAttribute="trailing" id="neg-R0-vTW"/>
                                     <constraint firstItem="4ah-3U-fd4" firstAttribute="top" secondItem="zU9-ah-sF5" secondAttribute="bottom" constant="8" id="tMt-o7-pyz"/>
                                 </constraints>
                             </stackView>
@@ -205,6 +212,7 @@
                 <outlet property="bodyLabel" destination="zU9-ah-sF5" id="pcW-YA-ISA"/>
                 <outlet property="downvoteButton" destination="lTr-7i-UlX" id="Haz-6q-zy8"/>
                 <outlet property="favoriteModifyButton" destination="Fvu-NK-Gkz" id="eW2-4A-dHl"/>
+                <outlet property="postTimeLabel" destination="s6f-hi-GAZ" id="vsW-wg-ZwL"/>
                 <outlet property="scoreLabel" destination="pQJ-bL-bjy" id="POg-gz-o4B"/>
                 <outlet property="supplementalImageView" destination="4ah-3U-fd4" id="zDU-C0-4Da"/>
                 <outlet property="tagList" destination="Hk3-1C-ciB" id="SBx-Um-chA"/>
@@ -222,11 +230,8 @@
         <designable name="2hb-pL-s5Y">
             <size key="intrinsicContentSize" width="18" height="20"/>
         </designable>
-        <designable name="Hk3-1C-ciB">
-            <size key="intrinsicContentSize" width="266" height="12"/>
-        </designable>
         <designable name="jaB-qT-1n0">
-            <size key="intrinsicContentSize" width="41" height="19.5"/>
+            <size key="intrinsicContentSize" width="31" height="14.5"/>
         </designable>
     </designables>
     <resources>
@@ -235,6 +240,9 @@
         <image name="plusplus" width="26" height="26"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

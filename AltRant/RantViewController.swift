@@ -174,6 +174,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let userImageStore = UserImageStore()
     var userImageLoader: UserImageLoader!
     
+    var currentDate: Date!
+    
     /*init(rantID: Int?) {
         self.rantID = rantID
         super.init(nibName: nil, bundle: nil)
@@ -211,8 +213,10 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidAppear(animated)
         
         if didFinishLoading == false {
-            navigationItem.rightBarButtonItems![0].isEnabled = false
-            navigationItem.rightBarButtonItems![1].isEnabled = false
+            //navigationItem.rightBarButtonItems![0].isEnabled = false
+            //navigationItem.rightBarButtonItems![1].isEnabled = false
+            
+            navigationItem.rightBarButtonItems?.forEach({ $0.isEnabled = false })
             
             for constraint in self.tableView.constraints {
                 self.tableView.removeConstraint(constraint)
@@ -231,6 +235,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             Task {
                 let result = await SwiftRant.shared.getRantFromID(token: nil, id: rantID ?? -1, lastCommentID: nil)
+                self.currentDate = Date()
                 
                 if case .success(let (rant, comments)) = result {
                     self.rant = rant
@@ -670,7 +675,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let cell = tableView.dequeueReusableCell(withIdentifier: "RantCell") as! RantCell
             
             //cell = RantCell.loadFromXIB() as! RantCell
-            cell.configure(with: rant!, userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self)
+            cell.configure(with: rant!, userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self, currentDate: currentDate)
             
             cell.delegate = self
             
@@ -679,7 +684,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
             
             //cell = CommentCell.loadFromXIB() as! CommentCell
-            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[comments[indexPath.row].id] ?? nil, parentTableViewController: self, parentTableView: tableView, allowedToPreview: true)
+            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[comments[indexPath.row].id] ?? nil, parentTableViewController: self, parentTableView: tableView, currentDate: currentDate, allowedToPreview: true)
             
             cell.delegate = self
             

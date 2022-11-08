@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21223" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -67,8 +67,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lVz-nD-j7E" userLabel="Text Stack View">
                                 <rect key="frame" x="47.5" y="0.0" width="304.5" height="530"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="5BQ-eC-JZ2" userLabel="User Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="126.5" height="45"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="5BQ-eC-JZ2" userLabel="User Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="304.5" height="45"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doc" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ZBO-rB-hit" userLabel="User Profile Image View" customClass="RoundedImageView" customModule="AltRant" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
@@ -78,16 +78,16 @@
                                                 </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="mnU-w1-D2N" userLabel="Username Stack View">
-                                                <rect key="frame" x="48" y="0.0" width="78.5" height="45"/>
+                                                <rect key="frame" x="48" y="0.0" width="218" height="42"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qL0-Tk-Ebr" userLabel="Username">
-                                                        <rect key="frame" x="0.0" y="0.0" width="78.5" height="22"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="218" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7p4-UN-zba" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="23" width="41" height="22"/>
+                                                        <rect key="frame" x="0.0" y="21.5" width="31" height="20.5"/>
                                                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -117,6 +117,12 @@
                                                     <constraint firstItem="qL0-Tk-Ebr" firstAttribute="leading" secondItem="mnU-w1-D2N" secondAttribute="leading" id="uEJ-xi-EAV"/>
                                                 </constraints>
                                             </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TRo-4a-RH5" userLabel="Post Time Label">
+                                                <rect key="frame" x="269" y="0.0" width="35.5" height="16"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <viewLayoutGuide key="safeArea" id="uQF-lx-xMn"/>
                                     </stackView>
@@ -164,6 +170,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="tjn-a3-DA4" firstAttribute="leading" secondItem="lVz-nD-j7E" secondAttribute="leading" id="JZJ-EU-Q1g"/>
+                                    <constraint firstAttribute="trailing" secondItem="5BQ-eC-JZ2" secondAttribute="trailing" id="ZAX-DO-ycO"/>
                                     <constraint firstItem="tjn-a3-DA4" firstAttribute="trailing" secondItem="9Ge-5u-DQt" secondAttribute="trailing" id="io9-3j-5nb"/>
                                     <constraint firstItem="cd4-OV-uma" firstAttribute="top" secondItem="tjn-a3-DA4" secondAttribute="bottom" constant="8" id="jIq-3T-DdN"/>
                                     <constraint firstAttribute="trailing" secondItem="tjn-a3-DA4" secondAttribute="trailing" id="r2R-lR-Sg6"/>
@@ -184,6 +191,7 @@
                 <outlet property="actionsStackView" destination="9Ge-5u-DQt" id="asY-Ti-tFI"/>
                 <outlet property="bodyLabel" destination="tjn-a3-DA4" id="lEn-Ec-jxc"/>
                 <outlet property="downvoteButton" destination="0Ri-yD-tK8" id="2XY-RA-848"/>
+                <outlet property="postTimeLabel" destination="TRo-4a-RH5" id="9yQ-YU-t0y"/>
                 <outlet property="reportModifyButton" destination="HSn-sU-391" id="72H-DL-n6g"/>
                 <outlet property="scoreLabel" destination="B8v-wA-z4K" id="d6c-eR-yFg"/>
                 <outlet property="supplementalImageView" destination="cd4-OV-uma" id="T7V-dr-7Tn"/>
@@ -199,7 +207,7 @@
     </objects>
     <designables>
         <designable name="7p4-UN-zba">
-            <size key="intrinsicContentSize" width="41" height="19.5"/>
+            <size key="intrinsicContentSize" width="31" height="14.5"/>
         </designable>
         <designable name="ZBO-rB-hit">
             <size key="intrinsicContentSize" width="18" height="20"/>
@@ -211,6 +219,9 @@
         <image name="plusplus" width="26" height="26"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

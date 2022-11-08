@@ -75,6 +75,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     private var cellHeights = [IndexPath:CGFloat]()
     
+    var currentDate: Date!
+    
     let userImageStore = UserImageStore()
     let userImageLoader: UserImageLoader!
     
@@ -536,6 +538,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     
                     SwiftRant.shared.getProfileFromID(self.userID!, token: nil, userContentType: .rants, skip: 0, completionHandler: { result in
                         self.rantTypeContent = try! result.get().content.content.rants
+                        self.currentDate = Date()
                         
                         for i in self.rantTypeContent {
                             if let attachedImage = i.attachedImage {
@@ -563,6 +566,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             } else {
                 SwiftRant.shared.getProfileFromID(self.userID!, token: nil, userContentType: .rants, skip: 0, completionHandler: { result in
                     self.rantTypeContent = try! result.get().content.content.rants
+                    self.currentDate = Date()
                     
                     for i in self.rantTypeContent {
                         if let attachedImage = i.attachedImage {
@@ -857,6 +861,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 self.isFetchAlreadyInProgress = false
                 return
             }
+            
+            self.currentDate = Date()
         
             var start = 0
             var end = 0
@@ -1158,7 +1164,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, allowedToPreview: false)
+                cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, currentDate: currentDate, allowedToPreview: false)
                 
                 return cell
             }

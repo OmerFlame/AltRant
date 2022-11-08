@@ -26,6 +26,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var actionsStackView: UIStackView!
     
     @IBOutlet weak var bodyLabel: UITextView!
+    @IBOutlet weak var postTimeLabel: UILabel!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var reportModifyButton: UIButton!
     
@@ -122,7 +123,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
      
      - returns: Nothing.
      */
-    func configure(with model: Comment, supplementalImage: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?, allowedToPreview: Bool) {
+    func configure(with model: Comment, supplementalImage: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?, currentDate: Date, allowedToPreview: Bool) {
         self.commentContents = model
         self.file = supplementalImage
         self.parentTableViewController = parentTableViewController
@@ -272,6 +273,19 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
                     }
                 }
             }
+        }
+        
+        let createdDate = Date(timeIntervalSince1970: Double(commentContents.createdTime))
+        if currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970 < 60 {
+            postTimeLabel.text = "\(commentContents.isEdited ? "(Edited) " : "")\(Int((currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970).rounded(.up)))s"
+        } else if (currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970) < 3600 {
+            postTimeLabel.text = "\(commentContents.isEdited ? "(Edited) " : "")\(Int(((currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970) / 60).rounded(.up)))m"
+        } else if currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970 < 86400 {
+            postTimeLabel.text = "\(commentContents.isEdited ? "(Edited) " : "")\(Int(((currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970) / 3600).rounded(.up)))h"
+        } else if currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970 < 2678400 {
+            postTimeLabel.text = "\(commentContents.isEdited ? "(Edited) " : "")\(Int(((currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970) / 86400).rounded(.up)))d"
+        } else {
+            postTimeLabel.text = "\(commentContents.isEdited ? "(Edited) " : "")\(createdDate.formatted(date: .numeric, time: .omitted))"
         }
     }
     

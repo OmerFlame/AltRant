@@ -19,6 +19,7 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
     @IBOutlet weak var userProfileImageView: RoundedImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var userScoreLabel: PaddingLabel!
+    @IBOutlet weak var postTimeLabel: UILabel!
     
     @IBOutlet weak var textStackView: UIStackView!
     @IBOutlet weak var userStackView: UIStackView!
@@ -78,7 +79,7 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
         tagList.addTags(["This", "Is", "A", "Test"])
     }
     
-    func configure(with model: Rant, userImage: UIImage?, supplementalImage: File?, profile: Profile, parentTableViewController: RantViewController?) {
+    func configure(with model: Rant, userImage: UIImage?, supplementalImage: File?, profile: Profile, parentTableViewController: RantViewController?, currentDate: Date) {
         self.rantContents = model
         self.userImage = userImage
         self.profile = profile
@@ -306,6 +307,18 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
             }
         }
         
+        let createdDate = Date(timeIntervalSince1970: Double(rantContents.createdTime))
+        if currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970 < 60 {
+            postTimeLabel.text = "\(rantContents.isEdited ? "(Edited) " : "")\(Int((currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970).rounded(.up)))s"
+        } else if (currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970) < 3600 {
+            postTimeLabel.text = "\(rantContents.isEdited ? "(Edited) " : "")\(Int(((currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970) / 60).rounded(.up)))m"
+        } else if currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970 < 86400 {
+            postTimeLabel.text = "\(rantContents.isEdited ? "(Edited) " : "")\(Int(((currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970) / 3600).rounded(.up)))h"
+        } else if currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970 < 2678400 {
+            postTimeLabel.text = "\(rantContents.isEdited ? "(Edited) " : "")\(Int(((currentDate.timeIntervalSince1970 - createdDate.timeIntervalSince1970) / 86400).rounded(.up)))d"
+        } else {
+            postTimeLabel.text = "\(rantContents.isEdited ? "(Edited) " : "")\(createdDate.formatted(date: .numeric, time: .omitted))"
+        }
         //layoutSubviews()
     }
     

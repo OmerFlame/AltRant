@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MXe-fl-qPC">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -14,7 +14,7 @@
         <!--devRant-->
         <scene sceneID="6qs-L4-7xV">
             <objects>
-                <tableViewController title="devRant" automaticallyAdjustsScrollViewInsets="NO" id="k5x-zg-0Zb" customClass="HomeFeedTableViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="HomeFeedTableViewController" title="devRant" automaticallyAdjustsScrollViewInsets="NO" id="k5x-zg-0Zb" customClass="HomeFeedTableViewController" customModule="AltRant" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="200" sectionHeaderHeight="28" estimatedSectionHeaderHeight="1" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" id="Xhg-Cz-KFH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
@@ -256,10 +256,10 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInSubscribedFeedCell" id="tRg-h6-stG" customClass="RantInSubscribedFeedCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="359.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="389.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tRg-h6-stG" id="BPP-Uy-B3I">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="359.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="389.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Kbr-C2-dCk" userLabel="User Actions View">
@@ -433,10 +433,10 @@
                                                     </variation>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="FOn-fi-29y">
-                                                    <rect key="frame" x="56" y="324" width="334" height="20.5"/>
+                                                    <rect key="frame" x="56" y="324" width="334" height="50.5"/>
                                                     <subviews>
                                                         <view contentMode="center" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="fDm-wM-9w1" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.5" width="307" height="19"/>
+                                                            <rect key="frame" x="0.0" y="0.5" width="307" height="50"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -1281,9 +1281,6 @@
     <designables>
         <designable name="69L-0b-9f7">
             <size key="intrinsicContentSize" width="26" height="26"/>
-        </designable>
-        <designable name="fDm-wM-9w1">
-            <size key="intrinsicContentSize" width="307" height="19"/>
         </designable>
         <designable name="lN7-Eb-p47">
             <size key="intrinsicContentSize" width="26" height="26"/>

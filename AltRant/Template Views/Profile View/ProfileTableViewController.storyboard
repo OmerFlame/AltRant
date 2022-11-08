@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -97,7 +97,7 @@
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhR-lP-j3Y" userLabel="User Score Label" customClass="PaddingLabel" customModule="AltRant" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="23" width="41" height="22"/>
+                                                                                    <rect key="frame" x="0.0" y="23" width="31" height="22"/>
                                                                                     <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -216,13 +216,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="340"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gYB-2A-o3L" userLabel="Content Stack View">
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gYB-2A-o3L" userLabel="Content Stack View">
                                                     <rect key="frame" x="20" y="15" width="370" height="289.5"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="tFB-14-6xE" userLabel="Voting Stack View">
+                                                        <stackView opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" ambiguous="YES" axis="vertical" distribution="fillProportionally" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="tFB-14-6xE" userLabel="Voting Stack View">
                                                             <rect key="frame" x="0.0" y="0.0" width="26" height="80"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="744" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-54-Xmg" userLabel="Upvote Button">
+                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="744" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pTi-54-Xmg" userLabel="Upvote Button">
                                                                     <rect key="frame" x="0.0" y="0.0" width="26" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="26" id="9FY-mW-UhS"/>
@@ -234,7 +234,7 @@
                                                                         <action selector="handleUpvote:" destination="4wH-G1-cdA" eventType="touchUpInside" id="Iso-ee-HDe"/>
                                                                     </connections>
                                                                 </button>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="266" horizontalCompressionResistancePriority="1000" text="9999" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2Z-Mw-s9C" userLabel="Score Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="266" horizontalCompressionResistancePriority="1000" ambiguous="YES" text="9999" textAlignment="center" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2Z-Mw-s9C" userLabel="Score Label">
                                                                     <rect key="frame" x="0.0" y="31" width="26" height="18"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="26" id="Dbk-9x-ZyV"/>
@@ -243,7 +243,7 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dr-Lk-9eQ" userLabel="Downvote Button">
+                                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dr-Lk-9eQ" userLabel="Downvote Button">
                                                                     <rect key="frame" x="0.0" y="50" width="26" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="26" id="09z-Zl-WdX"/>
@@ -267,10 +267,10 @@
                                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6dr-Lk-9eQ" secondAttribute="bottom" id="Ggn-zW-IgM"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="wHw-qS-WXo" userLabel="Text Stack View">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="238" ambiguous="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="wHw-qS-WXo" userLabel="Text Stack View">
                                                             <rect key="frame" x="36" y="0.0" width="334" height="286"/>
                                                             <subviews>
-                                                                <textView multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvQ-MH-y1d" userLabel="Body">
+                                                                <textView multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" ambiguous="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvQ-MH-y1d" userLabel="Body">
                                                                     <rect key="frame" x="0.0" y="0.0" width="334" height="236"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
@@ -278,7 +278,7 @@
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                                 </textView>
-                                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="bUp-4V-Xae">
+                                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bUp-4V-Xae">
                                                                     <rect key="frame" x="0.0" y="236" width="334" height="50"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" id="jwD-yz-ovh"/>
@@ -321,10 +321,10 @@
                                                         </mask>
                                                     </variation>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="mnJ-ti-y5j">
+                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="mnJ-ti-y5j">
                                                     <rect key="frame" x="56" y="304.5" width="334" height="20.5"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="UsI-cq-mC5" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UsI-cq-mC5" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.5" width="307" height="19"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
@@ -351,7 +351,7 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
-                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="5Lo-c1-OiF" userLabel="Comment Count Label">
+                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="5Lo-c1-OiF" userLabel="Comment Count Label">
                                                             <rect key="frame" x="307" y="0.5" width="27" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" priority="999" constant="20" id="sbd-ZS-ig2"/>
@@ -438,7 +438,7 @@
         <!--RantViewController-->
         <scene sceneID="BdY-bi-pm5">
             <objects>
-                <viewControllerPlaceholder storyboardName="RantViewController" referencedIdentifier="RantViewController" id="age-wr-6bV" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="RantViewController" id="age-wr-6bV" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="ESB-eK-wAi"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="25B-hs-Wzx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -448,13 +448,10 @@
     </scenes>
     <designables>
         <designable name="BhR-lP-j3Y">
-            <size key="intrinsicContentSize" width="41" height="19.5"/>
+            <size key="intrinsicContentSize" width="31" height="14.5"/>
         </designable>
         <designable name="C7z-Ni-RjW">
             <size key="intrinsicContentSize" width="18" height="20"/>
-        </designable>
-        <designable name="UsI-cq-mC5">
-            <size key="intrinsicContentSize" width="307" height="19"/>
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
