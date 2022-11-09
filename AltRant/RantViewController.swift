@@ -274,12 +274,12 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                             await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hexString: comment.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))!)
                         }
                         
-                        if comment.attachedImage == nil {
+                        /*if comment.attachedImage == nil {
                             //commentImages.append(nil)
                             self.commentImages[comment.id] = nil
                         } else {
                             self.commentImages[comment.id] = File.loadFile(image: comment.attachedImage!, size: CGSize(width: comment.attachedImage!.width, height: comment.attachedImage!.height))
-                        }
+                        }*/
                         
                         if comment.links != nil {
                             let links = comment.links!
@@ -309,9 +309,9 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     if case .success(let profile) = profileResult {
                         self.profile = profile
                         
-                        if self.rant?.attachedImage != nil && self.supplementalRantImage == nil {
+                        /*if self.rant?.attachedImage != nil && self.supplementalRantImage == nil {
                             self.supplementalRantImage = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
-                        }
+                        }*/
                         
                         
                         
@@ -345,7 +345,37 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         self.tableView.reloadData {
                             self.navigationItem.rightBarButtonItems![0].isEnabled = true
                             self.navigationItem.rightBarButtonItems![1].isEnabled = true
+                            
                             self.loadCompletionHandler?(self)
+                            
+                            self.tableView.setNeedsLayout()
+                            self.tableView.layoutIfNeeded()
+                            self.tableView.reloadData()
+                            
+                            /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.500) {
+                                /*self.tableView.setNeedsLayout()
+                                self.tableView.layoutIfNeeded()
+                                self.tableView.reloadData()*/
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.500) {
+                                    /*UIView.performWithoutAnimation {
+                                        self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                                        self.tableView.setContentOffset(.zero, animated: true)
+                                    }*/
+                                    
+                                    /*DispatchQueue.main.asyncAfter(deadline: .now() + 0.500) {
+                                        UIView.performWithoutAnimation {
+                                            self.tableView.beginUpdates()
+                                            self.tableView.endUpdates()
+                                        }
+                                    }*/
+                                }
+                                
+                                /*DispatchQueue.main.async {
+                                    self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                                    NotificationCenter.default.post(name: windowResizeNotification, object: nil)
+                                }*/
+                            }*/
                         }
                         
                         /*DispatchQueue.main.async {
@@ -549,6 +579,7 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        tableView.reloadData()
         print("WILL APPEAR")
     }
     
@@ -656,6 +687,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         rowHeights[indexPath] = cell.frame.size.height
+        
+        NotificationCenter.default.post(name: windowResizeNotification, object: nil)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -675,21 +708,29 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let cell = tableView.dequeueReusableCell(withIdentifier: "RantCell") as! RantCell
             
             //cell = RantCell.loadFromXIB() as! RantCell
-            cell.configure(with: rant!, userImage: ranterProfileImage, supplementalImage: supplementalRantImage, profile: profile!, parentTableViewController: self, currentDate: currentDate)
+            cell.configure(with: rant!, userImage: ranterProfileImage, supplementalImage: nil, profile: profile!, parentTableViewController: self, currentDate: currentDate)
             
             cell.delegate = self
+            
+            //cell.layoutIfNeeded()
             
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
             
             //cell = CommentCell.loadFromXIB() as! CommentCell
-            cell.configure(with: comments[indexPath.row], supplementalImage: commentImages[comments[indexPath.row].id] ?? nil, parentTableViewController: self, parentTableView: tableView, currentDate: currentDate, allowedToPreview: true)
+            cell.configure(with: comments[indexPath.row], supplementalImage: nil, parentTableViewController: self, parentTableView: tableView, currentDate: currentDate, allowedToPreview: true)
             
             cell.delegate = self
             
             return cell
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        NotificationCenter.default.post(name: windowResizeNotification, object: nil)
     }
     
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
@@ -700,11 +741,41 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }*/
         
         if tappedComment == nil {
-            return PreviewItem(url: tappedRant?.file?.previewItemURL, title: "Picture from \(tappedRant!.rantContents!.username)")
+            let temporaryFileURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(URL(string: tappedRant!.rantContents.attachedImage!.url)!.lastPathComponent)
+            
+            try? (temporaryFileURL.pathExtension != "" && temporaryFileURL.pathExtension != "png" ? tappedRant!.supplementalImageView.image!.jpegData(compressionQuality: 1.0) : tappedRant!.supplementalImageView.image!.pngData())!.write(to: temporaryFileURL, options: .atomic)
+            
+            return PreviewItem(url: temporaryFileURL, title: "Picture from \(tappedRant!.rantContents!.username)")
         } else {
-            return PreviewItem(url: tappedComment?.file?.previewItemURL, title: "Picture from \(tappedComment!.commentContents!.username)")
+            let temporaryFileURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(URL(string: tappedComment!.commentContents.attachedImage!.url)!.lastPathComponent)
+            
+            try? (temporaryFileURL.pathExtension != "" && temporaryFileURL.pathExtension != "png" ? tappedComment!.supplementalImageView.image!.jpegData(compressionQuality: 1.0) : tappedComment!.supplementalImageView.image!.pngData())!.write(to: temporaryFileURL, options: .atomic)
+            
+            return PreviewItem(url: temporaryFileURL, title: "Picture from \(tappedComment!.commentContents!.username)")
         }
     }
+    
+    /*func previewController(_ controller: QLPreviewController, shouldOpen url: URL, for item: QLPreviewItem) -> Bool {
+        guard url.pathExtension != "" else { return false }
+        
+        if tappedRant != nil {
+            do {
+                try (url.pathExtension != "png" ? tappedRant!.supplementalImageView.image!.jpegData(compressionQuality: 1.0) : tappedRant!.supplementalImageView.image!.pngData())!.write(to: url, options: .atomic)
+                
+                return true
+            } catch {
+                return false
+            }
+        } else if tappedComment != nil {
+            do {
+                try (url.pathExtension != "png" ? tappedComment!.supplementalImageView.image!.jpegData(compressionQuality: 1.0) : tappedComment!.supplementalImageView.image!.pngData())!.write(to: url, options: .atomic)
+            } catch {
+                return false
+            }
+        }
+        
+        return false
+    }*/
     
     func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
         1
@@ -735,13 +806,19 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func previewController(_ controller: QLPreviewController, transitionImageFor item: QLPreviewItem, contentRect: UnsafeMutablePointer<CGRect>) -> UIImage? {
         if tappedComment == nil {
+            contentRect.pointee = tappedRant!.convert(tappedRant!.supplementalImageView.frame, to: tableView)
             return tappedRant?.supplementalImageView.image
         } else {
+            contentRect.pointee = tappedComment!.convert(tappedComment!.supplementalImageView.frame, to: tableView)
             return tappedComment?.supplementalImageView.image
         }
     }
     
     func previewControllerDidDismiss(_ controller: QLPreviewController) {
+        let tempURL = previewController(controller, previewItemAt: 0).previewItemURL!
+        
+        try? FileManager.default.removeItem(at: tempURL)
+        
         tappedRant = nil
         tappedComment = nil
     }

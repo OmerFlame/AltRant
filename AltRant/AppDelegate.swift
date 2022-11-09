@@ -28,6 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         UIApplication.shared.registerForRemoteNotifications()
         
+        let urlCache = URLCache(memoryCapacity: 40 * 1024 * 1024, diskCapacity: 500 * 1024 * 1024)
+        
+        URLCache.shared = urlCache
+        
         
         
         return true

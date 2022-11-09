@@ -232,7 +232,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         (tableView.tableHeaderView as! StretchyTableHeaderView).imageContainer.backgroundColor = UIColor(hexString: profileData!.avatar.backgroundColor)!
         (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.backgroundColor = UIColor(hexString: profileData!.avatar.backgroundColor)!
         
-        tableView.register(UINib(nibName: "SecondaryRantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
+        tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
         tableView.register(UINib(nibName: "CommentCell", bundle: nil), forCellReuseIdentifier: "CommentCell")
         tableView.register(UINib(nibName: "LoadingCell", bundle: nil), forCellReuseIdentifier: "LoadingCell")
         
@@ -1083,7 +1083,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
                 cell.configure(with: rantTypeContent[indexPath.row], image: rantContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
                 
                 var attributedTitle = NSMutableAttributedString(string: "\(rantTypeContent[indexPath.row].commentCount)")
@@ -1363,7 +1363,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // MARK: - Feed Delegate
-    func didVoteOnRant(withID id: Int, vote: VoteState, cell: SecondaryRantInFeedCell) {
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantInFeedCell) {
         let rantIndex = indexForRant(withID: id)
         
         SwiftRant.shared.voteOnRant(nil, rantID: id, vote: vote) { [weak self] result in

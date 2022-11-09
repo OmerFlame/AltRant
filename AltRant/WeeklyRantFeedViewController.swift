@@ -28,7 +28,7 @@ class WeeklyRantFeedViewController: UITableViewController, HomeFeedTableViewCont
         tableView.rowHeight = UITableView.automaticDimension
         
         tableView.register(UINib(nibName: "LoadingCell", bundle: nil), forCellReuseIdentifier: "LoadingCell")
-        tableView.register(UINib(nibName: "SecondaryRantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
+        tableView.register(UINib(nibName: "RantInFeedCell", bundle: nil), forCellReuseIdentifier: "RantInFeedCell")
         
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.shadowColor = .clear
@@ -135,7 +135,7 @@ class WeeklyRantFeedViewController: UITableViewController, HomeFeedTableViewCont
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
             
             var counter = 0
             var feedOffset = 0
@@ -167,7 +167,7 @@ class WeeklyRantFeedViewController: UITableViewController, HomeFeedTableViewCont
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = self.tableView(tableView, cellForRowAt: indexPath)
         
-        performSegue(withIdentifier: "RantInFeedCell", sender: (self.tableView(tableView, cellForRowAt: indexPath) as! SecondaryRantInFeedCell))
+        performSegue(withIdentifier: "RantInFeedCell", sender: (self.tableView(tableView, cellForRowAt: indexPath) as! RantInFeedCell))
     }
     
     override func viewDidLayoutSubviews() {
@@ -228,11 +228,11 @@ class WeeklyRantFeedViewController: UITableViewController, HomeFeedTableViewCont
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "RantInFeedCell", let rantViewController = segue.destination as? RantViewController {
-            rantViewController.rantID = (sender as! SecondaryRantInFeedCell).rantContents!.id
+            rantViewController.rantID = (sender as! RantInFeedCell).rantContents!.id
             
             rantViewController.homeFeedDelegate = self
             
-            rantViewController.supplementalRantImage = (sender as! SecondaryRantInFeedCell).supplementalImage
+            rantViewController.supplementalRantImage = (sender as! RantInFeedCell).supplementalImage
             rantViewController.loadCompletionHandler = nil
         } else if segue.identifier == "AfterCompose", let rantViewController = segue.destination as? RantViewController {
             rantViewController.rantID = sender as! Int
@@ -285,7 +285,7 @@ class WeeklyRantFeedViewController: UITableViewController, HomeFeedTableViewCont
         }
     }
     
-    func didVoteOnRant(withID id: Int, vote: VoteState, cell: SecondaryRantInFeedCell) {
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantInFeedCell) {
         let rantIndex = indexOfRant(withID: id)
         
         guard let rantIndex = rantIndex else {

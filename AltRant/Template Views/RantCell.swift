@@ -10,8 +10,9 @@ import UIKit
 import QuickLook
 import SwiftRant
 import SwiftHEXColors
+import SkeletonView
 
-class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
+class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate, URLSessionDataDelegate {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
@@ -27,6 +28,8 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
     @IBOutlet weak var favoriteModifyButton: UIButton!
+    
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     
     var file: File?
     var savedPreviewImage: UIImage?
@@ -49,6 +52,31 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        supplementalImageView.image = nil
+        supplementalImageView.isHidden = true
+        
+        imageViewHeightConstraint.constant = 0
+        file = nil
+        
+        rantContents = nil
+        
+        scoreLabel.text = ""
+        bodyLabel.text = ""
+        tagList.removeAllTags()
+        
+        NotificationCenter.default.removeObserver(self, name: windowResizeNotification, object: nil)
+    }
+    
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        layoutIfNeeded()
+        
+        windowResizeHandler()
     }
     
     func testConfigure() {
@@ -102,62 +130,94 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
         scoreLabel.text = formatNumber(rantContents!.score)
         downvoteButton.tintColor = (model.voteState == .downvoted ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         
-        if supplementalImage == nil {
+        if rantContents.attachedImage == nil {
+            supplementalImageView.image = nil
             supplementalImageView.isHidden = true
         } else {
             supplementalImageView.isHidden = false
-            if supplementalImageView.image == nil {
-                print("Preview image is nil, generating!")
-                
-                print("TEXT STACK VIEW WIDTH: \(textStackView.frame.size.width)")
-                
-                let resizeMultiplier = supplementalImage!.size!.width / bodyLabel.frame.size.width
-                
-                let finalWidth = supplementalImage!.size!.width / resizeMultiplier
-                let finalHeight = supplementalImage!.size!.height / resizeMultiplier
-                
-                print("FINAL WIDTH:  \(finalWidth)")
-                print("FINAL HEIGHT: \(finalHeight)")
-                
-                UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, resizeMultiplier)
-                UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
-                let newImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                
-                supplementalImageView.image = newImage
-                
-                supplementalImageView.frame.size.width = finalWidth
-                supplementalImageView.frame.size.height = finalHeight
-                
-                /*var resizeMultiplier = getImageResizeMultiplier(imageWidth: supplementalImage!.size!.width, imageHeight: supplementalImage!.size!.height, multiplier: 1)
-                
-                //let previewImage = supplementalImage!.getThumbnail(size: CGSize(width: supplementalImage!.size!.width / resizeMultiplier, height: supplementalImage!.size!.height / resizeMultiplier))
-                
-                //supplementalImageView.image = previewImage
-                
-                if resizeMultiplier == 1 {
-                    resizeMultiplier = supplementalImage!.size!.width / textStackView.frame.size.width
-                    
-                    let finalWidth = supplementalImage!.size!.width / resizeMultiplier
-                    let finalHeight = supplementalImage!.size!.height / resizeMultiplier
-                    
-                    print("FINAL WIDTH:  \(finalWidth)")
-                    print("FINAL HEIGHT: \(finalHeight)")
-                    
-                    UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, 1)
-                    UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
-                    let newImage = UIGraphicsGetImageFromCurrentImageContext()
-                    UIGraphicsEndImageContext()
-                    
-                    supplementalImageView.image = newImage
-                } else {
-                    let imagePreview = supplementalImage!.getThumbnail(size: CGSize(width: supplementalImage!.size!.width / resizeMultiplier, height: supplementalImage!.size!.height / resizeMultiplier))
-                    
-                    
-                    supplementalImageView.image = imagePreview
-                }*/
+            
+            supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
+            
+            let resizeMultiplier = supplementalImageView.frame.size.width / (CGFloat(rantContents.attachedImage!.width) / UIScreen.main.scale)
+            
+            let finalHeight = (CGFloat(rantContents.attachedImage!.height) / UIScreen.main.scale) * resizeMultiplier
+            
+            debugPrint("FINAL IMAGE HEIGHT: \(finalHeight)")
+            
+            imageViewHeightConstraint.constant = finalHeight
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(windowResizeHandler), name: windowResizeNotification, object: nil)
+            
+            supplementalImageView.showAnimatedSkeleton()
+            
+            var request = URLRequest(url: URL(string: rantContents.attachedImage!.url)!)
+            request.cachePolicy = .returnCacheDataElseLoad
+            
+            // hopefully, this is cached.
+            let dataTask = URLSession.shared.dataTask(with: request) { data, _, _ in
+                if let data = data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.supplementalImageView.image = UIImage(data: data)
+                        
+                        self?.supplementalImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                    }
+                }
             }
-            //supplementalImageView.frame.size = supplementalImage!.size
+            
+            dataTask.delegate = self
+            
+            dataTask.resume()
+            
+            /*if supplementalImageView.image == nil {
+             print("Preview image is nil, generating!")
+             
+             print("TEXT STACK VIEW WIDTH: \(textStackView.frame.size.width)")
+             
+             let resizeMultiplier = supplementalImage!.size!.width / bodyLabel.frame.size.width
+             
+             let finalWidth = supplementalImage!.size!.width / resizeMultiplier
+             let finalHeight = supplementalImage!.size!.height / resizeMultiplier
+             
+             print("FINAL WIDTH:  \(finalWidth)")
+             print("FINAL HEIGHT: \(finalHeight)")
+             
+             UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, resizeMultiplier)
+             UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
+             let newImage = UIGraphicsGetImageFromCurrentImageContext()
+             UIGraphicsEndImageContext()
+             
+             supplementalImageView.image = newImage
+             
+             supplementalImageView.frame.size.width = finalWidth
+             supplementalImageView.frame.size.height = finalHeight*/
+            
+            /*var resizeMultiplier = getImageResizeMultiplier(imageWidth: supplementalImage!.size!.width, imageHeight: supplementalImage!.size!.height, multiplier: 1)
+             
+             //let previewImage = supplementalImage!.getThumbnail(size: CGSize(width: supplementalImage!.size!.width / resizeMultiplier, height: supplementalImage!.size!.height / resizeMultiplier))
+             
+             //supplementalImageView.image = previewImage
+             
+             if resizeMultiplier == 1 {
+             resizeMultiplier = supplementalImage!.size!.width / textStackView.frame.size.width
+             
+             let finalWidth = supplementalImage!.size!.width / resizeMultiplier
+             let finalHeight = supplementalImage!.size!.height / resizeMultiplier
+             
+             print("FINAL WIDTH:  \(finalWidth)")
+             print("FINAL HEIGHT: \(finalHeight)")
+             
+             UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, 1)
+             UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
+             let newImage = UIGraphicsGetImageFromCurrentImageContext()
+             UIGraphicsEndImageContext()
+             
+             supplementalImageView.image = newImage
+             } else {
+             let imagePreview = supplementalImage!.getThumbnail(size: CGSize(width: supplementalImage!.size!.width / resizeMultiplier, height: supplementalImage!.size!.height / resizeMultiplier))
+             
+             
+             supplementalImageView.image = imagePreview
+             }*/
         }
         
         upvoteButton.isEnabled = rantContents!.voteState != .unvotable
@@ -319,6 +379,8 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
         } else {
             postTimeLabel.text = "\(rantContents.isEdited ? "(Edited) " : "")\(createdDate.formatted(date: .numeric, time: .omitted))"
         }
+        
+        layoutIfNeeded()
         //layoutSubviews()
     }
     
@@ -585,5 +647,31 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate {
         vc.week = weekly.week
         
         parentTableViewController?.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    @objc func windowResizeHandler() {
+        guard rantContents.attachedImage != nil else {
+            return
+        }
+        
+        let resizeMultiplier = supplementalImageView.frame.size.width / (CGFloat(rantContents.attachedImage!.width) / UIScreen.main.scale)
+        
+        let finalHeight = (CGFloat(rantContents.attachedImage!.height) / UIScreen.main.scale) * resizeMultiplier
+        
+        print("IMAGE VIEW WIDTH:  \(supplementalImageView.frame.size.width)")
+        print("RESIZE MULTIPLIER: \(resizeMultiplier)")
+        print("FINAL HEIGHT:      \(finalHeight)")
+        print("-------------------------------------")
+        
+        imageViewHeightConstraint.constant = finalHeight
+        
+        layoutIfNeeded()
+    }
+    
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
+        
+        debugPrint("CACHING IMAGE FOR RANT ID \(rantContents.id) WITH STORAGE POLICY: \(proposedResponse.storagePolicy == .allowed ? ".allowed" : proposedResponse.storagePolicy == .allowedInMemoryOnly ? ".allowedInMemoryOnly" : ".notAllowed")")
+        
+        completionHandler(proposedResponse)
     }
 }

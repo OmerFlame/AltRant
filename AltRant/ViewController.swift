@@ -58,7 +58,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         tableView.rowHeight = UITableView.automaticDimension
         
         let loadingCellNib = UINib(nibName: "LoadingCell", bundle: nil)
-        let rantInFeedCellNib = UINib(nibName: "SecondaryRantInFeedCell", bundle: nil)
+        let rantInFeedCellNib = UINib(nibName: "RantInFeedCell", bundle: nil)
         
         tableView.register(rantInFeedCellNib, forCellReuseIdentifier: "RantInFeedCell")
         tableView.register(loadingCellNib, forCellReuseIdentifier: "LoadingCell")
@@ -269,7 +269,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 
                 self?.rantFeed.rantFeed.append(feed)
                 
-                for (idx, rant) in feed.rants.enumerated() {
+                /*for (idx, rant) in feed.rants.enumerated() {
                     if rant.attachedImage != nil {
                         if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
                             self?.supplementalImages[indexPaths[idx]] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
@@ -277,7 +277,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                             self?.supplementalImages[indexPaths[idx]] = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
                         }
                     }
-                }
+                }*/
                 
                 self?.currentPage += 1
                 
@@ -508,7 +508,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         if indexPath.section == 0 {
             //let rant = rantFeed.rantFeed[indexPath.row]
         
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
         
             //let image = supplementalImages[indexPath.row]
         
@@ -530,7 +530,9 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
                 }
             }
             
-            cell.configure(with: Optional(rantFeed.rantFeed[feedOffset].rants[rantOffset]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
+            //cell.configure(with: Optional(rantFeed.rantFeed[feedOffset].rants[rantOffset]), image: supplementalImages[indexPath], parentTableViewController: self, parentTableView: tableView)
+            
+            cell.configure(with: Optional(rantFeed.rantFeed[feedOffset].rants[rantOffset]), image: nil, parentTableViewController: self, parentTableView: tableView)
             
             var attributedTitle = NSMutableAttributedString(string: "\(rantFeed.rantFeed[feedOffset].rants[rantOffset].commentCount)")
             
@@ -545,7 +547,8 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             
             cell.delegate = self
             
-            cell.layoutIfNeeded()
+            
+            //cell.layoutIfNeeded()
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
@@ -637,7 +640,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
         if segue.identifier == "RantInFeedCell", let rantViewController = segue.destination as? RantViewController {
             //rantViewController.rantID = rantFeed.rantFeed[tableView.indexPath(for: sender as! UITableViewCell)!.row].id
             
-            rantViewController.rantID = (sender as! SecondaryRantInFeedCell).rantContents!.id
+            rantViewController.rantID = (sender as! RantInFeedCell).rantContents!.id
             
             /*withUnsafeMutablePointer(to: &(sender as! RantInFeedCell).rant, { pointer in
                 rantViewController.rantInFeed = pointer
@@ -730,7 +733,7 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
     }
     
     // MARK: - Feed Delegate
-    func didVoteOnRant(withID id: Int, vote: VoteState, cell: SecondaryRantInFeedCell) {
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantInFeedCell) {
         let rantIndex = indexOfRant(withID: id)
         
         guard let rantIndex = rantIndex else {

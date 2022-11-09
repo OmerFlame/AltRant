@@ -2,194 +2,228 @@
 //  RantInFeedCell.swift
 //  AltRant
 //
-//  Created by Omer Shamai on 12/1/20.
+//  Created by Omer Shamai on 2/7/21.
 //
 
 import UIKit
 import QuickLook
 import SwiftRant
 import SwiftHEXColors
-//import SwiftUI
+import SkeletonView
 
 class RantInFeedCell: UITableViewCell {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
+    @IBOutlet weak var contentStackView: UIStackView!
+    @IBOutlet weak var tagStackView: UIStackView!
     @IBOutlet weak var textStackView: UIStackView!
-    @IBOutlet weak var bodyLabel: UILabel!
+    @IBOutlet weak var bodyLabel: UITextView!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var tagList: TagListView!
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var commentCountLabel: UIButton!
     
-    //var rantContents: Binding<RantInFeed>? = nil
-    var rantContents: UnsafeMutablePointer<RantInFeed>? = nil
+    var rantContents: RantInFeed!
     var parentTableViewController: UIViewController? = nil
     var parentTableView: UITableView? = nil
     
     var supplementalImage: File?
     
-    /*init?(coder: NSCoder, rantContents: Binding<RantInFeed>, image: UIImage?, parentTableViewController: UITableViewController?) {
-        self.parentTableViewController = parentTableViewController
-        self.rantContents = rantContents
-        
-        super.init(coder: coder)
-        
-        upvoteButton.tintColor = (rantContents.wrappedValue.vote_state == 1 ? UIColor(hexString: rantContents.wrappedValue.user_avatar.b)! : UIColor.systemGray)
-        scoreLabel.text = String(rantContents.wrappedValue.score + rantContents.wrappedValue.vote_state)
-        downvoteButton.tintColor = (rantContents.wrappedValue.vote_state == -1 ? UIColor(hexString: rantContents.wrappedValue.user_avatar.b)! : UIColor.systemGray)
-        
-        if image == nil {
-            supplementalImageView.isHidden = true
-        } else {
-            //let resizeMultiplier = getImageResizeMultiplier(imageWidth: image!.size.width, imageHeight: image!.size.height, multiplier: 1)
-            
-            //UIGraphicsBeginImageContextWithOptions(CGSize(width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier), false, CGFloat(1 / resizeMultiplier))
-            //image!.draw(in: CGRect(x: 0, y: 0, width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier))
-            //let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            //UIGraphicsEndImageContext()
-            
-            supplementalImageView.image = image
-        }
-        
-        upvoteButton.isUserInteractionEnabled = rantContents.wrappedValue.vote_state != -2
-        downvoteButton.isUserInteractionEnabled = rantContents.wrappedValue.vote_state != -2
-        
-        //bodyLabel.text = model.wrappedValue.text
-        
-        if rantContents.wrappedValue.text.count > 240 {
-            bodyLabel.text = rantContents.wrappedValue.text.prefix(240) + "... [read more]"
-        } else {
-            bodyLabel.text = rantContents.wrappedValue.text
-        }
-        
-        tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
-        tagList.addTags(rantContents.wrappedValue.tags)
-    }
+    var loadingIndicator = UIActivityIndicatorView(style: .medium)
+    
+    var delegate: FeedDelegate?
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        supplementalImageView.image = nil
+        supplementalImageView.isHidden = true
+        
+        imageViewHeightConstraint.constant = 0
+        
+        supplementalImage = nil
+        
+        rantContents = nil
+        
+        scoreLabel.text = ""
+        bodyLabel.text = ""
+        tagList.removeAllTags()
+        
+        NotificationCenter.default.removeObserver(self, name: windowResizeNotification, object: nil)
+    }
+    
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        layoutIfNeeded()
+    }
+    
+    /*override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
     }*/
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    func configureLoading() {
+        upvoteButton.isHidden = true
+        scoreLabel.isHidden = true
+        downvoteButton.isHidden = true
+        textStackView.isHidden = true
+        bodyLabel.isHidden = true
+        supplementalImageView.isHidden = true
+        tagList.isHidden = true
+        
+        contentView.addSubview(loadingIndicator)
+        
+        loadingIndicator.startAnimating()
+        
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        //loadingIndicator.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        //loadingIndicator.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        loadingIndicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        
+        loadingIndicator.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -40).isActive = true
+        loadingIndicator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 40).isActive = true
+        
+        layoutIfNeeded()
+        //loadingIndicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 40).isActive = true
+        
+        //loadingIndicator.hidesWhenStopped = true
     }
     
-    func configure(with model: UnsafeMutablePointer<RantInFeed>?, image: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
+    func configure(with model: RantInFeed?, image: File?, parentTableViewController: UIViewController?, parentTableView: UITableView?) {
         self.parentTableViewController = parentTableViewController
         self.parentTableView = parentTableView
         self.supplementalImage = image
         self.rantContents = model
         
-        upvoteButton.tintColor = (rantContents!.pointee.voteState.rawValue == 1 ? UIColor(hexString: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
-        scoreLabel.text = String(rantContents!.pointee.score)
-        downvoteButton.tintColor = (rantContents!.pointee.voteState.rawValue == -1 ? UIColor(hexString: rantContents!.pointee.userAvatar.backgroundColor)! : UIColor.systemGray)
+        if loadingIndicator.isDescendant(of: contentView) {
+            loadingIndicator.removeFromSuperview()
+        }
         
-        upvoteButton.isEnabled = rantContents!.pointee.voteState.rawValue != -2
-        downvoteButton.isEnabled = rantContents!.pointee.voteState.rawValue != -2
+        upvoteButton.isHidden = false
+        scoreLabel.isHidden = false
+        downvoteButton.isHidden = false
+        textStackView.isHidden = false
+        bodyLabel.isHidden = false
+        supplementalImageView.isHidden = false
+        tagList.isHidden = false
+        commentCountLabel?.isHidden = rantContents.commentCount == 0
         
-        //let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        upvoteButton.tintColor = (rantContents.voteState.rawValue == 1 ? UIColor(hexString: rantContents.userAvatar.backgroundColor)! : UIColor.systemGray)
+        scoreLabel.text = String(rantContents.score)
+        downvoteButton.tintColor = (rantContents.voteState.rawValue == -1 ? UIColor(hexString: rantContents.userAvatar.backgroundColor)! : UIColor.systemGray)
         
-        //textStackView.addGestureRecognizer(gestureRecognizer)
+        upvoteButton.isEnabled = rantContents.voteState.rawValue != -2
+        downvoteButton.isEnabled = rantContents.voteState.rawValue != -2
         
-        if image == nil {
+        if rantContents.attachedImage == nil {
             supplementalImageView.image = nil
             supplementalImageView.isHidden = true
         } else {
             supplementalImageView.isHidden = false
-            supplementalImageView.image = nil
             
-            let resizeMultiplier = supplementalImage!.size!.width / textStackView.frame.size.width
+            supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
             
-            let finalWidth = supplementalImage!.size!.width / resizeMultiplier
-            let finalHeight = supplementalImage!.size!.height / resizeMultiplier
+            let resizeMultiplier = supplementalImageView.frame.size.width / (CGFloat(rantContents.attachedImage!.width) / UIScreen.main.scale)
             
-            print("FINAL WIDTH:  \(finalWidth)")
-            print("FINAL HEIGHT: \(finalHeight)")
+            let finalHeight = (CGFloat(rantContents.attachedImage!.height) / UIScreen.main.scale) * resizeMultiplier
             
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, resizeMultiplier)
-            UIImage(contentsOfFile: supplementalImage!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
-            let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
+            debugPrint("FINAL IMAGE HEIGHT: \(finalHeight)")
             
-            supplementalImageView.image = newImage
+            imageViewHeightConstraint.constant = finalHeight
             
-            //var resizeMultiplier = getImageResizeMultiplier(imageWidth: image!.size!.width, imageHeight: image!.size!.height, multiplier: 1)
+            NotificationCenter.default.addObserver(self, selector: #selector(windowResizeHandler), name: windowResizeNotification, object: nil)
             
-            /*if resizeMultiplier == 1 {
-                resizeMultiplier = image!.size!.width / textStackView.frame.size.width
+            //setNeedsLayout()
+            //layoutIfNeeded()
+            
+            supplementalImageView.showAnimatedSkeleton()
+            
+            if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rantContents.attachedImage!.url)!.lastPathComponent).relativePath) {
+                let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rantContents.attachedImage!.url)!.lastPathComponent).relativePath
                 
-                let finalWidth = image!.size!.width / resizeMultiplier
-                let finalHeight = image!.size!.height / resizeMultiplier
+                debugPrint("IMAGE FOUND AT RELATIVE PATH \(path) FOR RANT ID \(rantContents.id)!")
                 
-                print("FINAL WIDTH:  \(finalWidth)")
-                print("FINAL HEIGHT: \(finalHeight)")
-                
-                UIGraphicsBeginImageContextWithOptions(CGSize(width: finalWidth, height: finalHeight), false, 1)
-                UIImage(contentsOfFile: image!.previewItemURL.relativePath)!.draw(in: CGRect(origin: .zero, size: CGSize(width: finalWidth, height: finalHeight)))
-                let newImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                
-                supplementalImageView.image = newImage
+                DispatchQueue.global().async {
+                    let image = UIImage(contentsOfFile: path)
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        //self?.supplementalImageView.isHidden = false
+                        
+                        //self?.supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
+                        
+                        self?.supplementalImageView.image = image
+                        
+                        //let resizeMultiplier = self?.supplementalImageView.frame.size.width ?? 0 / UIScreen.main.ad_pixelDimension * CGFloat(self?.rantContents.attachedImage!.width ?? 1)
+                        
+                        //let finalHeight = UIScreen.main.ad_pixelDimension * CGFloat(self?.rantContents.attachedImage!.height ?? 0) * resizeMultiplier
+                        
+                        //self?.imageViewHeightConstraint.constant = finalHeight
+                        
+                        //print("IMAGE FRAME: \(supplementalImageView.frame.size)")
+                        
+                        self?.supplementalImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                        
+                        //self?.layoutSubviews()
+                    }
+                }
             } else {
-                let imagePreview = image!.getThumbnail(size: CGSize(width: image!.size!.width / resizeMultiplier, height: image!.size!.height / resizeMultiplier))
+                //let url = URL(string: rantContents.attachedImage!.url)!
+                debugPrint("IMAGE \(URL(string: rantContents.attachedImage!.url)!.lastPathComponent) FOR RANT ID \(rantContents.id) NOT AVAILABLE ON DISK, FETCHING FROM WEB...")
+                let session = URLSession(configuration: .default)
+                let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rantContents.attachedImage!.url)!.lastPathComponent)
                 
-                
-                supplementalImageView.image = imagePreview
-            }*/
-            
-            //UIGraphicsBeginImageContextWithOptions(CGSize(width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier), false, CGFloat(1 / resizeMultiplier))
-            //image!.draw(in: CGRect(x: 0, y: 0, width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier))
-            //let newImage = UIGraphicsGetImageFromCurrentImageContext()
-            //UIGraphicsEndImageContext()
-            
-            /*if supplementalImageView.image == nil || __CGSizeEqualToSize(supplementalImageView.image!.size, .zero) {
-                print("Preview image is nil, generating!")
-                
-                let resizeMultiplier = getImageResizeMultiplier(imageWidth: image!.size!.width, imageHeight: image!.size!.height, multiplier: 1)
-                
-                //UIGraphicsBeginImageContextWithOptions(CGSize(width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier), false, CGFloat(1 / resizeMultiplier))
-                //image!.draw(in: CGRect(x: 0, y: 0, width: image!.size.width / resizeMultiplier, height: image!.size.height / resizeMultiplier))
-                //let newImage = UIGraphicsGetImageFromCurrentImageContext()
-                //UIGraphicsEndImageContext()
-                
-                let imagePreview = image!.getThumbnail(size: CGSize(width: image!.size!.width / resizeMultiplier, height: image!.size!.height / resizeMultiplier))
-                
-                
-                supplementalImageView.image = imagePreview
-            }*/
+                session.dataTask(with: URL(string: rantContents.attachedImage!.url)!) { data, _, _ in
+                    if let data = data {
+                        try? data.write(to: fileURL, options: .atomic)
+                        
+                        DispatchQueue.main.async { [weak self] in
+                            //self?.supplementalImageView.isHidden = false
+                            
+                            //self?.supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
+                            
+                            self?.supplementalImageView.image = UIImage(data: data)
+                            
+                            //let resizeMultiplier = self?.supplementalImageView.frame.size.width ?? 0 / UIScreen.main.ad_pixelDimension * CGFloat(self?.rantContents.attachedImage!.width ?? 1)
+                            
+                            //let finalHeight = UIScreen.main.ad_pixelDimension * CGFloat(self?.rantContents.attachedImage!.height ?? 0) * resizeMultiplier
+                            
+                            //self?.imageViewHeightConstraint.constant = finalHeight
+                            
+                            //print("IMAGE FRAME: \(supplementalImageView.frame.size)")
+                            
+                            self?.supplementalImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                        }
+                    }
+                }.resume()
+            }
         }
         
-        upvoteButton.isUserInteractionEnabled = rantContents!.pointee.voteState.rawValue != -2
-        downvoteButton.isUserInteractionEnabled = rantContents!.pointee.voteState.rawValue != -2
+        upvoteButton.isUserInteractionEnabled = rantContents.voteState.rawValue != -2
+        downvoteButton.isUserInteractionEnabled = rantContents.voteState.rawValue != -2
         
-        //bodyLabel.text = model.wrappedValue.text
-        
-        if rantContents!.pointee.text.count > 240 {
-            bodyLabel.text = rantContents!.pointee.text.prefix(240) + "... [read more]"
+        if rantContents.text.count > 240 {
+            bodyLabel.text = rantContents.text.prefix(240) + "... [read more]"
         } else {
-            bodyLabel.text = rantContents!.pointee.text
+            bodyLabel.text = rantContents.text
         }
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
         
         tagList.removeAllTags()
-        tagList.addTags(rantContents!.pointee.tags)
-    }
-    
-    func testConfigure() {
-        upvoteButton.tintColor = .systemGray
-        downvoteButton.tintColor = .systemGray
-        scoreLabel.text = "9999"
+        tagList.addTags(rantContents.tags)
         
-        //bodyLabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae."
-        bodyLabel.text = "Lorem ipsum"
-        
-        tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
-        tagList.addTags(["This", "Is", "A", "Test"])
+        layoutIfNeeded()
     }
     
     @IBAction func handleUpvote(_ sender: UIButton) {
         var vote: VoteState {
-            switch self.rantContents!.pointee.voteState {
+            switch self.rantContents.voteState {
             case .unvoted:
                 return .upvoted
                 
@@ -201,40 +235,54 @@ class RantInFeedCell: UITableViewCell {
             }
         }
         
-        //let success = APIRequest().voteOnRant(rantID: self.rantContents!.pointee.id, vote: vote)
+        /*let success = APIRequest().voteOnRant(rantID: self.rantContents.pointee.id, vote: vote)
         
-        /*if success == nil {
+        if success == nil {
             print("ERROR WHILE UPVOTING")
         } else {
-            self.rantContents!.pointee.vote_state = success!.rant.vote_state
-            self.rantContents!.pointee.score = success!.rant.score
+            self.rantContents.pointee.vote_state = success!.rant.vote_state
+            self.rantContents.pointee.score = success!.rant.score
             
             if let parentTableView = self.parentTableView {
                 parentTableView.reloadData()
             }
         }*/
         
-        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] result in
-            if case .success(let updatedRant) = result {
-                self?.rantContents!.pointee.voteState = updatedRant.voteState
-                self?.rantContents!.pointee.score = updatedRant.score
+        // This cell is being used in 2 unique feeds, so we need to call the according functions for both types. Whichever runs depends on the type of delegate. If the type doesn't match, it will stop calling.
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantVoteState(rantID: rantContents.id, voteState: vote)
+        (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForRant(withID: rantContents.id, voteState: vote)
+        
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantScore(rantID: rantContents.id, score: rantContents.voteState == .upvoted ? rantContents.score - 1 : rantContents.score + vote.rawValue)
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForRant(withID: rantContents.id, score: rantContents.voteState == .upvoted ? rantContents.score - 1 : rantContents.score + vote.rawValue)
+        
+        DispatchQueue.main.async {
+            (self.delegate as? HomeFeedTableViewControllerDelegate)?.reloadData()
+            (self.delegate as? ProfileTableViewControllerDelegate)?.reloadData()
+        }
+        
+        delegate?.didVoteOnRant(withID: rantContents.id, vote: vote, cell: self)
+        
+        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents.pointee.id, vote: vote) { [weak self] error, updatedRant in
+            if updatedRant != nil {
+                self?.rantContents.pointee.voteState = updatedRant!.voteState
+                self?.rantContents.pointee.score = updatedRant!.score
                 
                 if let parentTableView = self?.parentTableView {
                     parentTableView.reloadData()
                 }
-            } else if case .failure(let failure) = result {
-                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred.", preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 
                 self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
             }
-        }
+        }*/
     }
     
     @IBAction func handleDownvote(_ sender: UIButton) {
         var vote: VoteState {
-            switch self.rantContents!.pointee.voteState {
+            switch self.rantContents.voteState {
             case .unvoted:
                 return .downvoted
                 
@@ -246,55 +294,49 @@ class RantInFeedCell: UITableViewCell {
             }
         }
         
-        /*let success = APIRequest().voteOnRant(rantID: self.rantContents!.pointee.id, vote: vote)
+        // This cell is being used in 2 unique feeds, so we need to call the according functions for both types. Whichever runs depends on the type of delegate. If the type doesn't match, it will stop calling.
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantVoteState(rantID: rantContents.id, voteState: vote)
+        (delegate as? ProfileTableViewControllerDelegate)?.setVoteStateForRant(withID: rantContents.id, voteState: vote)
         
-        if success == nil {
-            print("ERROR WHILE DOWNVOTING")
-        } else {
-            self.rantContents!.pointee.vote_state = success!.rant.vote_state
-            self.rantContents!.pointee.score = success!.rant.score
-            
-            if let parentTableView = self.parentTableView {
-                parentTableView.reloadData()
-            }
-        }*/
+        (delegate as? HomeFeedTableViewControllerDelegate)?.changeRantScore(rantID: rantContents.id, score: rantContents.voteState == .downvoted ? rantContents.score + 1 : rantContents.score + vote.rawValue)
+        (delegate as? ProfileTableViewControllerDelegate)?.setScoreForRant(withID: rantContents.id, score: rantContents.voteState == .downvoted ? rantContents.score + 1 : rantContents.score + vote.rawValue)
         
-        SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.pointee.id, vote: vote) { [weak self] result in
-            if case .success(let updatedRant) = result {
-                self?.rantContents!.pointee.voteState = updatedRant.voteState
-                self?.rantContents!.pointee.score = updatedRant.score
+        DispatchQueue.main.async {
+            (self.delegate as? HomeFeedTableViewControllerDelegate)?.reloadData()
+            (self.delegate as? ProfileTableViewControllerDelegate)?.reloadData()
+        }
+        
+        delegate?.didVoteOnRant(withID: rantContents.id, vote: vote, cell: self)
+        
+        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents.pointee.id, vote: vote) { [weak self] error, updatedRant in
+            if updatedRant != nil {
+                self?.rantContents.pointee.voteState = updatedRant!.voteState
+                self?.rantContents.pointee.score = updatedRant!.score
                 
                 if let parentTableView = self?.parentTableView {
                     parentTableView.reloadData()
                 }
-            } else if case .failure(let failure) = result {
-                let alertController = UIAlertController(title: "Error", message: failure.message, preferredStyle: .alert)
+            } else {
+                let alertController = UIAlertController(title: "Error", message: error ?? "An unknown error has occurred.", preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 
                 self?.parentTableViewController?.present(alertController, animated: true, completion: nil)
             }
-        }
+        }*/
     }
     
-    /*@objc func handleTap(_ sender: UITapGestureRecognizer) {
-        if let parentTableViewController = self.parentTableViewController {
-            let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(identifier: "RantViewController", creator: { coder in
-                return RantViewController(coder: coder, rantID: self.rantContents!.wrappedValue.id, rantInFeed: self.rantContents!, supplementalRantImage: self.supplementalImage, loadCompletionHandler: nil)
-            })
-            //rantVC.rantID = rantContents!.wrappedValue.id
-            //rantVC.rantInFeed = rantContents!.projectedValue
-            //rantVC.supplementalRantImage = supplementalImageView.image
-            
-            parentTableViewController.navigationController?.pushViewController(rantVC, animated: true)
+    @objc func windowResizeHandler() {
+        guard rantContents.attachedImage != nil else {
+            return
         }
-    }*/
-    
-    private func getImageResizeMultiplier(imageWidth: CGFloat, imageHeight: CGFloat, multiplier: Int) -> CGFloat {
-        if imageWidth / CGFloat(multiplier) < 315 && imageHeight / CGFloat(multiplier) < 420 {
-            return CGFloat(multiplier)
-        } else {
-            return getImageResizeMultiplier(imageWidth: imageWidth, imageHeight: imageHeight, multiplier: multiplier + 2)
-        }
+        
+        let resizeMultiplier = supplementalImageView.frame.size.width / (CGFloat(rantContents.attachedImage!.width) / UIScreen.main.scale)
+        
+        let finalHeight = (CGFloat(rantContents.attachedImage!.height) / UIScreen.main.scale) * resizeMultiplier
+        
+        imageViewHeightConstraint.constant = finalHeight
+        
+        layoutIfNeeded()
     }
 }

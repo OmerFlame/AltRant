@@ -10,6 +10,7 @@ import UIKit
 import QuickLook
 import SwiftRant
 import SwiftHEXColors
+import SkeletonView
 //import ActiveLabel
 
 
@@ -29,6 +30,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var postTimeLabel: UILabel!
     @IBOutlet weak var supplementalImageView: UIImageView!
     @IBOutlet weak var reportModifyButton: UIButton!
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     
     /**
      The `File` instance for a possible image.
@@ -77,6 +79,30 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         // Initialization code
     }
     //- commentInFeed: An [`UnsafeMutablePointer`]() pointer holding the data for the same comment in another table view. Optional.
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        supplementalImageView.image = nil
+        supplementalImageView.isHidden = true
+        
+        imageViewHeightConstraint.constant = 0
+        
+        file = nil
+        
+        commentContents = nil
+        
+        scoreLabel.text = ""
+        bodyLabel.text = ""
+        bodyLabel.attributedText = nil
+        
+        NotificationCenter.default.removeObserver(self, name: windowResizeNotification, object: nil)
+    }
+    
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        layoutIfNeeded()
+    }
     
     /**
      Configures the comment cell to show a loading ring.
@@ -145,11 +171,57 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         scoreLabel.text = formatNumber(commentContents!.score)
         downvoteButton.tintColor = (model.voteState == .downvoted ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         
-        if supplementalImage == nil {
+        if commentContents.attachedImage == nil {
             supplementalImageView.isHidden = true
         } else {
             supplementalImageView.isHidden = false
-            let resizeMultiplier = supplementalImage!.size!.width / bodyLabel.frame.size.width
+            
+            supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
+            
+            let resizeMultiplier = supplementalImageView.frame.size.width / (CGFloat(commentContents.attachedImage!.width) / UIScreen.main.scale)
+            
+            let finalHeight = (CGFloat(commentContents.attachedImage!.height) / UIScreen.main.scale) * resizeMultiplier
+            
+            debugPrint("FINAL IMAGE HEIGHT: \(finalHeight)")
+            
+            imageViewHeightConstraint.constant = finalHeight
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(windowResizeHandler), name: windowResizeNotification, object: nil)
+            
+            supplementalImageView.showAnimatedSkeleton()
+            
+            if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: commentContents.attachedImage!.url)!.lastPathComponent).relativePath) {
+                let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: commentContents.attachedImage!.url)!.lastPathComponent).relativePath
+                
+                debugPrint("IMAGE FOUND AT RELATIVE PATH \(path) FOR COMMENT ID \(commentContents.id)!")
+                
+                DispatchQueue.global().async {
+                    let image = UIImage(contentsOfFile: path)
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        self?.supplementalImageView.image = image
+                        
+                        self?.supplementalImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                    }
+                }
+            } else {
+                debugPrint("IMAGE \(URL(string: commentContents.attachedImage!.url)!.lastPathComponent) FOR COMMENT ID \(commentContents.id) NOT AVAILABLE ON DISK, FETCHING FROM WEB...")
+                let session = URLSession(configuration: .default)
+                let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: commentContents.attachedImage!.url)!.lastPathComponent)
+                
+                session.dataTask(with: URL(string: commentContents.attachedImage!.url)!) { data, _, _ in
+                    if let data = data {
+                        try? data.write(to: fileURL, options: .atomic)
+                        
+                        DispatchQueue.main.async { [weak self] in
+                            self?.supplementalImageView.image = UIImage(data: data)
+                            self?.supplementalImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                        }
+                    }
+                }.resume()
+            }
+            
+            /*let resizeMultiplier = supplementalImage!.size!.width / bodyLabel.frame.size.width
             
             let finalWidth = supplementalImage!.size!.width / resizeMultiplier
             let finalHeight = supplementalImage!.size!.height / resizeMultiplier
@@ -159,7 +231,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             
-            supplementalImageView.image = newImage
+            supplementalImageView.image = newImage*/
         }
         
         upvoteButton.isEnabled = commentContents!.voteState != .unvotable
@@ -287,6 +359,8 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         } else {
             postTimeLabel.text = "\(commentContents.isEdited ? "(Edited) " : "")\(createdDate.formatted(date: .numeric, time: .omitted))"
         }
+        
+        layoutIfNeeded()
     }
     
     @objc func didDoubleTap() {
@@ -432,6 +506,20 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         } else {
             return getImageResizeMultiplier(imageWidth: imageWidth, imageHeight: imageHeight, multiplier: multiplier + 2)
         }
+    }
+    
+    @objc func windowResizeHandler() {
+        guard commentContents.attachedImage != nil else {
+            return
+        }
+        
+        let resizeMultiplier = supplementalImageView.frame.size.width / (CGFloat(commentContents.attachedImage!.width) / UIScreen.main.scale)
+        
+        let finalHeight = (CGFloat(commentContents.attachedImage!.height) / UIScreen.main.scale) * resizeMultiplier
+        
+        imageViewHeightConstraint.constant = finalHeight
+        
+        layoutIfNeeded()
     }
 }
 

@@ -10,7 +10,7 @@ import SwiftRant
 
 protocol FeedDelegate: AnyObject {
     func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantInSubscribedFeedCell)
-    func didVoteOnRant(withID id: Int, vote: VoteState, cell: SecondaryRantInFeedCell)
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantInFeedCell)
     func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantCell)
     
     func didFavoriteRant(withID id: Int, cell: RantCell)
@@ -27,7 +27,7 @@ protocol FeedDelegate: AnyObject {
 
 extension FeedDelegate {
     func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantInSubscribedFeedCell) {}
-    func didVoteOnRant(withID id: Int, vote: VoteState, cell: SecondaryRantInFeedCell) {}
+    func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantInFeedCell) {}
     func didVoteOnRant(withID id: Int, vote: VoteState, cell: RantCell) {}
     
     func didFavoriteRant(withID id: Int, cell: RantCell) {}
