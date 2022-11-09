@@ -18,8 +18,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="340.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Y1c-vO-YYC" userLabel="Content Stack View">
-                        <rect key="frame" x="20" y="15" width="370" height="286"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Y1c-vO-YYC" userLabel="Content Stack View">
+                        <rect key="frame" x="20" y="15" width="370" height="286.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qCA-xZ-Ms3" userLabel="Voting Group View">
                                 <rect key="frame" x="0.0" y="0.0" width="26" height="80"/>
@@ -86,7 +86,7 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                     </textView>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="TDN-qL-Geb">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="TDN-qL-Geb">
                                         <rect key="frame" x="0.0" y="236" width="334" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="999" constant="50" id="k34-t0-qv1"/>
@@ -135,11 +135,11 @@
                             </mask>
                         </variation>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="JEc-KD-KDX" userLabel="Tag Stack View">
-                        <rect key="frame" x="56" y="305" width="334" height="20.5"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="JEc-KD-KDX" userLabel="Tag Stack View">
+                        <rect key="frame" x="56" y="304.5" width="334" height="20"/>
                         <subviews>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="rZF-Yu-nvq" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="307" height="20.5"/>
+                            <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rZF-Yu-nvq" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="1" width="307" height="19"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -165,7 +165,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="r1E-j2-CZr" userLabel="Comment Count Label">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="r1E-j2-CZr" userLabel="Comment Count Label">
                                 <rect key="frame" x="307" y="0.0" width="27" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="20" id="Cyw-A2-6dd"/>
@@ -189,7 +189,7 @@
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="r1E-j2-CZr" firstAttribute="leading" secondItem="rZF-Yu-nvq" secondAttribute="trailing" id="hie-b0-1J0"/>
+                            <constraint firstItem="r1E-j2-CZr" firstAttribute="leading" secondItem="rZF-Yu-nvq" secondAttribute="trailing" id="DMm-uN-ZBy"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -212,13 +212,17 @@
                 <outlet property="scoreLabel" destination="ToN-aY-S0U" id="gUk-rW-HgN"/>
                 <outlet property="supplementalImageView" destination="TDN-qL-Geb" id="eZ9-dp-6fm"/>
                 <outlet property="tagList" destination="rZF-Yu-nvq" id="LTd-z5-kyq"/>
-                <outlet property="tagStackView" destination="JEc-KD-KDX" id="RhF-Ej-o8T"/>
                 <outlet property="textStackView" destination="CwW-A1-O9d" id="bQW-mt-htA"/>
                 <outlet property="upvoteButton" destination="QSl-0c-kf0" id="vYd-8I-8gB"/>
             </connections>
             <point key="canvasLocation" x="-175" y="203"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="rZF-Yu-nvq">
+            <size key="intrinsicContentSize" width="307" height="19"/>
+        </designable>
+    </designables>
     <resources>
         <image name="bubble.right.fill" catalog="system" width="128" height="112"/>
         <image name="minuminus" width="26" height="26"/>

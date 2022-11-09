@@ -16,7 +16,6 @@ class RantInFeedCell: UITableViewCell {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
     @IBOutlet weak var contentStackView: UIStackView!
-    @IBOutlet weak var tagStackView: UIStackView!
     @IBOutlet weak var textStackView: UIStackView!
     @IBOutlet weak var bodyLabel: UITextView!
     @IBOutlet weak var supplementalImageView: UIImageView!

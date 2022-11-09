@@ -1124,12 +1124,12 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                         break
                         
                     case "bottomMarginSpace":
-                        cell.contentView.removeConstraint(constraint)
+                        //cell.contentView.removeConstraint(constraint)
                         
-                        let newConstraint = cell.contentView.bottomAnchor.constraint(equalTo: cell.tagStackView.bottomAnchor, constant: 15)
-                        newConstraint.isActive = true
+                        //let newConstraint = cell.contentView.bottomAnchor.constraint(equalTo: cell.tagList.bottomAnchor, constant: 15)
+                        //newConstraint.isActive = true
                         
-                        cell.contentView.addConstraint(newConstraint)
+                        //cell.contentView.addConstraint(newConstraint)
                         break
                         
                     case "topMarginSpace":
