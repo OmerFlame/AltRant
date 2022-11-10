@@ -8,8 +8,9 @@
 import UIKit
 import SwiftRant
 import SwiftHEXColors
+import SkeletonView
 
-class RantInSubscribedFeedCell: UITableViewCell {
+class RantInSubscribedFeedCell: UITableViewCell, URLSessionDataDelegate {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
@@ -24,7 +25,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
     @IBOutlet weak var trailingUserActionImageLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var commentCountLabel: UIButton!
     
-    var rantContents: RantInSubscribedFeed? = nil
+    var rantContents: RantInSubscribedFeed!
     //var subscribedFeed: UnsafeMutablePointer<SubscribedFeed>? = nil
     var parentTableViewController: UIViewController? = nil
     var parentTableView: UITableView? = nil
@@ -91,19 +92,19 @@ class RantInSubscribedFeedCell: UITableViewCell {
         leadingUserActionImageView.isHidden = false
         trailingUserActionImageView.isHidden = false
         userActionDescriptionLabel.isHidden = false
-        commentCountLabel.isHidden = rantContents!.commentCount == 0
+        commentCountLabel.isHidden = rantContents.commentCount == 0
         
-        upvoteButton.tintColor = (rantContents!.voteState == .upvoted ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
-        scoreLabel.text = String(rantContents!.score)
-        downvoteButton.tintColor = (rantContents!.voteState == .downvoted ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
+        upvoteButton.tintColor = (rantContents.voteState == .upvoted ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
+        scoreLabel.text = String(rantContents.score)
+        downvoteButton.tintColor = (rantContents.voteState == .downvoted ? UIColor(hexString: "c65a64")! : UIColor.systemGray)
         
-        upvoteButton.isEnabled = rantContents!.voteState != .unvotable
-        downvoteButton.isEnabled = rantContents!.voteState != .unvotable
+        upvoteButton.isEnabled = rantContents.voteState != .unvotable
+        downvoteButton.isEnabled = rantContents.voteState != .unvotable
         
-        upvoteButton.isUserInteractionEnabled = rantContents!.voteState != .unvotable
-        downvoteButton.isUserInteractionEnabled = rantContents!.voteState != .unvotable
+        upvoteButton.isUserInteractionEnabled = rantContents.voteState != .unvotable
+        downvoteButton.isUserInteractionEnabled = rantContents.voteState != .unvotable
         
-        if image == nil {
+        if rantContents?.attachedImage == nil {
             supplementalImageView.image = nil
             supplementalImageView.isHidden = true
         } else {
@@ -111,37 +112,60 @@ class RantInSubscribedFeedCell: UITableViewCell {
             
             supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
             
-            supplementalImageView.image = UIImage(contentsOfFile: image!.previewItemURL.relativePath)!
+            let resizeMultiplier = supplementalImageView.frame.size.width / (CGFloat(rantContents.attachedImage!.width) / UIScreen.main.scale)
             
-            let resizeMultiplier = supplementalImageView.frame.size.width / supplementalImageView.image!.size.width
+            let finalHeight = (CGFloat(rantContents.attachedImage!.height) / UIScreen.main.scale) * resizeMultiplier
             
-            let finalHeight = supplementalImageView.image!.size.height * resizeMultiplier
+            debugPrint("FINAL IMAGE HEIGHT: \(finalHeight)")
             
             imageViewHeightConstraint.constant = finalHeight
             
             NotificationCenter.default.addObserver(self, selector: #selector(windowResizeHandler), name: windowResizeNotification, object: nil)
+            
+            //setNeedsLayout()
+            //layoutIfNeeded()
+            
+            supplementalImageView.showAnimatedSkeleton()
+            
+            var request = URLRequest(url: URL(string: rantContents.attachedImage!.url)!)
+            request.cachePolicy = .returnCacheDataElseLoad
+            
+            // hopefully, this is cached.
+            let dataTask = URLSession.shared.dataTask(with: request) { data, _, _ in
+                if let data = data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.supplementalImageView.image = UIImage(data: data)
+                        
+                        self?.supplementalImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                    }
+                }
+            }
+            
+            dataTask.delegate = self
+            
+            dataTask.resume()
         }
         
-        if rantContents!.text.count > 240 {
-            bodyLabel.text = rantContents!.text.prefix(240) + "... [read more]"
+        if rantContents.text.count > 240 {
+            bodyLabel.text = rantContents.text.prefix(240) + "... [read more]"
         } else {
-            bodyLabel.text = rantContents!.text
+            bodyLabel.text = rantContents.text
         }
         
         tagList.textFont = UIFont.preferredFont(forTextStyle: .footnote)
         
         tagList.removeAllTags()
         
-        print("TAGS: \(rantContents!.tags)")
+        print("TAGS: \(rantContents.tags)")
         print("---------------------------------------------")
         
-        tagList.addTags(rantContents!.tags)
+        tagList.addTags(rantContents.tags)
         
         leadingUserActionImageView.image = self.leadingUserActionImage
         
-        //var leadingActionUserID = rantContents!.relatedUserActions[0].userID
+        //var leadingActionUserID = rantContents.relatedUserActions[0].userID
         
-        /*if rantContents!.relatedUserActions.count == 2 {
+        /*if rantContents.relatedUserActions.count == 2 {
             trailingUserActionImageLeadingConstraint.constant = -6.5
             trailingUserActionImageView.image = self.trailingUserActionImage
         } else {
@@ -161,15 +185,15 @@ class RantInSubscribedFeedCell: UITableViewCell {
         
         var usernamePortionString = ""
         
-        /*usernamePortionString += self.subscribedFeed!.pointee.usernameMap.users.first(where: { $0.userID == self.rantContents!.pointee.relatedUserActions[0].userID })!.username
+        /*usernamePortionString += self.subscribedFeed!.pointee.usernameMap.users.first(where: { $0.userID == self.rantContents.pointee.relatedUserActions[0].userID })!.username
         
-        if self.rantContents!.pointee.relatedUserActions.count == 2 {
-            if self.rantContents!.pointee.relatedUserActions[1].userID != self.rantContents!.pointee.relatedUserActions[0].userID {
-                usernamePortionString += " & \(self.subscribedFeed!.pointee.usernameMap.users.first(where: { $0.userID == self.rantContents!.pointee.relatedUserActions[1].userID })!.username)"
+        if self.rantContents.pointee.relatedUserActions.count == 2 {
+            if self.rantContents.pointee.relatedUserActions[1].userID != self.rantContents.pointee.relatedUserActions[0].userID {
+                usernamePortionString += " & \(self.subscribedFeed!.pointee.usernameMap.users.first(where: { $0.userID == self.rantContents.pointee.relatedUserActions[1].userID })!.username)"
             }
         }*/
         
-        for (idx, action) in self.rantContents!.relatedUserActions.enumerated() {
+        for (idx, action) in self.rantContents.relatedUserActions.enumerated() {
             if idx == 0 {
                 usernamePortionString += subscribedFeed.usernameMap.users.first(where: { $0.userID == action.userID })!.username
             } else {
@@ -183,7 +207,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
         
         var actionPortionString = ""
         
-        for (idx, action) in self.rantContents!.relatedUserActions.enumerated() {
+        for (idx, action) in self.rantContents.relatedUserActions.enumerated() {
             if idx == 0 {
                 switch action.action {
                 case .posted:
@@ -234,7 +258,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
     
     @IBAction func handleUpvote(_ sender: Any) {
         var vote: VoteState {
-            switch self.rantContents!.voteState {
+            switch self.rantContents.voteState {
             case .unvoted:
                 return.upvoted
                 
@@ -246,10 +270,10 @@ class RantInSubscribedFeedCell: UITableViewCell {
             }
         }
         
-        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.id, vote: vote) { [weak self] error, updatedRant in
+        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents.id, vote: vote) { [weak self] error, updatedRant in
             if updatedRant != nil {
-                self?.rantContents!.voteState = updatedRant!.voteState
-                self?.rantContents!.score = updatedRant!.score
+                self?.rantContents.voteState = updatedRant!.voteState
+                self?.rantContents.score = updatedRant!.score
                 
                 if let parentTableView = self?.parentTableView {
                     DispatchQueue.main.async {
@@ -267,12 +291,12 @@ class RantInSubscribedFeedCell: UITableViewCell {
             }
         }*/
         
-        delegate?.didVoteOnRant(withID: rantContents!.id, vote: vote, cell: self)
+        delegate?.didVoteOnRant(withID: rantContents.id, vote: vote, cell: self)
     }
     
     @IBAction func handleDownvote(_ sender: Any) {
         var vote: VoteState {
-            switch self.rantContents!.voteState {
+            switch self.rantContents.voteState {
             case .unvoted:
                 return .downvoted
                 
@@ -284,10 +308,10 @@ class RantInSubscribedFeedCell: UITableViewCell {
             }
         }
         
-        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents!.id, vote: vote) { [weak self] error, updatedRant in
+        /*SwiftRant.shared.voteOnRant(nil, rantID: self.rantContents.id, vote: vote) { [weak self] error, updatedRant in
             if updatedRant != nil {
-                self?.rantContents!.voteState = updatedRant!.voteState
-                self?.rantContents!.score = updatedRant!.score
+                self?.rantContents.voteState = updatedRant!.voteState
+                self?.rantContents.score = updatedRant!.score
                 
                 if let parentTableView = self?.parentTableView {
                     DispatchQueue.main.async {
@@ -305,7 +329,7 @@ class RantInSubscribedFeedCell: UITableViewCell {
             }
         }*/
         
-        delegate?.didVoteOnRant(withID: rantContents!.id, vote: vote, cell: self)
+        delegate?.didVoteOnRant(withID: rantContents.id, vote: vote, cell: self)
     }
     
     @objc func windowResizeHandler() {
@@ -320,5 +344,12 @@ class RantInSubscribedFeedCell: UITableViewCell {
         imageViewHeightConstraint.constant = finalHeight
         
         layoutIfNeeded()
+    }
+    
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
+        
+        debugPrint("CACHING IMAGE FOR RANT ID \(rantContents.id) WITH STORAGE POLICY: \(proposedResponse.storagePolicy == .allowed ? ".allowed" : proposedResponse.storagePolicy == .allowedInMemoryOnly ? ".allowedInMemoryOnly" : ".notAllowed")")
+        
+        completionHandler(proposedResponse)
     }
 }

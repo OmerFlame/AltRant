@@ -53,13 +53,13 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                     //self.subscribedFeed.append(feed!)
                     
                     for (idx, rant) in feed.rants.enumerated() {
-                        if rant.attachedImage != nil {
+                        /*if rant.attachedImage != nil {
                             if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
                                 self.supplementalImages[rant.id] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
                             } else {
                                 self.supplementalImages[rant.id] = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
                             }
-                        }
+                        }*/
                         
                         for user in rant.relatedUserActions {
                             if feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage != nil {
@@ -288,7 +288,7 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                     }
                 }
                 
-                cell.configure(feedOffset: idxPath.section, rantOffset: idxPath.row, image: supplementalImages[subscribedFeed[idxPath.section].rants[idxPath.row].id], leadingUserActionImage: firstActionUserImage, trailingUserActionImage: secondActionUserImage, parentTableViewController: self, parentTableView: tableView)
+                cell.configure(feedOffset: idxPath.section, rantOffset: idxPath.row, image: nil, leadingUserActionImage: firstActionUserImage, trailingUserActionImage: secondActionUserImage, parentTableViewController: self, parentTableView: tableView)
                 
                 var attributedTitle = NSMutableAttributedString(string: "\(subscribedFeed[idxPath.section].rants[idxPath.row].commentCount)")
                 
@@ -356,13 +356,13 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                 //self.subscribedFeed.append(feed!)
                 
                 for (idx, rant) in feed.rants.enumerated() {
-                    if rant.attachedImage != nil {
+                    /*if rant.attachedImage != nil {
                         if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
                             self.supplementalImages[rant.id] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
                         } else {
                             self.supplementalImages[rant.id] = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
                         }
-                    }
+                    }*/
                     
                     for user in rant.relatedUserActions {
                         if feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage != nil {
@@ -469,13 +469,13 @@ class SubscribedFeedViewController: UIViewController, UITableViewDataSource, UIT
                     self.subscribedFeed.append(feed)
                     
                     for (idx, rant) in feed.rants.enumerated() {
-                        if rant.attachedImage != nil {
+                        /*if rant.attachedImage != nil {
                             if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent).relativePath) {
                                 self.supplementalImages[rant.id] = File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rant.attachedImage!.url)!.lastPathComponent), size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
                             } else {
                                 self.supplementalImages[rant.id] = File.loadFile(image: rant.attachedImage!, size: CGSize(width: rant.attachedImage!.width, height: rant.attachedImage!.height))
                             }
-                        }
+                        }*/
                         
                         for user in rant.relatedUserActions {
                             if feed.usernameMap.users.first(where: { $0.userID == user.userID })!.avatar.avatarImage != nil {
