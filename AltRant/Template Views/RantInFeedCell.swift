@@ -11,7 +11,7 @@ import SwiftRant
 import SwiftHEXColors
 import SkeletonView
 
-class RantInFeedCell: UITableViewCell {
+class RantInFeedCell: UITableViewCell, URLSessionDataDelegate {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
@@ -143,7 +143,25 @@ class RantInFeedCell: UITableViewCell {
             
             supplementalImageView.showAnimatedSkeleton()
             
-            if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rantContents.attachedImage!.url)!.lastPathComponent).relativePath) {
+            var request = URLRequest(url: URL(string: rantContents.attachedImage!.url)!)
+            request.cachePolicy = .returnCacheDataElseLoad
+            
+            // hopefully, this is cached.
+            let dataTask = URLSession.shared.dataTask(with: request) { data, _, _ in
+                if let data = data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.supplementalImageView.image = UIImage(data: data)
+                        
+                        self?.supplementalImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                    }
+                }
+            }
+            
+            dataTask.delegate = self
+            
+            dataTask.resume()
+            
+            /*if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rantContents.attachedImage!.url)!.lastPathComponent).relativePath) {
                 let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: rantContents.attachedImage!.url)!.lastPathComponent).relativePath
                 
                 debugPrint("IMAGE FOUND AT RELATIVE PATH \(path) FOR RANT ID \(rantContents.id)!")
@@ -200,7 +218,7 @@ class RantInFeedCell: UITableViewCell {
                         }
                     }
                 }.resume()
-            }
+            }*/
         }
         
         upvoteButton.isUserInteractionEnabled = rantContents.voteState.rawValue != -2
@@ -337,5 +355,12 @@ class RantInFeedCell: UITableViewCell {
         imageViewHeightConstraint.constant = finalHeight
         
         layoutIfNeeded()
+    }
+    
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
+        
+        debugPrint("CACHING IMAGE FOR RANT ID \(rantContents.id) WITH STORAGE POLICY: \(proposedResponse.storagePolicy == .allowed ? ".allowed" : proposedResponse.storagePolicy == .allowedInMemoryOnly ? ".allowedInMemoryOnly" : ".notAllowed")")
+        
+        completionHandler(proposedResponse)
     }
 }

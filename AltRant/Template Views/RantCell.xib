@@ -201,11 +201,11 @@
                             </mask>
                         </variation>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="371-dd-bdM" userLabel="Actions Stack View">
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="371-dd-bdM" userLabel="Actions Stack View">
                         <rect key="frame" x="56" y="349" width="334" height="20"/>
                         <subviews>
                             <view contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="PE7-wC-2VS" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="289" height="19"/>
+                                <rect key="frame" x="0.0" y="0.66666666666668561" width="289" height="19"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -231,12 +231,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oQL-ae-qIf" userLabel="Favorite / Modify Button">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oQL-ae-qIf" userLabel="Favorite / Modify Button">
                                 <rect key="frame" x="289" y="0.0" width="45" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="4xq-oz-54P"/>
+                                    <constraint firstAttribute="height" priority="999" constant="20" id="4xq-oz-54P"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="2.5" maxX="0.0" maxY="2.5"/>
                                 <state key="normal" title="Favorite"/>
                             </button>
                         </subviews>

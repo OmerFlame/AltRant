@@ -14,7 +14,7 @@ import SkeletonView
 //import ActiveLabel
 
 
-class CommentCell: UITableViewCell, UITextViewDelegate {
+class CommentCell: UITableViewCell, UITextViewDelegate, URLSessionDataDelegate {
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var downvoteButton: UIButton!
@@ -85,6 +85,8 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         
         supplementalImageView.image = nil
         supplementalImageView.isHidden = true
+        
+        userProfileImageView.image = nil
         
         imageViewHeightConstraint.constant = 0
         
@@ -166,6 +168,19 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         bodyLabel.isHidden = false
         supplementalImageView.isHidden = false
         
+        debugPrint("==========BEGIN DEBUG COMMENT INFO==========")
+        debugPrint("COMMENT ID:         \(commentContents.id)")
+        debugPrint("ASSOCIATED RANT ID: \(commentContents.rantID)")
+        debugPrint("BODY:               \"\(commentContents.body.count <= 30 ? commentContents.body : "\(commentContents.body.prefix(upTo: commentContents.body.index(commentContents.body.startIndex, offsetBy: 29)))...")")
+        debugPrint("SCORE:              \(commentContents.score)")
+        debugPrint("CREATED TIME:       \(commentContents.createdTime)")
+        debugPrint("VOTE STATE:         \(commentContents.voteState)")
+        debugPrint("IS EDITED:          \(commentContents.isEdited)")
+        debugPrint("LINKS:              \(commentContents.links == nil ? "0 LINKS" : "\(commentContents.links!.count) LINKS")")
+        debugPrint("USER ID:            \(commentContents.userID)")
+        debugPrint("USERNAME:           \(commentContents.username)")
+        debugPrint("USER SCORE:         \(commentContents.userScore)")
+        
         upvoteButton.tintColor = (model.voteState == .upvoted ? UIColor(hexString: model.userAvatar.backgroundColor)! : UIColor.systemGray)
         //scoreLabel.text = String(commentContents!.score)
         scoreLabel.text = formatNumber(commentContents!.score)
@@ -190,7 +205,25 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             
             supplementalImageView.showAnimatedSkeleton()
             
-            if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: commentContents.attachedImage!.url)!.lastPathComponent).relativePath) {
+            var request = URLRequest(url: URL(string: commentContents.attachedImage!.url)!)
+            request.cachePolicy = .returnCacheDataElseLoad
+            
+            // hopefully, this is cached.
+            let dataTask = URLSession.shared.dataTask(with: request) { data, _, _ in
+                if let data = data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.supplementalImageView.image = UIImage(data: data)
+                        
+                        self?.supplementalImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                    }
+                }
+            }
+            
+            dataTask.delegate = self
+            
+            dataTask.resume()
+            
+            /*if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: commentContents.attachedImage!.url)!.lastPathComponent).relativePath) {
                 let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: commentContents.attachedImage!.url)!.lastPathComponent).relativePath
                 
                 debugPrint("IMAGE FOUND AT RELATIVE PATH \(path) FOR COMMENT ID \(commentContents.id)!")
@@ -219,7 +252,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
                         }
                     }
                 }.resume()
-            }
+            }*/
             
             /*let resizeMultiplier = supplementalImage!.size!.width / bodyLabel.frame.size.width
             
@@ -239,7 +272,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         
         bodyLabel.text = commentContents!.body
         
-        if let parentTableViewController = parentTableViewController as? RantViewController {
+        /*if let parentTableViewController = parentTableViewController as? RantViewController {
             Task {
                 self.userProfileImageView.image = try? await parentTableViewController.userImageLoader.loadImage(withUserID: self.commentContents.userID)
             }
@@ -247,6 +280,30 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             Task {
                 self.userProfileImageView.image = try? await parentTableViewController.userImageLoader.loadImage(withUserID: self.commentContents.userID)
             }
+        }*/
+        
+        userProfileImageView.backgroundColor = UIColor(hexString: commentContents.userAvatar.backgroundColor)
+        
+        if let avatarImage = commentContents.userAvatar.avatarImage {
+            userProfileImageView.showAnimatedSkeleton(usingColor: UIColor(hexString: commentContents.userAvatar.backgroundColor)!)
+            
+            var request = URLRequest(url: URL(string: "https://avatars.devrant.com/\(avatarImage)")!)
+            request.cachePolicy = .returnCacheDataElseLoad
+            
+            // hopefully, this is cached.
+            let dataTask = URLSession.shared.dataTask(with: request) { data, _, _ in
+                if let data = data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.userProfileImageView.image = UIImage(data: data)
+                        
+                        self?.userProfileImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                    }
+                }
+            }
+            
+            dataTask.delegate = self
+            
+            dataTask.resume()
         }
         
         usernameLabel.text = commentContents!.username
@@ -311,12 +368,24 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
             }
             
             if commentContents.links != nil {
+                debugPrint("IS ADDING LINKS:    true")
                 if let parentTableViewController = parentTableViewController, let controller = parentTableViewController as? RantViewController {
                     bodyLabel.attributedText = controller.textsWithLinks[commentContents.id]
                 }
                 bodyLabel.isUserInteractionEnabled = true
                 
                 bodyLabel.delegate = self
+            } else {
+                debugPrint("IS ADDING LINKS:    false")
+                //bodyLabel.attributedText = nil
+                //bodyLabel.text = commentContents.body
+                var attributedString = NSMutableAttributedString(string: commentContents.body)
+                
+                attributedString.addAttribute(.font, value: UIFont.preferredFont(forTextStyle: .body), range: (commentContents.body as NSString).range(of: commentContents.body))
+                
+                attributedString.addAttribute(.foregroundColor, value: UIColor.label, range: (commentContents.body as NSString).range(of: commentContents.body))
+                
+                bodyLabel.attributedText = attributedString
             }
         }
         
@@ -359,6 +428,8 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         } else {
             postTimeLabel.text = "\(commentContents.isEdited ? "(Edited) " : "")\(createdDate.formatted(date: .numeric, time: .omitted))"
         }
+        
+        debugPrint("===========END DEBUG COMMENT INFO===========")
         
         layoutIfNeeded()
     }
@@ -520,6 +591,13 @@ class CommentCell: UITableViewCell, UITextViewDelegate {
         imageViewHeightConstraint.constant = finalHeight
         
         layoutIfNeeded()
+    }
+    
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
+        
+        debugPrint("CACHING IMAGE FOR COMMENT ID \(commentContents.id) WITH STORAGE POLICY: \(proposedResponse.storagePolicy == .allowed ? ".allowed" : proposedResponse.storagePolicy == .allowedInMemoryOnly ? ".allowedInMemoryOnly" : ".notAllowed")")
+        
+        completionHandler(proposedResponse)
     }
 }
 

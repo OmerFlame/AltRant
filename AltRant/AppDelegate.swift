@@ -32,7 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         URLCache.shared = urlCache
         
-        
+        print("==========CACHE INFORMATION==========")
+        print("RAM USED:     \(Double(URLCache.shared.currentMemoryUsage) / 1000000)MB/\(Double(URLCache.shared.memoryCapacity) / 1000000)MB")
+        print("STORAGE USED: \(Double(URLCache.shared.currentDiskUsage) / 1000000)MB/\(Double(URLCache.shared.diskCapacity) / 1000000)MB")
         
         return true
         

@@ -29,7 +29,37 @@ protocol ProfileTableViewControllerDelegate: FeedDelegate {
     func reloadData()
 }
 
-class ProfileTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching, ProfileTableViewControllerDelegate {
+protocol PropertyLoopable {
+    var allProperties: [String: Any] { get }
+}
+
+extension PropertyLoopable {
+    var allProperties: [String: Any] {
+        get {
+            var result: [String: Any] = [:]
+            
+            let mirror = Mirror(reflecting: self)
+            
+            guard let style = mirror.displayStyle, style == .struct || style == .class else { return result }
+            
+            //let style = mirror.displayStyle
+            
+            for (label, value) in mirror.children {
+                guard let label = label else { continue }
+                
+                result[label] = value
+            }
+            
+            return result
+        }
+    }
+}
+
+extension Profile.UserCounts: PropertyLoopable {
+    
+}
+
+class ProfileTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ProfileTableViewControllerDelegate {
     //@IBOutlet weak var headerView: StretchyTableHeaderView!
     var profileData: Profile?
     var shouldLoadFromUsername = false
@@ -91,6 +121,31 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows, indexPathsForVisibleRows.contains(IndexPath(row: 0, section: 1)) && !isFetchAlreadyInProgress && tableView(tableView, numberOfRowsInSection: 0) > 0 {
+            let currentCellCount = tableView(tableView, numberOfRowsInSection: 0)
+            
+            performFetch(contentType: currentContentType, {
+                let indexPathsToInsert = ((currentCellCount)...(self.tableView(self.tableView, numberOfRowsInSection: 0) - 1)).map { IndexPath(row: $0, section: 0) }
+                
+                DispatchQueue.main.async {
+                    self.tableView.insertRows(at: indexPathsToInsert, with: .none)
+                    
+                    /*UIView.performWithoutAnimation {
+                        self?.scrollViewDidScroll(scrollView)
+                    }*/
+                    
+                    //self?.tableView.insertRows(at: indexPathsToInsert, with: .none)
+                    //self?.tableView.setContentOffset(scrollView.contentOffset, animated: false)
+                    
+                    self.tableView.reloadData()
+                    self.scrollViewDidScroll(self.tableView)
+                    
+                    return
+                    //self.tableView.reloadData()
+                }
+            })
+        }
+        
         // If this function runs and the header view property is nil, return immediately.
         guard tableView.tableHeaderView != nil, navigationController != nil else { return }
         
@@ -211,7 +266,6 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.prefetchDataSource = self
         
         tableView.contentInsetAdjustmentBehavior = .never
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -269,7 +323,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         scrollViewDidScroll(tableView)
         
-        tableView.scrollIndicatorInsets.top = tableView.tableHeaderView!.frame.maxY - (navigationController!.navigationBar.frame.size.height + navigationController!.navigationBar.frame.minY)
+        //tableView.scrollIndicatorInsets.top = tableView.tableHeaderView!.frame.maxY - (navigationController!.navigationBar.frame.size.height + navigationController!.navigationBar.frame.minY)
+        
+        tableView.verticalScrollIndicatorInsets = UIEdgeInsets(top: tableView.tableHeaderView!.frame.maxY - (navigationController!.navigationBar.frame.size.height + navigationController!.navigationBar.frame.minY))
         
         currentBlurFrame = blurView.frame
         
@@ -338,7 +394,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    private func canLoadMore() -> Bool {
+    /*private func canLoadMore() -> Bool {
         switch tableView(tableView, numberOfRowsInSection: 0) {
         case self.profileData!.content.counts.rants,
              self.profileData!.content.counts.upvoted,
@@ -349,6 +405,12 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         default:
             return true
         }
+    }*/
+    
+    private func canLoadMore() -> Bool {
+        let currentRowCount = tableView(tableView, numberOfRowsInSection: 0)
+        
+        return (profileData?.content.counts.allProperties[currentContentType.rawValue] as! Int?) ?? 0 > currentRowCount
     }
     
     // Add the special title subviews at the top of the screen and set up the constraints.
@@ -540,7 +602,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                         self.rantTypeContent = try! result.get().content.content.rants
                         self.currentDate = Date()
                         
-                        for i in self.rantTypeContent {
+                        /*for i in self.rantTypeContent {
                             if let attachedImage = i.attachedImage {
                                 if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url)!.lastPathComponent).relativePath) {
                                     self.rantContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url)!.lastPathComponent), size: CGSize(width: attachedImage.width, height: attachedImage.height)))
@@ -550,7 +612,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                             } else {
                                 self.rantContentImages.append(nil)
                             }
-                        }
+                        }*/
                         
                         DispatchQueue.main.async {
                             self.loadingIndicator.stopAnimating()
@@ -568,7 +630,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     self.rantTypeContent = try! result.get().content.content.rants
                     self.currentDate = Date()
                     
-                    for i in self.rantTypeContent {
+                    /*for i in self.rantTypeContent {
                         if let attachedImage = i.attachedImage {
                             if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url)!.lastPathComponent).relativePath) {
                                 self.rantContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url)!.lastPathComponent), size: CGSize(width: attachedImage.width, height: attachedImage.height)))
@@ -578,7 +640,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                         } else {
                             self.rantContentImages.append(nil)
                         }
-                    }
+                    }*/
                     
                     DispatchQueue.main.async {
                         self.loadingIndicator.stopAnimating()
@@ -811,11 +873,11 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - Table view data source
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch currentContentType {
+        /*switch currentContentType {
         case .rants:
             return profileData?.content.counts.rants ?? 0
             
@@ -829,11 +891,24 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             return profileData?.content.counts.favorites ?? 0
         default:
             fatalError("wtf is this")
+        }*/
+        if section == 0 {
+            if currentContentType != .comments {
+                return rantTypeContent.count
+            } else {
+                return commentTypeContent.commentTypeContent.count
+            }
+        } else {
+            if canLoadMore() {
+                return 1
+            } else {
+                return 0
+            }
         }
     }
     
     // MARK: - Table View Data Source Prefetching
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+    /*func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: { $0.row >= (currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite ? rantTypeContent.count : commentTypeContent.commentTypeContent.count) }) {
             print("PREFETCHING!")
             performFetch(contentType: currentContentType, {
@@ -842,7 +917,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 }
             })
         }
-    }
+    }*/
     
     // MARK: - Miscellaneous utilities
     fileprivate func performFetch(contentType: Profile.ProfileContentTypes, _ completionHandler: (() -> Void)?) {
@@ -893,7 +968,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 start = self.commentTypeContent.commentTypeContent.count
                 end = response.content.content.comments.count + start
                 
-                for comment in response.content.content.comments {
+                /*for comment in response.content.content.comments {
                     if let avatarImage = comment.userAvatar.avatarImage {
                         Task {
                             try? await self.userImageLoader.loadImage(from: URL(string: "https://avatars.devrant.com/\(avatarImage)")!, forUserID: comment.userID)
@@ -901,7 +976,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     } else {
                         await self.userImageStore.store(userID: comment.userID, image: UIImage(color: UIColor(hexString: comment.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))!)
                     }
-                }
+                }*/
             
                 self.rantTypeContent = []
                 break
@@ -928,22 +1003,22 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             }
         
             if !self.rantTypeContent.isEmpty {
-                for i in self.rantTypeContent[start..<end] {
+                /*for i in self.rantTypeContent[start..<end] {
                     if let attachedImage = i.attachedImage {
                         self.rantContentImages.append(File.loadFile(image: attachedImage, size: CGSize(width: attachedImage.width, height: attachedImage.height)))
                     } else {
                         self.rantContentImages.append(nil)
                     }
-                }
+                }*/
                 
-                await userImageLoader.waitUntilAllTasksAreFinished()
+                //await userImageLoader.waitUntilAllTasksAreFinished()
                 self.isFetchAlreadyInProgress = false
                 
                 await MainActor.run {
                     completionHandler?()
                 }
             } else {
-                for i in self.commentTypeContent.commentTypeContent[start..<end] {
+                /*for i in self.commentTypeContent.commentTypeContent[start..<end] {
                     if let attachedImage = i.attachedImage {
                         if FileManager.default.fileExists(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url)!.lastPathComponent).relativePath) {
                             self.commentContentImages.append(File(url: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(URL(string: attachedImage.url)!.lastPathComponent), size: CGSize(width: attachedImage.width, height: attachedImage.height)))
@@ -953,9 +1028,9 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     } else {
                         self.commentContentImages.append(nil)
                     }
-                }
+                }*/
                 
-                await userImageLoader.waitUntilAllTasksAreFinished()
+                //await userImageLoader.waitUntilAllTasksAreFinished()
                 self.isFetchAlreadyInProgress = false
                 
                 await MainActor.run {
@@ -1070,21 +1145,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite {
-            if indexPath.row >= rantTypeContent.count || indexPath.row >= rantContentImages.count {
-                //let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! SecondaryRantInFeedCell
-                //cell.configureLoading()
-                
-                //cell.layoutIfNeeded()
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell") as! LoadingCell
-                
-                cell.activityIndicator.startAnimating()
-                
-                return cell
-            } else {
+        if indexPath.section == 0 {
+            if currentContentType != .comments {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RantInFeedCell") as! RantInFeedCell
-                cell.configure(with: rantTypeContent[indexPath.row], image: rantContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView)
+                cell.configure(with: rantTypeContent[indexPath.row], image: nil, parentTableViewController: self, parentTableView: tableView)
                 
                 var attributedTitle = NSMutableAttributedString(string: "\(rantTypeContent[indexPath.row].commentCount)")
                 
@@ -1147,27 +1211,18 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 
                 return cell
-            }
-        } else {
-            if indexPath.row >= commentTypeContent.commentTypeContent.count || indexPath.row >= commentContentImages.count {
-                //let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                //cell.configureLoading()
-                
-                //cell.layoutIfNeeded()
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell") as! LoadingCell
-                
-                cell.activityIndicator.startAnimating()
-                
-                //return cell
-                
-                return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
-                cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: commentContentImages[indexPath.row], parentTableViewController: self, parentTableView: tableView, currentDate: currentDate, allowedToPreview: false)
+                cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: nil, parentTableViewController: self, parentTableView: tableView, currentDate: currentDate, allowedToPreview: false)
                 
                 return cell
             }
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell") as! LoadingCell
+            
+            cell.activityIndicator.startAnimating()
+            
+            return cell
         }
     }
     
@@ -1183,7 +1238,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    /*func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite {
             if indexPath.row >= rantTypeContent.count || indexPath.row >= rantContentImages.count {
                 return 80
@@ -1197,7 +1252,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 return cellHeights[indexPath] ?? UITableView.automaticDimension
             }
         }
-    }
+    }*/
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -1227,7 +1282,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             performSegue(withIdentifier: "commentInFeed", sender: tableView.cellForRow(at: indexPath))
         }*/
         
-        if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite {
+        /*if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite {
             guard indexPath.row < rantTypeContent.count && indexPath.row < rantContentImages.count else {
                 return
             }
@@ -1235,14 +1290,23 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             guard indexPath.row < commentTypeContent.commentTypeContent.count && indexPath.row < commentContentImages.count else {
                 return
             }
-        }
+        }*/
         
-        if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite || currentContentType == .viewed {
+        /*if currentContentType == .rants || currentContentType == .upvoted || currentContentType == .favorite || currentContentType == .viewed {
             performSegue(withIdentifier: "rantInFeed", sender: tableView.cellForRow(at: indexPath))
         }
         
         if currentContentType == .comments {
             performSegue(withIdentifier: "commentInFeed", sender: indexPath)
+        }*/
+        if indexPath.section == 0 {
+            if currentContentType != .comments {
+                performSegue(withIdentifier: "rantInFeed", sender: tableView.cellForRow(at: indexPath))
+            } else {
+                performSegue(withIdentifier: "commentInFeed", sender: indexPath)
+            }
+        } else {
+            return
         }
     }
     
@@ -1262,7 +1326,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 rantViewController.rantInFeed = pointer
             })*/
             
-            rantViewController.supplementalRantImage = rantContentImages[indexPath.row]
+            //rantViewController.supplementalRantImage = rantContentImages[indexPath.row]
             rantViewController.loadCompletionHandler = nil
         } else if segue.identifier == "commentInFeed", let rantViewController = segue.destination as? RantViewController {
             let indexPath = sender as! IndexPath
@@ -1306,7 +1370,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     @objc func windowDidResize() {
         scrollViewDidScroll(tableView)
-        tableView.reloadData()
+        //tableView.reloadData()
     }
     
     fileprivate func indexForRant(withID id: Int) -> Int? {
