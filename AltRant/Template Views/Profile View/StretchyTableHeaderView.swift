@@ -110,6 +110,7 @@ class StretchyTableHeaderView: UIView {
         //var title: StretchyHeaderTitle!
         
     weak var segControl: UISegmentedControl?
+    weak var moreInfoButton: UIButton?
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -117,7 +118,6 @@ class StretchyTableHeaderView: UIView {
         createViews()
             
         setViewConstraints()
-            
     }
         
     required init?(coder aDecoder: NSCoder) {
@@ -128,12 +128,23 @@ class StretchyTableHeaderView: UIView {
         guard isUserInteractionEnabled,
                 !isHidden,
                 alpha >= 0.01,
-                let sc = segControl
+                let sc = segControl,
+                let moreInfoButton = moreInfoButton
         else { return nil }
             
         let convertedPoint = sc.convert(point, from: self)
         if let v = sc.hitTest(convertedPoint, with: event) {
             return v
+        }
+        
+        let convertedPointInfoButton = moreInfoButton.convert(point, from: self)
+        if let view = moreInfoButton.hitTest(convertedPointInfoButton, with: event) {
+            return view
+        }
+        
+        let convertedPointImageView = imageView.convert(point, from: self)
+        if let view = imageView.hitTest(convertedPointImageView, with: event) {
+            return view
         }
             
         guard self.point(inside: point, with: event) else { return nil }

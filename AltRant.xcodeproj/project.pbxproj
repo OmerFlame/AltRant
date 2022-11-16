@@ -95,6 +95,8 @@
 		59CA4FB125CA8BB6005FB279 /* PullUpController in Frameworks */ = {isa = PBXBuildFile; productRef = 59CA4FB025CA8BB6005FB279 /* PullUpController */; };
 		59D253562593334400BEA35A /* Double+truncate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D253552593334400BEA35A /* Double+truncate.swift */; };
 		59D2B95427059AAB00C695E3 /* SPAlert in Frameworks */ = {isa = PBXBuildFile; productRef = 59D2B95327059AAB00C695E3 /* SPAlert */; };
+		59D73C54291D16A50028DB2A /* UserInfoTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59D73C53291D16A50028DB2A /* UserInfoTableViewController.storyboard */; };
+		59D73C56291D1D020028DB2A /* UserInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D73C55291D1D020028DB2A /* UserInfoTableViewController.swift */; };
 		59DA0F712580FB5E00AF49BB /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DA0F6F2580FB5E00AF49BB /* ProfileTableViewController.swift */; };
 		59DA0F772580FC3400AF49BB /* ProfileTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */; };
 		59DB9CC9262C76C4009A4704 /* Haptica in Frameworks */ = {isa = PBXBuildFile; productRef = 59DB9CC8262C76C4009A4704 /* Haptica */; };
@@ -214,6 +216,8 @@
 		59C3A1D8257E0FAB0082E76F /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		59C3A1E2257E972F0082E76F /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		59D253552593334400BEA35A /* Double+truncate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+truncate.swift"; sourceTree = "<group>"; };
+		59D73C53291D16A50028DB2A /* UserInfoTableViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UserInfoTableViewController.storyboard; sourceTree = "<group>"; };
+		59D73C55291D1D020028DB2A /* UserInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewController.swift; sourceTree = "<group>"; };
 		59DA0F6F2580FB5E00AF49BB /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileTableViewController.storyboard; sourceTree = "<group>"; };
 		59E671612576AD12007EEB28 /* RantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RantCell.swift; sourceTree = "<group>"; };
@@ -355,6 +359,8 @@
 				590A82852580B6600025F11A /* StretchyTableHeaderView.swift */,
 				59DA0F6F2580FB5E00AF49BB /* ProfileTableViewController.swift */,
 				59DA0F762580FC3400AF49BB /* ProfileTableViewController.storyboard */,
+				59D73C53291D16A50028DB2A /* UserInfoTableViewController.storyboard */,
+				59D73C55291D1D020028DB2A /* UserInfoTableViewController.swift */,
 			);
 			path = "Profile View";
 			sourceTree = "<group>";
@@ -571,6 +577,7 @@
 				598FEE7728D2FC44003CF357 /* SettingsViewController.storyboard in Resources */,
 				59A9E69A25CFCA3500DC6065 /* RantInFeedCell.xib in Resources */,
 				590FBD322631BBAA001DDA9B /* README.md in Resources */,
+				59D73C54291D16A50028DB2A /* UserInfoTableViewController.storyboard in Resources */,
 				59040173257627A5002B062A /* Assets.xcassets in Resources */,
 				59095F5E25961CB40074BABC /* ComposeViewController.storyboard in Resources */,
 				5980330A27D499E700E59922 /* RecommendedUsersCell.xib in Resources */,
@@ -625,6 +632,7 @@
 				59C3A1D9257E0FAB0082E76F /* UIImage+.swift in Sources */,
 				595B984C27C6235900C30068 /* RecommendedUserCell.swift in Sources */,
 				5921F2C22598E53900540CF5 /* MoreTableViewController.swift in Sources */,
+				59D73C56291D1D020028DB2A /* UserInfoTableViewController.swift in Sources */,
 				5904016E257627A3002B062A /* ViewController.swift in Sources */,
 				593B17B025D14C41001FAF6F /* StoriesViewController.swift in Sources */,
 				590A82862580B6600025F11A /* StretchyTableHeaderView.swift in Sources */,
@@ -828,7 +836,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1956;
+				CURRENT_PROJECT_VERSION = 2070;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -864,7 +872,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1956;
+				CURRENT_PROJECT_VERSION = 2070;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -896,7 +904,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1956;
+				CURRENT_PROJECT_VERSION = 2070;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -933,7 +941,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1956;
+				CURRENT_PROJECT_VERSION = 2070;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Open with AltRant/Info.plist";

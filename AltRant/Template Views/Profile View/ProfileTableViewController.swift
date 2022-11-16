@@ -59,6 +59,56 @@ extension Profile.UserCounts: PropertyLoopable {
     
 }
 
+class PassthroughVisualEffectView: UIVisualEffectView {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        
+        return view == self ? nil : view
+    }
+    
+    /*override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        return subviews.contains(where: { !$0.isHidden && $0.isUserInteractionEnabled && $0.point(inside: self.convert(point, to: $0), with: event) })
+    }*/
+}
+
+/*extension UIVisualEffectView {
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        //print("UIVISUALEFFECTVIEW IMPLEMENTATION RUNNING")
+        //print("TYPE OF VISUAL EFFECT VIEW: \(String(describing: type(of: self)))")
+        
+        print("HIJACK - HITTEST")
+        
+        return super.hitTest(point, with: event)
+    }
+    
+    open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if type(of: self) == PassthroughVisualEffectView.Type.self {
+            print("HIJACK - POINT")
+            
+            return subviews.contains(where: { !$0.isHidden && $0.isUserInteractionEnabled && $0.point(inside: self.convert(point, to: $0), with: event) })
+        } else {
+            return super.point(inside: point, with: event)
+        }
+    }
+}*/
+
+/*extension UIVisualEffectView {
+    func replaceHitTestImplementation() {
+        guard let originalMethod = class_getInstanceMethod(UIVisualEffectView.self, #selector(hitTest(_:with:))),
+              let swizzledMethod = class_getInstanceMethod(UIVisualEffectView.self, #selector(swizzledHitTest(_:with:))) else {
+            return
+        }
+        
+        method_exchangeImplementations(originalMethod, swizzledMethod)
+    }
+    
+    @objc func swizzledHitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let view = super.hitTest(point, with: event)
+        
+        return view == self ? nil : view
+    }
+}*/
+
 class ProfileTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ProfileTableViewControllerDelegate {
     //@IBOutlet weak var headerView: StretchyTableHeaderView!
     var profileData: Profile?
@@ -249,12 +299,32 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap(_:)))
                 tableView.tableHeaderView!.addGestureRecognizer(gestureRecognizer)
             }
+            
+            /*if (tableView.tableHeaderView! as! StretchyTableHeaderView).imageView.gestureRecognizers == nil {
+                //let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap(_:)))
+                //(tableView.tableHeaderView! as! StretchyTableHeaderView).imageView.addGestureRecognizer(gestureRecognizer)
+                
+                (tableView.tableHeaderView! as! StretchyTableHeaderView).imageView.isUserInteractionEnabled = true
+                
+                //(tableView.tableHeaderView! as! StretchyTableHeaderView).maskBlurView?.isHidden = true
+                //(tableView.tableHeaderView! as! StretchyTableHeaderView).maskBlurView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.isHidden = true
+                
+                (tableView.tableHeaderView! as! StretchyTableHeaderView).maskBlurView?.isUserInteractionEnabled = false
+                
+                let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap(_:)))
+                //(tableView.tableHeaderView! as! StretchyTableHeaderView).maskBlurView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.isUserInteractionEnabled = true
+            }*/
         } else {
             //blurView.contentView.gestureRecognizers!.forEach(blurView.contentView.removeGestureRecognizer)
-            tableView.tableHeaderView!.gestureRecognizers!.forEach(tableView.tableHeaderView!.removeGestureRecognizer)
+            /*tableView.tableHeaderView!.gestureRecognizers!.forEach(tableView.tableHeaderView!.removeGestureRecognizer)
             
             blurView.contentView.isUserInteractionEnabled = false
-            blurView.isUserInteractionEnabled = false
+            blurView.isUserInteractionEnabled = false*/
+            
+            //(tableView.tableHeaderView! as! StretchyTableHeaderView).imageView.gestureRecognizers!.forEach((tableView.tableHeaderView! as! StretchyTableHeaderView).imageView.removeGestureRecognizer)
+            
+            //(tableView.tableHeaderView! as! StretchyTableHeaderView).maskBlurView?.isHidden = false
+            //(tableView.tableHeaderView! as! StretchyTableHeaderView).maskBlurView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.isHidden = false
         }
         
         // Call the header view's scrollViewDidScroll function to handle its layout and effects as well.
@@ -319,9 +389,25 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         //(tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView = navigationController?.navigationBar.visualEffectView
         
-        (tableView.tableHeaderView as! StretchyTableHeaderView).setMaskBlurView(newBlurView: navigationController?.navigationBar.visualEffectView?.copyView())
+        let copiedView: UIVisualEffectView? = navigationController?.navigationBar.visualEffectView?.copyView() as? UIVisualEffectView
+        
+        //object_setClass(copiedView, PassthroughVisualEffectView.self)
+        
+        //let casted: PassthroughVisualEffectView? = copiedView as? PassthroughVisualEffectView
+        
+        //(tableView.tableHeaderView as! StretchyTableHeaderView).setMaskBlurView(newBlurView: navigationController?.navigationBar.visualEffectView?.copyView())
+        
+        (tableView.tableHeaderView as! StretchyTableHeaderView).setMaskBlurView(newBlurView: copiedView)
+        
+        
+        (tableView.tableHeaderView! as! StretchyTableHeaderView).imageView.isUserInteractionEnabled = true
+        //object_setClass((tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView, PassthroughVisualEffectView.self)
+        
+       // (tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView.replaceHitTestImplementation()
         
         scrollViewDidScroll(tableView)
+        
+        (tableView.tableHeaderView as! StretchyTableHeaderView).maskBlurView.isUserInteractionEnabled = false
         
         //tableView.scrollIndicatorInsets.top = tableView.tableHeaderView!.frame.maxY - (navigationController!.navigationBar.frame.size.height + navigationController!.navigationBar.frame.minY)
         
@@ -455,6 +541,17 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         //smallScoreLabel.layer.borderWidth = 1
         //smallScoreLabel.layer.borderColor = UIColor.black.cgColor
         
+        let moreInfoButton = UIButton()
+        moreInfoButton.setImage(UIImage(systemName: "info.circle.fill"), for: .normal)
+        moreInfoButton.tintColor = .label
+        moreInfoButton.addTarget(self, action: #selector(showMoreInfo), for: .touchUpInside)
+        
+        moreInfoButton.imageView?.preferredSymbolConfiguration = .init(scale: .large)
+        
+        moreInfoButton.contentHorizontalAlignment = .left
+        
+        moreInfoButton.translatesAutoresizingMaskIntoConstraints = false
+        
         smallScoreLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         
         let largeLabelHeight = UIFont.systemFont(ofSize: 34, weight: .black).lineHeight
@@ -496,8 +593,14 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         scoreLabelContainerView.translatesAutoresizingMaskIntoConstraints = false
         scoreLabelContainerView.addSubview(scoreLabel)
         
+        let moreInfoButtonContainerView = UIView()
+        moreInfoButtonContainerView.translatesAutoresizingMaskIntoConstraints = false
+        moreInfoButtonContainerView.addSubview(moreInfoButton)
+        
         headerTitle.addArrangedSubview(largeLabel)
         headerTitle.addArrangedSubview(scoreLabelContainerView)
+        headerTitle.addArrangedSubview(moreInfoButtonContainerView)
+        //headerTitle.addArrangedSubview(moreInfoButton)
         
         smallHeaderTitle = UIStackView(frame: CGRect(x: 0, y: 0, width: smallLabel.frame.size.width + 5 + smallScoreLabel.intrinsicContentSize.width, height: max(smallLabel.frame.size.height, smallScoreLabel.intrinsicContentSize.height)))
         
@@ -535,12 +638,21 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         smallLabel.translatesAutoresizingMaskIntoConstraints = false
         
         scoreLabelContainerView.heightAnchor.constraint(equalTo: headerTitle.heightAnchor).isActive = true
+        moreInfoButtonContainerView.heightAnchor.constraint(equalTo: headerTitle.heightAnchor).isActive = true
         
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         
         scoreLabel.leadingAnchor.constraint(equalTo: largeLabel.trailingAnchor, constant: 5).isActive = true
         
         scoreLabel.centerYAnchor.constraint(equalTo: scoreLabelContainerView.centerYAnchor, constant: 2.7).isActive = true
+        moreInfoButton.centerYAnchor.constraint(equalTo: moreInfoButtonContainerView.centerYAnchor, constant: 3.7).isActive = true
+        
+        moreInfoButton.topAnchor.constraint(equalTo: largeLabel.topAnchor).isActive = true
+        
+        moreInfoButton.widthAnchor.constraint(equalTo: moreInfoButton.heightAnchor).isActive = true
+        
+        moreInfoButton.leadingAnchor.constraint(equalTo: scoreLabel.trailingAnchor, constant: 5).isActive = true
+        //moreInfoButton.centerYAnchor.constraint(equalTo: scoreLabelContainerView.centerYAnchor, constant: 2.7).isActive = true
         
         largeLabel.centerYAnchor.constraint(equalTo: largeLabel.superview!.centerYAnchor).isActive = true
         //scoreLabel.centerYAnchor.constraint(equalTo: scoreLabel.superview!.centerYAnchor, constant: 2.5).isActive = true
@@ -581,6 +693,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         if let v = tableView.tableHeaderView as? StretchyTableHeaderView {
             v.segControl = segmentedControl
+            v.moreInfoButton = moreInfoButton
         }
         
         headerTitle.updateConstraints()
@@ -1533,6 +1646,105 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 }
             }
         }
+    }
+    
+    @objc func showMoreInfo() {
+        let moreInfoTVC = UIStoryboard(name: "UserInfoTableViewController", bundle: nil).instantiateViewController(identifier: "UserInfoTableViewController") as! UserInfoTableViewController
+        
+        moreInfoTVC.modalPresentationStyle = .pageSheet
+        
+        //let sheet = moreInfoTVC.sheetPresentationController
+        
+        //sheet!.detents = [.medium(), .large()]
+        
+        moreInfoTVC.methodForRunningAfterLoad = { vc in
+            if self.profileData!.about == "" {
+                //vc.aboutContentCell.isHidden = true
+                //vc.aboutTitleCell.isHidden = true
+                
+                //let set = IndexSet(integer: 0)
+                
+                //vc.tableView.deleteSections(set, with: .none)
+                
+                vc.indexPathsToHide.append(IndexPath(row: 0, section: 0))
+                vc.indexPathsToHide.append(IndexPath(row: 1, section: 0))
+            } else {
+                (vc.aboutContentCell.contentView.subviews.first(where: { $0 is UITextView }) as? UITextView)?.text = self.profileData!.about
+            }
+            
+            if self.profileData!.skills == "" {
+                //vc.skillsContentCell.isHidden = true
+                //vc.skillsTitleCell.isHidden = true
+                
+                //let set = IndexSet(integer: 1)
+                
+                //vc.tableView.deleteSections(set, with: .none)
+                
+                vc.indexPathsToHide.append(IndexPath(row: 0, section: 1))
+                vc.indexPathsToHide.append(IndexPath(row: 1, section: 1))
+            } else {
+                (vc.skillsContentCell.contentView.subviews.first(where: { $0 is UITextView }) as? UITextView)?.text = self.profileData!.skills
+            }
+            
+            if self.profileData!.location == "" {
+                //vc.locationContentCell.isHidden = true
+                //vc.locationTItleCell.isHidden = true
+                
+                //let set = IndexSet(integer: 2)
+                
+                //vc.tableView.deleteSections(set, with: .none)
+                
+                vc.indexPathsToHide.append(IndexPath(row: 0, section: 2))
+                vc.indexPathsToHide.append(IndexPath(row: 1, section: 2))
+            } else {
+                (vc.locationContentCell.contentView.subviews.first(where: { $0 is UILabel }) as? UILabel)?.text = self.profileData!.location
+            }
+            
+            if let website = self.profileData!.website, website != "" {
+                (vc.websiteContentCell.contentView.subviews.first(where: { $0 is UILabel }) as? UILabel)?.text = website
+            } else {
+                //vc.websiteContentCell.isHidden = true
+                //vc.websiteTitleCell.isHidden = true
+                
+                
+                //let set = IndexSet(integer: 4)
+                
+                //vc.tableView.deleteSections(set, with: .none)
+                
+                vc.indexPathsToHide.append(IndexPath(row: 0, section: 3))
+                vc.indexPathsToHide.append(IndexPath(row: 1, section: 3))
+            }
+            
+            if self.profileData!.github == "" {
+                //vc.githubContentCell.isHidden = true
+                //vc.githubTitleCell.isHidden = true
+                
+                //let set = IndexSet(integer: 3)
+                
+                //vc.tableView.deleteSections(set, with: .none)
+                
+                vc.indexPathsToHide.append(IndexPath(row: 0, section: 4))
+                vc.indexPathsToHide.append(IndexPath(row: 1, section: 4))
+            } else {
+                (vc.githubContentCell.contentView.subviews.first(where: { $0 is UILabel }) as? UILabel)?.text = self.profileData!.github
+            }
+            
+            //vc.tableView.beginUpdates()
+            //vc.tableView.deleteRows(at: indexPaths, with: .none)
+            //vc.tableView.endUpdates()
+            
+            //vc.tableView.deleteRows(at: indexPaths, with: .none)
+            
+            //vc.tableView.reloadData()
+        }
+        
+        let navController = UINavigationController(rootViewController: moreInfoTVC)
+        
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+        }
+        
+        present(navController, animated: true)
     }
 }
 
