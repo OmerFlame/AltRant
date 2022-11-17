@@ -325,6 +325,11 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             
             //(tableView.tableHeaderView! as! StretchyTableHeaderView).maskBlurView?.isHidden = false
             //(tableView.tableHeaderView! as! StretchyTableHeaderView).maskBlurView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectSubview" })?.isHidden = false
+            
+            tableView.tableHeaderView!.gestureRecognizers!.forEach(tableView.tableHeaderView!.removeGestureRecognizer)
+            
+            blurView.contentView.isUserInteractionEnabled = false
+            blurView.isUserInteractionEnabled = false
         }
         
         // Call the header view's scrollViewDidScroll function to handle its layout and effects as well.
@@ -361,7 +366,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         tableView.register(UINib(nibName: "LoadingCell", bundle: nil), forCellReuseIdentifier: "LoadingCell")
         
         if profileData!.avatar.avatarImage != nil {
-            let completionSemaphore = DispatchSemaphore(value: 0)
+            /*let completionSemaphore = DispatchSemaphore(value: 0)
             var profileImage: UIImage?
             
             URLSession.shared.dataTask(with: URL(string: "https://avatars.devrant.com/" + profileData!.avatar.avatarImage!)!) { data, _, _ in
@@ -369,18 +374,37 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 completionSemaphore.signal()
             }.resume()
             
-            completionSemaphore.wait()
+            completionSemaphore.wait()*/
             
-            if profileImage != nil {
-                UIGraphicsBeginImageContextWithOptions(CGSize(width: 382, height: 382), false, CGFloat(profileImage!.size.height / 382))
-                profileImage!.draw(in: CGRect(origin: .zero, size: CGSize(width: 382, height: 382)))
-                let newImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                
-                (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = newImage
-            } else {
-                (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = UIImage(color: UIColor(hexString: profileData!.avatar.backgroundColor)!, size: CGSize(width: 382, height: 382))
+            var request = URLRequest(url: URL(string: "https://avatars.devrant.com/\(profileData!.avatar.avatarImage!)")!)
+            request.cachePolicy = .returnCacheDataElseLoad
+            
+            // hopefully, this is cached.
+            let dataTask = URLSession.shared.dataTask(with: request) { data, _, _ in
+                if let data = data {
+                    
+                    if let profileImage = UIImage(data: data) {
+                        UIGraphicsBeginImageContextWithOptions(CGSize(width: 382, height: 382), false, CGFloat(profileImage.size.height / 382))
+                        profileImage.draw(in: CGRect(origin: .zero, size: CGSize(width: 382, height: 382)))
+                        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+                        UIGraphicsEndImageContext()
+                        
+                        DispatchQueue.main.async { [weak self] in
+                            (self?.tableView.tableHeaderView as? StretchyTableHeaderView)?.imageView.image = newImage
+                        }
+                    } else {
+                        DispatchQueue.main.async { [weak self] in
+                            if let self = self {
+                                (self.tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = UIImage(color: UIColor(hexString: self.profileData!.avatar.backgroundColor)!, size: CGSize(width: 382, height: 382))
+                            }
+                        }
+                    }
+                }
             }
+            
+            dataTask.delegate = self
+            
+            dataTask.resume()
         } else {
             (tableView.tableHeaderView as! StretchyTableHeaderView).imageView.image = UIImage(color: UIColor(hexString: profileData!.avatar.backgroundColor)!, size: CGSize(width: 382, height: 382))
         }
@@ -1812,6 +1836,14 @@ extension UINavigationController: UIGestureRecognizerDelegate {
     
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return viewControllers.count > 1
+    }
+}
+
+extension ProfileTableViewController: URLSessionDataDelegate {
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
+        debugPrint("CACHING PROFILE IMAGE FOR USER \(profileData!.username) WITH STORAGE POLICY: \(proposedResponse.storagePolicy == .allowed ? ".allowed" : proposedResponse.storagePolicy == .allowedInMemoryOnly ? ".allowedInMemoryOnly" : ".notAllowed")")
+        
+        completionHandler(proposedResponse)
     }
 }
 

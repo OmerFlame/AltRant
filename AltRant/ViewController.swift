@@ -547,6 +547,10 @@ class HomeFeedTableViewController: UITableViewController, UITabBarControllerDele
             
             cell.delegate = self
             
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = .clear
+            
+            cell.selectedBackgroundView = backgroundView
             
             //cell.layoutIfNeeded()
             return cell

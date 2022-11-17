@@ -142,11 +142,6 @@ class StretchyTableHeaderView: UIView {
             return view
         }
         
-        let convertedPointImageView = imageView.convert(point, from: self)
-        if let view = imageView.hitTest(convertedPointImageView, with: event) {
-            return view
-        }
-            
         guard self.point(inside: point, with: event) else { return nil }
             
         return self

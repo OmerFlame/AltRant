@@ -256,10 +256,10 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RantInSubscribedFeedCell" id="tRg-h6-stG" customClass="RantInSubscribedFeedCell" customModule="AltRant" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="389.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="359.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tRg-h6-stG" id="BPP-Uy-B3I">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="389.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="359.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Kbr-C2-dCk" userLabel="User Actions View">
@@ -433,10 +433,10 @@
                                                     </variation>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="FOn-fi-29y">
-                                                    <rect key="frame" x="56" y="324" width="334" height="50.5"/>
+                                                    <rect key="frame" x="56" y="324" width="334" height="20.5"/>
                                                     <subviews>
                                                         <view contentMode="center" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="fDm-wM-9w1" userLabel="Tag List" customClass="TagListView" customModule="AltRant" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.5" width="307" height="50"/>
+                                                            <rect key="frame" x="0.0" y="0.5" width="307" height="19"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="color" keyPath="textColor">
@@ -1282,6 +1282,9 @@
         <designable name="69L-0b-9f7">
             <size key="intrinsicContentSize" width="26" height="26"/>
         </designable>
+        <designable name="fDm-wM-9w1">
+            <size key="intrinsicContentSize" width="307" height="19"/>
+        </designable>
         <designable name="lN7-Eb-p47">
             <size key="intrinsicContentSize" width="26" height="26"/>
         </designable>
@@ -1307,7 +1310,7 @@
         <image name="square.stack.fill" catalog="system" width="112" height="128"/>
         <image name="text.bubble.fill" catalog="system" width="128" height="110"/>
         <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

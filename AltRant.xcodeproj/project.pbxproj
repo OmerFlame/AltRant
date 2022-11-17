@@ -836,7 +836,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2070;
+				CURRENT_PROJECT_VERSION = 2084;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 666F768P5J;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -872,7 +872,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2070;
+				CURRENT_PROJECT_VERSION = 2084;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = AltRant/Info.plist;
@@ -904,7 +904,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2070;
+				CURRENT_PROJECT_VERSION = 2084;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -941,7 +941,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2070;
+				CURRENT_PROJECT_VERSION = 2084;
 				DEVELOPMENT_TEAM = 666F768P5J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Open with AltRant/Info.plist";
@@ -1046,8 +1046,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/OmerFlame/SwiftRant.git";
 			requirement = {
-				branch = "add-edited-property-comment";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
 			};
 		};
 		594A21E827B3B48D00AD6D75 /* XCRemoteSwiftPackageReference "OSPlaceholderTextView" */ = {

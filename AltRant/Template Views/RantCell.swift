@@ -232,7 +232,7 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate, URLSes
         if rantContents!.userAvatar.avatarImage == nil {
             userProfileImageView.image = UIImage(color: UIColor(hexString: rantContents!.userAvatar.backgroundColor)!, size: CGSize(width: 45, height: 45))
         } else {
-            let resourceURL = URL(string: "https://avatars.devrant.com/" + rantContents!.userAvatar.avatarImage!)!
+            /*let resourceURL = URL(string: "https://avatars.devrant.com/" + rantContents!.userAvatar.avatarImage!)!
             
             let completionSemaphore = DispatchSemaphore(value: 0)
             var imageData: Data? = nil
@@ -244,7 +244,29 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate, URLSes
             }.resume()
             
             completionSemaphore.wait()
-            userProfileImageView.image = UIImage(data: imageData ?? Data()) ?? nil
+            userProfileImageView.image = UIImage(data: imageData ?? Data()) ?? nil*/
+            
+            userProfileImageView.backgroundColor = UIColor(hexString: rantContents.userAvatar.backgroundColor)!
+            
+            userProfileImageView.showAnimatedSkeleton(usingColor: userProfileImageView.backgroundColor!)
+            
+            var request = URLRequest(url: URL(string: "https://avatars.devrant.com/\(rantContents.userAvatar.avatarImage!)")!)
+            request.cachePolicy = .returnCacheDataElseLoad
+            
+            // hopefully, this is cached.
+            let dataTask = URLSession.shared.dataTask(with: request) { data, _, _ in
+                if let data = data {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.userProfileImageView.image = UIImage(data: data)
+                        
+                        self?.userProfileImageView.hideSkeleton(transition: .crossDissolve(0.2))
+                    }
+                }
+            }
+            
+            dataTask.delegate = self
+            
+            dataTask.resume()
         }
         
         usernameLabel.text = rantContents!.username
@@ -352,6 +374,10 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate, URLSes
                     print("FOUND DOUBLE+ TAP! NUMBER OF TAPS REQUIRED: \((gestureRecognizer as! UITapGestureRecognizer).numberOfTapsRequired)")
                     //bodyLabel.removeGestureRecognizer(gestureRecognizer)
                     
+                    print(gestureRecognizer.debugDescription)
+                    
+                    print("---------------------------")
+                    
                     let newDoubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
                     newDoubleTapGesture.numberOfTapsRequired = 2
                     bodyLabel.addGestureRecognizer(newDoubleTapGesture)
@@ -359,10 +385,6 @@ class RantCell: UITableViewCell, UITextViewDelegate, TagListViewDelegate, URLSes
                     
                     gestureRecognizer.removeTarget(nil, action: nil)
                     gestureRecognizer.require(toFail: newDoubleTapGesture)
-                    
-                    print(gestureRecognizer.debugDescription)
-                    
-                    print("---------------------------")
                 }
             }
         }
