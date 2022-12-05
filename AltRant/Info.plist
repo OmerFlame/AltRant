@@ -32,13 +32,15 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2084</string>
+	<string>2096</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs photo library access in order to save images that you choose to save.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs photo library access in order to save/load images that you choose to save/load.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

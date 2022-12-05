@@ -10,9 +10,10 @@ import UniformTypeIdentifiers
 import SwiftRant
 import OSPlaceholderTextView
 import SwiftHEXColors
+import PhotosUI
 //import SwiftUI
 
-class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIDocumentPickerDelegate {
+class ComposeViewController: UIViewController, UITextViewDelegate, PHPickerViewControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIDocumentPickerDelegate {
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var contentTextView: OSPlaceholderTextView!
     @IBOutlet weak var remainingLettersLabel: UILabel!
@@ -55,7 +56,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         ])
     }
     
-    var inputImage: UIImage? {
+    var inputImage: Data? {
         didSet {
             if inputImage == nil {
                 attachmentButton.setTitle("Attach img/gif", for: .normal)
@@ -72,7 +73,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                 
                 attachmentButton.removeTarget(nil, action: nil, for: .primaryActionTriggered)
                 attachmentButton.addTarget(self, action: #selector(discardImage), for: .primaryActionTriggered)
-                previewImageView.image = inputImage
+                previewImageView.image = UIImage.gifImageWithData(inputImage!) ?? UIImage(data: inputImage!)
             }
         }
     }
@@ -127,10 +128,34 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
             if !isComment {
                 tagTextField.text = tags
                 
-                if (viewControllerThatPresented as! RantViewController).supplementalRantImage == nil {
+                if (viewControllerThatPresented as! RantViewController).rant?.attachedImage == nil {
                     inputImage = nil
                 } else {
-                    inputImage = UIImage(contentsOfFile: (viewControllerThatPresented as! RantViewController).supplementalRantImage?.previewItemURL.relativePath ?? "")
+                    //inputImage = UIImage(contentsOfFile: (viewControllerThatPresented as! RantViewController).supplementalRantImage?.previewItemURL.relativePath ?? "")
+                    let pending = UIAlertController(title: "Loading...", message: nil, preferredStyle: .alert)
+                    
+                    let indicator = UIActivityIndicatorView(frame: pending.view.bounds)
+                    indicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    pending.view.addSubview(indicator)
+                    indicator.isUserInteractionEnabled = false
+                    indicator.startAnimating()
+                    
+                    present(pending, animated: true)
+                    
+                    var request = URLRequest(url: URL(string: (viewControllerThatPresented as! RantViewController).rant!.attachedImage!.url)!)
+                    request.cachePolicy = .returnCacheDataElseLoad
+                    
+                    let dataTask = URLSession.shared.dataTask(with: request) { data, _, _ in
+                        if let data = data {
+                            DispatchQueue.main.async {
+                                self.inputImage = data
+                                
+                                pending.dismiss(animated: true)
+                            }
+                        }
+                    }
+                    
+                    dataTask.resume()
                 }
             }
         } else if isEdit && isComment {
@@ -288,6 +313,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                 var addedContent = [Comment]()
                 let lastCommentID = (viewControllerThatPresented as! RantViewController).comments.last?.id ?? 0
                 
+                
+                
                 SwiftRant.shared.postComment(nil, rantID: rantID!, content: contentTextView.text, image: inputImage) { [weak self] result in
                     if case .success() = result {
                         SwiftRant.shared.getRantFromID(token: nil, id: self?.rantID ?? 0, lastCommentID: lastCommentID) { result in
@@ -403,7 +430,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                     if case .success() = result {
                         SwiftRant.shared.getCommentFromID(self?.commentID ?? 0, token: nil) { result in
                             if case .success(let newComment) = result {
-                                if (self?.viewControllerThatPresented as! RantViewController).commentImages[self?.commentID ?? 0] != nil {
+                                /*if (self?.viewControllerThatPresented as! RantViewController).commentImages[self?.commentID ?? 0] != nil {
                                     if UIImage(contentsOfFile: (self?.viewControllerThatPresented as! RantViewController).commentImages[self?.commentID ?? 0]!?.previewItemURL.relativePath ?? "") != self?.inputImage {
                                         if newComment.attachedImage != nil {
                                             (self?.viewControllerThatPresented as! RantViewController).commentImages[self?.commentID ?? 0] = File.loadFile(image: newComment.attachedImage!, size: CGSize(width: newComment.attachedImage!.width, height: newComment.attachedImage!.height))
@@ -417,7 +444,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
                                     } else {
                                         (self?.viewControllerThatPresented as! RantViewController).commentImages[self?.commentID ?? 0] = nil
                                     }
-                                }
+                                }*/
                                 
                                 if newComment.links != nil {
                                     let links = newComment.links!
@@ -702,7 +729,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     }
     
     func openDocumentPicker() {
-        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.image])
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.image, UTType.gif])
         documentPicker.delegate = self
         documentPicker.allowsMultipleSelection = false
         
@@ -710,16 +737,62 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
     }
     
     func openImagePicker() {
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
+        //let pickerController = UIImagePickerController()
+        //pickerController.delegate = self
         
-        pickerController.isModalInPresentation = true
+        //pickerController.isModalInPresentation = true
         
-        present(pickerController, animated: true, completion: nil)
+        //present(pickerController, animated: true, completion: nil)
+        
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        
+        configuration.filter = .images
+        configuration.preferredAssetRepresentationMode = .current
+        configuration.selection = .ordered
+        configuration.selectionLimit = 1
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
     }
     
     // MARK: - Image Picker Controller Delegate
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        guard !results.isEmpty else {
+            return
+        }
+        
+        let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: [results[0].assetIdentifier!], options: nil)
+        
+        guard fetchResult.count > 0 else {
+            return
+        }
+        
+        let asset = fetchResult[0]
+        
+        /*let pending = UIAlertController(title: "Importing Image", message: nil, preferredStyle: .alert)
+        
+        let indicator = UIActivityIndicatorView(frame: pending.view.bounds)
+        indicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        pending.view.addSubview(indicator)
+        indicator.isUserInteractionEnabled = false
+        indicator.startAnimating()
+        
+        present(pending, animated: true)*/
+        
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.isSynchronous = true
+        
+        PHImageManager.default().requestImageData(for: asset, options: requestOptions) { imageData, _, _, _ in
+            DispatchQueue.main.async {
+                //pending.dismiss(animated: true)
+                self.inputImage = imageData
+            }
+        }
+    }
+    /*func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
             print("IMAGE WIDTH:  \(image.size.width)")
@@ -729,13 +802,13 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UIImagePicker
         }
         
         picker.dismiss(animated: true, completion: nil)
-    }
+    }*/
     
     // MARK: - Document Picker Delegate
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        let image = UIImage(contentsOfFile: urls[0].path)
+        //let image = UIImage(contentsOfFile: urls[0].path)
         
-        inputImage = image
+        inputImage = try? Data(contentsOf: urls[0])
         
         //attachmentButton.menu = nil
         //attachmentButton.showsMenuAsPrimaryAction = false
