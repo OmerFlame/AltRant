@@ -160,6 +160,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     let userImageStore = UserImageStore()
     let userImageLoader: UserImageLoader!
     
+    var shouldModifyNavigationBar = true
+    
     init?(coder: NSCoder, userID: Int?) {
         self.userID = userID
         self.userImageLoader = UserImageLoader(store: userImageStore)
@@ -242,7 +244,10 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         if offset < 0 { offset = 0 }
         
         // Change the tint color of the navigation bar to a color between white and the profile's background color, depending on how much we scroll.
-        navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hexString: profileData!.avatar.backgroundColor)!, percent: Double(sqrt(offset)))
+        
+        if shouldModifyNavigationBar {
+            navigationController?.navigationBar.tintColor = blend(from: .white, to: UIColor(hexString: profileData!.avatar.backgroundColor)!, percent: Double(sqrt(offset)))
+        }
         
         // Set the opacity of the custom title view of the navigation bar to the square root of the offset.
         if offset > 0 {
@@ -253,19 +258,22 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         smallHeaderTitle?.alpha = sqrt(offset)
         navigationItem.titleView?.alpha = sqrt(offset)
         
-        /* In here, we start to meddle with private views inside the navigation bar that provide the blur effect that the navigation bar has.
-         *
-         * We set the opacity of the navigation bar's private background and visual effect views to the square root of the offset we calculated earlier.
-         */
-        navigationController?.navigationBar.backgroundView?.alpha = sqrt(offset)
-        navigationController?.navigationBar.visualEffectView?.alpha = sqrt(offset)
-        
-        // Set the opacity of one of the private views of the navigation bar's visual effect view. We search the subviews of the visual effect view for a view that has this private class name and the first one that pops up is the only one that exists. We set that view's alpha to the square root of the offset we calculated earlier.
-        self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
-        
-        // If the user pushed this view controller into view through the notifications view controller, the structure of the navigation bar is different, so we need to set the opacity of the background of the UIToolbar that the extended navigation view has (which is a private Apple view as well) to the square root of the offset that we calculated earlier.
-        if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
-            extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = sqrt(offset)
+        if shouldModifyNavigationBar {
+            /* In here, we start to meddle with private views inside the navigation bar that provide the blur effect that the navigation bar has.
+             *
+             * We set the opacity of the navigation bar's private background and visual effect views to the square root of the offset we calculated earlier.
+             */
+            
+            navigationController?.navigationBar.backgroundView?.alpha = sqrt(offset)
+            navigationController?.navigationBar.visualEffectView?.alpha = sqrt(offset)
+            
+            // Set the opacity of one of the private views of the navigation bar's visual effect view. We search the subviews of the visual effect view for a view that has this private class name and the first one that pops up is the only one that exists. We set that view's alpha to the square root of the offset we calculated earlier.
+            self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = sqrt(offset)
+            
+            // If the user pushed this view controller into view through the notifications view controller, the structure of the navigation bar is different, so we need to set the opacity of the background of the UIToolbar that the extended navigation view has (which is a private Apple view as well) to the square root of the offset that we calculated earlier.
+            if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
+                extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = sqrt(offset)
+            }
         }
         
         // We repeat the same procedures above on more private Apple views that are inside the blur view for the segmented control.
@@ -818,6 +826,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         print("RUNNING VIEWWILLAPPEAR")
         
+        shouldModifyNavigationBar = true
+        
         if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
             transitionCoordinator?.animate(alongsideTransition: { context in
                 extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = sqrt(offset)
@@ -833,9 +843,13 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 if self.navigationItem.titleView != nil {
                     self.navigationItem.titleView!.isHidden = false
                 }
+                
+                self.scrollViewDidScroll(self.tableView)
             }, completion: { context in
                 if context.isCancelled && self.navigationController?.topViewController != self {
                     self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+                    
+                    self.shouldModifyNavigationBar = false
                 }
             })
         } else {
@@ -889,6 +903,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             
             if offset < 0 { offset = 0 }
             
+            shouldModifyNavigationBar = false
+            
             if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
                 
                 print("RUNNING AS EXTENSIVE")
@@ -898,24 +914,39 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                         self.navigationItem.titleView!.isHidden = true
                     }
                     
-                    extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
                     self.navigationController?.navigationBar.backgroundView?.alpha = 1
                     
-                    self.navigationController?.navigationBar.tintColor = UIButton().tintColor
+                    self.navigationController?.navigationBar.tintColor = UIColor.tintColor
+                    
+                    debugPrint("TINT COLOR SET")
+                    
+                    //extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = 1
+                    
+                    if let barBackground = extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" }) {
+                        barBackground.alpha = 1
+                        
+                        debugPrint("ALPHA SET")
+                    } else {
+                        print("COULD NOT FIND BAR BACKGROUND!")
+                    }
                 }, completion: { context in
                     if context.isCancelled && self.navigationController?.topViewController == self {
                         
                         print("CANCELLED")
                         
+                        self.shouldModifyNavigationBar = true
+                        
                         print("FROM: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
                         print("TO: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
-                        self.navigationItem.titleView!.isHidden = false
+                        self.navigationItem.titleView?.isHidden = false
                         extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = previousBackgroundAlpha
                         self.navigationController?.navigationBar.backgroundView?.alpha = previousBackgroundAlpha
                         
                         self.navigationController?.navigationBar.visualEffectView?.subviews.first(where: { String(describing: type(of: $0)) == "_UIVisualEffectBackdropView" })?.alpha = previousBackgroundAlpha
                         
                         self.navigationController?.navigationBar.tintColor = previousTintColor
+                        
+                        self.scrollViewDidScroll(self.tableView)
                     }
                 })
             } else {

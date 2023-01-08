@@ -212,6 +212,8 @@ class RantViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        fixNavigationBar()
+        
         if didFinishLoading == false {
             //navigationItem.rightBarButtonItems![0].isEnabled = false
             //navigationItem.rightBarButtonItems![1].isEnabled = false
