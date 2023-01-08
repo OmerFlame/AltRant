@@ -162,6 +162,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
     
     var shouldModifyNavigationBar = true
     
+    var defaultNavigationBarScrollEdgeAppearance: UINavigationBarAppearance?
+    
     init?(coder: NSCoder, userID: Int?) {
         self.userID = userID
         self.userImageLoader = UserImageLoader(store: userImageStore)
@@ -828,6 +830,13 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
         
         shouldModifyNavigationBar = true
         
+        //defaultNavigationBarScrollEdgeAppearance = navigationController?.navigationBar.scrollEdgeAppearance
+        //let navigationBarAppearance = UINavigationBarAppearance()
+        //navigationBarAppearance.shadowColor = .clear
+        //navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        
+        navigationController?.navigationBar.clipsToBounds = true
+        
         if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
             transitionCoordinator?.animate(alongsideTransition: { context in
                 extendedNavigationController.navigationBarToolbar?.subviews.first(where: { String(describing: type(of: $0)) == "_UIBarBackground" })?.alpha = sqrt(offset)
@@ -850,6 +859,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                     self.navigationController?.navigationBar.tintColor = UIButton().tintColor
                     
                     self.shouldModifyNavigationBar = false
+                    extendedNavigationController.navigationBar.clipsToBounds = false
                 }
             })
         } else {
@@ -905,6 +915,8 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
             
             shouldModifyNavigationBar = false
             
+            navigationController.navigationBar.clipsToBounds = false
+            
             if let extendedNavigationController = navigationController as? ExtensibleNavigationBarNavigationController {
                 
                 print("RUNNING AS EXTENSIVE")
@@ -935,6 +947,7 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                         print("CANCELLED")
                         
                         self.shouldModifyNavigationBar = true
+                        extendedNavigationController.navigationBar.clipsToBounds = true
                         
                         print("FROM: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
                         print("TO: \(context.viewController(forKey: .from)! is RantViewController ? "RantViewController" : "ProfileTableViewController")")
