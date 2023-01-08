@@ -43,6 +43,8 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
     
     private let accessQueue = DispatchQueue(label: "SynchronizedArrayAccess", attributes: .concurrent)
     
+    private let userImagesAccessQueue = DispatchQueue(label: "UserImagesQueue")
+    
     private var indexPathsToInsert = [IndexPath]()
     private var badgeValue: String?
     
@@ -287,7 +289,10 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 $0.uidForUsername == String(notifications[indexPath.row].uid)
             })!
             
-            cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            userImagesAccessQueue.sync {
+                cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            }
+            
             cell.usernameUpvoteLabel.text = "\(userMapping.name) ++'d your rant!"
             
             cell.usernameUpvoteLabel.font = notifications[indexPath.row].read == 0 ? .systemFont(ofSize: 17, weight: .semibold) : .systemFont(ofSize: 17)
@@ -304,7 +309,10 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 $0.uidForUsername == String(notifications[indexPath.row].uid)
             })!
             
-            cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            userImagesAccessQueue.sync {
+                cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            }
+            
             cell.usernameCommentLabel.text = "\(userMapping.name) commented on your rant!"
             
             cell.usernameCommentLabel.font = notifications[indexPath.row].read == 0 ? .systemFont(ofSize: 17, weight: .semibold) : .systemFont(ofSize: 17)
@@ -321,7 +329,10 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 $0.uidForUsername == String(notifications[indexPath.row].uid)
             })!
             
-            cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            userImagesAccessQueue.sync {
+                cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            }
+            
             cell.usernameCommentLabel.text = "\(userMapping.name) commented on a rant you commented on!"
             
             cell.usernameCommentLabel.font = notifications[indexPath.row].read == 0 ? .systemFont(ofSize: 17, weight: .semibold) : .systemFont(ofSize: 17)
@@ -338,7 +349,9 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 $0.uidForUsername == String(notifications[indexPath.row].uid)
             })!
             
-            cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            userImagesAccessQueue.sync {
+                cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            }
             
             cell.usernameCommentLabel.text = "\(userMapping.name) mentioned you in a comment!"
             
@@ -356,7 +369,10 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 $0.uidForUsername == String(notifications[indexPath.row].uid)
             })!
             
-            cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            userImagesAccessQueue.sync {
+                cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            }
+            
             cell.usernameUpvoteLabel.text = "\(userMapping.name) ++'d your comment!"
             
             cell.usernameUpvoteLabel.font = notifications[indexPath.row].read == 0 ? .systemFont(ofSize: 17, weight: .semibold) : .systemFont(ofSize: 17)
@@ -373,7 +389,10 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                 $0.uidForUsername == String(notifications[indexPath.row].uid)
             })!
             
-            cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            userImagesAccessQueue.sync {
+                cell.profileImageView.image = userImages[notifications[indexPath.row].uid]
+            }
+            
             cell.usernameCommentLabel.text = "\(userMapping.name) posted a new rant!"
             
             cell.usernameCommentLabel.font = notifications[indexPath.row].read == 0 ? .systemFont(ofSize: 17, weight: .semibold) : .systemFont(ofSize: 17)
@@ -418,7 +437,10 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                         $0.uidForUsername == String(item.uid)
                     })?.avatar.avatarImage {
                         if let cachedFile = FileManager.default.contents(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(avatarLink).relativePath) {
-                            self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: cachedFile)!)
+                            //self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: cachedFile)!)
+                            self.userImagesAccessQueue.sync {
+                                self.userImages[item.uid] = UIImage(data: cachedFile)!
+                            }
                             
                             //debugPrint("DOWNLOAD TASK LEAVING!")
                             downloadGroup.leave()
@@ -427,7 +449,11 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                             
                             session.dataTask(with: URL(string: "https://avatars.devrant.com/\(avatarLink)")!) { data, _, _ in
                                 
-                                self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: data!)!)
+                                //self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(data: data!)!)
+                                
+                                self.userImagesAccessQueue.sync {
+                                    self.userImages[item.uid] = UIImage(data: data!)!
+                                }
                                 
                                 FileManager.default.createFile(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(avatarLink).relativePath, contents: data, attributes: nil)
                                 
@@ -445,7 +471,11 @@ class NotificationsTableViewController: UIViewController, UITableViewDataSource,
                             $0.uidForUsername == String(item.uid)
                         })!.avatar.backgroundColor
                         
-                        self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(color: UIColor(hexString: avatarColor)!, size: CGSize(width: 45, height: 45))!)
+                        //self.asynchronousWriteToDict(dict: &self.userImages, key: item.uid, value: UIImage(color: UIColor(hexString: avatarColor)!, size: CGSize(width: 45, height: 45))!)
+                        
+                        self.userImagesAccessQueue.sync {
+                            self.userImages[item.uid] = UIImage(color: UIColor(hexString: avatarColor)!, size: CGSize(width: 45, height: 45))!
+                        }
                         
                         //debugPrint("DOWNLOAD TASK LEAVING!")
                         downloadGroup.leave()
