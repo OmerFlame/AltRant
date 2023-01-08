@@ -116,7 +116,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             return
         } else {
-            let rantVC = UIStoryboard(name: "RantViewController", bundle: nil).instantiateViewController(withIdentifier: "RantViewController") as! RantViewController
+            let rantVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RantViewController") as! RantViewController
             rantVC.rantID = Int(incomingURL.absoluteString.replacingOccurrences(of: "altrant://", with: ""))!
             rantVC.rantInFeed = nil
             rantVC.supplementalRantImage = nil

@@ -122,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/OmerFlame/SwiftRant.git",
       "state" : {
-        "revision" : "4f676423793a84e4693d989b7d466c0ae7f540ce",
-        "version" : "2.3.0"
+        "revision" : "799455731112005092bf091f6fa3f23a3904398b",
+        "version" : "2.4.1"
       }
     }
   ],
