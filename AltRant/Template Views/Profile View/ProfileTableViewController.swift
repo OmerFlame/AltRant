@@ -1396,6 +1396,56 @@ class ProfileTableViewController: UIViewController, UITableViewDelegate, UITable
                 let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
                 cell.configure(with: commentTypeContent.commentTypeContent[indexPath.row], supplementalImage: nil, parentTableViewController: self, parentTableView: tableView, currentDate: currentDate, allowedToPreview: false)
                 
+                for constraint in cell.contentView.constraints {
+                    switch constraint.identifier {
+                    case "leadingMarginSpace":
+                        cell.removeConstraint(constraint)
+                        
+                        let newConstraint = cell.contentStackView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 20)
+                        newConstraint.isActive = true
+                        
+                        cell.contentView.addConstraint(newConstraint)
+                        break
+                        
+                    case "trailingMarginSpace":
+                        cell.contentView.removeConstraint(constraint)
+                        
+                        let newConstraint = cell.contentView.trailingAnchor.constraint(equalTo: cell.contentStackView.trailingAnchor, constant: 24)
+                        newConstraint.isActive = true
+                        
+                        cell.contentView.addConstraint(newConstraint)
+                        break
+                        
+                    case "bottomMarginSpace":
+                        cell.contentView.removeConstraint(constraint)
+                        
+                        //let newConstraint = cell.contentView.bottomAnchor.constraint(equalTo: cell.actionsStackView.bottomAnchor, constant: 0)
+                        //newConstraint.isActive = true
+                        
+                        //cell.contentView.addConstraint(newConstraint)
+                        
+                        //let newConstraint = cell.contentView.bottomAnchor.constraint(equalTo: cell.contentStackView.bottomAnchor, constant: 15)
+                        
+                        let newConstraint = cell.contentView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: cell.contentStackView.bottomAnchor, constant: 4)
+                        newConstraint.isActive = true
+                        
+                        cell.contentView.addConstraint(newConstraint)
+                        break
+                        
+                    case "topMarginSpace":
+                        cell.contentView.removeConstraint(constraint)
+                        
+                        let newConstraint = cell.contentStackView.topAnchor.constraint(equalTo: cell.contentView.topAnchor, constant: 15)
+                        newConstraint.isActive = true
+                        
+                        cell.contentView.addConstraint(newConstraint)
+                        break
+                        
+                    default:
+                        break
+                    }
+                }
+                
                 return cell
             }
         } else {

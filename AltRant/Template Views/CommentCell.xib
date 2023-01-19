@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="384"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gw2-Fd-QOr" userLabel="Content Stack View">
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gw2-Fd-QOr" userLabel="Content Stack View">
                         <rect key="frame" x="20" y="15" width="370" height="338"/>
                         <subviews>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="STV-4z-dcN" userLabel="Voting Group View">
@@ -64,7 +64,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="e6R-YG-Ipg" firstAttribute="centerY" secondItem="STV-4z-dcN" secondAttribute="centerY" id="3Xl-sG-Obg"/>
                                     <constraint firstItem="hQw-mg-kRq" firstAttribute="top" secondItem="STV-4z-dcN" secondAttribute="top" id="4H1-UD-2Pl"/>
@@ -143,7 +143,7 @@
                                     </stackView>
                                     <textView multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" editable="NO" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g6Z-Sz-FnA" userLabel="Body">
                                         <rect key="frame" x="0.0" y="45" width="334" height="236"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in ligula vel mi cursus ultricies eu quis arcu. In hac habitasse platea dictumst. Nam ultricies sem congue pharetra gravida. Sed ut neque ut velit dapibus pharetra porttitor eget ipsum. In pellentesque sapien eu porta semper. Ut non justo condimentum sapien ultrices venenatis. Vivamus finibus lorem justo, feugiat tempor metus volutpat vitae.</string>
                                         <color key="textColor" systemColor="labelColor"/>
@@ -201,11 +201,14 @@
                             </mask>
                         </variation>
                     </stackView>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="kGV-uY-zdt" userLabel="Actions Stack View">
-                        <rect key="frame" x="56" y="357" width="334" height="12"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="kGV-uY-zdt" userLabel="Actions Stack View">
+                        <rect key="frame" x="56" y="350" width="334" height="12"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nkV-tk-JoE" userLabel="Reply Button">
                                 <rect key="frame" x="0.0" y="0.0" width="32" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="999" constant="12" id="YZf-7H-Acf"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="Reply"/>
                                 <connections>
@@ -214,6 +217,9 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eq7-FA-fky" userLabel="Report/Modify Button">
                                 <rect key="frame" x="296" y="0.0" width="38" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="999" constant="12" id="LHT-Z3-Oz0"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="Report"/>
                             </button>
@@ -221,6 +227,11 @@
                         <constraints>
                             <constraint firstAttribute="height" priority="999" constant="12" id="H85-hB-NZn"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="H85-hB-NZn"/>
+                            </mask>
+                        </variation>
                     </stackView>
                 </subviews>
                 <constraints>
@@ -236,6 +247,7 @@
             <connections>
                 <outlet property="actionsStackView" destination="kGV-uY-zdt" id="IkO-iw-dec"/>
                 <outlet property="bodyLabel" destination="g6Z-Sz-FnA" id="lhx-AB-uLB"/>
+                <outlet property="contentStackView" destination="gw2-Fd-QOr" id="8Lk-08-3mU"/>
                 <outlet property="downvoteButton" destination="aii-Tt-8gn" id="UkR-bi-LB1"/>
                 <outlet property="imageViewHeightConstraint" destination="xTL-iq-dZu" id="w18-Aj-hhK"/>
                 <outlet property="postTimeLabel" destination="8tO-eK-0jL" id="l9o-df-2Yh"/>
@@ -265,9 +277,6 @@
         </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

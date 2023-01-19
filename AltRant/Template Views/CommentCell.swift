@@ -25,6 +25,7 @@ class CommentCell: UITableViewCell, UITextViewDelegate, URLSessionDataDelegate {
     @IBOutlet weak var userScoreLabel: PaddingLabel!
     @IBOutlet weak var userStackView: UIStackView!
     @IBOutlet weak var actionsStackView: UIStackView!
+    @IBOutlet weak var contentStackView: UIStackView!
     
     @IBOutlet weak var bodyLabel: UITextView!
     @IBOutlet weak var postTimeLabel: UILabel!
@@ -391,6 +392,10 @@ class CommentCell: UITableViewCell, UITextViewDelegate, URLSessionDataDelegate {
         
         if !allowedToPreview {
             actionsStackView.isHidden = true
+            
+            bodyLabel.isUserInteractionEnabled = false
+            bodyLabel.isSelectable = false
+            bodyLabel.dataDetectorTypes = UIDataDetectorTypes([])
         } else {
             if let gestureRecognizers = bodyLabel.gestureRecognizers {
                 print("GESTURE RECOGNIZERS IN BODY LABEL FOUND! SEARCHING DOUBLE TAP...")
